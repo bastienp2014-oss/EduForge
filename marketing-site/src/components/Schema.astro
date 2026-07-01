@@ -1,0 +1,16 @@
+---
+// src/components/Schema.astro
+interface Props {
+  item: Record<string, any>;
+}
+
+const { item } = Astro.props;
+
+// Ensure the schema context is included
+const schema = {
+  "@context": "https://schema.org",
+  ...item,
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

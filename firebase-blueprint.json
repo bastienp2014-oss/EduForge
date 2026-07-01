@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "Utilisateur": {
+      "title": "Utilisateur",
+      "description": "Profil et progression du joueur",
+      "type": "object",
+      "properties": {
+        "etoiles": {
+          "type": "number",
+          "description": "Nombre d'étoiles gagnées"
+        },
+        "motsDebloques": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Liste des IDs des mots débloqués"
+        },
+        "derniereMiseAJour": {
+          "type": "object",
+          "description": "Timestamp de la dernière sauvegarde"
+        }
+      },
+      "required": ["etoiles", "motsDebloques"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "Représente un cours de formation",
+      "type": "object",
+      "properties": {
+        "tenantId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "authorId": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "published", "archived"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["tenantId", "title", "authorId", "status"]
+    },
+    "Bundle": {
+      "title": "Bundle",
+      "description": "Regroupe plusieurs cours",
+      "type": "object",
+      "properties": {
+        "tenantId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "courseIds": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["tenantId", "title", "courseIds"]
+    }
+  },
+  "firestore": {
+    "utilisateurs/{userId}": {
+      "schema": {
+        "$ref": "#/entities/Utilisateur"
+      },
+      "description": "Contient la progression et les données d'état global du joueur"
+    },
+    "courses/{courseId}": {
+      "schema": {
+        "$ref": "#/entities/Course"
+      },
+      "description": "Les cours de la plateforme, isolés par tenantId"
+    },
+    "bundles/{bundleId}": {
+      "schema": {
+        "$ref": "#/entities/Bundle"
+      },
+      "description": "Les packs de cours, isolés par tenantId"
+    }
+  }
+}

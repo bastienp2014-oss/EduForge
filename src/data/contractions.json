@@ -1,0 +1,682 @@
+[
+  {
+    "id": "contr_001",
+    "standard": "Je suis fatigué.",
+    "quebecois": "Chu fatigué.",
+    "chunks": [
+      "Chu",
+      "fatigué",
+      "."
+    ],
+    "explication": "La contraction la plus emblématique du français québécois oral. 'Je suis' fusionne totalement en 'Chu' par assimilation phonétique rapide. Audible chez pratiquement tous les locuteurs québécois, quel que soit le registre ou l'âge.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_002",
+    "standard": "Je ne suis pas là.",
+    "quebecois": "Chu pas là.",
+    "chunks": [
+      "Chu",
+      "pas",
+      "là",
+      "."
+    ],
+    "explication": "'Je ne suis pas' cumule deux réductions : 'je suis → Chu' d'une part, et chute du 'ne' de négation d'autre part. Cette chute du 'ne' est universelle en français oral familier, mais systématique et totale au Québec, y compris dans des contextes semi-formels.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_003",
+    "standard": "Tu es prêt ?",
+    "quebecois": "T'es prêt ?",
+    "chunks": [
+      "T'es",
+      "prêt",
+      "?"
+    ],
+    "explication": "'Tu es' se contracte en 'T'es' par élision du 'u' de 'tu' devant le 'e' de 'es'. Ce phénomène existe aussi en français de France, mais il est encore plus systématique au Québec. La forme pleine 'Tu es' sonne écrite ou très soutenue à l'oreille québécoise.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_004",
+    "standard": "Il est arrivé.",
+    "quebecois": "Y'est arrivé.",
+    "chunks": [
+      "Y'est",
+      "arrivé",
+      "."
+    ],
+    "explication": "'Il est' devient 'Y'est' : le pronom 'il' se réduit à 'Y' (ou 'i' selon les régions), et 'est' reste mais se fusionne phonétiquement. 'Y'est' se prononce comme un seul mot bref [jɛ]. La forme pleine 'Il est' est réservée à l'écrit ou au discours très soigné.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_005",
+    "standard": "Elle est partie.",
+    "quebecois": "A l'est partie.",
+    "chunks": [
+      "A",
+      "l'est",
+      "partie",
+      "."
+    ],
+    "explication": "'Elle est' devient 'A l'est'. 'Elle' se réduit à 'A', puis un 'l'' de liaison épenthétique apparaît devant 'est' pour faciliter la prononciation. Ce 'l'' n'est pas un article — il est purement phonétique et caractéristique du québécois. Il n'apparaît pas devant une consonne.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_006",
+    "standard": "Nous sommes en retard.",
+    "quebecois": "On est en retard.",
+    "chunks": [
+      "On",
+      "est",
+      "en retard",
+      "."
+    ],
+    "explication": "Le pronom 'nous' est quasi absent de l'oral québécois : il est remplacé systématiquement par 'on', conjugué à la 3e personne du singulier. Ce n'est pas une contraction phonétique, mais une substitution pronominale complète. Un immigrant qui dit 'Nous sommes...' sera compris, mais sonnera formel.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_007",
+    "standard": "Ils sont déjà là.",
+    "quebecois": "Y sont déjà là.",
+    "chunks": [
+      "Y",
+      "sont",
+      "déjà",
+      "là",
+      "."
+    ],
+    "explication": "'Ils' se réduit à 'Y' au pluriel aussi. Contrairement à la 3e personne du singulier où l'on dit 'Y'est', le pluriel donne 'Y sont' sans apostrophe — le 'y' final et le 's' initial de 'sont' créent une liaison naturelle. Schéma prévisible : 'Y + forme plurielle du verbe'.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_008",
+    "standard": "Elles sont venues.",
+    "quebecois": "A sont venues.",
+    "chunks": [
+      "A",
+      "sont",
+      "venues",
+      "."
+    ],
+    "explication": "'Elles' se réduit à 'A' — même forme qu'au singulier 'elle → A'. Le nombre est porté par le verbe et le participe accordé. Un immigrant entendant 'A sont' peut être désorienté car 'A' ressemble à la préposition 'à'. Seul le contexte permet de distinguer.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_009",
+    "standard": "C'était vraiment bon !",
+    "quebecois": "C'tait vraiment bon !",
+    "chunks": [
+      "C'tait",
+      "vraiment",
+      "bon",
+      "!"
+    ],
+    "explication": "'C'était' se contracte en 'C'tait' par chute du 'é' intérieur. Se prononce en une syllabe [stɛ] ou [ktɛ] selon le débit. La voyelle disparaît complètement dans le débit naturel québécois. Très fréquent pour commenter un événement passé avec enthousiasme ou nostalgie.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_010",
+    "standard": "Je vais au dépanneur.",
+    "quebecois": "J'vas au dépanneur.",
+    "chunks": [
+      "J'vas",
+      "au",
+      "dépanneur",
+      "."
+    ],
+    "explication": "'Je vais' se contracte en 'J'vas' : 'je' s'élide en 'j'' et 'vais' se prononce 'vas'. Cette prononciation 'vas' pour 'vais' à la 1re personne est une forme historique conservée et une marque très identifiable du français québécois. Le 'dépanneur' est le dépôt-épicerie du coin.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_011",
+    "standard": "Je m'en vais.",
+    "quebecois": "M'en vas.",
+    "chunks": [
+      "M'en",
+      "vas",
+      "."
+    ],
+    "explication": "'Je m'en vais' perd le pronom sujet 'je' à l'oral et se réduit à 'M'en vas'. Le sujet disparaît car 'm'' (forme réduite de 'me') suffit à identifier la personne. Forme très courante pour signifier qu'on part. Se prononce [mɑ̃va] en une seule unité prosodique.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_012",
+    "standard": "Je vais le faire ce soir.",
+    "quebecois": "M'a le faire à soir.",
+    "chunks": [
+      "M'a",
+      "le",
+      "faire",
+      "à soir",
+      "."
+    ],
+    "explication": "'M'a' est la contraction extrême de 'je m'en vais' utilisée comme marqueur de futur proche. 'M'a faire ça' = 'Je vais faire ça'. C'est un futur périphrastique réduit à deux sons [ma]. De plus, 'ce soir' devient 'à soir' en québécois — expression archaïque encore vivante.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_013",
+    "standard": "Il va neiger demain.",
+    "quebecois": "Y va neiger demain.",
+    "chunks": [
+      "Y",
+      "va",
+      "neiger",
+      "demain",
+      "."
+    ],
+    "explication": "'Il' se réduit à 'Y' devant le verbe 'aller'. 'Y va' se prononce comme une seule unité rythmique brève [iva]. Attention : 'Y va' (il va) et 'Y'a' (il y a / il a) sont distincts phonétiquement. La prosodie et le contexte sémantique sont les seules clés de désambiguïsation.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_014",
+    "standard": "Elle va arriver bientôt.",
+    "quebecois": "A va arriver bientôt.",
+    "chunks": [
+      "A",
+      "va",
+      "arriver",
+      "bientôt",
+      "."
+    ],
+    "explication": "'Elle va' se contracte en 'A va' : 'elle → A'. Devant 'va' qui commence par une consonne, le 'l'' épenthétique n'apparaît pas (il n'est nécessaire que devant une voyelle). On entend aussi 'Al va' selon les locuteurs. 'A va' reste la forme la plus répandue.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_015",
+    "standard": "Ils vont venir.",
+    "quebecois": "Y vont venir.",
+    "chunks": [
+      "Y",
+      "vont",
+      "venir",
+      "."
+    ],
+    "explication": "'Ils' se réduit à 'Y' au pluriel, et 'vont' reste intact. Structure très prévisible : pronom réduit 'Y' + forme conjuguée à la 3e personne du pluriel. Ce schéma s'applique à tous les verbes : 'Y font', 'Y disent', 'Y prennent', etc.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_016",
+    "standard": "Tu as mangé ?",
+    "quebecois": "T'as mangé ?",
+    "chunks": [
+      "T'as",
+      "mangé",
+      "?"
+    ],
+    "explication": "'Tu as' se contracte en 'T'as' par élision du 'u' de 'tu'. Identique à la contraction 'tu es → T'es'. Ce patron 'T' + verbe commençant par une voyelle est systématique : 'T'avais', 'T'aurais', 'T'aimes'. Très courant dans les questions du quotidien.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_017",
+    "standard": "Il a appelé.",
+    "quebecois": "Y'a appelé.",
+    "chunks": [
+      "Y'a",
+      "appelé",
+      "."
+    ],
+    "explication": "'Il a' se contracte en 'Y'a', forme identique à 'il y a → Y'a'. C'est une ambiguïté structurelle du québécois oral : 'Y'a' peut signifier 'il a', 'il y a', ou 'elle a' selon le contexte. La prosodie et la sémantique sont les seules clés de lecture.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_018",
+    "standard": "Elle a dit ça.",
+    "quebecois": "A l'a dit ça.",
+    "chunks": [
+      "A",
+      "l'a",
+      "dit",
+      "ça",
+      "."
+    ],
+    "explication": "'Elle a' devient 'A l'a' : 'elle → A' puis apparition d'un 'l'' épenthétique devant l'auxiliaire 'a' (qui commence par une voyelle). Ce 'l'' phonétique est une marque forte du québécois oral, totalement absente du français de France. Il n'est jamais présent devant une consonne.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_019",
+    "standard": "Il y a du monde ici.",
+    "quebecois": "Y'a du monde icitte.",
+    "chunks": [
+      "Y'a",
+      "du",
+      "monde",
+      "icitte",
+      "."
+    ],
+    "explication": "'Il y a → Y'a' : contraction de l'existentiel en une syllabe. De plus, 'ici' devient 'icitte' au Québec — une forme ancienne du vieux français conservée oralement. Deux phénomènes distincts en une phrase : contraction de la locution existentielle et préservation d'un archaïsme lexical.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_020",
+    "standard": "Il y avait beaucoup de monde.",
+    "quebecois": "Y'avait ben du monde.",
+    "chunks": [
+      "Y'avait",
+      "ben",
+      "du",
+      "monde",
+      "."
+    ],
+    "explication": "'Il y avait' devient 'Y'avait' par réduction de 'il y'. 'Beaucoup' se contracte en 'ben' (issu de 'bien' utilisé comme intensifieur). Double contraction dans la même phrase : pronominale ('il y → Y') et lexicale ('beaucoup → ben'). 'Ben' est un intensifieur oral québécois omniprésent.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_021",
+    "standard": "Je ne sais pas.",
+    "quebecois": "Ché pas.",
+    "chunks": [
+      "Ché",
+      "pas",
+      "."
+    ],
+    "explication": "'Je ne sais pas' se contracte drastiquement en 'Ché pas'. 'J'sais' subit une assimilation consonantique : la chuintante [ʒ] de 'j'' et le [s] de 'sais' fusionnent en [ʃ], donnant 'Ché'. Combiné à la chute du 'ne', 4 mots deviennent 2 syllabes. Contraction parmi les plus fréquente au Québec.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_022",
+    "standard": "Tu sais, c'est compliqué.",
+    "quebecois": "Tsé, c'est compliqué.",
+    "chunks": [
+      "Tsé",
+      ",",
+      "c'est",
+      "compliqué",
+      "."
+    ],
+    "explication": "'Tu sais' se réduit à 'Tsé' [tse] — contraction phonétique totale des deux mots. 'Tsé' fonctionne aussi comme marqueur discursif phatique (comme 'tu vois' en France) : il maintient le contact ou signale l'évidence sans valeur lexicale réelle. 'Tsé veux dire' = 'tu sais ce que je veux dire'.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_023",
+    "standard": "Et puis, qu'est-ce qui s'est passé ?",
+    "quebecois": "Pis, qu'est-ce qui s'est passé ?",
+    "chunks": [
+      "Pis",
+      ",",
+      "qu'est-ce qui",
+      "s'est passé",
+      "?"
+    ],
+    "explication": "'Puis' se contracte en 'Pis' — forme historique conservée du vieux français. 'Pis' sert à la fois de coordonnant ('et puis → pis'), de marqueur temporel ('ensuite') et d'enchaînement discursif. 'Pis là...' est une des formules les plus fréquentes pour poursuivre un récit.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_024",
+    "standard": "Parce que je suis fatigué.",
+    "quebecois": "Pasque chu fatigué.",
+    "chunks": [
+      "Pasque",
+      "chu",
+      "fatigué",
+      "."
+    ],
+    "explication": "'Parce que' se réduit à 'Pasque' [pask] par synérèse et chute des syllabes médianes. On entend aussi 'parce que → parcque' en transition. Double contraction : 'parce que → pasque' ET 'je suis → chu'. Cinq mots du français standard deviennent trois syllabes à l'oral québécois.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_025",
+    "standard": "Peut-être qu'il viendra.",
+    "quebecois": "P'tête qu'y viendra.",
+    "chunks": [
+      "P'tête",
+      "qu'y",
+      "viendra",
+      "."
+    ],
+    "explication": "'Peut-être' se contracte en 'P'tête' [ptɛt] par chute de la voyelle interne et assimilation. 'Qu'il' se contracte en 'Qu'y' par réduction du pronom 'il → y'. Deux contractions en une courte phrase. 'P'tête' et 'P't'être' sont les deux variantes les plus courantes.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_026",
+    "standard": "J'ai quelque chose à te dire.",
+    "quebecois": "J'ai kek chose à te dire.",
+    "chunks": [
+      "J'ai",
+      "kek chose",
+      "à",
+      "te dire",
+      "."
+    ],
+    "explication": "'Quelque chose' se contracte en 'kek chose' [kɛk ʃoz] : 'quelque' perd ses syllabes médianes. On entend aussi 'quèque chose'. La réduction est purement phonétique. Très courant à vitesse normale. Peut aussi se contracter davantage en 'kek affaire' dans certains contextes.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_027",
+    "standard": "Il y avait quelqu'un dehors.",
+    "quebecois": "Y'avait quèqu'un dehors.",
+    "chunks": [
+      "Y'avait",
+      "quèqu'un",
+      "dehors",
+      "."
+    ],
+    "explication": "'Quelqu'un' se contracte en 'quèqu'un' [kɛkœ̃] : même réduction vocalique que 'quelque chose'. Le 'el' médian de 'quelqu'' est absorbé dans le débit rapide. 'Il y avait → Y'avait' simultanément. Deux contractions distinctes en une phrase courte.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_028",
+    "standard": "Tout le monde est là.",
+    "quebecois": "Tout l'monde est là.",
+    "chunks": [
+      "Tout",
+      "l'monde",
+      "est",
+      "là",
+      "."
+    ],
+    "explication": "'Tout le monde' perd le 'e' de 'le' par élision classique devant le 'm' de 'monde' : 'l'monde'. Bien que ce phénomène existe aussi en français de France, il est quasi obligatoire au Québec même dans des registres semi-formels. 'Tout le monde' pleine articulation = sonne très formel.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_029",
+    "standard": "Ça fait que je suis parti.",
+    "quebecois": "Faque chu parti.",
+    "chunks": [
+      "Faque",
+      "chu",
+      "parti",
+      "."
+    ],
+    "explication": "'Ça fait que' se contracte en 'Faque' [fak] — l'une des contractions les plus radicales du québécois. Trois mots fusionnent en une syllabe servant de connecteur logique causal-consécutif (donc, alors, c'est pourquoi). 'Faque' est un marqueur discursif extrêmement fréquent, impossible à manquer.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_030",
+    "standard": "Je ne veux pas y aller.",
+    "quebecois": "J'veux pas y aller.",
+    "chunks": [
+      "J'veux",
+      "pas",
+      "y",
+      "aller",
+      "."
+    ],
+    "explication": "'Je ne veux pas' : chute du 'e' de 'je' (→ j') et chute du 'ne' négatif simultanément. 'J'veux pas' se prononce presque [ʒvøpa] en débit rapide, avec le 'j'' quasi inaudible. Représentatif de la négation orale québécoise : le 'ne' est systématiquement absent.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_031",
+    "standard": "Il ne veut pas venir.",
+    "quebecois": "Y veut pas venir.",
+    "chunks": [
+      "Y",
+      "veut",
+      "pas",
+      "venir",
+      "."
+    ],
+    "explication": "'Il ne veut pas' : 'il → Y' (réduction pronominale) et chute du 'ne'. Double réduction en 'Y veut pas'. Schéma régulier pour toutes les négations à la 3e personne du singulier : 'Y fait pas', 'Y sait pas', 'Y peut pas'. Une fois ce patron intégré, la compréhension devient automatique.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_032",
+    "standard": "Je ne peux pas faire ça.",
+    "quebecois": "J'peux pas faire ça.",
+    "chunks": [
+      "J'peux",
+      "pas",
+      "faire",
+      "ça",
+      "."
+    ],
+    "explication": "'Je ne peux pas' : 'je → j'' par élision et chute du 'ne'. 'J'peux pas' se prononce [ʒpøpa] en un seul souffle. Le 'p' de 'peux' est directement accolé au 'j'', créant un groupe consonantique [ʒp] peu commun en français standard mais parfaitement naturel à l'oral québécois.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_033",
+    "standard": "Il ne comprend pas.",
+    "quebecois": "Y comprend pas.",
+    "chunks": [
+      "Y",
+      "comprend",
+      "pas",
+      "."
+    ],
+    "explication": "Double réduction : 'il → Y' et chute du 'ne'. Le patron 'Y + verbe + pas' est universel pour toute négation à la 3e personne du singulier en québécois oral. Absolument prévisible. Un immigrant qui intègre ce schéma décodera automatiquement toutes les négations masculines singulières.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_034",
+    "standard": "Il ne fait pas beau ce matin.",
+    "quebecois": "Y fait pas beau à matin.",
+    "chunks": [
+      "Y",
+      "fait",
+      "pas",
+      "beau",
+      "à matin",
+      "."
+    ],
+    "explication": "Double phénomène : 'il ne → Y' + chute du 'ne'. De plus, 'ce matin' se dit 'à matin' au Québec — expression héritée du vieux français et conservée oralement. 'À soir' (ce soir) et 'à matin' (ce matin) sont des marques lexicales distinctives du français québécois quotidien.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_035",
+    "standard": "Il faut y aller maintenant.",
+    "quebecois": "Faut y aller astheure.",
+    "chunks": [
+      "Faut",
+      "y",
+      "aller",
+      "astheure",
+      "."
+    ],
+    "explication": "'Il faut' perd son sujet impersonnel 'il' pour donner 'Faut' — ellipse du pronom sujet. 'Maintenant' devient 'astheure' [astoer], contraction de l'expression vieux-française 'à cette heure', conservée exclusivement au Québec et en Acadie. Un immigrant européen n'aura jamais entendu 'astheure'.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_036",
+    "standard": "Regarde, je t'explique ça.",
+    "quebecois": "Garde, j't'explique ça.",
+    "chunks": [
+      "Garde",
+      ",",
+      "j't'explique",
+      "ça",
+      "."
+    ],
+    "explication": "'Regarde' perd sa première syllabe pour donner 'Garde' — marqueur discursif pour attirer l'attention, équivalent de 'écoute'. De plus, 'je te' se contracte en 'j't'' par double élision. 'J't'explique' enchaîne trois clitiques en un groupe phonétique continu [ʒtɛksplik].",
+    "niveau": 5
+  },
+  {
+    "id": "contr_037",
+    "standard": "Je ne comprends pas.",
+    "quebecois": "J'comprends pas.",
+    "chunks": [
+      "J'comprends",
+      "pas",
+      "."
+    ],
+    "explication": "'Je ne comprends pas' : 'je → j'' et chute du 'ne'. 'J'comprends' commence par [ʒk] — groupe consonantique rare en français standard mais naturel au Québec oral rapide. La voyelle de 'je' disparaît totalement. Souvent prononcé [ʃkʁɑ̃pa] en débit très rapide.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_038",
+    "standard": "Vous autres, vous restez ?",
+    "quebecois": "Vous aut', vous restez ?",
+    "chunks": [
+      "Vous",
+      "aut'",
+      ",",
+      "vous",
+      "restez",
+      "?"
+    ],
+    "explication": "'Vous autres' se contracte en 'Vous aut'' : 'autres' perd ses syllabes finales. 'Vous autres' est le pronom de la 2e personne du pluriel emphatique au Québec, servant à désigner et différencier un groupe. Distinct du simple 'vous' non emphatique. Équivalent de 'vous en particulier, vous tous'.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_039",
+    "standard": "Nous, on reste ici.",
+    "quebecois": "Nous aut', on reste icitte.",
+    "chunks": [
+      "Nous",
+      "aut'",
+      ",",
+      "on",
+      "reste",
+      "icitte",
+      "."
+    ],
+    "explication": "'Nous autres' → 'Nous aut'' est le pronom fort de la 1re personne du pluriel, mais le verbe qui suit reste conjugué avec 'on' (pronom faible). Triple phénomène : pronom emphatique contracté, substitution 'nous → on' pour le verbe, et 'ici → icitte'. Phrase typiquement québécoise.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_040",
+    "standard": "Eux, ils savent très bien.",
+    "quebecois": "Eux aut', y savent très bien.",
+    "chunks": [
+      "Eux",
+      "aut'",
+      ",",
+      "y",
+      "savent",
+      "très bien",
+      "."
+    ],
+    "explication": "'Eux autres → Eux aut'' est le pronom emphatique de la 3e personne du pluriel. Les trois pronoms emphatiques suivent le même modèle de contraction : 'Nous aut'', 'Vous aut'', 'Eux aut''. Ils marquent l'insistance ou le contraste entre des groupes distincts dans la conversation.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_041",
+    "standard": "Qu'est-ce que tu veux ?",
+    "quebecois": "Qu'ossé que tu veux ?",
+    "chunks": [
+      "Qu'ossé",
+      "que",
+      "tu",
+      "veux",
+      "?"
+    ],
+    "explication": "'Qu'est-ce que' se contracte en 'Qu'ossé que' [kɔsɛ k] : réduction phonétique radicale de la locution interrogative. On entend aussi 'Qu'est-ce' (intermédiaire) mais 'Qu'ossé' est la forme populaire québécoise caractéristique. Un immigrant peut ne pas reconnaître cette forme du tout à la première écoute.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_042",
+    "standard": "Qui est-ce qui a fait ça ?",
+    "quebecois": "Qui c'est qui a fait ça ?",
+    "chunks": [
+      "Qui",
+      "c'est",
+      "qui",
+      "a fait",
+      "ça",
+      "?"
+    ],
+    "explication": "'Qui est-ce qui' se restructure en 'Qui c'est qui' au Québec : remplacement de la locution standard par une construction présentative. Très courant pour toutes les questions avec 'qui'. 'Qui c'est qui a appelé ?' = 'Qui a appelé ?' — forme interrogative emblématique du registre oral.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_043",
+    "standard": "Maintenant, je comprends mieux.",
+    "quebecois": "Astheure, j'comprends mieux.",
+    "chunks": [
+      "Astheure",
+      ",",
+      "j'comprends",
+      "mieux",
+      "."
+    ],
+    "explication": "'Astheure' [astoer] est la contraction de 'à cette heure', signifiant 'maintenant'. Forme vieux-française survivant uniquement en Amérique du Nord francophone (Québec, Acadie). Peut aussi s'écrire 'à c't'heure' en graphie phonétique. Incompréhensible pour un immigrant européen sans explication préalable.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_044",
+    "standard": "Je suis en train de travailler.",
+    "quebecois": "Chu en train de travailler.",
+    "chunks": [
+      "Chu",
+      "en train de",
+      "travailler",
+      "."
+    ],
+    "explication": "La périphrase progressive 'être en train de' est très utilisée au Québec. 'Je suis → Chu' s'applique avant la locution qui reste intacte. La contraction ne concerne que le bloc 'sujet + copule' : 'Chu' fonctionne dans toutes les constructions où 'je suis' est suivi d'un attribut ou d'une locution.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_045",
+    "standard": "Il est en train de dormir.",
+    "quebecois": "Y'est en train de dormir.",
+    "chunks": [
+      "Y'est",
+      "en train de",
+      "dormir",
+      "."
+    ],
+    "explication": "Même structure à la 3e personne : 'il est → Y'est'. La locution 'en train de' suit sans modification. Montre que 'Y'est' s'applique dans tous les contextes, incluant les locutions verbales composées. Parallélisme parfait : 'Chu' (je suis) / 'T'es' (tu es) / 'Y'est' (il est) + 'en train de'.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_046",
+    "standard": "Je te le dis.",
+    "quebecois": "J'te l'dis.",
+    "chunks": [
+      "J'te",
+      "l'dis",
+      "."
+    ],
+    "explication": "'Je te le dis' accumule trois réductions : 'je → j'' par élision, 'te' reste mais se fusionne à 'j'', et 'le → l'' s'élide devant 'dis'. 'J'te l'dis' est une chaîne de clitiques quasi continue [ʒtəldi], prononcée en une seule unité prosodique. Ce cumul de clitiques est naturel au Québec oral.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_047",
+    "standard": "Il allait venir hier soir.",
+    "quebecois": "Y allait venir hier soir.",
+    "chunks": [
+      "Y",
+      "allait",
+      "venir",
+      "hier soir",
+      "."
+    ],
+    "explication": "La réduction 'il → Y' s'applique à tous les temps verbaux sans exception. 'Y allait', 'Y venait', 'Y savait' : même mécanisme à l'imparfait. Le pronom réduit est indépendant du temps ou du mode du verbe — c'est une réduction phonologique globale, pas conditionée par la morphologie.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_048",
+    "standard": "Il voulait venir, mais il ne pouvait pas.",
+    "quebecois": "Y voulait venir, mais y pouvait pas.",
+    "chunks": [
+      "Y",
+      "voulait",
+      "venir",
+      ",",
+      "mais",
+      "y",
+      "pouvait",
+      "pas",
+      "."
+    ],
+    "explication": "Double réduction de 'il → Y' dans la même phrase, aux deux propositions. Illustre que la réduction est systématique et automatique pour chaque occurrence du pronom. De plus, 'ne pouvait pas → pouvait pas' montre la chute du 'ne' dans les deux propositions simultanément.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_049",
+    "standard": "Bien sûr, je vais y aller.",
+    "quebecois": "Ben sûr, j'vas y aller.",
+    "chunks": [
+      "Ben",
+      "sûr",
+      ",",
+      "j'vas",
+      "y",
+      "aller",
+      "."
+    ],
+    "explication": "'Bien' se contracte en 'Ben' [bɛ̃] à l'oral québécois — réduction vocalique systématique. 'Ben' est aussi un intensifieur ('ben bon', 'ben correct', 'ben des fois'), un marqueur d'hésitation ('ben...'), ou de concession ('ben oui'). Double contraction : 'bien → ben' et 'je vais → j'vas'.",
+    "niveau": 5
+  },
+  {
+    "id": "contr_050",
+    "standard": "Il n'y a pas de problème.",
+    "quebecois": "Y'a pas de problème.",
+    "chunks": [
+      "Y'a",
+      "pas",
+      "de problème",
+      "."
+    ],
+    "explication": "'Il n'y a pas' : chute du 'ne' négatif, puis 'il y a → Y'a'. La réduction donne 'Y'a pas'. Structure très fréquente pour rassurer ou minimiser. Distinguer 'Y'a du monde' (positif) et 'Y'a pas de monde' (négatif) repose uniquement sur la présence ou l'absence du 'pas' qui suit 'Y'a'.",
+    "niveau": 5
+  }
+]

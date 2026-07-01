@@ -1,0 +1,550 @@
+[
+  {
+    "id": "interro_001",
+    "standard": "Est-ce qu'il vient ?",
+    "quebecois": "Il vient-tu ?",
+    "chunks": [
+      "Il",
+      "vient",
+      "-tu",
+      "?"
+    ],
+    "explication": "La particule '-tu' s'ajoute après le verbe à la 3e personne du singulier pour former une question fermée, en remplacement de 'est-ce que'. Ce '-tu' n'a rien à voir avec le pronom 'tu' — il est devenu une simple marque interrogative invariable.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_002",
+    "standard": "Est-ce qu'elle mange ?",
+    "quebecois": "Elle mange-tu ?",
+    "chunks": [
+      "Elle",
+      "mange",
+      "-tu",
+      "?"
+    ],
+    "explication": "Même mécanisme qu'avec 'il' : la particule '-tu' se greffe au verbe après le sujet féminin 'elle'. Le '-tu' est invariable en genre — il ne devient jamais '-elle', quelle que soit la personne grammaticale du sujet.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_003",
+    "standard": "Est-ce que tu viens ?",
+    "quebecois": "Tu viens-tu ?",
+    "chunks": [
+      "Tu",
+      "viens",
+      "-tu",
+      "?"
+    ],
+    "explication": "Le cas le plus frappant pour un Européen : le pronom 'tu' sujet est suivi de la particule '-tu' interrogative, créant un apparent doublement. Le premier 'tu' est le sujet, le second '-tu' est la marque de question. Totalement naturel à l'oral québécois.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_004",
+    "standard": "Est-ce que vous venez ?",
+    "quebecois": "Vous venez-vous ?",
+    "chunks": [
+      "Vous",
+      "venez",
+      "-vous",
+      "?"
+    ],
+    "explication": "Avec le pronom 'vous', la marque interrogative n'est pas '-tu' mais '-vous' : le pronom sujet est répété après le verbe. C'est la réduplication pronominale, mécanisme propre au 'vous' dans le français québécois parlé.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_005",
+    "standard": "Est-ce qu'on peut entrer ?",
+    "quebecois": "On peut-tu entrer ?",
+    "chunks": [
+      "On",
+      "peut",
+      "-tu",
+      "entrer",
+      "?"
+    ],
+    "explication": "Avec le pronom 'on' (très fréquent au Québec à la place de 'nous'), la particule '-tu' s'insère entre le verbe modal et l'infinitif. Structure : sujet + verbe conjugué + -tu + infinitif.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_006",
+    "standard": "Est-ce que je peux avoir un café ?",
+    "quebecois": "Je peux-tu avoir un café ?",
+    "chunks": [
+      "Je",
+      "peux",
+      "-tu",
+      "avoir un café",
+      "?"
+    ],
+    "explication": "Avec 'je', le '-tu' sert souvent à demander poliment la permission avec une nuance d'hésitation. 'Je peux-tu ?' est très courant pour solliciter une autorisation sans paraître trop direct ou imposant.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_007",
+    "standard": "Est-ce qu'ils ont fini ?",
+    "quebecois": "Ils ont-tu fini ?",
+    "chunks": [
+      "Ils",
+      "ont",
+      "-tu",
+      "fini",
+      "?"
+    ],
+    "explication": "Aux temps composés avec 'ils', le '-tu' s'insère entre l'auxiliaire 'avoir' et le participe passé. La particule vient toujours immédiatement après le verbe conjugué, soit l'auxiliaire dans ce cas.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_008",
+    "standard": "Est-ce qu'elles sont là ?",
+    "quebecois": "Elles sont-tu là ?",
+    "chunks": [
+      "Elles",
+      "sont",
+      "-tu",
+      "là",
+      "?"
+    ],
+    "explication": "Même avec 'elles', le '-tu' fonctionne sans accord de genre. Point crucial : 'elles' et 'ils' utilisent toujours '-tu', jamais une réduplication '-elles' ou '-ils'. Seul 'vous' fait exception avec son propre '-vous'.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_009",
+    "standard": "Est-ce que vous l'avez vu ?",
+    "quebecois": "Vous l'avez-vous vu ?",
+    "chunks": [
+      "Vous",
+      "l'avez",
+      "-vous",
+      "vu",
+      "?"
+    ],
+    "explication": "Avec un pronom objet clitique ('l'') agglutiné à l'auxiliaire, la réduplication '-vous' se place après l'ensemble auxiliaire+clitique. Structure : vous + clitique+auxiliaire + -vous + participe passé.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_010",
+    "standard": "Est-ce que vous êtes prêts ?",
+    "quebecois": "Vous êtes-vous prêts ?",
+    "chunks": [
+      "Vous",
+      "êtes",
+      "-vous",
+      "prêts",
+      "?"
+    ],
+    "explication": "Avec le verbe 'être', la réduplication '-vous' fonctionne identiquement. 'Vous êtes-vous prêts ?' est la formulation naturelle pour vérifier si un groupe est prêt à démarrer une activité.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_011",
+    "standard": "Est-ce que tu as faim ?",
+    "quebecois": "T'as-tu faim ?",
+    "chunks": [
+      "T'",
+      "as",
+      "-tu",
+      "faim",
+      "?"
+    ],
+    "explication": "À l'oral, 'tu as' se contracte en 't'as'. Le '-tu' interrogatif suit immédiatement le verbe contracté. Contraction et particule coexistent naturellement : deux phénomènes de l'oral qui se cumulent.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_012",
+    "standard": "Est-ce que tu as vu ça ?",
+    "quebecois": "T'as-tu vu ça ?",
+    "chunks": [
+      "T'",
+      "as",
+      "-tu",
+      "vu ça",
+      "?"
+    ],
+    "explication": "Nouveau cas de contraction 'tu as → t'as'. Le '-tu' se place entre l'auxiliaire contracté et le participe. 'T'as-tu vu ça ?' exprime souvent l'étonnement ou le désir de partager une découverte.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_013",
+    "standard": "Est-ce que tu vas bien ?",
+    "quebecois": "T'es-tu correct ?",
+    "chunks": [
+      "T'",
+      "es",
+      "-tu",
+      "correct",
+      "?"
+    ],
+    "explication": "'Tu es' devient 't'es' à l'oral. 'T'es-tu correct ?' signifie 'Ça va ?' — 'correct' au Québec voulant dire 'OK, en bon état'. Double phénomène : contraction de 'tu es' et particule '-tu' interrogative.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_014",
+    "standard": "Est-ce que tu en veux ?",
+    "quebecois": "T'en veux-tu ?",
+    "chunks": [
+      "T'",
+      "en",
+      "veux",
+      "-tu",
+      "?"
+    ],
+    "explication": "Avec le pronom adverbial 'en', celui-ci se place entre le sujet contracté et le verbe — l'ordre des clitiques est préservé. Le '-tu' vient après le verbe, toujours en dernière position avant le point d'interrogation.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_015",
+    "standard": "Est-ce que tu as le temps ?",
+    "quebecois": "T'as-tu le temps ?",
+    "chunks": [
+      "T'",
+      "as",
+      "-tu",
+      "le temps",
+      "?"
+    ],
+    "explication": "'T'as-tu le temps ?' est l'une des formules les plus fréquentes au Québec pour vérifier la disponibilité de quelqu'un. Naturelle et directe, elle illustre la contraction + '-tu' en contexte quotidien.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_016",
+    "standard": "Est-ce que c'est bon ?",
+    "quebecois": "C'est-tu bon ?",
+    "chunks": [
+      "C'",
+      "est",
+      "-tu",
+      "bon",
+      "?"
+    ],
+    "explication": "Le '-tu' ne s'applique pas qu'aux pronoms personnels : il fonctionne aussi avec le présentatif 'c'est'. 'C'est-tu bon ?' peut être une vraie question sur un plat ou exprimer l'enthousiasme : 'C'est-tu bon, donc !'",
+    "niveau": 5
+  },
+  {
+    "id": "interro_017",
+    "standard": "Est-ce que c'était bon ?",
+    "quebecois": "C'était-tu bon ?",
+    "chunks": [
+      "C'",
+      "était",
+      "-tu",
+      "bon",
+      "?"
+    ],
+    "explication": "Le '-tu' fonctionne aussi à l'imparfait avec 'c'était'. La particule interrogative est invariable au temps : elle s'attache au verbe conjugué quel que soit le temps ou le mode utilisé.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_018",
+    "standard": "Est-ce que c'est loin ?",
+    "quebecois": "C'est-tu loin ?",
+    "chunks": [
+      "C'",
+      "est",
+      "-tu",
+      "loin",
+      "?"
+    ],
+    "explication": "'C'est-tu loin ?' illustre l'usage du '-tu' pour toute question fermée portant sur une caractéristique ou une distance. Peut aussi exprimer la surprise incrédule : 'C'est-tu loin, votre place !' (= Vous habitez vraiment loin !)",
+    "niveau": 5
+  },
+  {
+    "id": "interro_019",
+    "standard": "Est-ce qu'il y a quelqu'un ?",
+    "quebecois": "Y'a-tu quelqu'un ?",
+    "chunks": [
+      "Y'a",
+      "-tu",
+      "quelqu'un",
+      "?"
+    ],
+    "explication": "'Il y a' se réduit à 'y'a' à l'oral québécois. Le '-tu' s'attache directement à cette forme contractée. 'Y'a-tu quelqu'un ?' est la façon la plus naturelle de vérifier la présence de personnes dans un lieu.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_020",
+    "standard": "Est-ce qu'il y a du lait ?",
+    "quebecois": "Y'a-tu du lait ?",
+    "chunks": [
+      "Y'a",
+      "-tu",
+      "du lait",
+      "?"
+    ],
+    "explication": "Même structure que 'y'a-tu quelqu'un' appliquée aux choses. 'Il y a → y'a + -tu' est un patron très productif au Québec pour toutes les questions d'existence ou de disponibilité d'un objet.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_021",
+    "standard": "Est-ce que ça marche ?",
+    "quebecois": "Ça marche-tu ?",
+    "chunks": [
+      "Ça",
+      "marche",
+      "-tu",
+      "?"
+    ],
+    "explication": "Le pronom démonstratif 'ça' accepte aussi la particule '-tu'. 'Ça marche-tu ?' peut signifier 'est-ce que ça fonctionne ?' (objet technique) ou 'est-ce que ça te convient ?' (proposition). Très polyvalent.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_022",
+    "standard": "Est-ce que ça te tente ?",
+    "quebecois": "Ça te tente-tu ?",
+    "chunks": [
+      "Ça",
+      "te tente",
+      "-tu",
+      "?"
+    ],
+    "explication": "'Tenter' au Québec signifie 'avoir envie de'. Le pronom 'te' (objet indirect) reste entre 'ça' et le verbe; le '-tu' s'ajoute après le verbe. 'Ça te tente-tu ?' = 'Tu en as envie ?' — très courant pour des propositions.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_023",
+    "standard": "Est-ce qu'on s'en va ?",
+    "quebecois": "On s'en va-tu ?",
+    "chunks": [
+      "On",
+      "s'en va",
+      "-tu",
+      "?"
+    ],
+    "explication": "Avec un verbe pronominal comme 's'en aller', le '-tu' se place après la forme conjuguée complète incluant le réfléchi et le clitique 'en'. La particule interrogative vient toujours en dernier après tout le bloc verbal.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_024",
+    "standard": "Est-ce qu'on mange ici ?",
+    "quebecois": "On mange-tu ici ?",
+    "chunks": [
+      "On",
+      "mange",
+      "-tu",
+      "ici",
+      "?"
+    ],
+    "explication": "'On' est le pronom de prédilection au Québec pour le 'nous'. Il prend systématiquement le '-tu' comme marqueur interrogatif — jamais de réduplication '-on'. 'On mange-tu ici ?' est direct et naturel.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_025",
+    "standard": "Est-ce qu'on est corrects ?",
+    "quebecois": "On est-tu corrects ?",
+    "chunks": [
+      "On",
+      "est",
+      "-tu",
+      "corrects",
+      "?"
+    ],
+    "explication": "'On est-tu corrects ?' signifie 'On est OK ?' ou 'On a tout ce qu'il faut ?'. L'adjectif 'correct' peut s'accorder au pluriel avec le référent collectif implicite de 'on'. Usage très fréquent en groupe.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_026",
+    "standard": "Est-ce que vous mangez ?",
+    "quebecois": "Vous mangez-vous ?",
+    "chunks": [
+      "Vous",
+      "mangez",
+      "-vous",
+      "?"
+    ],
+    "explication": "La réduplication '-vous' est systématique dès que le sujet est 'vous'. Contrairement à 'ils' ou 'elles' qui prennent '-tu', 'vous' répète son propre pronom comme marque interrogative. Règle constante à l'oral.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_027",
+    "standard": "Est-ce que vous comprenez ?",
+    "quebecois": "Vous comprenez-vous ?",
+    "chunks": [
+      "Vous",
+      "comprenez",
+      "-vous",
+      "?"
+    ],
+    "explication": "Point crucial : le '-vous' final n'est PAS un pronom réfléchi ici. 'Vous vous comprenez' = vous vous comprenez mutuellement. 'Vous comprenez-vous ?' = est-ce que vous comprenez ? Le contexte et la prosodie distinguent les deux.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_028",
+    "standard": "Est-ce que vous avez besoin d'aide ?",
+    "quebecois": "Vous avez-vous besoin d'aide ?",
+    "chunks": [
+      "Vous",
+      "avez",
+      "-vous",
+      "besoin d'aide",
+      "?"
+    ],
+    "explication": "Même avec 'avoir' suivi d'un long complément, la réduplication '-vous' se place immédiatement après le verbe principal conjugué. Structure invariable : pronom + verbe + -vous + reste de la phrase.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_029",
+    "standard": "Est-ce que vous voulez du café ?",
+    "quebecois": "Vous voulez-vous du café ?",
+    "chunks": [
+      "Vous",
+      "voulez",
+      "-vous",
+      "du café",
+      "?"
+    ],
+    "explication": "'Vous voulez-vous du café ?' est la façon polie et chaleureuse d'offrir quelque chose au Québec. La réduplication pronominale n'enlève rien à la politesse — c'est simplement la norme de l'oral.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_030",
+    "standard": "Est-ce que vous avez mangé ?",
+    "quebecois": "Vous avez-vous mangé ?",
+    "chunks": [
+      "Vous",
+      "avez",
+      "-vous",
+      "mangé",
+      "?"
+    ],
+    "explication": "Au passé composé, la réduplication '-vous' s'insère entre l'auxiliaire conjugué et le participe passé — exactement comme '-tu' avec les autres pronoms. Structure parallèle et symétrique : 'Ils ont-tu mangé ?' / 'Vous avez-vous mangé ?'",
+    "niveau": 5
+  },
+  {
+    "id": "interro_031",
+    "standard": "Est-ce que vous venez avec nous ?",
+    "quebecois": "Vous venez-vous avec nous ?",
+    "chunks": [
+      "Vous",
+      "venez",
+      "-vous",
+      "avec nous",
+      "?"
+    ],
+    "explication": "La présence d'un complément circonstanciel ne change pas la règle : '-vous' se place toujours immédiatement après le verbe conjugué, et tous les compléments suivent. La structure est fixe et prévisible.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_032",
+    "standard": "Est-ce que vous restez pour souper ?",
+    "quebecois": "Vous restez-vous pour souper ?",
+    "chunks": [
+      "Vous",
+      "restez",
+      "-vous",
+      "pour souper",
+      "?"
+    ],
+    "explication": "'Vous restez-vous pour souper ?' est une invitation chaleureuse typiquement québécoise. 'Souper' = repas du soir. La réduplication donne un ton oral, spontané et accueillant à l'invitation.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "interro_033",
+    "standard": "Est-ce qu'il est parti ?",
+    "quebecois": "Il est-tu parti ?",
+    "chunks": [
+      "Il",
+      "est",
+      "-tu",
+      "parti",
+      "?"
+    ],
+    "explication": "Au passé composé avec l'auxiliaire 'être', le '-tu' vient après 'est' et avant le participe. Identique à la structure avec 'avoir' : le marqueur interrogatif suit toujours et uniquement l'auxiliaire conjugué.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_034",
+    "standard": "Est-ce qu'il peut venir ?",
+    "quebecois": "Il peut-tu venir ?",
+    "chunks": [
+      "Il",
+      "peut",
+      "-tu",
+      "venir",
+      "?"
+    ],
+    "explication": "Avec un verbe modal ('pouvoir'), le '-tu' s'intercale entre le modal conjugué et l'infinitif. Structure : sujet + modal conjugué + -tu + infinitif. Même logique qu'avec 'On peut-tu entrer ?', applicable à tous les modaux.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_035",
+    "standard": "Est-ce qu'il a appelé ?",
+    "quebecois": "Il a-tu appelé ?",
+    "chunks": [
+      "Il",
+      "a",
+      "-tu",
+      "appelé",
+      "?"
+    ],
+    "explication": "Au passé composé avec 'avoir' à la 3e personne du singulier, le '-tu' s'insère entre 'a' et le participe. Régulier et systématique : auxiliaire conjugué + -tu + participe, quel que soit le verbe.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_036",
+    "standard": "Est-ce qu'ils viennent ce soir ?",
+    "quebecois": "Ils viennent-tu ce soir ?",
+    "chunks": [
+      "Ils",
+      "viennent",
+      "-tu",
+      "ce soir",
+      "?"
+    ],
+    "explication": "Rappel de la règle asymétrique : avec 'ils', la particule est '-tu' et non '-ils' (qui n'existe pas). Seul 'vous' reduplique son propre pronom. 'Ils', 'elles', 'il', 'elle', 'on', 'je', 'tu' → tous prennent '-tu'.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_037",
+    "standard": "Est-ce qu'elles ont appelé ?",
+    "quebecois": "Elles ont-tu appelé ?",
+    "chunks": [
+      "Elles",
+      "ont",
+      "-tu",
+      "appelé",
+      "?"
+    ],
+    "explication": "Confirmation que 'elles' prend '-tu' et non '-elles'. La réduplication pronominale est un phénomène strictement réservé à 'vous' en français québécois oral. Pour toutes les autres personnes : la particule est invariablement '-tu'.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_038",
+    "standard": "Est-ce qu'ils savent ça ?",
+    "quebecois": "Ils savent-tu ça ?",
+    "chunks": [
+      "Ils",
+      "savent",
+      "-tu",
+      "ça",
+      "?"
+    ],
+    "explication": "'Ils savent-tu ça ?' peut être une vraie question ou une surprise incrédule ('Ils savent-tu ça, eux autres ?!'). Le '-tu' s'utilise aussi dans les questions rhétoriques et les exclamations déguisées en questions.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_039",
+    "standard": "Est-ce que vous vous en souvenez ?",
+    "quebecois": "Vous vous en souvenez-vous ?",
+    "chunks": [
+      "Vous",
+      "vous en souvenez",
+      "-vous",
+      "?"
+    ],
+    "explication": "Cas complexe : 'se souvenir' est pronominal et contient déjà un 'vous' réfléchi. La réduplication interrogative '-vous' s'ajoute en fin de verbe, créant trois occurrences du mot 'vous' — parfaitement grammatical et naturel en québécois parlé.",
+    "niveau": 5
+  },
+  {
+    "id": "interro_040",
+    "standard": "Est-ce que vous vous êtes parlé ?",
+    "quebecois": "Vous vous êtes-vous parlé ?",
+    "chunks": [
+      "Vous",
+      "vous êtes",
+      "-vous",
+      "parlé",
+      "?"
+    ],
+    "explication": "Autre cas de verbe pronominal au passé composé : 'vous vous êtes' (pronom réfléchi + auxiliaire) forme un bloc, suivi de '-vous' interrogatif, puis du participe. Structure : sujet + réfléchi+auxiliaire + -vous + participe.",
+    "niveau": 5
+  }
+]

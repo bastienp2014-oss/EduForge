@@ -1,0 +1,67 @@
+---
+// Mode SSR : Exécuté à chaque requête
+import TenantLayout from '../../layouts/TenantLayout.astro';
+import DeviceFrame from '../../components/astro/DeviceFrame.astro';
+import Hero from '../../components/astro/Hero.astro';
+import Features from '../../components/astro/Features.astro';
+import Pricing from '../../components/astro/Pricing.astro';
+import Footer from '../../components/astro/Footer.astro';
+import { getTenantConfig } from '../../lib/tenantApi';
+
+// On récupère le composant React depuis le path alias (@shared -> ../../src/)
+import { InteractiveTeaser } from '@shared/components/InteractiveTeaser';
+import MemoryMatch from '@shared/mechanics/04_MemoryMatch';
+
+// Paramètre de route /[tenant]/
+const { tenant } = Astro.params;
+
+// 1. Récupération de la configuration (CMS Headless)
+const tenantConfig = await getTenantConfig(tenant);
+
+if (!tenantConfig) {
+  return Astro.redirect('/404');
+}
+
+// Données de démo pour le jeu
+const demoGameData = {
+  id: "demo",
+  pairs: [
+    { id: "1", cardA: { text: "Bonjour" }, cardB: { text: "Hello" } },
+    { id: "2", cardA: { text: "Merci" }, cardB: { text: "Thank you" } }
+  ]
+};
+---
+
+<TenantLayout config={tenantConfig}>
+  <!-- Header Marketing (Minimalist) -->
+  <header class="w-full p-6 border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="font-bold text-xl" style="color: var(--theme-primary)">
+        {tenantConfig.marketing.siteTitle}
+      </div>
+      <nav class="space-x-4 hidden md:block">
+        <a href="#features" class="opacity-70 hover:opacity-100 transition-opacity" style="color: var(--theme-text)">Fonctionnalités</a>
+        <a href="#pricing" class="opacity-70 hover:opacity-100 transition-opacity" style="color: var(--theme-text)">Tarifs</a>
+      </nav>
+      <button class="px-4 py-2 rounded-lg font-medium text-white transition-opacity hover:opacity-90" style="background-color: var(--theme-primary)">
+        Commencer
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <Hero>
+      <DeviceFrame>
+        <!-- client:idle permet de charger le JS de React uniquement quand le fil principal du navigateur est libre. -->
+        <InteractiveTeaser client:idle maxInteractions={2} ctaTitle={`Rejoignez ${tenantConfig.marketing.siteTitle}`}>
+          <MemoryMatch data={demoGameData} onComplete={() => {}} />
+        </InteractiveTeaser>
+      </DeviceFrame>
+    </Hero>
+
+    <Features />
+    <Pricing />
+  </main>
+  
+  <Footer />
+</TenantLayout>

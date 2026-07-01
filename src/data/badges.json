@@ -1,0 +1,82 @@
+[
+  {
+    "id": "pendu_debutant",
+    "titre": "Bourreau Débutant",
+    "description": "Trouve 1 mot au Pendu.",
+    "icon": "🪢",
+    "conditions": [{ "statId": "pendu_won", "threshold": 1 }],
+    "categorie": "arcade"
+  },
+  {
+    "id": "pendu_expert",
+    "titre": "Maître du Pendu",
+    "description": "Trouve 10 mots au Pendu.",
+    "icon": "🔤",
+    "conditions": [{ "statId": "pendu_won", "threshold": 10 }],
+    "categorie": "arcade"
+  },
+  {
+    "id": "quiz_fan",
+    "titre": "Curieux",
+    "description": "Réponds à 5 questions du Quizz.",
+    "icon": "❓",
+    "conditions": [{ "statId": "quiz_played", "threshold": 5 }],
+    "categorie": "apprentissage"
+  },
+  {
+    "id": "quiz_pro",
+    "titre": "Puits de Science",
+    "description": "Réponds à 20 questions du Quizz.",
+    "icon": "🧠",
+    "conditions": [{ "statId": "quiz_played", "threshold": 20 }],
+    "categorie": "apprentissage"
+  },
+  {
+    "id": "fusion_initie",
+    "titre": "Fusionniste",
+    "description": "Joue 1 fois au jeu de fusion (2048).",
+    "icon": "🧊",
+    "conditions": [{ "statId": "2048_played", "threshold": 1 }],
+    "categorie": "arcade"
+  },
+  {
+    "id": "swipe_debutant",
+    "titre": "Tinder des Mots",
+    "description": "Swipe 10 faux-amis.",
+    "icon": "↔️",
+    "conditions": [{ "statId": "swipe_played", "threshold": 10 }],
+    "categorie": "arcade"
+  },
+  {
+    "id": "sort_debutant",
+    "titre": "Trieur de Rue",
+    "description": "Fais 5 tris réussis.",
+    "icon": "🗑️",
+    "conditions": [{ "statId": "sort_won", "threshold": 5 }],
+    "categorie": "arcade"
+  },
+  {
+    "id": "hache_debutant",
+    "titre": "Bûcheron",
+    "description": "Lance 5 haches.",
+    "icon": "🪓",
+    "conditions": [{ "statId": "hache_played", "threshold": 5 }],
+    "categorie": "arcade"
+  },
+  {
+    "id": "xp_100",
+    "titre": "Premiers Pas",
+    "description": "Atteins 100 XP.",
+    "icon": "🌟",
+    "conditions": [{ "statId": "xp_total", "threshold": 100 }],
+    "categorie": "apprentissage"
+  },
+  {
+    "id": "streak_3",
+    "titre": "Habitué",
+    "description": "Maintiens une série de 3 jours.",
+    "icon": "🔥",
+    "conditions": [{ "statId": "streak_max", "threshold": 3 }],
+    "categorie": "special"
+  }
+]

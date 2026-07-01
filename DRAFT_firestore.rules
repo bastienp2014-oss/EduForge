@@ -1,0 +1,56 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Common Helpers
+    function isSignedIn() { return request.auth != null; }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isValidId(id) { 
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+
+    // Validation Helpers
+    function isValidUtilisateur(data) {
+      return data.keys().hasOnly(['etoiles', 'motsDebloques', 'derniereMiseAJour'])
+        && data.get('etoiles', 0) is number 
+        && data.get('etoiles', 0) >= 0
+        && data.get('motsDebloques', []) is list 
+        && data.get('motsDebloques', []).size() <= 2000
+        && (data.get('motsDebloques', []).size() == 0 || data.get('motsDebloques', [])[0] is string);
+    }
+    
+    // Exact schema check for creation
+    function isValidUtilisateurCreate(data) {
+      return data.keys().hasAll(['etoiles', 'motsDebloques', 'derniereMiseAJour'])
+        && data.keys().size() == 3
+        && data.etoiles is number
+        && data.etoiles >= 0
+        && data.motsDebloques is list
+        && data.motsDebloques.size() <= 2000
+        && (data.motsDebloques.size() == 0 || data.motsDebloques[0] is string)
+        && data.derniereMiseAJour == request.time;
+    }
+
+    // Collection: utilisateurs
+    match /utilisateurs/{userId} {
+      allow get: if isSignedIn() && isValidId(userId) && request.auth.uid == userId;
+      
+      allow create: if isSignedIn() 
+                    && isValidId(userId) 
+                    && request.auth.uid == userId
+                    && isValidUtilisateurCreate(incoming());
+
+      allow update: if isSignedIn() 
+                    && isValidId(userId) 
+                    && request.auth.uid == userId
+                    && isValidUtilisateur(incoming())
+                    && incoming().diff(existing()).affectedKeys().hasOnly(['etoiles', 'motsDebloques', 'derniereMiseAJour'])
+                    && incoming().derniereMiseAJour == request.time;
+    }
+  }
+}

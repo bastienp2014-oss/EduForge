@@ -1,0 +1,170 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // -----------------------------------------------------------------------------
+    // HELPERS
+    // -----------------------------------------------------------------------------
+    function isSignedIn() {
+      return request.auth != null && request.auth.uid != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return isSignedIn() && (request.auth.token.get('email', '') == 'bastienp2014@gmail.com' || request.auth.token.get('role', '') == 'superadmin');
+    }
+    
+    function isTenantMember(tenantId) {
+      return isSignedIn() && getUserTenantId() == tenantId;
+    }
+
+    function isTenantAdmin(tenantId) {
+      return isTenantMember(tenantId) && (request.auth.token.get('role', '') == 'admin' || request.auth.token.get('role', '') == 'owner');
+    }
+    
+    function isTenantCreator(tenantId) {
+      return isTenantMember(tenantId) && request.auth.token.get('role', '') == 'creator';
+    }
+
+    function getUserTenantId() {
+      return ('tenantId' in request.auth.token) 
+        ? request.auth.token.tenantId 
+        : (exists(/databases/$(database)/documents/utilisateurs/$(request.auth.uid)) 
+          ? get(/databases/$(database)/documents/utilisateurs/$(request.auth.uid)).data.get('tenantId', 'eduforge')
+          : 'eduforge');
+    }
+
+    function isValidId(id) { 
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isValidString(val, maxLength) {
+      return val is string && val.size() <= maxLength;
+    }
+
+    function isValidNumber(val, minVal) {
+      return (val is number || val is int || val is float) && val >= minVal;
+    }
+
+    function isValidArray(val, maxLen) {
+      return val is list && val.size() <= maxLen;
+    }
+
+    // -----------------------------------------------------------------------------
+    // DENY BY DEFAULT
+    // -----------------------------------------------------------------------------
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // -----------------------------------------------------------------------------
+    // TENANTS (SaaS B2B configs)
+    // -----------------------------------------------------------------------------
+    match /tenants/{tenantId} {
+      allow read: if isAdmin() || isTenantMember(tenantId);
+      allow write: if isAdmin() || isTenantAdmin(tenantId);
+      
+      // Members subcollection (managed via Admin API in server.ts)
+      match /members/{userId} {
+        allow read: if isAdmin() || isTenantMember(tenantId);
+        allow write: if false;
+      }
+
+      // Configuration subcollection
+      match /configuration/{document=**} {
+        allow read: if isAdmin() || isTenantMember(tenantId);
+        allow write: if isAdmin() || isTenantAdmin(tenantId);
+      }
+
+      // Scenarios subcollection
+      match /scenarios/{document=**} {
+        allow read: if isAdmin() || isTenantMember(tenantId) || (isSignedIn() && resource.data.statut == 'active');
+        allow write: if isAdmin() || isTenantAdmin(tenantId) || isTenantCreator(tenantId);
+      }
+    }
+
+    // -----------------------------------------------------------------------------
+    // UTILISATEURS
+    // -----------------------------------------------------------------------------
+    match /utilisateurs/{userId} {
+      // READ : Uniquement le propriétaire ou admin
+      allow get: if (isOwner(userId) && isValidId(userId)) || isAdmin() || (('tenantId' in existing()) && isTenantAdmin(existing().tenantId));
+      allow list: if isAdmin() || (isSignedIn() && isTenantAdmin(resource.data.tenantId));
+      
+      // CREATE / UPDATE
+      allow create: if isOwner(userId) && isValidId(userId)
+                    && !('isAdmin' in incoming()) // Interdiction absolue d'escalade
+                    && incoming().tenantId is string
+                    // Validation simple
+                    && (!('streakCount' in incoming()) || incoming().streakCount == null || isValidNumber(incoming().streakCount, 0))
+                    && (!('longestStreak' in incoming()) || incoming().longestStreak == null || isValidNumber(incoming().longestStreak, 0))
+                    && (!('lastActiveDay' in incoming()) || incoming().lastActiveDay == null || incoming().lastActiveDay is string)
+                    && (!('surnom' in incoming()) || incoming().surnom == null || isValidString(incoming().surnom, 100))
+                    && (!('motsDebloques' in incoming()) || incoming().motsDebloques == null || isValidArray(incoming().motsDebloques, 2000))
+                    && (!('derniereMiseAJour' in incoming()) || incoming().derniereMiseAJour == null || incoming().derniereMiseAJour is timestamp);
+                    
+      allow update: if isOwner(userId) && isValidId(userId)
+                    && !incoming().diff(existing()).affectedKeys().hasAny(['isAdmin', 'piasses', 'xp', 'isPremium', 'subscriptionPlan', 'entitlements'])
+                    // Validation de types
+                    && (!('streakCount' in incoming()) || incoming().streakCount == null || isValidNumber(incoming().streakCount, 0))
+                    && (!('longestStreak' in incoming()) || incoming().longestStreak == null || isValidNumber(incoming().longestStreak, 0))
+                    && (!('lastActiveDay' in incoming()) || incoming().lastActiveDay == null || incoming().lastActiveDay is string)
+                    && (!('surnom' in incoming()) || incoming().surnom == null || isValidString(incoming().surnom, 100))
+                    && (!('motsDebloques' in incoming()) || incoming().motsDebloques == null || isValidArray(incoming().motsDebloques, 2000))
+                    && (!('derniereMiseAJour' in incoming()) || incoming().derniereMiseAJour == null || incoming().derniereMiseAJour is timestamp);
+
+      match /srs/{itemId} {
+        allow read, write: if isOwner(userId) && isValidId(userId);
+      }
+    }
+
+    // -----------------------------------------------------------------------------
+    // CLASSEMENT
+    // -----------------------------------------------------------------------------
+    match /classement/{userId} {
+      allow get: if isSignedIn() && isValidId(userId);
+      allow list: if isSignedIn() && resource.data.tenantId == getUserTenantId();
+      allow create: if isOwner(userId) && isValidId(userId)
+                    && incoming().tenantId is string
+                    && (!('scoreTotal' in incoming()) || incoming().scoreTotal == null || isValidNumber(incoming().scoreTotal, 0))
+                    && (!('surnom' in incoming()) || incoming().surnom == null || isValidString(incoming().surnom, 100))
+                    && (!('derniereMiseAJour' in incoming()) || incoming().derniereMiseAJour is timestamp);
+      allow update: if isOwner(userId) && isValidId(userId)
+                    && (!('scoreTotal' in incoming()) || incoming().scoreTotal == null || isValidNumber(incoming().scoreTotal, 0))
+                    && (!('surnom' in incoming()) || incoming().surnom == null || isValidString(incoming().surnom, 100))
+                    && (!('derniereMiseAJour' in incoming()) || incoming().derniereMiseAJour is timestamp);
+    }
+    // -----------------------------------------------------------------------------
+    // COURSES & BUNDLES (Creator Hub)
+    // -----------------------------------------------------------------------------
+    match /courses/{courseId} {
+      allow read: if isAdmin() || (isSignedIn() && resource.data.tenantId == getUserTenantId());
+      allow create: if (isAdmin() || isTenantCreator(incoming().tenantId) || isTenantAdmin(incoming().tenantId))
+                    && incoming().tenantId == getUserTenantId();
+      allow update: if (isAdmin() || isTenantCreator(existing().tenantId) || isTenantAdmin(existing().tenantId))
+                    && incoming().tenantId == existing().tenantId;
+      allow delete: if isAdmin() || isTenantAdmin(existing().tenantId) || isTenantCreator(existing().tenantId);
+    }
+
+    match /bundles/{bundleId} {
+      allow read: if isAdmin() || (isSignedIn() && resource.data.tenantId == getUserTenantId());
+      allow create: if (isAdmin() || isTenantCreator(incoming().tenantId) || isTenantAdmin(incoming().tenantId))
+                    && incoming().tenantId == getUserTenantId();
+      allow update: if (isAdmin() || isTenantCreator(existing().tenantId) || isTenantAdmin(existing().tenantId))
+                    && incoming().tenantId == existing().tenantId;
+      allow delete: if isAdmin() || isTenantAdmin(existing().tenantId) || isTenantCreator(existing().tenantId);
+    }
+  }
+}
+

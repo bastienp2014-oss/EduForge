@@ -1,0 +1,61 @@
+[
+  {
+    "id": "sms_proprio",
+    "titre": "SMS du Proprio",
+    "description": "Un propriétaire réclame un dépôt de 2 mois. Que fais-tu ?",
+    "lieu": "Ton téléphone",
+    "rue_id": "logement",
+    "statut": "active",
+    "noeudInitial": "n1",
+    "noeuds": [
+      {
+        "id": "n1",
+        "locuteur": "proprio",
+        "avatar": "🏠",
+        "texte": "L'appart est à toi, fais-moi juste un virement de 2 mois pour le dépôt de garantie. Que fais-tu ?",
+        "choix": [
+          {
+            "id": "c1",
+            "texte": "Je paie 💸",
+            "noeudSuivant": "n_echec",
+            "effets": { "piasses": -2000, "xp": 0 },
+            "feedback": "Attention ! Au Québec, la Loi 31 interdit tout dépôt supérieur à 1 mois de loyer."
+          },
+          {
+            "id": "c2",
+            "texte": "Je refuse poliment 💪",
+            "noeudSuivant": "n_succes",
+            "effets": { "piasses": 0, "xp": 150 },
+            "feedback": "Excellent ! La Loi 31 vous protège. Seul le premier mois peut être exigé."
+          }
+        ]
+      },
+      {
+        "id": "n_echec",
+        "locuteur": "systeme",
+        "avatar": "⚖️",
+        "texte": "Vous venez de virer 2 000 $... C'est illégal au Québec. Un propriétaire ne peut exiger qu'un seul mois de loyer.",
+        "choix": [],
+        "outcome": {
+          "type": "echec",
+          "message": "Vous avez perdu 2 000 $. Heureusement, c'était une simulation.",
+          "sousTitre": "La Loi 31 interdit les dépôts supérieurs à 1 mois de loyer.",
+          "recompense": 0
+        }
+      },
+      {
+        "id": "n_succes",
+        "locuteur": "systeme",
+        "avatar": "⚖️",
+        "texte": "BAM ! Vous avez économisé 2 000 $. La Loi 31 vous protège — un proprio ne peut exiger qu'un seul mois de loyer.",
+        "choix": [],
+        "outcome": {
+          "type": "succes",
+          "message": "Arrive en ville vient de vous faire économiser 2 000 $.",
+          "sousTitre": "La Loi 31 vous protège en tant que locataire.",
+          "recompense": 150
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,502 @@
+[
+  {
+    "id": "sacre_001",
+    "sacre": "Tabarnak",
+    "intensite": "5/5 (Extrême)",
+    "statut": "Très vulgaire",
+    "signification": "Le sacre le plus puissant et le plus emblématique du Québec. Exprime une colère extrême, une douleur intense, un choc profond ou une admiration extrême selon le ton. Peut aussi servir d'intensifieur ou de ponctuant dans le discours.",
+    "origine": "Dérivé de 'tabernacle', le meuble liturgique abritant les hosties consacrées dans les églises catholiques. Profaner cet objet sacré était considéré comme un blasphème suprême.",
+    "avertissement": "C'est le sacre le plus fort de la langue québécoise. Ne l'utilisez jamais en public, au travail ou avec des inconnus. Dans la bouche d'un nouvel arrivant, tous les sacres sonnent faux et peuvent choquer. Votre rôle est uniquement de comprendre l'état émotionnel intense de votre interlocuteur quand vous l'entendez.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_002",
+    "sacre": "Câlice / Câlisse",
+    "intensite": "5/5 (Extrême)",
+    "statut": "Très vulgaire",
+    "signification": "Deuxième sacre majeur en intensité. Exprime une colère vive, une frustration intense ou une surprise brutale. Peut aussi amplifier un autre mot : 'câlice que c'est beau !' = c'est extraordinairement beau. Souvent abrégé en 'câl' dans le débit rapide.",
+    "origine": "Dérivé du 'calice', le vase liturgique utilisé pour contenir le vin consacré lors de la messe catholique. Profaner ce symbole de l'eucharistie était considéré comme un sacrilège grave.",
+    "avertissement": "Ce sacre est omniprésent dans les films, séries et conversations québécoises. Apprendre à reconnaître son ton (colère vs admiration) est essentiel pour bien lire la situation. Ne l'utilisez pas vous-même : le niveau d'intensité émotionnelle qu'il projette est très difficile à doser correctement pour un non-natif.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_003",
+    "sacre": "Criss / Crisse",
+    "intensite": "5/5 (Extrême)",
+    "statut": "Très vulgaire",
+    "signification": "Troisième sacre majeur. Exprime la colère, l'exaspération ou la surprise. S'utilise comme exclamation isolée ou comme intensifieur. 'Crisse que c'est long !' = c'est interminablement long. 'Crisse-moi patience !' = fiche-moi la paix. Très fréquent dans les discussions animées.",
+    "origine": "Déformation phonétique de 'Christ'. En québécois oral, le nom de Jésus-Christ est prononcé [kʁis]. L'utilisation du nom du Christ comme juron remonte à la Nouvelle-France.",
+    "avertissement": "Quand vous entendez 'Crisse !', votre interlocuteur est dans un état émotionnel fort — colère, frustration ou choc. Reconnaître ce signal vous aide à adapter votre communication. Ne l'utilisez jamais : son usage par un non-natif est presque toujours perçu comme maladroit ou offensant.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_004",
+    "sacre": "Ostie / Estie / Esti",
+    "intensite": "5/5 (Extrême)",
+    "statut": "Très vulgaire",
+    "signification": "Quatrième sacre majeur, interchangeable avec les précédents. Exprime la colère, la surprise intense ou l'admiration extrême. Sert aussi d'intensifieur : 'ostie que c'est bon !' = c'est absolument délicieux. Souvent abrégé en 'sti' ou 'esti' dans le parler rapide.",
+    "origine": "Dérivé de 'hostie', le pain consacré de l'eucharistie catholique, symbole du corps du Christ. Profaner ce symbole était considéré comme le blasphème ultime dans la culture catholique québécoise.",
+    "avertissement": "Ce sacre revient constamment dans la langue populaire québécoise, notamment dans les films et la chanson. Sa fréquence élevée ne diminue pas son caractère vulgaire. Contentez-vous de le reconnaître et de calibrer l'intensité émotionnelle de votre interlocuteur.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_005",
+    "sacre": "Viarge / Bout de Viarge",
+    "intensite": "4/5 (Élevé)",
+    "statut": "Vulgaire",
+    "signification": "Exprime une frustration forte, un étonnement ou une indignation. Légèrement moins fort que les quatre grands sacres. 'Bout de viarge !' est une formulation atténuée qui exprime tout de même une forte contrariété. Peut aussi exprimer de l'admiration : 'viarge qu'il joue bien !'",
+    "origine": "Déformation de 'Vierge', référence à la Vierge Marie. La déformation phonétique [vjɑʁʒ] en [vjɑʁʒ] ou 'viarge' est typique du français québécois populaire.",
+    "avertissement": "Quand vous entendez 'viarge' ou 'bout de viarge', votre interlocuteur exprime une contrariété ou une surprise notable. Le ton de voix (étonné vs irrité) vous indiquera le sens. N'utilisez pas ces expressions : elles restent vulgaires malgré leur apparence moins forte.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_006",
+    "sacre": "Sacrament / Sacrement",
+    "intensite": "4/5 (Élevé)",
+    "statut": "Vulgaire",
+    "signification": "Exprime la colère, la frustration ou la surprise. Moins violent que les cinq grands sacres mais toujours vulgaire en contexte formel. Peut aussi fonctionner comme intensifieur : 'il est sacrament bon, ce gars-là !' = il est vraiment excellent.",
+    "origine": "Dérivé du mot 'sacrement', terme générique désignant les sept sacrements de l'Église catholique (baptême, eucharistie, etc.). Son usage comme juron est caractéristique de la culture blasphématoire québécoise.",
+    "avertissement": "Ce sacre s'entend dans des contextes variés et peut exprimer aussi bien la frustration que l'admiration. La prosodie (montée ou descente de la voix) est le meilleur indicateur du sens. Réservez-vous à l'observation et à la compréhension.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_007",
+    "sacre": "Ciboire / Cibouère",
+    "intensite": "4/5 (Élevé)",
+    "statut": "Vulgaire",
+    "signification": "Sacre d'intensité élevée, synonyme fonctionnel de 'câlice'. Exprime la colère, la frustration ou la surprise. Moins fréquent que les quatre grands sacres mais bien connu de tous les Québécois. La prononciation populaire [sibwɛʁ] est caractéristique.",
+    "origine": "Dérivé du 'ciboire', vase liturgique servant à conserver les hosties consacrées entre les messes. Comme le calice, cet objet sacré de l'eucharistie a donné naissance à un sacre.",
+    "avertissement": "Ce sacre est moins courant que 'câlice' mais vous l'entendrez dans les films québécois classiques et chez les locuteurs plus âgés. Sa présence dans une conversation signale un état émotionnel intense. Observez sans reproduire.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_008",
+    "sacre": "Baptême / Batême",
+    "intensite": "3/5 (Modéré)",
+    "statut": "Vulgaire",
+    "signification": "Sacre d'intensité modérée. Exprime la frustration, la surprise ou un mécontentement. Moins violent que les grands sacres, il peut s'entendre dans des contextes légèrement moins formels. 'Baptême que t'es lent !' = tu es vraiment lent !",
+    "origine": "Dérivé du sacrement du 'baptême', premier sacrement catholique. La déformation [batɛm] au lieu de [batɛm] est typique de la prononciation populaire québécoise.",
+    "avertissement": "Ce sacre signale une contrariété ou une frustration modérée. Il est parfois utilisé par des gens qui évitent les sacres les plus forts. Son usage par un immigrant reste déconseillé car il appartient à un registre culturel très spécifique que les non-natifs maîtrisent rarement.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_009",
+    "sacre": "Marde",
+    "intensite": "3/5 (Modéré)",
+    "statut": "Vulgaire",
+    "signification": "Équivalent québécois de 'merde'. Exprime la déception, la frustration ou désigne quelque chose de mauvaise qualité. 'C'est de la marde !' = c'est nul, c'est sans valeur. Aussi utilisé dans l'expression 'dans la marde' = dans une situation difficile.",
+    "origine": "Déformation phonétique de 'merde' selon la prononciation populaire québécoise. Contrairement aux autres sacres, il n'a pas d'origine religieuse directe mais fait partie du registre vulgaire québécois.",
+    "avertissement": "Ce mot s'entend très fréquemment au Québec pour qualifier quelque chose de mauvais ou pour exprimer la déception. 'Je suis dans la marde' = je suis dans le pétrin. Bien que moins choquant que les grands sacres religieux, il reste vulgaire et à éviter en public ou au travail.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_010",
+    "sacre": "Maudit / Maudite",
+    "intensite": "2/5 (Léger à modéré)",
+    "statut": "Familier / légèrement vulgaire",
+    "signification": "Exprime la frustration, la déception ou qualifie quelque chose de désagréable. 'Maudit que c'est plate !' = c'est vraiment décevant ! 'Maudite journée !' = quelle horrible journée ! Peut aussi exprimer de l'admiration : 'maudit qu'il est bon !'",
+    "origine": "Issu du mot 'maudit' (damné, maudit par Dieu) du christianisme. Sa connotation religieuse a été atténuée au fil du temps, ce qui en fait un sacre relativement doux.",
+    "avertissement": "C'est l'un des sacres les plus courants et les plus légers. Il s'entend dans de nombreux contextes, y compris parfois dans des émissions de télévision grand public. Reste à éviter dans les contextes formels. Reconnaissez-le comme signal de légère frustration ou d'emphase.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_011",
+    "sacre": "Tabarouette",
+    "intensite": "1/5 (Très faible)",
+    "statut": "Inoffensif / Familial",
+    "signification": "Version très atténuée de 'tabarnak'. Exprime une légère surprise ou une petite déception sans vulgarité. 'Tabarnouche, j'ai oublié mes clés !' = oh non, j'ai oublié mes clés ! Souvent utilisé par les gens qui veulent exprimer une émotion sans blasphémer. Parfaitement acceptable dans tous les contextes, y compris devant les enfants.",
+    "origine": "Déformation phonétique volontaire de 'tabarnak' pour en retirer le caractère blasphématoire. Le remplacement de la fin du mot par '-ouette' est le mécanisme classique d'atténuation des sacres au Québec.",
+    "avertissement": "Ce mot est suffisamment doux pour être utilisé en public. Cependant, pour un immigrant, même les formes atténuées peuvent sonner maladroites si elles ne sont pas bien dosées culturellement. Privilégiez la compréhension et laissez ces expressions venir naturellement avec le temps, si jamais.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_012",
+    "sacre": "Câline / Câline de bine",
+    "intensite": "1/5 (Très faible)",
+    "statut": "Inoffensif / Familial",
+    "signification": "Version très atténuée de 'câlice'. Exprime une légère déception, une petite frustration ou une surprise agréable. 'Câline de bine !' est souvent utilisé avec humour. Les parents l'utilisent devant leurs enfants et il peut même avoir une connotation affectueuse.",
+    "origine": "Déformation phonétique volontaire de 'câlice' pour supprimer le blasphème. 'De bine' est ajouté pour l'euphonie et l'humour. Mécanisme typique de substitution phonétique des sacres atténués.",
+    "avertissement": "Ce mot est si doux qu'il est entendu dans les dessins animés et les livres pour enfants québécois. Il vous donne un bon repère : si quelqu'un utilise 'câline' au lieu de 'câlice', il fait un effort pour rester poli ou est de bonne humeur.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_013",
+    "sacre": "Crime / Crisme",
+    "intensite": "1/5 (Très faible)",
+    "statut": "Inoffensif / Familial",
+    "signification": "Version très atténuée de 'criss'. Exprime une légère surprise ou une petite contrariété sans aucune vulgarité. 'Crime que c'est beau !' = oh comme c'est beau ! Utilisé par toutes les générations et dans tous les contextes, même formels.",
+    "origine": "Déformation phonétique de 'Christ / Criss' pour en retirer le blasphème. Le remplacement de la terminaison par '-me' crée une forme neutre phonétiquement proche mais culturellement acceptable.",
+    "avertissement": "Ce mot est totalement inoffensif. Il vous donne un bon repère pour comprendre la gradation des sacres : quand quelqu'un passe de 'crime' à 'criss', le niveau d'émotion a fortement augmenté. C'est un bon outil de décodage émotionnel pour les immigrants.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_014",
+    "sacre": "Tabarnak — usage comme intensifieur",
+    "intensite": "5/5 (Extrême)",
+    "statut": "Très vulgaire",
+    "signification": "Quand 'tabarnak' précède ou suit un adjectif ou une phrase, il sert d'intensifieur extrême. 'C'est tabarnak bon !' = c'est absolument incroyablement bon ! Ce n'est pas de la colère — c'est de l'enthousiasme maximal. La distinction dépend entièrement du ton de voix.",
+    "origine": "Les sacres québécois ont une particularité unique : ils peuvent amplifier positivement un message. Ce phénomène linguistique est documenté par les chercheurs comme une spécificité du québécois populaire.",
+    "avertissement": "Comprendre que les sacres peuvent exprimer la joie et non seulement la colère est crucial pour les immigrants. Entendre 'tabarnak' avec une voix enthousiaste et un grand sourire signifie quelque chose de très différent de la même exclamation dite avec les dents serrées.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_015",
+    "sacre": "Crissment / Câlissment / Ostiment",
+    "intensite": "4/5 (Élevé)",
+    "statut": "Vulgaire",
+    "signification": "Formes adverbiales des sacres, fonctionnant comme des intensifieur extrêmes. 'C'est crissment bon !' = c'est vraiment très bon. 'C'est câlissment compliqué' = c'est extrêmement compliqué. Remplacent 'extrêmement', 'vraiment', 'terriblement' avec une emphase bien plus forte.",
+    "origine": "Transformation grammaticale des sacres en adverbes par l'ajout du suffixe '-ment'. Phénomène courant en linguistique québécoise qui démontre l'intégration des sacres comme marqueurs grammaticaux à part entière.",
+    "avertissement": "Ces formes adverbiales s'entendent très fréquemment dans la langue parlée informelle. Elles signalent une emphase forte, positive ou négative. Reconnaître ces formes adverbiales vous permettra de calibrer l'intensité de ce que décrit votre interlocuteur.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_016",
+    "sacre": "Tabarnouche",
+    "intensite": "1/5 (Très faible)",
+    "statut": "Inoffensif / Familial",
+    "signification": "Autre version atténuée de 'tabarnak', légèrement différente de 'tabarouette'. Exprime la surprise ou la légère frustration sans vulgarité. 'Tabarnouche, j'ai oublié mes clés !' = oh non, j'ai oublié mes clés ! Souvent utilisé avec une nuance d'autodérision ou de légèreté.",
+    "origine": "Déformation phonétique de 'tabarnak' avec remplacement du suffixe par '-nouche', suffixe d'atténuation humoristique. Reflète l'inventivité du québécois oral dans la création d'euphémismes.",
+    "avertissement": "Ce mot est très doux et légèrement humoristique. Quand vous l'entendez, votre interlocuteur exprime une frustration mineure ou vous taquine. C'est un bon signal qu'il essaie de rester poli tout en laissant sortir un peu d'émotion.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_017",
+    "sacre": "Torrieux / Torrien",
+    "intensite": "2/5 (Léger)",
+    "statut": "Familier / Vieilli",
+    "signification": "Exprime la surprise ou la contrariété légère. Plus fréquent chez les générations plus âgées et dans les régions rurales. 'Torrieux que t'es donc bien !' = tu es vraiment adorable ! Peut exprimer aussi bien la frustration que l'affection.",
+    "origine": "Déformation de 'Seigneur' (le Seigneur Dieu) par substitution phonétique. La déformation [tɔʁjø] masque l'invocation divine originale. Sacre archaïque qu'on entend encore dans la génération des 60 ans et plus.",
+    "avertissement": "Ce mot est rarissime chez les jeunes Québécois mais fréquent dans les œuvres littéraires et les films historiques québécois. Si vous l'entendez de la bouche d'un aîné, il exprime une émotion modérée et souvent bienveillante.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_018",
+    "sacre": "Mosus / Mosûs",
+    "intensite": "1/5 (Très faible)",
+    "statut": "Inoffensif / Vieilli",
+    "signification": "Euphémisme très doux exprimant la surprise légère ou la petite frustration. 'Mosus que c'est froid ce matin !' = oh là là, qu'il fait froid ! Appartient au vocabulaire québécois traditionnel et rural. Pratiquement disparu chez les jeunes générations.",
+    "origine": "Déformation de 'Seigneur Dieu' ou de 'mon Dieu' selon les linguistes. Très ancien euphémisme religieux datant de la Nouvelle-France. Phénomène de déformation phonétique progressif sur plusieurs siècles.",
+    "avertissement": "Ce mot quasi-archaïque vous indique que votre interlocuteur est de la vieille école ou fait de l'humour en adoptant un registre vintage. Totalement inoffensif. Vous pourriez l'entendre dans les romans historiques québécois ou dans les vieilles séries télévisées.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_019",
+    "sacre": "Barnac / Barnache",
+    "intensite": "1/5 (Très faible)",
+    "statut": "Inoffensif / Familial",
+    "signification": "Version atténuée supplémentaire de 'tabarnak', utilisée principalement par les gens qui évitent de blasphémer. 'Barnac que c'est beau !' = oh que c'est beau ! Légèrement plus fort que 'tabarouette' mais reste parfaitement acceptable.",
+    "origine": "Déformation phonétique de 'tabarnak' avec chute de la syllabe initiale 'ta-' et modification de la finale. La 'barnache' (bernache du Canada, oie sauvage) partage le même son, ce qui crée une homophonie pratique.",
+    "avertissement": "Quand vous entendez 'barnac', votre interlocuteur exprime une légère émotion en restant dans les limites du convenable. Cela vous indique que la situation est légère et que la personne garde son calme. Bon indicateur de niveau émotionnel bas.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_020",
+    "sacre": "Sacrifice",
+    "intensite": "1/5 (Très faible)",
+    "statut": "Inoffensif / Familial",
+    "signification": "Euphémisme de 'sacrament'. Exprime une petite frustration ou une surprise légère. 'Sacrifice, j'aurais pas dû manger autant !' = oh zut, j'aurais dû m'arrêter ! Absolument inoffensif, il peut s'entendre devant des enfants et dans des contextes familiaux.",
+    "origine": "Substitution phonétique partielle et sémantique : 'sacré' (participe passé ou adjectif) et 'sacrament'. La substitution par 'sacrifice', un autre terme religieux catholique jugé moins blasphématoire car ne désignant pas directement un sacrement liturgique précis.",
+    "avertissement": "Ce mot très doux est souvent utilisé avec une nuance humoristique ou d'autodérision. Il signale que votre interlocuteur vit un léger contretemps mais garde le sourire. Peut aussi parfois être utilisé de façon fausse-naïve pour faire rire.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_021",
+    "sacre": "Câliboire / Câliboère",
+    "intensite": "2/5 (Léger à modéré)",
+    "statut": "Familier",
+    "signification": "Fusion hybride entre 'câlice' et 'ciboire', deux vases liturgiques. Exprime la frustration ou la surprise modérée. 'Câliboire que ça prend du temps !' = ça prend vraiment trop de temps ! Légèrement plus fort que 'câline' mais bien moins vulgaire que 'câlice'.",
+    "origine": "Mot-valise combinant deux sacres religieux ('câlice' + 'ciboire') pour créer une forme hybride d'intensité intermédiaire. Témoigne de la créativité phonétique de la langue populaire québécoise.",
+    "avertissement": "Ce sacre hybride peut surprendre un immigrant qui tente de l'analyser. Sa présence indique une frustration modérée. L'intensité est entre 'câline' (inoffensif) et 'câlice' (très vulgaire). Le contexte et le ton restent vos meilleurs guides.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_022",
+    "sacre": "Ostination / Ostine",
+    "intensite": "2/5 (Léger à modéré)",
+    "statut": "Familier",
+    "signification": "'Ostination' est une version adoucie de 'ostie'. Mais 's'ostiner' signifie aussi se disputer, être entêté, chicaner. 'Arrête de t'ostiner !' = arrête de te disputer, arrête d'être têtu ! Ce double usage est caractéristique de la richesse grammaticale des sacres québécois.",
+    "origine": "Dérivé de 'hostie' avec ajout du suffixe nominal '-ation'. Ce même suffixe a créé le verbe 's'ostiner' (s'entêter, se quereller) qui est devenu une expression courante bien au-delà du registre blasphématoire.",
+    "avertissement": "Quand vous entendez 's'ostiner', votre interlocuteur décrit une dispute ou un entêtement — pas nécessairement un blasphème. Le contexte est crucial. Si quelqu'un dit 'on s'ostine sur ça depuis des heures', il décrit une discussion sans fin.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_023",
+    "sacre": "Crisse — usage impératif ('Se faire crisse dehors')",
+    "intensite": "5/5 (Extrême)",
+    "statut": "Très vulgaire",
+    "signification": "'Crisse' peut devenir un verbe ! 'Se faire crisse dehors' = se faire mettre à la porte. 'Je m'en crisse' = je m'en fiche complètement. 'Crisse-moi patience !' = fiche-moi la paix ! Ces expressions verbalisées du sacre sont très fréquentes dans le langage populaire québécois.",
+    "origine": "Phénomène de verbalisation des sacres : 'crisse' devient le verbe 'crisser' (lancer, jeter, partir brusquement). 'Crisser le camp' = partir en vitesse. Témoigne de l'intégration complète des sacres dans la grammaire québécoise.",
+    "avertissement": "Entendre 'je m'en crisse' vous indique que votre interlocuteur est totalement détaché d'une situation ou profondément indifférent. 'Crisser le camp' indique un départ brusque ou une situation qui dégénère. Ces signaux sont utiles pour comprendre la dynamique d'une situation.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_024",
+    "sacre": "Câlice — usage verbal ('Se faire câlicer dehors')",
+    "intensite": "5/5 (Extrême)",
+    "statut": "Très vulgaire",
+    "signification": "'Câlicer' est la forme verbalisée de 'câlice'. 'Se faire câlicer dehors' = se faire expulser violemment. 'Câlicer une volée' = frapper fort quelqu'un. 'Je m'en câlice' = je m'en fiche royalement. Ces formes verbales indiquent généralement une intensité émotionnelle extrême.",
+    "origine": "Même mécanisme de verbalisation que 'crisser'. Le sacre 'câlice' devient le verbe 'câlicer', conjugué comme un verbe du 1er groupe. Phénomène linguistique documenté par les chercheurs en études québécoises.",
+    "avertissement": "Ces formes verbalisées sont très expressives et signalent une situation émotionnellement chargée. 'Je m'en câlice' doit être clairement distingué d'un simple désaccord — c'est une indifférence totale et définitive. Connaître ces formes vous aide à mesurer la gravité d'une conversation.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_025",
+    "sacre": "Tabarnak — usage verbal ('Tabarnaker')",
+    "intensite": "5/5 (Extrême)",
+    "statut": "Très vulgaire",
+    "signification": "'Tabarnaker' ou 'se faire tabarnaker' = se faire avoir, se faire malmener. Moins courant que 'crisser' et 'câlicer' dans leur forme verbale, mais entendu dans le parler populaire. Indique généralement qu'une personne a été trompée ou malmenée dans une situation.",
+    "origine": "Même processus de verbalisation des autres sacres. L'ajout du suffixe verbal '-er' transforme l'exclamation en verbe d'action. Témoigne du degré d'intégration grammaticale complète des sacres dans le français québécois populaire.",
+    "avertissement": "Si vous entendez 'on s'est fait tabarnaker' dans une conversation, votre interlocuteur exprime qu'il a été dupé ou malmené dans une situation. C'est un signal fort de mécontentement face à une injustice perçue. Reconnaissez ce signal pour adapter votre réponse avec empathie.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_026",
+    "sacre": "Viande / Bout de viande",
+    "intensite": "1/5 (Très faible)",
+    "statut": "Inoffensif",
+    "signification": "Euphémisme de 'viarge' (Vierge). Exprime une légère surprise ou une petite contrariété sans aucune vulgarité. 'Bout de viande !' est souvent dit avec humour ou autodérision. Parfaitement acceptable dans tous les contextes familiaux et sociaux.",
+    "origine": "Substitution phonétique partielle et sémantique : 'viarge' → 'viande'. La ressemblance phonétique avec 'viarge' permet l'effet euphorique tout en évitant le blasphème. Mécanisme d'atténuation typique.",
+    "avertissement": "Ce mot totalement inoffensif est souvent utilisé avec légèreté et humour. Quand vous l'entendez, la situation est peu sérieuse. C'est un bon repère pour vous : si votre interlocuteur utilise 'bout de viande' plutôt que 'viarge', il reste de très bonne humeur malgré un petit contretemps.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_027",
+    "sacre": "Bâtard",
+    "intensite": "2/5 (Léger à modéré)",
+    "statut": "Familier",
+    "signification": "Euphémisme de 'baptême'. Exprime la frustration modérée ou la surprise. 'Bâtard que c'est compliqué !' = oh là là, c'est vraiment compliqué ! Peut aussi être une insulte directe dans certains contextes (bâtard comme individu méprisable), ce qui en fait un mot à double lecture.",
+    "origine": "Déformation phonétique de 'baptême' en 'batême' puis en 'bâtard'. La substitution par un mot existant en français ('bâtard' = né hors mariage) crée une ambiguïté qui peut être soit un sacre atténué, soit une insulte selon le contexte.",
+    "avertissement": "Ce mot est ambigu : selon le ton, il peut être un sacre doux ou une insulte directe. Votre interlocuteur peut lancer 'bâtard !' en riant (surprise amusée) ou avec mépris (insulte). Lisez le ton et la situation pour bien interpréter son usage.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_028",
+    "sacre": "Seigneur / Seigneur de Dieu",
+    "intensite": "1/5 (Très faible)",
+    "statut": "Inoffensif / Vieilli",
+    "signification": "Invocation de Dieu comme juron très léger, hérité du vieux français. 'Seigneur de Dieu !' exprime la surprise ou l'émerveillement. Pratiquement disparu des conversations quotidiennes des jeunes Québécois mais encore entendu chez les aînés.",
+    "origine": "Invocation directe du Seigneur (Dieu) comme exclamation. Précurseur historique des sacres modernes — avant que les objets liturgiques (calice, tabernacle) deviennent les sacres dominants, les invocations divines directes étaient les blasphèmes usuels.",
+    "avertissement": "Ce mot appartient au vocabulaire des générations plus âgées. Si un aîné québécois dit 'Seigneur de Dieu !', il exprime une surprise ou un émerveillement sincère. Ce signal indique un état émotionnel positif plutôt que de la colère.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_029",
+    "sacre": "Maudit verrat / Verrat",
+    "intensite": "2/5 (Léger à modéré)",
+    "statut": "Familier / Rustre",
+    "signification": "'Verrat' (porc mâle non castré) est utilisé comme substitut de 'viarge'. 'Maudit verrat !' exprime la frustration ou la surprise. Plus courant dans les régions rurales et chez les générations plus âgées. A une connotation légèrement rustique ou campagnarde.",
+    "origine": "Le 'verrat' (porc reproducteur) partage une ressemblance phonétique avec 'viarge'. Cet euphémisme animal est un mécanisme classique d'atténuation où un mot concret et inoffensif remplace le blasphème.",
+    "avertissement": "Entendre 'verrat' ou 'maudit verrat' vous situe souvent dans un contexte rural ou chez un locuteur d'âge mûr. Ce signal exprime la frustration avec une couleur locale régionale. Il témoigne de la diversité géographique du français québécois.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_030",
+    "sacre": "Écoeurant — usage comme sacre amplificateur",
+    "intensite": "2/5 (Léger)",
+    "statut": "Familier",
+    "signification": "Bien qu'il ne soit pas un sacre religieux, 'écœurant' est souvent utilisé avec les sacres comme amplificateur. 'C'est câlice écoeurant bon !' = c'est extraordinairement bon ! Le mot 'écœurant' signifie au Québec 'excellent, incroyable' (sens positif), à l'opposé du sens français (dégoûtant).",
+    "origine": "Faux-ami majeur France/Québec. Au Québec, 'écœurant' a subi une inversion sémantique complète : de 'qui soulève le cœur' (négatif en France) à 'qui dépasse toutes les attentes' (positif au Québec). Souvent combiné avec les sacres pour un effet d'hyperbole maximale.",
+    "avertissement": "Si vous entendez 'c'est écœurant' en contexte positif accompagné de sacres, votre interlocuteur exprime une admiration intense. Cette inversion sémantique est un des faux-amis les plus importants du québécois — indispensable à intégrer pour décoder les émotions correctement.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_031",
+    "sacre": "Crisser le camp",
+    "intensite": "4/5 (Élevé)",
+    "statut": "Vulgaire",
+    "signification": "Expression verbale signifiant partir très rapidement, fuir, quitter brusquement un endroit. 'Il a crissé le camp sans dire un mot' = il est parti brusquement. 'Crisse le camp !' = va-t'en ! Peut indiquer une fuite, un congédiement ou une sortie précipitée selon le contexte.",
+    "origine": "Verbalisation de 'criss' (Christ) avec formation d'un verbe 'crisser' qui prend le sens de 'lancer', 'jeter' ou 'partir brusquement'. 'Crisser le camp' = lancer (son départ) hors d'ici. Expression totalement intégrée au vocabulaire québécois populaire.",
+    "avertissement": "Quand quelqu'un dit 'il faut que je crisse le camp', la situation est urgente ou la personne est très mécontente et veut partir. Si on vous dit 'crisse le camp !', c'est un ordre de partir immédiatement formulé avec une forte charge émotionnelle négative.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_032",
+    "sacre": "M'en câlice / Je m'en câlice",
+    "intensite": "5/5 (Extrême)",
+    "statut": "Très vulgaire",
+    "signification": "Expression d'indifférence totale et radicale. 'Je m'en câlice' = je m'en fiche complètement, cette chose ne m'importe absolument pas. Plus fort que 'je m'en fous' ou même 'je m'en fiche'. Exprime un détachement définitif et souvent agressif.",
+    "origine": "Construction verbale avec le verbe réfléchi 'se câlicer' (se ficher de). Structure identique à 'je m'en fous' mais avec le sacre comme racine verbale, ce qui multiplie l'intensité émotionnelle de l'expression.",
+    "avertissement": "Quand vous entendez cette expression, votre interlocuteur signale un désengagement total et irrévocable. Dans un contexte professionnel, c'est un signal d'alarme sérieux. Dans un contexte personnel, c'est l'équivalent d'un 'laisse-moi tranquille' poussé à l'extrême.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_033",
+    "sacre": "Avoir l'air de la marde",
+    "intensite": "3/5 (Modéré)",
+    "statut": "Vulgaire",
+    "signification": "Expression signifiant avoir l'air minable, épuisé, pitoyable ou désordonné. 'T'as l'air de la marde ce matin' = tu as vraiment mauvaise mine. 'Le projet a l'air de la marde' = le projet est dans un état lamentable. Peut s'appliquer aux personnes ou aux choses.",
+    "origine": "Construction avec 'marde' (merde). Cette expression imagée compare l'aspect visuel d'une personne ou d'une chose à quelque chose de très négatif. Typique du registre populaire québécois qui utilise souvent des métaphores physiques très directes.",
+    "avertissement": "Si quelqu'un vous dit que vous 'avez l'air de la marde', il exprime de façon très directe et crue que vous semblez en mauvaise forme. Au Québec, cette franchise directe peut parfois choquer les immigrants habitués à des formulations plus atténuées. Prenez-le comme un signal de préoccupation sincère, même si brutal.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_034",
+    "sacre": "Être dans la marde",
+    "intensite": "3/5 (Modéré)",
+    "statut": "Vulgaire",
+    "signification": "Expression signifiant être dans une situation difficile, être dans le pétrin, avoir de gros problèmes. 'Je suis dans la marde jusqu'au cou' = j'ai d'immenses problèmes. Équivalent québécois de 'être dans la merde' mais avec la prononciation locale.",
+    "origine": "Construction avec 'marde' dans une locution exprimant l'enlisement dans une situation négative. L'image de l'enlisement physique dans une matière désagréable est une métaphore universelle des langues populaires pour désigner les problèmes graves.",
+    "avertissement": "Quand quelqu'un dit 'je suis dans la marde', il décrit une situation difficile sérieuse. C'est un signal qu'il a besoin d'aide ou qu'il est stressé. Dans un contexte professionnel, ce signal mérite attention et empathie. Ne banalisez pas cette expression — elle traduit un vrai stress.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_035",
+    "sacre": "Ostie de / Esti de (adjectif devant un nom)",
+    "intensite": "5/5 (Extrême)",
+    "statut": "Très vulgaire",
+    "signification": "Quand 'ostie de / esti de' précède un nom, il fonctionne comme un qualificatif intensif négatif. 'Ostie d'idiot !' = quel parfait idiot ! 'Esti de belle journée !' = quelle journée vraiment magnifique ! Selon le ton, l'expression peut être très négative ou très positive.",
+    "origine": "Construction adjectivale où le sacre modifie un nom comme un adjectif intensif. Ce phénomène grammatical unique du québécois populaire — où un sacre devient un modificateur nominal — est étudié par les linguistes comme trait distinctif du français québécois.",
+    "avertissement": "Cette construction 'sacre + de + nom' est extrêmement fréquente au Québec. Le ton et le contexte sont absolument déterminants pour interpréter le sens positif ou négatif. Un immigrant doit d'abord observer attentivement le visage et le ton avant de réagir à ce type d'expression.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_036",
+    "sacre": "Viarge — usage amplificateur positif",
+    "intensite": "4/5 (Élevé)",
+    "statut": "Vulgaire",
+    "signification": "'Viarge que t'es donc bien !' = oh, tu es vraiment adorable ! L'usage positif de 'viarge' comme intensifieur d'admiration ou d'affection est courant au Québec. Il peut exprimer une tendresse sincère, une admiration ou un étonnement positif malgré son statut de sacre.",
+    "origine": "Même mécanisme d'usage amplificateur positif que tous les autres grands sacres. La Vierge Marie, figure de douceur et de compassion dans le catholicisme, donne à 'viarge' un usage amplificateur qui peut avoir une nuance affective.",
+    "avertissement": "Quand 'viarge' est dit avec un ton affectueux et un sourire, votre interlocuteur exprime de l'admiration ou de la tendresse. Ce signal positif est important à reconnaître pour ne pas mal interpréter la situation comme hostile alors qu'elle est chaleureuse.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_037",
+    "sacre": "Câline — usage comme interjection de tendresse",
+    "intensite": "1/5 (Très faible)",
+    "statut": "Inoffensif / Affectueux",
+    "signification": "'Câline' peut aussi fonctionner comme une interjection tendre ou affectueuse, proche de 'câlin'. 'Ah câline, viens ici !' = ah mon cher(e), viens ! Cette ambiguïté entre l'euphémisme de sacre et la tendresse fait de 'câline' un mot chaleureux dans certains contextes.",
+    "origine": "La convergence phonétique entre 'câline' (euphémisme de câlice) et 'câlin' (affectueux, doux) crée une ambiguïté productive en québécois. Les deux sens coexistent sans confusion pour les locuteurs natifs.",
+    "avertissement": "Quand vous entendez 'câline' dit doucement et affectueusement, votre interlocuteur exprime de la tendresse. C'est un des rares cas où un mot issu des sacres peut avoir une connotation totalement positive et chaleureuse. Le ton doux est le signal principal.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_038",
+    "sacre": "Tabarslak / Tabarnak de slak",
+    "intensite": "4/5 (Élevé)",
+    "statut": "Vulgaire",
+    "signification": "Variante de 'tabarnak' combinée avec l'anglicisme 'slack' (mou, inefficace). 'C'est un tabarslak !' = c'est quelqu'un de vraiment inefficace et indolent. Mélange typique du québécois populaire qui hybride sacres et anglicismes pour créer des insultes très expressives.",
+    "origine": "Fusion de 'tabarnak' et de 'slack' (anglais : mou, laxiste). Ce type d'hybridation franco-anglaise est caractéristique du vernaculaire québécois urbain contemporain, où sacres et anglicismes se combinent librement.",
+    "avertissement": "Ce type d'expression hybride illustre la créativité du québécois populaire. Si vous l'entendez, votre interlocuteur exprime une frustration intense envers quelqu'un qu'il juge incompétent ou paresseux. Signal d'une irritation professionnelle ou personnelle élevée.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_039",
+    "sacre": "Maudit chance / Maudit pas de chance",
+    "intensite": "2/5 (Léger à modéré)",
+    "statut": "Familier",
+    "signification": "'Maudit pas de chance !' exprime la malchance, la déception face à une situation défavorable. 'Ah, maudit que t'as donc pas de chance !' = ah, comme tu es malchanceux ! Peut exprimer aussi la compassion sincère pour quelqu'un qui vit une mauvaise journée.",
+    "origine": "Construction de 'maudit' comme intensifieur d'une proposition. Ce type d'usage de 'maudit' comme adverbe expressif est très courant et illustre la polyvalence grammaticale de ce sacre léger.",
+    "avertissement": "Cette expression exprime souvent de la compassion pour la malchance d'autrui. Si quelqu'un vous dit 'ah maudit pas de chance !', il compatit sincèrement à votre situation. C'est un signal d'empathie, non d'hostilité. La nuance est importante pour décoder les interactions québécoises.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_040",
+    "sacre": "Crimonye / Crimine",
+    "intensite": "1/5 (Très faible)",
+    "statut": "Inoffensif / Vieilli",
+    "signification": "Variante de 'crime', euphémisme de 'criss'. Exprime une petite surprise ou une légère contrariété. 'Crimonye, j'avais oublié ça !' = oh zut, j'avais oublié ! Surtout entendu chez les générations plus âgées ou dans les régions rurales du Québec.",
+    "origine": "Variation phonétique de 'crime' avec ajout du suffixe '-onye' ou '-ine'. Ces variations régionales et générationnelles illustrent la richesse dialectale du système des sacres atténués en français québécois.",
+    "avertissement": "Ce mot vieilli et inoffensif vous situe géographiquement ou générationnellement votre interlocuteur. S'il l'utilise, il est probablement d'âge mûr ou vient d'une région moins urbaine du Québec. C'est un indicateur précieux sur le profil de votre interlocuteur.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_041",
+    "sacre": "Câlique",
+    "intensite": "3/5 (Modéré)",
+    "statut": "Vulgaire",
+    "signification": "Variante orthographique et phonétique de 'câlice' avec atténuation légère. Exprime la frustration ou la surprise modérée. Intermédiaire entre 'câline' (inoffensif) et 'câlice' (très vulgaire). Certains locuteurs l'utilisent quand ils veulent exprimer une frustration sans aller jusqu'au sacre complet.",
+    "origine": "Variation phonétique de 'câlice' par modification de la terminaison ('-ice' → '-ique'). Ce glissement phonétique réduit légèrement l'impact blasphématoire tout en conservant l'expressivité émotionnelle.",
+    "avertissement": "Ce mot vous indique une frustration modérée. Sa position intermédiaire dans l'échelle des sacres est un bon repère : votre interlocuteur est contrarié mais pas en colère noire. Il retient encore une partie de son émotion. Un dialogue calme est encore possible.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_042",
+    "sacre": "Sacré / Sacrant",
+    "intensite": "2/5 (Léger)",
+    "statut": "Familier",
+    "signification": "'Sacrant' signifie agaçant, irritant, qui énerve. 'C'est sacrant !' = c'est vraiment irritant, c'est énervant ! 'Arrête, t'es tellement sacrant !' = arrête, tu es vraiment agaçant ! Mot courant pour désigner quelque chose ou quelqu'un d'exaspérant.",
+    "origine": "Participe présent adjectivalisé du verbe 'sacrer' (blasphémer). Par extension, ce qui vous fait sacrer (blasphémer) est 'sacrant' = ce qui vous irrite au point de vous faire jurer. Passage du verbe au qualificatif expressif.",
+    "avertissement": "Quand quelqu'un vous dit que vous êtes 'sacrant', c'est une critique directe de votre comportement jugé irritant. Différent des insultes graves, 'sacrant' exprime une exaspération légère à modérée. Un signal que votre interlocuteur commence à perdre patience.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_043",
+    "sacre": "Câlice — dans les chansons et l'art",
+    "intensite": "Variable (1 à 5/5)",
+    "statut": "Contextuel",
+    "signification": "Les sacres québécois, dont 'câlice', sont fréquents dans la musique populaire québécoise, le cinéma et la littérature. Dans ces contextes artistiques, ils peuvent exprimer l'authenticité culturelle, l'appartenance identitaire ou simplement le registre populaire, sans nécessairement signifier une émotion violente.",
+    "origine": "La culture québécoise a réhabilité les sacres comme marqueurs identitaires depuis les années 1960 (Révolution tranquille). Des artistes comme Michel Tremblay, Richard Desjardins ou Les Cowboys Fringants les utilisent pour ancrer leurs œuvres dans l'authenticité du peuple québécois.",
+    "avertissement": "Dans les films, chansons et pièces de théâtre québécois, les sacres sont courants et culturellement significatifs. Pour un immigrant, les consommer en contexte artistique est la meilleure façon de s'familiariser avec leur sonorité et leur usage sans risquer de les utiliser maladroitement dans la vraie vie.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_044",
+    "sacre": "Batêche",
+    "intensite": "2/5 (Léger)",
+    "statut": "Familier / Vieilli",
+    "signification": "Variante atténuée de 'baptême'. Exprime la surprise légère ou la frustration modérée. 'Batêche que c'est bon !' = oh que c'est bon ! Surtout entendu chez les gens d'âge mûr et dans les régions rurales. Ajoute souvent une connotation d'émerveillement sincère.",
+    "origine": "Déformation phonétique de 'baptême' [batɛm] → [batɛʃ]. Le glissement de la finale [-m] vers [-ʃ] est un mécanisme phonétique courant dans les dialectes du québécois rural. Forme vieillissante mais encore vivante.",
+    "avertissement": "Ce mot vieilli et léger vous indique que votre interlocuteur est probablement d'un certain âge ou adopte volontairement un registre traditionnel. Son usage est presque toujours bienveillant. Un signal d'étonnement positif ou d'expression affectueuse.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_045",
+    "sacre": "Mautadit / Mautadine",
+    "intensite": "1/5 (Très faible)",
+    "statut": "Inoffensif / Affectueux",
+    "signification": "Version atténuée et presque affectueuse de 'maudit'. 'Mautadit que t'es drôle !' = oh que tu es drôle ! Souvent utilisé avec tendresse ou légèreté. Peut exprimer une légère exaspération affectueuse devant le comportement d'un enfant ou d'un ami cher.",
+    "origine": "Déformation légère de 'maudit' par insertion d'une syllabe médiane '-ta-' qui atténue le blasphème. La modification minimale conserve la sonorité tout en réduisant le caractère choquant. Mécanisme typique des euphémismes québécois.",
+    "avertissement": "Ce mot très doux est presque un terme d'affection quand utilisé avec le bon ton. 'Mautadit que je t'aime !' exprime une tendresse intense avec une pointe d'humour. Un bon repère : si vous l'entendez avec un sourire, c'est de l'affection. Avec un front plissé, c'est une légère exaspération.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_046",
+    "sacre": "Crisse — exclamation de douleur physique",
+    "intensite": "5/5 (Extrême)",
+    "statut": "Très vulgaire",
+    "signification": "Les sacres, et 'crisse' en particulier, sont très souvent utilisés comme réaction spontanée à une douleur physique aiguë. Se cogner un orteil, se blesser, recevoir une mauvaise nouvelle médicale peut déclencher un 'Crisse !' instinctif. Dans ce cas, aucune colère envers quelqu'un n'est impliquée.",
+    "origine": "L'usage des sacres comme réaction à la douleur est universel au Québec. Depuis l'enfance, les Québécois ont entendu ces mots dans des contextes de douleur, ce qui crée une association automatique entre la douleur aiguë et le sacre le plus fort disponible.",
+    "avertissement": "Si vous voyez quelqu'un se blesser et crier un sacre, ne vous alarmez pas — c'est une réaction physique automatique, pas de l'agressivité envers vous. Ce contexte de douleur physique est l'un des usages les plus fréquents et les plus innocents des grands sacres. Comprendre ce contexte évite de mauvaises interprétations.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_047",
+    "sacre": "Saint-Simonac / Simac",
+    "intensite": "2/5 (Léger à modéré)",
+    "statut": "Familier / Régional",
+    "signification": "Sacre régional exprimant la surprise ou la frustration modérée. 'Saint-Simonac que c'est beau !' = oh comme c'est beau ! Surtout entendu dans certaines régions du Québec, notamment la Mauricie et le Saguenay-Lac-Saint-Jean.",
+    "origine": "Déformation de 'Saint-Simon' (apôtre) combinée à un suffixe phonétique. Les saints catholiques ont parfois servi de base aux sacres régionaux, alternative aux sacres liturgiques plus connus. Témoigne de la diversité régionale du système des sacres.",
+    "avertissement": "Ce sacre régional vous donne une information géographique : si vous l'entendez, votre interlocuteur vient peut-être d'une région spécifique du Québec. Il exprime une émotion légère à modérée avec une couleur locale distinctive. Signe d'appartenance régionale affirmée.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_048",
+    "sacre": "Câlice de câlice",
+    "intensite": "5/5 (Extrême)",
+    "statut": "Très vulgaire",
+    "signification": "Redoublement d'un même sacre pour amplifier encore davantage l'intensité émotionnelle. 'Câlice de câlice, c'est insupportable !' = c'est absolument, totalement insupportable ! Le redoublement est le dernier degré de l'amplification émotionnelle. Signale une situation perçue comme extrême.",
+    "origine": "Mécanisme de redoublement ou d'empilement des sacres pour atteindre l'intensité maximale. Les Québécois peuvent empiler plusieurs sacres : 'Ostie de câlice de tabarnak !' pour exprimer une émotion qui dépasse tous les niveaux habituels d'expression.",
+    "avertissement": "Quand vous entendez un empilement ou un redoublement de sacres, la situation émotionnelle est à son maximum. Votre interlocuteur est dans un état de détresse, de colère ou d'incrédulité extrême. C'est un signal clair qu'une intervention calme et empathique est nécessaire ou que vous devez vous écarter de la situation.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_049",
+    "sacre": "Maudit nono",
+    "intensite": "2/5 (Léger)",
+    "statut": "Familier",
+    "signification": "'Nono' = idiot, nigaud au Québec. 'Maudit nono' est une insulte légère exprimant qu'on trouve quelqu'un stupide ou maladroit. 'Mais qu'est-ce que t'as fait là, maudit nono !' = mais qu'est-ce que tu as fait, espèce d'idiot ! Peut aussi être affectueux selon le ton.",
+    "origine": "Combinaison du sacre doux 'maudit' avec l'insulte légère 'nono' (peut-être dérivé du prénom 'Nono', diminutif populaire, ou d'une onomatopée évoquant la naïveté). Expression couleur locale très québécoise.",
+    "avertissement": "Cette expression peut être une vraie critique légère ou une taquinerie affectueuse selon le ton et la relation entre les personnes. Entre amis proches, c'est souvent de la taquinerie bienveillante. Dans un contexte tendu, c'est une critique directe. Lisez toujours la relation entre les personnes.",
+    "niveau": 7
+  },
+  {
+    "id": "sacre_050",
+    "sacre": "Les sacres et le lieu de travail",
+    "intensite": "Variable",
+    "statut": "Contextuel — avertissement collectif",
+    "signification": "Les sacres sont STRICTEMENT à éviter dans tout contexte professionnel québécois. Même si vous entendez des collègues utiliser des sacres entre eux, cela ne vous autorise pas à les utiliser. Les locuteurs natifs ont une maîtrise nuancée de quand et avec qui ils peuvent sacrer — une compétence qui se développe sur des décennies.",
+    "origine": "La culture du sacre est profondément liée à l'histoire catholique du Québec. Après la Révolution tranquille (années 1960), les sacres ont perdu leur caractère uniquement blasphématoire pour devenir des marqueurs identitaires. Mais leur usage reste codifié socialement de façon très précise.",
+    "avertissement": "Ce module a pour unique but de vous aider à DÉCODER les émotions de vos interlocuteurs québécois. La maîtrise des sacres est un processus qui demande des années d'immersion culturelle. En tant que nouvel arrivant, votre capital sympathie est bien plus grand quand vous vous abstenez d'utiliser ces mots. Les Québécois apprécient et respectent les immigrants qui observent, comprennent et s'adaptent sans forcer une familiarité culturelle qui ne s'improvise pas.",
+    "niveau": 7
+  }
+]

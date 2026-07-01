@@ -1,0 +1,3098 @@
+[
+  {
+    "id": "mot_faux_016",
+    "mot": "Dîner",
+    "definition": "Au Québec : repas du midi, l'équivalent du lunch. En France, 'dîner' désigne le repas du soir. 'Se retrouver pour dîner' peut créer une confusion totale d'horaire entre un Québécois et un Européen.",
+    "exemple": "On dîne ensemble à la cafétéria ? J'ai une heure de libre entre midi et une heure.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_017",
+    "mot": "Souper",
+    "definition": "Au Québec : repas principal du soir. En France, 'souper' désigne un repas très tardif pris après minuit, après un spectacle ou une sortie. 'Viens souper' au Québec = viens manger ce soir.",
+    "exemple": "Ma mère nous invite à souper dimanche, elle fait son bouilli de légumes.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_018",
+    "mot": "Liqueur",
+    "definition": "Au Québec : boisson gazeuse sucrée, soda (Pepsi, 7Up, Sprite, etc.). En France, 'liqueur' désigne une boisson alcoolisée sucrée et aromatisée. Commander une 'liqueur' au restaurant québécois ne vous donnera pas d'alcool !",
+    "exemple": "As-tu des liqueurs dans ton frigo ? J'ai soif et je ne veux pas d'eau.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_019",
+    "mot": "Blé d'Inde",
+    "definition": "Au Québec : maïs sucré, maïs en épi. En France, 'blé d'Inde' est archaïque ou inconnu — on dit uniquement 'maïs'. Le terme reste courant dans tout le Québec et vous le verrez sur les menus estivaux.",
+    "exemple": "On fait cuire du blé d'Inde sur le BBQ ce soir, t'apportes du beurre ?",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_023",
+    "mot": "Brassière",
+    "definition": "Au Québec : soutien-gorge, sous-vêtement féminin. En France, une 'brassière' est un haut sans manches pour bébé ou un gilet de sauvetage. Chercher une 'brassière de sport' dans un magasin québécois est parfaitement normal.",
+    "exemple": "Je cherche une brassière de sport pour mes entraînements au gym.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_024",
+    "mot": "Vidanges",
+    "definition": "Au Québec : ordures ménagères, déchets, poubelles. En France, 'vidange' désigne le changement d'huile d'un moteur ou le curage d'une fosse septique. 'Sortir les vidanges' au Québec = sortir les poubelles.",
+    "exemple": "C'est ton tour de sortir les vidanges ce soir, le camion passe demain matin.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_025",
+    "mot": "Partir",
+    "definition": "Au Québec : démarrer, mettre en marche (une voiture, un appareil, un projet). En France, 'partir' signifie uniquement quitter un endroit. 'Partir le café' ou 'partir la machine à laver' sont des expressions québécoises très courantes.",
+    "exemple": "Peux-tu partir le café ? J'arrive dans deux minutes.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_026",
+    "mot": "Barrer",
+    "definition": "Au Québec : verrouiller, fermer à clé (une porte, une voiture). En France, 'barrer' signifie rayer, biffer ou bloquer un passage. 'Barre la porte en sortant' au Québec = verrouille la porte en partant.",
+    "exemple": "T'as-tu barré la porte en partant ? Le quartier a eu des vols récemment.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_027",
+    "mot": "Baveux",
+    "definition": "Au Québec : personne arrogante, condescendante, provocatrice qui cherche noise. Insulte sérieuse. En France, 'baveux' signifie littéralement qui bave, qui salive — sens purement physique.",
+    "exemple": "Il était vraiment baveux avec la serveuse, j'avais honte d'être à sa table.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_029",
+    "mot": "Cellulaire",
+    "definition": "Au Québec : téléphone portable, téléphone mobile. En France, 'cellulaire' est uniquement un adjectif scientifique (tissu cellulaire, biologie). Un Français dira 'portable' ou 'mobile', jamais 'cellulaire' pour désigner son téléphone.",
+    "exemple": "Mon cellulaire n'a plus de batterie, peux-tu me prêter ton chargeur ?",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_030",
+    "mot": "Colon",
+    "definition": "Au Québec : personne naïve, peu dégourdie, inculte — une insulte légère à modérée. En France, 'colon' désigne un colonisateur ou habitant d'une colonie, terme historique et neutre. Se faire traiter de 'colon' au Québec est une moquerie.",
+    "exemple": "Il a payé 50 $ pour un taxi qui faisait 10 minutes de marche. Quel colon !",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_031",
+    "mot": "Dispendieux",
+    "definition": "Au Québec : cher, coûteux, onéreux. Très courant dans la langue quotidienne. En France, ce mot est jugé archaïque ou pédant — on dira simplement 'cher' ou 'coûteux'. Un immigrant l'entendra souvent sans le connaître.",
+    "exemple": "Cette épicerie fine est vraiment trop dispendieuse pour mon budget.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_032",
+    "mot": "Efface",
+    "definition": "Au Québec (nom féminin) : gomme à effacer, l'outil scolaire en caoutchouc. En France, 'efface' est uniquement la conjugaison du verbe 'effacer', jamais un nom commun — on dit 'gomme'. 'Passe-moi l'efface' est parfaitement naturel au Québec.",
+    "exemple": "As-tu une efface ? J'ai fait une erreur dans mon formulaire.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_033",
+    "mot": "Mouton",
+    "definition": "Au Québec : en plus de l'animal ovin, désigne un flocon ou chaton de poussière qui s'accumule sous les meubles. En France, 'mouton' désigne uniquement l'animal. 'Y'a des moutons sous le lit' au Québec ne parle pas de brebis.",
+    "exemple": "Il faut que je passe le balai, y'a des moutons partout sous le canapé.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_034",
+    "mot": "Pamphlet",
+    "definition": "Au Québec : brochure publicitaire, dépliant, flyer informatif. En France, un 'pamphlet' est un texte court, virulent et satirique à caractère politique ou social — jamais un simple dépliant. La confusion peut être comique en librairie.",
+    "exemple": "Prends un pamphlet à l'entrée, toutes les activités de la bibliothèque y sont expliquées.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_035",
+    "mot": "Débarquer",
+    "definition": "Au Québec : descendre d'un véhicule (autobus, voiture, métro) ou arriver chez quelqu'un à l'improviste. En France, 'débarquer' est principalement lié au bateau ou au débarquement militaire, avec un sens d'arrivée inattendue plus rare.",
+    "exemple": "Je débarque au prochain arrêt, peux-tu appuyer sur le bouton pour moi ?",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_036",
+    "mot": "Bobettes",
+    "definition": "Au Québec : sous-vêtements, culotte ou caleçon. Terme courant, sans connotation vulgaire. En France, ce mot n'existe pas en français standard — on dit 'slip', 'culotte' ou 'caleçon'. Un Français entendant 'bobettes' sera complètement perdu.",
+    "exemple": "J'ai fait une lessive, tes bobettes et tes chaussettes sont sur la corde.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_037",
+    "mot": "Attaché",
+    "definition": "Au Québec : bouclé avec sa ceinture de sécurité. En France, 'attaché' signifie simplement lié, fixé ou rattaché. 'Es-tu attaché ?' dans une voiture québécoise signifie 'As-tu mis ta ceinture ?' — pas que tu sois ligoté.",
+    "exemple": "Es-tu attaché ? Je pars pas tant que tout le monde a sa ceinture.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_040",
+    "mot": "Débarbouillette",
+    "definition": "Au Québec : gant de toilette, carré de tissu éponge pour se laver le visage ou le corps. En France, ce mot est inconnu — on dit exclusivement 'gant de toilette'. Un immigrant ne comprendra pas 'passe-moi la débarbouillette'.",
+    "exemple": "Mouille la débarbouillette et nettoie le visage du bébé doucement.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_041",
+    "mot": "Chaudière",
+    "definition": "Au Québec : seau, récipient pour transporter de l'eau ou des liquides. En France, 'chaudière' désigne un appareil de chauffage central ou de production d'eau chaude. 'Apporte une chaudière' = apporte un seau, pas un appareil.",
+    "exemple": "Prends la chaudière rouge dans le garage pour laver le char.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_042",
+    "mot": "Fin / Fine",
+    "definition": "Au Québec : gentil(le), aimable, serviable. En France, 'fin/fine' signifie mince, délicat ou raffiné (une ligne fine, un palais fin). 'T'es bien fine' au Québec = tu es très gentille, absolument pas une référence à la minceur.",
+    "exemple": "Il est tellement fin, il m'a aidée à déménager toute la journée sans se plaindre.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_044",
+    "mot": "Plate",
+    "definition": "Au Québec : ennuyeux, décevant, sans intérêt. Peut aussi qualifier quelqu'un de fade. En France, 'plate' est uniquement le féminin de 'plat' (surface plate). 'C'est plate' au Québec = c'est décevant ou ennuyeux, pas une description de relief.",
+    "exemple": "C'était plate comme soirée, personne ne parlait et la musique était nulle.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_045",
+    "mot": "Niaiser",
+    "definition": "Au Québec : faire perdre son temps à quelqu'un, taquiner, ne pas prendre les choses au sérieux. En France, ce verbe n'existe pas (on a 'niais' comme adjectif uniquement). 'Niaise pas !' = sois sérieux, ne traîne pas.",
+    "exemple": "Arrête de niaiser et finis ton travail, on est en retard pour la réunion.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_046",
+    "mot": "Aubaine",
+    "definition": "Au Québec : promotion, solde, bonne affaire commerciale. Sens courant et commercial. En France, 'aubaine' désigne une chance imprévue ou un avantage inattendu — sens plus abstrait, jamais affiché en vitrine de magasin.",
+    "exemple": "J'ai trouvé une belle aubaine : un manteau à 30 $ au lieu de 150 $.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_047",
+    "mot": "Garde-robe",
+    "definition": "Au Québec : placard encastré dans le mur, espace de rangement des vêtements intégré à la pièce. En France, 'garde-robe' désigne soit un meuble-armoire, soit l'ensemble des vêtements d'une personne. Distinction cruciale lors d'une visite d'appartement.",
+    "exemple": "L'appartement est petit mais la garde-robe dans la chambre est immense.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_050",
+    "mot": "Achaler",
+    "definition": "Au Québec : agacer, embêter, importuner, déranger quelqu'un. Très courant dans la langue de tous les jours. En France, ce verbe n'existe pas en français standard. 'Tu m'achales' = tu m'énerves, tu m'importunes.",
+    "exemple": "Arrête d'achaler ta sœur, elle essaie de dormir.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_052",
+    "mot": "Chalet",
+    "definition": "Au Québec : maison de campagne, cottage, résidence secondaire en nature (bord d'un lac, en forêt). Pas forcément en montagne. En France, 'chalet' désigne spécifiquement une maison typique des Alpes. 'Partir au chalet' au Québec = aller se ressourcer à la campagne.",
+    "exemple": "On passe la fin de semaine au chalet, il y a un lac et on va faire du canot.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_053",
+    "mot": "Bienvenue",
+    "definition": "Au Québec : couramment utilisé comme 'de rien' en réponse à 'merci' (calque de l'anglais 'you're welcome'). En France, 'bienvenue' est exclusivement une formule d'accueil et ne répond jamais à un 'merci'. Confusion fréquente dans les échanges polis.",
+    "exemple": "— Merci pour ton aide ! — Bienvenue, c'était vraiment un plaisir.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_055",
+    "mot": "Allure",
+    "definition": "Au Québec : 'avoir de l'allure' = faire sens, être raisonnable ou logique. 'Avoir l'air d'avoir de l'allure' = sembler compétent. En France, 'allure' désigne l'apparence physique, la prestance ou la vitesse. Le sens logique/rationnel québécois est totalement absent en France.",
+    "exemple": "Ton idée a de l'allure, je pense qu'on devrait l'essayer dès lundi.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_056",
+    "mot": "Poche",
+    "definition": "Au Québec : mauvais, nul, décevant, raté. Adjectif invariable très courant ('c'est poche', 'il est poche'). En France, 'poche' est un nom féminin désignant une poche de vêtement ou un sachet. Le sens péjoratif québécois est totalement absent en Europe.",
+    "exemple": "Mon équipe a perdu 8-0, c'était vraiment poche comme match.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_057",
+    "mot": "Sacrer",
+    "definition": "Au Québec : proférer des sacres, les jurons québécois tirés du vocabulaire religieux (câlice, ostie, tabarnak, etc.). En France, 'sacrer' signifie consacrer ou couronner (sacrer un roi, un évêque). Sens quasi opposé : profaner vs consacrer.",
+    "exemple": "Il a sacré toute la soirée parce que son équipe de hockey perdait.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_059",
+    "mot": "Maringouin",
+    "definition": "Au Québec : moustique, insecte piqueur. Terme courant et normal. En France, 'maringouin' est totalement inconnu — on dit 'moustique'. Un immigrant fraîchement arrivé ne comprendra pas 'attention aux maringouins ce soir au chalet'.",
+    "exemple": "Mets du chasse-maringouin, le soir au bord du lac c'est infesté.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_061",
+    "mot": "Bordée",
+    "definition": "Au Québec : importante chute de neige, grosse quantité de neige tombée en peu de temps. En France, 'bordée' est un terme maritime désignant une salve de canons tirés simultanément d'un côté d'un navire de guerre.",
+    "exemple": "On a eu toute une bordée la nuit passée, il y a 40 cm de neige dans l'entrée.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_062",
+    "mot": "Poêle",
+    "definition": "Au Québec : cuisinière, l'appareil de cuisson complet (four + plaques). En France, 'poêle' désigne principalement une poêle à frire (ustensile) ou un poêle à bois (chauffage). 'Nettoie le poêle' au Québec = nettoie la cuisinière, pas un ustensile.",
+    "exemple": "Le poêle est à gaz ou électrique dans cet appartement-là ?",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_063",
+    "mot": "Piton",
+    "definition": "Au Québec : bouton, touche, commande (piton de sonnette, piton d'ascenseur, piton de télécommande). Très courant à l'oral. En France, 'piton' désigne un pic montagneux isolé ou un crampon d'alpinisme. 'Appuie sur le piton' = appuie sur le bouton.",
+    "exemple": "Appuie sur le piton pour appeler l'ascenseur, j'ai les mains pleines de sacs.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_064",
+    "mot": "Palette",
+    "definition": "Au Québec : popsicle, sucette glacée sur bâton (glace à l'eau ou à la crème). En France, 'palette' désigne la planche du peintre, une palette de manutention logistique ou un morceau d'épaule de porc. Le sens glacé est totalement inconnu en France.",
+    "exemple": "Il fait tellement chaud, j'ai mangé trois palettes depuis ce matin.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_065",
+    "mot": "Frencher",
+    "definition": "Au Québec : embrasser avec la langue, rouler une pelle. Verbe familier et très courant. En France, ce verbe n'existe pas — on dit 'rouler une pelle' ou 'un patin'. Vient de l'anglais 'to French kiss'. Surprenant pour un Européen qui l'entend pour la première fois.",
+    "exemple": "Ils se sont frenchés devant tout le monde à la soirée, c'était un peu gênant.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_066",
+    "mot": "Fatigant",
+    "definition": "Au Québec : agaçant, énervant, qui tape sur les nerfs — une qualité de caractère négatif. En France, 'fatigant' signifie uniquement ce qui cause de la fatigue physique ou mentale. 'Il est fatigant' au Québec = il est insupportable, pas qu'il épuise physiquement.",
+    "exemple": "Il est vraiment fatigant avec ses questions constantes, je ne peux plus le voir.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_067",
+    "mot": "Tannant",
+    "definition": "Au Québec : agaçant, espiègle, turbulent — surtout pour un enfant difficile. Dérivé de 'tanné'. En France, 'tannant' n'est pas un adjectif courant — au mieux archaïque pour 'qui tanne le cuir'. Très utilisé par les parents québécois.",
+    "exemple": "Mon petit est tannant aujourd'hui, il n'arrête pas de faire des niaiseries.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_069",
+    "mot": "Coquerelle",
+    "definition": "Au Québec : cafard, blatte, l'insecte nuisible que l'on peut trouver dans les logements. En France, 'coquerelle' est totalement inconnu — on dit 'cafard' ou 'blatte'. Voir une 'coquerelle' dans son appartement québécois est une mauvaise surprise.",
+    "exemple": "J'ai trouvé une coquerelle dans la cuisine, il faut appeler le proprio pour une extermination.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_070",
+    "mot": "Bibitte",
+    "definition": "Au Québec : insecte, bestiole, petit animal ou créature quelconque. Terme neutre ou affectueux. En France, ce mot est inconnu — on dira 'bestiole', 'bête', 'insecte'. 'Une bibitte' peut être un moustique, une araignée ou tout petit être vivant.",
+    "exemple": "Il y a une grosse bibitte dans la salle de bain, peux-tu venir l'attraper ?",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_071",
+    "mot": "Pinotte",
+    "definition": "Au Québec : cacahuète, arachide. Aussi dans l'expression 'pour des pinottes' = pour presque rien, à vil prix. En France, 'pinotte' est inconnu — on dit 'cacahuète'. 'Travailler pour des pinottes' = travailler pour un salaire dérisoire.",
+    "exemple": "Ce boulot paye pour des pinottes, il faut vraiment que je trouve mieux.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_074",
+    "mot": "Party",
+    "definition": "Au Québec : fête, soirée, rassemblement festif (de l'anglais 'party'). Très naturel dans la langue parlée. En France, 'party' est compris mais non standard — on dit 'fête', 'soirée', 'boom'. 'Un party de bureau' = une fête entre collègues de travail.",
+    "exemple": "T'as vu la gang au party de Sophie ? Il y avait au moins cinquante personnes.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_078",
+    "mot": "Claques",
+    "definition": "Au Québec : couvre-chaussures en caoutchouc que l'on enfile par-dessus ses souliers pour se protéger de la neige et de la sloche (galoshes). En France, 'une claque' = une gifle. 'Mettre ses claques' au Québec = protéger ses chaussures, pas se battre.",
+    "exemple": "Mets tes claques avant de sortir, il y a de la sloche partout sur le trottoir.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_079",
+    "mot": "Caméra",
+    "definition": "Au Québec : appareil photo ou caméra vidéo — les deux indistinctement. En France, 'caméra' désigne uniquement un appareil de prise de vue vidéo. Pour une photo, un Français dira 'appareil photo'. Au Québec, 'caméra' couvre les deux usages.",
+    "exemple": "Apporte ta caméra, il y a de beaux paysages à photographier au parc national.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_080",
+    "mot": "Motton",
+    "definition": "Au Québec : nœud, boule, agglomérat physique. Aussi utilisé pour une émotion bloquée ('avoir un motton dans la gorge' = avoir la gorge serrée par l'émotion). En France, 'motton' est inconnu — on dira 'un nœud dans la gorge' ou 'la gorge serrée'.",
+    "exemple": "Quand il a reçu son diplôme devant toute la famille, j'avais un gros motton dans la gorge.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_082",
+    "mot": "Épeurant",
+    "definition": "Au Québec : effrayant, qui fait peur. Dérivé de 'épeur' (peur). En France, ce mot n'existe pas — on dit 'effrayant', 'terrifiant', 'qui fait peur'. 'C'est épeurant' est une réaction normale d'un Québécois face à quelque chose d'angoissant.",
+    "exemple": "Le film d'horreur était vraiment épeurant, j'ai pas dormi de la nuit.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_083",
+    "mot": "Niaiseux / Niaiseuse",
+    "definition": "Au Québec : idiot, stupide, sans bon sens. Plus fort et plus courant que 'niais'. En France, 'niaiseux' n'existe pas — on dira 'niais', 'bête', 'idiot'. Peut être une insulte franche ou une taquinerie affectueuse selon le ton.",
+    "exemple": "J'ai oublié mes clés dans le char encore. Je suis tellement niaiseux des fois.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_084",
+    "mot": "En masse",
+    "definition": "Au Québec : beaucoup, en grande quantité, plus que suffisant ('y'en a en masse' = il y en a largement assez). En France, 'en masse' signifie en grand nombre collectivement, tous ensemble — sens collectif ou social, pas d'abondance.",
+    "exemple": "Inquiète-toi pas pour la bouffe, j'en ai préparé en masse pour tout le monde.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_085",
+    "mot": "Gosser",
+    "definition": "Au Québec : tailler du bois à la main; mais surtout dans le sens familier d'agacer, de tripoter ou de s'acharner sur quelque chose. En France, ce verbe est archaïque pour 'tailler' et pratiquement inconnu. 'Arrête de gosser' = arrête de tripoter ou d'agacer.",
+    "exemple": "Arrête de gosser avec ton cellulaire et écoute ce que je te dis.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_086",
+    "mot": "Gratte",
+    "definition": "Au Québec : grattoir à glace, outil indispensable pour dégivrer le pare-brise d'une voiture en hiver. Aussi le grand chasse-neige municipal. En France, 'gratte' est uniquement une forme conjuguée du verbe 'gratter' — jamais un outil hivernal nommé ainsi.",
+    "exemple": "J'ai pas trouvé ma gratte ce matin, j'ai dû dégivrer avec une carte de crédit.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_087",
+    "mot": "Coton ouaté",
+    "definition": "Au Québec : sweat-shirt, hoodie ou molleton — vêtement de détente en coton molletonné, avec ou sans capuche. En France, on dit uniquement 'sweat', 'sweat-shirt' ou 'hoodie'. 'Coton ouaté' est complètement inconnu en Europe francophone.",
+    "exemple": "Je reste chez moi ce soir, je mets mon coton ouaté et je regarde une série.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_088",
+    "mot": "Orignal",
+    "definition": "Au Québec : grand cervidé d'Amérique du Nord (moose en anglais), symbole de la faune québécoise. En France, 'orignal' est inconnu du grand public — on dit 'élan' (qui est en réalité une espèce différente, européenne). Voir un orignal en bord de route est courant au Québec.",
+    "exemple": "Fais attention en conduisant la nuit sur la 138, il y a des orignaux sur la route.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_089",
+    "mot": "Mouiller",
+    "definition": "Au Québec : pleuvoir. 'Il mouille' = il pleut. Verbe impersonnel très courant. En France, 'mouiller' signifie rendre humide, tremper — jamais pleuvoir (on dit 'il pleut'). 'Il mouille dehors' déroutera n'importe quel Européen francophone.",
+    "exemple": "Prends ton imperméable, il mouille depuis ce matin et ça va pas s'arrêter de sitôt.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_090",
+    "mot": "S'accoter",
+    "definition": "Au Québec : vivre en union libre, emménager en couple sans être marié. 'Être accoté(e)' = vivre en concubinage. En France, 's'accoter' signifie s'appuyer contre quelque chose. 'Ils se sont accoté(e)s' au Québec = ils ont emménagé ensemble en couple.",
+    "exemple": "Ça fait un an qu'ils sortent ensemble, ils vont s'accoter au printemps.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_091",
+    "mot": "Brosse",
+    "definition": "Au Québec : cuite, beuverie, état d'ivresse avancé. 'Prendre une brosse' = se soûler, faire une fête arrosée. En France, 'brosse' désigne uniquement l'outil (brosse à cheveux, brosse à dents). Le sens alcoolisé est totalement inconnu en France.",
+    "exemple": "Il a pris toute une brosse au mariage de son frère, il était dans un état.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_093",
+    "mot": "Traverse",
+    "definition": "Au Québec : passage pour piétons, passage clouté, endroit marqué au sol pour traverser la rue. En France, 'traverse' désigne une pièce de bois transversale (traverse de chemin de fer) ou une petite ruelle — jamais un passage piéton.",
+    "exemple": "Attends la traverse pour traverser, il y a beaucoup trop de trafic ici.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_094",
+    "mot": "Tire",
+    "definition": "Au Québec : confiserie traditionnelle à base de sucre d'érable tiré — sorte de caramel mou et collant (tire sur la neige, tire Sainte-Catherine). En France, 'tire' (argot) = une voiture, ou le simple fait de tirer. La 'tire d'érable' est un incontournable du terroir québécois.",
+    "exemple": "À l'érablière, on a fait de la tire sur la neige, c'est sucré à mort mais tellement bon.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_095",
+    "mot": "Divan",
+    "definition": "Au Québec : canapé, sofa, meuble de salon rembourré pour s'asseoir ou se coucher. En France, 'divan' désigne une méridienne ou chaise longue orientale, ou le divan du psychanalyste — notion beaucoup plus spécifique et rare dans la vie quotidienne.",
+    "exemple": "Le divan du salon est trop grand pour la pièce, on devrait en prendre un plus petit.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_096",
+    "mot": "Joke",
+    "definition": "Au Québec : blague, histoire drôle ou plaisanterie (de l'anglais 'joke'). Nom féminin : 'une joke'. Naturel et universel dans la langue parlée. En France, 'joke' est compris mais non standard — on dit 'une blague', 'une vanne'. 'C'est une joke' = c'est pour rire.",
+    "exemple": "Arrête, c'est une joke ! Je ne l'ai pas vraiment dit à ton boss.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_001",
+    "mot": "Gosses",
+    "definition": "Testicules. Fam. et très vulgaire. **NE JAMAIS UTILISER** pour parler d'enfants (ex: 'J'ai laissé les gosses à la maison' est catastrophique).",
+    "exemple": "Il a reçu un coup dans les gosses.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_002",
+    "mot": "Blonde",
+    "definition": "Petite amie ou conjointe, peu importe la couleur de ses cheveux.",
+    "exemple": "Je te présente ma blonde, elle est rousse.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_003",
+    "mot": "Char",
+    "definition": "Voiture. Rien à voir avec un char d'assaut (tank) de l'armée.",
+    "exemple": "J'ai parké mon char dans l'entrée.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_004",
+    "mot": "Écœurant",
+    "definition": "Peut signifier 'dégoûtant', OU (très souvent) 'absolument délicieux / génial' lorsqu'utilisé de façon positive.",
+    "exemple": "Ce gâteau-là est vraiment écœurant! (Il est très bon).",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_005",
+    "mot": "Préservatif",
+    "definition": "Condom. Mais attention, les agents de conservation dans la nourriture sont des 'agents de conservation', pas des préservatifs!",
+    "exemple": "Ce produit contient des agents de conservation.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_006",
+    "mot": "Dépanneur",
+    "definition": "Petite épicerie de quartier ouverte très tard. Ce n'est pas un mécanicien automobile ou un garagiste.",
+    "exemple": "Je vais au dépanneur acheter du lait.",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_007",
+    "mot": "Breuvage",
+    "definition": "N'importe quelle boisson (jus, soda, café). Pas du tout péjoratif au Québec.",
+    "exemple": "Voulez-vous un breuvage avec votre trio?",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_faux_008",
+    "mot": "Glace",
+    "definition": "Un glaçon pour une boisson, ou la glace sur un lac. Pour le dessert glacé en cornet, on dit toujours de la 'crème glacée'.",
+    "exemple": "Veux-tu de la glace dans ton eau?",
+    "theme": "Urgence Faux-Amis",
+    "niveau": "urgence",
+    "pack": "0_faux_amis"
+  },
+  {
+    "id": "mot_0001",
+    "mot": "Tuque",
+    "definition": "Chapeau hiver.",
+    "exemple": "Mets ta tuque.",
+    "theme": "Vêtements",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0002",
+    "mot": "Chum",
+    "definition": "Amoureux ou ami.",
+    "exemple": "Mon chum.",
+    "theme": "Relations",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0004",
+    "mot": "Magasiner",
+    "definition": "Faire des achats.",
+    "exemple": "Je vais magasiner.",
+    "theme": "Magasinage",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0005",
+    "mot": "Tiguidou",
+    "definition": "C'est excellent, c'est réglé, je suis d'accord.",
+    "exemple": "Tu m'appelles quand tu arrives? C'est tiguidou!",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0006",
+    "mot": "Achalant",
+    "definition": "Quelque chose ou quelqu'un d'agaçant, d'énervant ou de dérangeant.",
+    "exemple": "Arrête de niaiser ton frère, t'es ben achalant!",
+    "theme": "Émotions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0007",
+    "mot": "Poudrerie",
+    "definition": "Neige fine et sèche soufflée par le vent près du sol, réduisant parfois la visibilité de façon dangereuse. Ce phénomène est différent d'une chute de neige et est fréquent dans les régions ouvertes du Québec.",
+    "exemple": "Il y a de la poudrerie sur l'autoroute 20, la visibilité est réduite à moins de 200 mètres.",
+    "theme": "Hiver/Météo",
+    "niveau": "urgence",
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0008",
+    "mot": "Pantoute",
+    "definition": "Pas du tout.",
+    "exemple": "Pas pantoute.",
+    "theme": "Expressions",
+    "niveau": 5,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0009",
+    "mot": "Piastre",
+    "definition": "Terme familier pour désigner un dollar. Prononcé souvent \"piasse\".",
+    "exemple": "Ça m'a coûté vingt piastres c'te livre-là.",
+    "theme": "Argent",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0011",
+    "mot": "Allô",
+    "definition": "Salutation informelle utilisée au Québec pour dire 'bonjour' à toute heure de la journée, et non seulement au téléphone comme en France.",
+    "exemple": "Allô! Ça va-tu bien ce matin?",
+    "theme": "Expressions de base",
+    "niveau": 4,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0013",
+    "mot": "Couvert",
+    "definition": "Se dit du ciel lorsqu'il est entièrement recouvert de nuages. Équivalent de nuageux en français standard. Terme très courant dans les bulletins météo québécois.",
+    "exemple": "Le ciel est ben couvert aujourd'hui, on devrait avoir de la neige en après-midi.",
+    "theme": "Hiver/Météo",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0014",
+    "mot": "Déjeuner",
+    "definition": "Au Québec, le déjeuner désigne le repas du matin (petit-déjeuner en France). Le repas du midi s'appelle le dîner, et le repas du soir s'appelle le souper.",
+    "exemple": "Je prends toujours mon déjeuner avant d'aller travailler, même si c'est juste un café et un toast.",
+    "theme": "Nourriture",
+    "niveau": "urgence",
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0015",
+    "mot": "Mitaines",
+    "definition": "Gants sans séparation individuelle pour les doigts (moufles en France), portés en hiver pour protéger les mains du froid. Les doigts se réchauffent mutuellement, ce qui les rend plus efficaces par grand froid.",
+    "exemple": "Mets tes mitaines avant de sortir, tu vas te geler les mains si tu les oublies.",
+    "theme": "Hiver/Météo",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0016",
+    "mot": "Stationnement",
+    "definition": "Espace ou terrain destiné à garer les véhicules. Désigne aussi l'action de garer sa voiture. Les restrictions de stationnement sont très fréquentes dans les rues des grandes villes québécoises.",
+    "exemple": "C'est vraiment difficile de trouver un stationnement gratuit dans le centre-ville de Montréal.",
+    "theme": "Transport",
+    "niveau": 5,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0017",
+    "mot": "Bec",
+    "definition": "Un bisou ou une bise rapide donnée sur la joue ou les lèvres pour saluer ou montrer de l'affection. Terme très affectueux utilisé surtout en famille.",
+    "exemple": "Donne un bec à ta grand-maman avant de partir à l'école!",
+    "theme": "Expressions de base",
+    "niveau": 3,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0018",
+    "mot": "Centre d'achat",
+    "definition": "Grand centre commercial regroupant de nombreux magasins, restaurants et services sous un même toit. L'équivalent du mall anglophone ou du centre commercial en France.",
+    "exemple": "On va au centre d'achat Carrefour Laval samedi, il y a des soldes partout cette semaine.",
+    "theme": "Transport",
+    "niveau": 3,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0019",
+    "mot": "Épicerie",
+    "definition": "Supermarché au Québec.",
+    "exemple": "On fait l'épicerie.",
+    "theme": "Quotidien",
+    "niveau": 2,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0020",
+    "mot": "Un 4 et demi (4½)",
+    "definition": "Appartement ou lieu d'habitation. Au Québec, les logements sont désignés par un nombre de pièces suivi d'un demi (ex: 3½, 4½, 5½), où le ½ représente la salle de bain.",
+    "exemple": "J'ai trouvé un beau 4½ à louer dans Rosemont, c'est parfait pour moi et ma famille.",
+    "theme": "Logement",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0021",
+    "mot": "Frette",
+    "definition": "Très froid.",
+    "exemple": "Y fait frette.",
+    "theme": "Météo",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0022",
+    "mot": "Poutine",
+    "definition": "Frites fromage sauce.",
+    "exemple": "Manger une poutine.",
+    "theme": "Nourriture",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0023",
+    "mot": "Coloc",
+    "definition": "Abréviation familière de colocataire. Personne avec qui on partage un logement pour diviser les frais de loyer et les dépenses du quotidien.",
+    "exemple": "Ma coloc est super tranquille, on s'entend vraiment bien depuis six mois.",
+    "theme": "Logement",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0024",
+    "mot": "Garderie",
+    "definition": "Établissement d'accueil pour les enfants de 0 à 5 ans pendant que les parents travaillent. Les CPE (Centres de la petite enfance) sont des garderies subventionnées par le gouvernement québécois, proposant des tarifs très réduits.",
+    "exemple": "Ma fille va à la garderie depuis ses 18 mois, ça lui fait du bien de jouer avec d'autres enfants.",
+    "theme": "Logement",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0025",
+    "mot": "Souffleuse",
+    "definition": "Machine motorisée utilisée pour dégager la neige des entrées, des trottoirs et des stationnements en l'aspirant et en la projetant loin via un tube orientable. Quasi indispensable pour les propriétaires de maisons au Québec.",
+    "exemple": "Mon voisin m'a passé un coup de souffleuse dans l'entrée après la tempête, c'est ben fin de sa part!",
+    "theme": "Hiver/Météo",
+    "niveau": 5,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0026",
+    "mot": "Traversier",
+    "definition": "Bateau de transport qui assure la liaison entre deux rives d'un fleuve ou d'un bras de mer. La Société des traversiers du Québec (STQ) gère plusieurs liaisons, dont le célèbre traversier Québec-Lévis.",
+    "exemple": "On prend le traversier pour aller à Lévis ce soir, c'est plus rapide que de faire le pont et la vue est magnifique.",
+    "theme": "Transport",
+    "niveau": 3,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0027",
+    "mot": "Tantôt",
+    "definition": "Expression temporelle ambiguë pouvant signifier tout à l'heure (dans peu de temps), il y a un moment ou encore cet après-midi ou ce soir, selon le contexte. Cette ambiguïté peut causer des quiproquos même entre Québécois.",
+    "exemple": "Je t'appelle tantôt quand j'ai fini de souper, garde ton téléphone proche.",
+    "theme": "Expressions de base",
+    "niveau": "urgence",
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0028",
+    "mot": "Caisse populaire",
+    "definition": "Institution financière coopérative appartenant à ses membres, l'équivalent d'une banque. Le réseau Desjardins, fondé en 1900 par Alphonse Desjardins à Lévis, est le plus grand groupe financier coopératif en Amérique du Nord.",
+    "exemple": "J'ai ouvert mon compte à la caisse populaire du quartier dès mon arrivée au Québec.",
+    "theme": "Marché du travail",
+    "niveau": 4,
+    "pack": "3_travail"
+  },
+  {
+    "id": "mot_0029",
+    "mot": "RQAP",
+    "definition": "Régime québécois d'assurance parentale. Programme gouvernemental offrant des prestations financières aux deux parents lors de la naissance ou de l'adoption d'un enfant. Le Québec est un leader mondial en politiques familiales.",
+    "exemple": "Mon patron sait que je pars en RQAP en janvier, je l'ai avisé longtemps à l'avance.",
+    "theme": "Marché du travail",
+    "niveau": 4,
+    "pack": "3_travail"
+  },
+  {
+    "id": "mot_0030",
+    "mot": "Bungalow",
+    "definition": "Maison individuelle de plain-pied sans étage, très répandue dans les banlieues québécoises construites après la Deuxième Guerre mondiale. Son accès facile le rend populaire auprès des familles et des personnes âgées.",
+    "exemple": "On a acheté un bungalow à Laval, c'est parfait pour la famille avec une grande cour arrière.",
+    "theme": "Logement",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0031",
+    "mot": "Cabane à sucre",
+    "definition": "Érable.",
+    "exemple": "Aller à la cabane.",
+    "theme": "Culture",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0032",
+    "mot": "Placoter",
+    "definition": "Bavarder, jaser et discuter de façon détendue, souvent à propos de sujets sans grande importance. Placoter dans le dos de quelqu'un signifie faire des ragots sur cette personne en son absence.",
+    "exemple": "Les deux voisines placotent sur le balcon depuis une heure, elles ont l'air de bien s'amuser.",
+    "theme": "Quotidien",
+    "niveau": 6,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0033",
+    "mot": "Métro (de Montréal)",
+    "definition": "Réseau de transport souterrain de Montréal, inauguré en 1966 pour l'Expo 67. Composé de 4 lignes et 68 stations, il se distingue par ses voitures sur pneumatiques (pneus en caoutchouc) et ses stations à l'architecture unique.",
+    "exemple": "Je prends le métro ligne orange chaque matin pour aller travailler au centre-ville, c'est bien plus pratique qu'en char.",
+    "theme": "Transport",
+    "niveau": 4,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0034",
+    "mot": "Pogner",
+    "definition": "Attraper/succès.",
+    "exemple": "J'ai pogné la grippe.",
+    "theme": "Action",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0035",
+    "mot": "Cégep",
+    "definition": "Collège post-secondaire.",
+    "exemple": "Étudier au cégep.",
+    "theme": "Éducation",
+    "niveau": 4,
+    "pack": "3_travail"
+  },
+  {
+    "id": "mot_0036",
+    "mot": "Smoked meat",
+    "definition": "Spécialité culinaire montréalaise: poitrine de bœuf marinée, fumée et cuite lentement, servie en sandwich sur du pain de seigle avec de la moutarde jaune. Popularisée par les immigrants juifs ashkénazes au début du XXe siècle.",
+    "exemple": "Un smoked meat medium au Schwartz's sur le boulevard Saint-Laurent, c'est un classique incontournable à Montréal.",
+    "theme": "Nourriture",
+    "niveau": 5,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0037",
+    "mot": "Redoux",
+    "definition": "Période de température douce et temporaire survenant en hiver, causant une fonte partielle de la neige avant que le froid revienne. Le cycle gel-dégel qui s'ensuit rend souvent les routes et trottoirs très glissants.",
+    "exemple": "Il y a un redoux cette semaine, la neige fond partout mais attention à la glace noire ce soir.",
+    "theme": "Hiver/Météo",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0038",
+    "mot": "1er juillet",
+    "definition": "Date officielle de déménagement au Québec, où la grande majorité des baux de logement se terminent et commencent. Ce jour est surnommé la fête du déménagement: des milliers de ménages changent de logement simultanément.",
+    "exemple": "Je cherche des amis forts pour m'aider à déménager le 1er juillet, c'est la folie dans les rues de Montréal ce jour-là.",
+    "theme": "Logement",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0039",
+    "mot": "Être dans le jus",
+    "definition": "Expression idiomatique signifiant être très occupé, débordé et avoir trop de travail ou de responsabilités à gérer en même temps. Être dans le jus jusqu'au cou accentue encore davantage l'idée d'être complètement submergé.",
+    "exemple": "Appelle-moi pas ce matin, je suis vraiment dans le jus avec le rapport de fin d'année à remettre.",
+    "theme": "Expressions de base",
+    "niveau": 4,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0040",
+    "mot": "CNESST",
+    "definition": "Commission des normes, de l'équité, de la santé et de la sécurité du travail. Organisme gouvernemental québécois qui protège les travailleurs en cas d'accident de travail ou de maladie professionnelle et verse des indemnités de remplacement du revenu.",
+    "exemple": "Mon employé s'est blessé au dos sur le chantier, on a dû faire une déclaration à la CNESST le jour même.",
+    "theme": "Marché du travail",
+    "niveau": "urgence",
+    "pack": "3_travail"
+  },
+  {
+    "id": "mot_0041",
+    "mot": "Convention collective",
+    "definition": "Entente écrite négociée entre un syndicat et un employeur, fixant les conditions de travail pour les employés syndiqués: salaires, horaires, vacances, avantages sociaux et procédures de règlement des conflits.",
+    "exemple": "Grâce à la convention collective négociée l'automne dernier, on a obtenu une augmentation de salaire de 4% cette année.",
+    "theme": "Marché du travail",
+    "niveau": 4,
+    "pack": "3_travail"
+  },
+  {
+    "id": "mot_0042",
+    "mot": "Joual",
+    "definition": "Terme désignant le parler populaire québécois, caractérisé par des anglicismes, des emprunts phonétiques et un lexique distinct. Le mot joual est lui-même la prononciation populaire du mot cheval.",
+    "exemple": "Les pièces de Michel Tremblay sont écrites en joual pour représenter authentiquement le peuple ordinaire de Montréal.",
+    "theme": "Expressions de base",
+    "niveau": 1,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0043",
+    "mot": "Réveillon",
+    "definition": "Repas festif et animé qui se tient la nuit du 24 décembre (Noël) ou du 31 décembre (Nouvel An). Tradition profondément ancrée dans la culture québécoise, avec des plats typiques comme la tourtière, les fèves au lard et la tire d'érable.",
+    "exemple": "Chez nous, le réveillon de Noël réunit toute la famille et on mange jusqu'aux petites heures du matin.",
+    "theme": "Nourriture",
+    "niveau": 3,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0044",
+    "mot": "Rang",
+    "definition": "Route rurale typique du Québec longeant des terres agricoles. Le système des rangs est un héritage du régime seigneurial français en Nouvelle-France, qui a façonné de façon unique l'occupation et le paysage du territoire québécois.",
+    "exemple": "Mes grands-parents habitent dans un rang en Beauce, loin de tout mais tellement tranquille en été.",
+    "theme": "Logement",
+    "niveau": 5,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0045",
+    "mot": "Syndicat",
+    "definition": "Défend droits travailleurs.",
+    "exemple": "Le syndicat.",
+    "theme": "Emploi",
+    "niveau": 4,
+    "pack": "3_travail"
+  },
+  {
+    "id": "mot_0046",
+    "mot": "Vignette de stationnement",
+    "definition": "Permis ou autocollant délivré par une municipalité permettant aux résidents d'un quartier de garer leur véhicule dans leur rue ou dans des zones résidentielles à accès restreint, sans risquer de contraventions.",
+    "exemple": "Sans vignette de stationnement résidentiel, j'aurais des contraventions tous les jours dans ma rue.",
+    "theme": "Transport",
+    "niveau": 3,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0047",
+    "mot": "Se faire un motton",
+    "definition": "Expression signifiant faire beaucoup d'argent, s'enrichir. À noter: avoir le motton dans la gorge est une expression différente qui signifie avoir une boule dans la gorge, être ému.",
+    "exemple": "Il s'est fait un motton.",
+    "theme": "Expressions de base",
+    "niveau": 2,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0048",
+    "mot": "Verglas",
+    "definition": "Couche de glace se formant sur les surfaces (routes, trottoirs, arbres) lorsque la pluie verglaçante gèle au contact du sol. La crise du verglas de janvier 1998 est l'une des catastrophes naturelles les plus marquantes de l'histoire du Québec.",
+    "exemple": "Il y a du verglas ce matin sur les trottoirs, marche lentement pour ne pas tomber!",
+    "theme": "Hiver/Météo",
+    "niveau": 5,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0049",
+    "mot": "Faire du millage",
+    "definition": "Expression calquée sur l'anglais mileage, signifiant tirer le maximum d'une situation, d'un avantage ou d'une expérience. Peut être positif (valoriser ses compétences) ou négatif (exploiter excessivement une situation).",
+    "exemple": "Il fait vraiment du millage avec son expérience à l'étranger lors de chaque entrevue d'embauche.",
+    "theme": "Marché du travail",
+    "niveau": 4,
+    "pack": "3_travail"
+  },
+  {
+    "id": "mot_0050",
+    "mot": "Virer sa crêpe",
+    "definition": "Expression imagée signifiant changer radicalement et soudainement d'opinion ou de position, souvent de façon inattendue. L'image vient de la crêpe que l'on retourne dans la poêle. Très utilisée en politique et dans les médias.",
+    "exemple": "Il était totalement contre le projet, mais après la réunion avec le ministre, il a viré sa crêpe complètement.",
+    "theme": "Expressions de base",
+    "niveau": 4,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0051",
+    "mot": "Coopérative d'habitation",
+    "definition": "Forme d'habitation collective où les résidents sont propriétaires-membres d'une coopérative qui possède l'immeuble. Organisme à but non lucratif, elle offre des loyers généralement plus stables à long terme que le marché locatif traditionnel.",
+    "exemple": "On a mis nos noms sur la liste d'attente d'une coopérative d'habitation dans Villeray, les loyers y sont plus stables.",
+    "theme": "Logement",
+    "niveau": 2,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0052",
+    "mot": "Covoiturage",
+    "definition": "Pratique consistant à partager un trajet en voiture avec d'autres personnes pour réduire les coûts et l'empreinte écologique. La plateforme Amigo Express est la plus populaire au Québec pour les trajets interurbains.",
+    "exemple": "Je fais du covoiturage chaque semaine pour aller à Québec, ça me coûte deux fois moins cher que le bus.",
+    "theme": "Transport",
+    "niveau": 5,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0053",
+    "mot": "Tire d'érable",
+    "definition": "Confiserie québécoise traditionnelle fabriquée en versant du sirop d'érable chaud sur de la neige fraîche, où il se fige légèrement et est enroulé sur un bâtonnet de bois. Activité phare des cabanes à sucre au printemps.",
+    "exemple": "Les enfants adorent la tire d'érable sur la neige à la cabane, c'est une tradition du temps des sucres qu'on attend toute l'année.",
+    "theme": "Nourriture",
+    "niveau": 1,
+    "pack": "1_survie"
+  },
+  {
+    "id": "mot_0054",
+    "mot": "Assurance-emploi",
+    "definition": "Programme fédéral canadien versant des prestations financières temporaires aux travailleurs ayant perdu leur emploi involontairement et ayant accumulé suffisamment d'heures de travail assurables. Communément appelé le chômage dans le langage courant.",
+    "exemple": "J'ai perdu mon emploi en mars à cause d'une mise à pied, j'attends l'approbation de mon assurance-emploi.",
+    "theme": "Marché du travail",
+    "niveau": 4,
+    "pack": "3_travail"
+  },
+  {
+    "id": "mot_0055",
+    "mot": "Loyer",
+    "definition": "Montant pour louer.",
+    "exemple": "Le loyer est dû.",
+    "theme": "Logement",
+    "niveau": 2,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0056",
+    "mot": "Proprio",
+    "definition": "Abréviation familière de propriétaire, la personne qui possède le logement et à qui on verse le loyer.",
+    "exemple": "Mon proprio est correct, il répare les affaires vite quand il y a un problème.",
+    "theme": "Logement",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0057",
+    "mot": "Bail",
+    "definition": "Contrat de location.",
+    "exemple": "Signer le bail.",
+    "theme": "Logement",
+    "niveau": "urgence",
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0058",
+    "mot": "Chauffage inclus",
+    "definition": "Mention dans une annonce de logement indiquant que les frais de chauffage sont payés par le propriétaire et non par le locataire.",
+    "exemple": "J'ai trouvé un 3½ à 900$ avec chauffage inclus, c'est une bonne affaire pour l'hiver.",
+    "theme": "Logement",
+    "niveau": 1,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0059",
+    "mot": "Sous-sol",
+    "definition": "Logement situé en dessous du rez-de-chaussée, partiellement ou totalement enterré. Souvent moins cher, mais moins lumineux.",
+    "exemple": "Le sous-sol est moins cher, mais j'ai besoin de lumière naturelle alors je cherche autre chose.",
+    "theme": "Logement",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0060",
+    "mot": "Concierge",
+    "definition": "Personne responsable de l'entretien courant d'un immeuble résidentiel. À contacter en cas de problème dans les parties communes.",
+    "exemple": "Le concierge de mon building est toujours disponible, il répond même le week-end.",
+    "theme": "Logement",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0061",
+    "mot": "TAL",
+    "definition": "Tribunal administratif du logement. Organisme gouvernemental québécois qui règle gratuitement les conflits entre locataires et propriétaires.",
+    "exemple": "Mon proprio refuse de faire les réparations, je vais porter plainte au TAL.",
+    "theme": "Logement",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0062",
+    "mot": "Cour arrière",
+    "definition": "Espace extérieur privé ou semi-privé situé derrière une maison ou un immeuble, parfois inclus dans la location.",
+    "exemple": "On a une belle cour arrière, les enfants peuvent jouer dehors en toute sécurité.",
+    "theme": "Logement",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0063",
+    "mot": "Entrée",
+    "definition": "Allée privée permettant de garer une voiture devant ou sur le côté d'une maison. À déneiger obligatoirement en hiver.",
+    "exemple": "La maison a une entrée pour deux chars, c'est pratique quand on est deux à travailler.",
+    "theme": "Logement",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0064",
+    "mot": "Plex",
+    "definition": "Immeuble résidentiel divisé en plusieurs logements superposés. Un duplex en a 2, un triplex 3, un quadruplex 4, et ainsi de suite.",
+    "exemple": "On habite dans le deuxième étage d'un triplex, notre proprio vit en dessous de nous.",
+    "theme": "Logement",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0065",
+    "mot": "Chauffé-éclairé",
+    "definition": "Mention dans une annonce de logement indiquant que le chauffage et l'électricité sont inclus dans le prix du loyer, assumés par le propriétaire.",
+    "exemple": "À 950$ chauffé-éclairé, c'est vraiment une bonne affaire pour passer l'hiver au Québec.",
+    "theme": "Logement",
+    "niveau": 2,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0066",
+    "mot": "Faire une visite",
+    "definition": "Visiter un logement pour évaluer s'il correspond à ses besoins avant de signer un bail. Étape incontournable avant toute location.",
+    "exemple": "J'ai trois visites de prévues ce samedi, j'espère trouver quelque chose avant le 1er juillet.",
+    "theme": "Logement",
+    "niveau": "urgence",
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0067",
+    "mot": "Reconduire son bail",
+    "definition": "Renouveler automatiquement son contrat de location pour une nouvelle période, généralement un an, aux mêmes conditions ou avec une légère hausse de loyer.",
+    "exemple": "Mon proprio m'a envoyé l'avis de reconduction avec une augmentation de 50$ par mois.",
+    "theme": "Logement",
+    "niveau": "urgence",
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0068",
+    "mot": "Semi-détaché",
+    "definition": "Maison individuelle partagée par un mur mitoyen avec la maison voisine. Moins chère qu'une maison pleinement isolée, très courante dans les banlieues québécoises.",
+    "exemple": "On a acheté un semi-détaché à Longueuil, c'est parfait pour commencer à un bon prix.",
+    "theme": "Logement",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0069",
+    "mot": "Cave",
+    "definition": "Espace de rangement situé dans le sous-sol d'un immeuble, attribué à chaque locataire pour stocker des objets encombrants comme des vélos, des skis ou des meubles.",
+    "exemple": "Je mets mes skis et mon vélo dans la cave en hiver, ça libère de la place dans l'appartement.",
+    "theme": "Logement",
+    "niveau": 2,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0070",
+    "mot": "Meublé",
+    "definition": "Logement loué avec les meubles essentiels déjà inclus (lit, canapé, table, électroménagers). Pratique pour les nouveaux arrivants, mais généralement plus cher au mois.",
+    "exemple": "Pour mes premiers mois au Québec, j'ai loué un studio meublé le temps de m'installer tranquillement.",
+    "theme": "Logement",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0071",
+    "mot": "Avis de hausse",
+    "definition": "Avis écrit envoyé par le propriétaire pour informer le locataire d'une augmentation de loyer. Le locataire a le droit légal de refuser la hausse en répondant par écrit dans les délais prévus.",
+    "exemple": "J'ai reçu mon avis de hausse ce matin, le proprio veut augmenter mon loyer de 75$ à partir de juillet.",
+    "theme": "Logement",
+    "niveau": 2,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0072",
+    "mot": "Les rénos",
+    "definition": "Abréviation familière de rénovations. Travaux d'amélioration ou de remise en état effectués dans un logement ou une maison.",
+    "exemple": "Le proprio fait des rénos dans tout l'immeuble cet été, ça va faire du bruit pendant deux mois.",
+    "theme": "Logement",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0073",
+    "mot": "Déménageur",
+    "definition": "Personne ou entreprise professionnelle qui transporte les meubles et effets personnels d'un logement à un autre lors d'un déménagement, particulièrement sollicitée autour du 1er juillet.",
+    "exemple": "On a engagé des déménageurs cette fois-là, j'en pouvais plus de demander service à mes amis chaque année.",
+    "theme": "Logement",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0074",
+    "mot": "Châssis",
+    "definition": "Terme populaire québécois pour désigner une fenêtre. Ce mot désigne techniquement le cadre, mais est utilisé couramment au Québec pour la fenêtre entière.",
+    "exemple": "Ouvre donc le châssis, il fait étouffant ici depuis ce matin!",
+    "theme": "Logement",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0075",
+    "mot": "Se faire sortir",
+    "definition": "Expression populaire signifiant être expulsé ou évincé de son logement par son propriétaire, parfois de façon informelle ou abusive. Un recours au TAL est possible dans ce cas.",
+    "exemple": "Il s'est fait sortir par son proprio sans préavis, maintenant il cherche quelque chose en catastrophe.",
+    "theme": "Logement",
+    "niveau": 2,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0076",
+    "mot": "Garrocher ses boîtes",
+    "definition": "Expression imagée décrivant un déménagement fait à la hâte et sans organisation. Garrocher signifie lancer ou jeter quelque chose sans soin particulier.",
+    "exemple": "On a garroché nos boîtes dans le truck en deux heures, le proprio voulait récupérer l'appart ce soir-là.",
+    "theme": "Logement",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0077",
+    "mot": "Les coquerelles",
+    "definition": "Terme québécois pour désigner les cafards ou blattes. Problème courant dans les vieux immeubles locatifs des grandes villes. Leur présence constitue un motif de plainte recevable au TAL.",
+    "exemple": "J'ai vu des coquerelles dans la cuisine dès le premier soir, j'ai appelé le proprio le lendemain matin.",
+    "theme": "Logement",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0078",
+    "mot": "Appart de fond de cour",
+    "definition": "Petit logement dissimulé à l'arrière d'un terrain, souvent derrière l'immeuble principal. Généralement sombre et exigu, il est loué moins cher. Désigne aussi par extension tout logement de piètre qualité.",
+    "exemple": "C'est un appart de fond de cour, pas de lumière naturelle et le proprio répare rien, mais le loyer est bas.",
+    "theme": "Logement",
+    "niveau": 2,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0079",
+    "mot": "Être dans ses meubles",
+    "definition": "Expression signifiant être bien installé chez soi, dans son propre logement aménagé à son goût. Évoque un sentiment de stabilité et d'ancrage après une période de transition.",
+    "exemple": "Ça fait du bien d'être enfin dans mes meubles après six mois à me promener de chambre en chambre.",
+    "theme": "Logement",
+    "niveau": 5,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0080",
+    "mot": "Une dompe",
+    "definition": "Terme familier pour désigner un endroit très désordonné, sale ou un logement en très mauvais état (de l'anglais 'dump'). Peut aussi désigner un dépotoir.",
+    "exemple": "Je louerai jamais cet appart-là, c'est une vraie dompe et ça sent le moisi.",
+    "theme": "Logement",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0081",
+    "mot": "Sacrer son camp",
+    "definition": "Expression familière et très colorée signifiant quitter précipitamment et définitivement un logement. Exprime souvent une forte frustration ayant atteint son point de rupture.",
+    "exemple": "Après la troisième inondation du sous-sol, il a sacré son camp et trouvé un autre appart en une semaine.",
+    "theme": "Logement",
+    "niveau": 7,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0082",
+    "mot": "Ça pas d'allure",
+    "definition": "Expression signifiant que quelque chose est inacceptable ou absurde. Utilisée pour dénoncer un loyer excessif, un logement insalubre ou toute situation jugée complètement inadmissible.",
+    "exemple": "1 800$ pour un 3½ sans stationnement dans ce quartier-là, ça pas d'allure pantoute!",
+    "theme": "Logement",
+    "niveau": 5,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0083",
+    "mot": "Se ramasser à la rue",
+    "definition": "Expression imagée signifiant se retrouver sans logement, souvent de façon imprévue et précipitée. Équivalent de se retrouver sans abri ou à la rue en français standard.",
+    "exemple": "Si je trouve rien avant le 1er juillet, je vais me ramasser à la rue avec toutes mes boîtes.",
+    "theme": "Logement",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0084",
+    "mot": "NAS",
+    "definition": "Numéro d'assurance sociale.",
+    "exemple": "Mon NAS.",
+    "theme": "Administration",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0085",
+    "mot": "RAMQ",
+    "definition": "Régie de l'assurance maladie.",
+    "exemple": "Ma carte RAMQ.",
+    "theme": "Administration",
+    "niveau": "urgence",
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0086",
+    "mot": "Carte soleil",
+    "definition": "Nom populaire donné à la carte d'assurance maladie du Québec, émise par la RAMQ. Elle donne accès aux soins de santé couverts par le régime public et doit être présentée à chaque visite médicale.",
+    "exemple": "N'oublie pas ta carte soleil quand tu vas à la clinique, sans ça tu vas payer de ta poche.",
+    "theme": "Administration",
+    "niveau": "urgence",
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0087",
+    "mot": "Permis de travail",
+    "definition": "Document officiel délivré par le gouvernement fédéral canadien autorisant un ressortissant étranger à occuper un emploi légalement au Canada pour une durée déterminée.",
+    "exemple": "Mon permis de travail expire en mars, je dois faire ma demande de renouvellement au moins trois mois à l'avance.",
+    "theme": "Administration",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0088",
+    "mot": "Résidence permanente",
+    "definition": "Statut juridique accordé par le gouvernement canadien permettant à un immigrant de vivre et travailler au Canada sans restriction de durée, tout en gardant sa nationalité d'origine.",
+    "exemple": "Après deux ans sous permis de travail, j'ai finalement obtenu ma résidence permanente la semaine passée.",
+    "theme": "Administration",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0089",
+    "mot": "Formulaire",
+    "definition": "Document à remplir.",
+    "exemple": "Remplir ce formulaire.",
+    "theme": "Administration",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0090",
+    "mot": "SAAQ",
+    "definition": "Assurance automobile (permis).",
+    "exemple": "Aller à la SAAQ.",
+    "theme": "Administration",
+    "niveau": "urgence",
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0091",
+    "mot": "Code postal",
+    "definition": "Identifiant alphanumérique canadien à six caractères (lettres et chiffres alternés) identifiant une zone géographique précise pour la livraison du courrier. Toujours demandé dans les formulaires administratifs.",
+    "exemple": "Mon code postal commence par H, ce qui indique que j'habite sur l'île de Montréal.",
+    "theme": "Administration",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0092",
+    "mot": "Pièce d'identité",
+    "definition": "Document officiel prouvant l'identité d'une personne, comme un passeport, un permis de conduire ou une carte d'identité. Exigée dans la majorité des démarches administratives au Québec.",
+    "exemple": "Pour ouvrir un compte à la caisse, j'ai besoin de deux pièces d'identité valides avec photo.",
+    "theme": "Administration",
+    "niveau": 5,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0093",
+    "mot": "Service Canada",
+    "definition": "Organisme fédéral offrant en un seul guichet l'accès à de nombreux services gouvernementaux canadiens, comme le NAS, l'assurance-emploi, la pension de vieillesse et le passeport.",
+    "exemple": "Je vais au bureau de Service Canada demain matin pour faire ma demande de numéro d'assurance sociale.",
+    "theme": "Administration",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0094",
+    "mot": "Déclaration de revenus",
+    "definition": "Rapport annuel obligatoire transmis aux gouvernements provincial et fédéral détaillant les revenus gagnés dans l'année. Elle permet de calculer l'impôt dû ou le remboursement auquel on a droit.",
+    "exemple": "J'ai fait ma déclaration de revenus en ligne avec Impôt Rapide, j'ai eu un retour de 600$ cette année.",
+    "theme": "Administration",
+    "niveau": 5,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0095",
+    "mot": "Relevé d'emploi",
+    "definition": "Document officiel remis par un employeur à la fin d'un contrat de travail ou lors d'une mise à pied. Il est indispensable pour faire une demande de prestations d'assurance-emploi.",
+    "exemple": "Mon employeur m'a remis mon relevé d'emploi la journée même où j'ai été mis à pied.",
+    "theme": "Administration",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0096",
+    "mot": "Avis de cotisation",
+    "definition": "Document officiel envoyé par Revenu Québec ou l'Agence du revenu du Canada après le traitement de la déclaration de revenus, confirmant le montant d'impôt payé, dû ou remboursé.",
+    "exemple": "J'ai reçu mon avis de cotisation par courrier, ils me remboursent 430$ d'ici deux semaines.",
+    "theme": "Administration",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0097",
+    "mot": "Parrainage",
+    "definition": "Procédure permettant à un citoyen ou résident permanent canadien de parrainer un membre de sa famille proche (conjoint, enfant, parent) pour qu'il obtienne la résidence permanente au Canada.",
+    "exemple": "Je suis en train de faire une demande de parrainage pour faire venir ma femme au Canada.",
+    "theme": "Administration",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0098",
+    "mot": "Renouveler",
+    "definition": "Action de prolonger la validité d'un document officiel arrivant à expiration, comme un permis de travail, un passeport, une carte soleil ou un permis de conduire.",
+    "exemple": "Je dois renouveler mon permis de travail avant la fin du mois sinon je suis en situation irrégulière.",
+    "theme": "Administration",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0099",
+    "mot": "Clinique d'impôts",
+    "definition": "Service bénévole gratuit offert chaque printemps dans plusieurs quartiers pour aider les personnes à revenus modestes à remplir leur déclaration de revenus. Très utile pour les nouveaux arrivants.",
+    "exemple": "Il y a une clinique d'impôts gratuite à la bibliothèque du quartier tous les mardis soirs en avril.",
+    "theme": "Administration",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0100",
+    "mot": "Preuve de résidence",
+    "definition": "Document officiel attestant qu'une personne habite bien à l'adresse déclarée. Généralement une facture récente, un bail signé ou un relevé bancaire à son nom.",
+    "exemple": "Pour inscrire mes enfants à l'école, on m'a demandé une preuve de résidence datant de moins de trois mois.",
+    "theme": "Administration",
+    "niveau": "urgence",
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0101",
+    "mot": "Ministère de l'Immigration (MIFI)",
+    "definition": "Ministère de l'Immigration, de la Francisation et de l'Intégration du Québec. Organisme provincial gérant la sélection des immigrants, les cours de francisation et les programmes d'intégration.",
+    "exemple": "Le MIFI m'a convoqué pour une entrevue dans le cadre de ma demande de certificat de sélection du Québec.",
+    "theme": "Administration",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0102",
+    "mot": "Francisation",
+    "definition": "Programme gratuit offert par le gouvernement du Québec pour aider les nouveaux arrivants allophones à apprendre le français. Les cours sont dispensés à temps plein ou à temps partiel avec une allocation financière possible.",
+    "exemple": "Je suis des cours de francisation à temps plein depuis trois mois, mon français s'améliore vraiment vite.",
+    "theme": "Administration",
+    "niveau": 5,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0103",
+    "mot": "Guichet automatique",
+    "definition": "Terminal bancaire permettant de retirer de l'argent, vérifier un solde ou effectuer des dépôts à toute heure. Aussi appelé familièrement le machine ou le guichet. Des frais peuvent s'appliquer hors réseau.",
+    "exemple": "Je cherche le guichet automatique de ma caisse, je veux pas payer des frais avec celui de la banque d'à côté.",
+    "theme": "Administration",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0104",
+    "mot": "Être dans le système",
+    "definition": "Expression populaire signifiant être officiellement enregistré dans les bases de données gouvernementales québécoises ou canadiennes. Implique avoir accès aux services publics et aux droits associés.",
+    "exemple": "Depuis que j'ai eu mon NAS et ma carte soleil, je suis enfin dans le système, je me sens moins dans le vide.",
+    "theme": "Administration",
+    "niveau": 5,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0105",
+    "mot": "Tomber entre les craques",
+    "definition": "Expression imagée décrivant une situation où une personne n'est prise en charge par aucun programme ou service gouvernemental, faute de correspondre aux critères établis. Dénonce les lacunes du système.",
+    "exemple": "Il gagne trop pour l'aide sociale mais pas assez pour vivre, il tombe entre les craques du système.",
+    "theme": "Administration",
+    "niveau": 2,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0106",
+    "mot": "Maganer son dossier",
+    "definition": "Expression signifiant nuire à sa propre situation administrative en commettant des erreurs, des oublis ou des faux pas dans ses démarches officielles d'immigration ou fiscales.",
+    "exemple": "Fais attention à ce que tu signes, tu veux pas maganer ton dossier d'immigration avec une erreur évitable.",
+    "theme": "Administration",
+    "niveau": 5,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0107",
+    "mot": "Avoir sa RP",
+    "definition": "Expression courante désignant l'obtention de la résidence permanente canadienne. Moment symbolique très important dans le parcours d'un immigrant.",
+    "exemple": "Ça fait trois ans que j'attends, j'ai enfin eu ma RP la semaine passée, je suis tellement soulagé!",
+    "theme": "Administration",
+    "niveau": 3,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0108",
+    "mot": "Se perdre dans la paperasse",
+    "definition": "Expression désignant la confusion et l'épuisement causés par la multitude de formulaires, documents et démarches administratives à gérer. Très fréquente dans le contexte de l'immigration.",
+    "exemple": "Depuis mon arrivée, je me perds dans la paperasse, j'ai l'impression que chaque document en demande trois autres.",
+    "theme": "Administration",
+    "niveau": 5,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0109",
+    "mot": "Travailler dans le beurre",
+    "definition": "Expression familière signifiant fournir un effort en vain, sans obtenir de résultat. Souvent utilisé dans le monde professionnel.",
+    "exemple": "J'ai passé deux heures sur ce rapport pour qu'il soit jeté, j'ai vraiment travaillé dans le beurre.",
+    "theme": "Administration",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0110",
+    "mot": "Se faire avoir par le fisc",
+    "definition": "Expression signifiant subir un redressement fiscal ou payer plus d'impôts que prévu suite à une erreur dans sa déclaration de revenus ou à un contrôle de Revenu Québec ou de l'Agence fédérale.",
+    "exemple": "Il a oublié de déclarer ses revenus de freelance, il s'est fait avoir par le fisc et doit rembourser 2 000$.",
+    "theme": "Administration",
+    "niveau": 2,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0111",
+    "mot": "Dealer avec la bureaucratie",
+    "definition": "Expression familière et très utilisée signifiant composer avec et surmonter les lourdeurs et les lenteurs du système administratif gouvernemental. Dealer est un calque de l'anglais to deal with.",
+    "exemple": "Immigrer, c'est aussi dealer avec la bureaucratie pendant des mois, faut avoir de la patience et de la persévérance.",
+    "theme": "Administration",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0112",
+    "mot": "Passer au cash",
+    "definition": "Expression populaire ayant deux sens: au sens propre, payer en argent comptant pour éviter les traces; au sens figuré dans un contexte fiscal, subir les conséquences financières d'une erreur ou d'un oubli administratif.",
+    "exemple": "Il a pas déclaré son deuxième emploi pendant deux ans, il a fini par passer au cash avec Revenu Québec.",
+    "theme": "Administration",
+    "niveau": 2,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0113",
+    "mot": "Avoir ses papiers en règle",
+    "definition": "Expression signifiant que tous ses documents administratifs d'immigration, d'identité et de travail sont valides, à jour et conformes aux exigences légales en vigueur au Canada ou au Québec.",
+    "exemple": "Avant de chercher un emploi, assure-toi d'avoir tes papiers en règle, les employeurs vont te les demander.",
+    "theme": "Administration",
+    "niveau": 4,
+    "pack": "2_installation"
+  },
+  {
+    "id": "mot_0118",
+    "mot": "Autobus",
+    "definition": "Véhicule de transport en commun.",
+    "exemple": "Je prends l'autobus.",
+    "theme": "Transport",
+    "niveau": 2,
+    "pack": "1_survie"
+  },
+  {
+    "mot": "Métro",
+    "definition": "Train souterrain urbain.",
+    "exemple": "La station de métro est proche.",
+    "theme": "Transport",
+    "pack": "1_survie",
+    "id": "mot_0124",
+    "niveau": 2
+  },
+  {
+    "mot": "Arrêt",
+    "definition": "Lieu où l'autobus s'arrête.",
+    "exemple": "Je descends au prochain arrêt.",
+    "theme": "Transport",
+    "pack": "1_survie",
+    "id": "mot_0125",
+    "niveau": 2
+  },
+  {
+    "mot": "Billet",
+    "definition": "Titre de transport.",
+    "exemple": "J'ai acheté un billet.",
+    "theme": "Transport",
+    "pack": "1_survie",
+    "id": "mot_0126",
+    "niveau": 3
+  },
+  {
+    "mot": "Horaire",
+    "definition": "Relevé des heures.",
+    "exemple": "Je vérifie l'horaire.",
+    "theme": "Transport",
+    "pack": "1_survie",
+    "id": "mot_0127",
+    "niveau": 4
+  },
+  {
+    "mot": "Toilettes",
+    "definition": "Lieu d'aisance.",
+    "exemple": "Où sont les toilettes?",
+    "theme": "Survie",
+    "pack": "1_survie",
+    "id": "mot_0128",
+    "niveau": 3
+  },
+  {
+    "mot": "Eau",
+    "definition": "Liquide indispensable.",
+    "exemple": "Un verre d'eau.",
+    "theme": "Nourriture",
+    "pack": "1_survie",
+    "id": "mot_0129",
+    "niveau": 3
+  },
+  {
+    "mot": "Manger",
+    "definition": "S'alimenter.",
+    "exemple": "Où manger?",
+    "theme": "Nourriture",
+    "pack": "1_survie",
+    "id": "mot_0130",
+    "niveau": 1
+  },
+  {
+    "mot": "Gare",
+    "definition": "Lieu d'arrêt des trains.",
+    "exemple": "Où est la gare?",
+    "theme": "Transport",
+    "pack": "1_survie",
+    "id": "mot_0134",
+    "niveau": 3
+  },
+  {
+    "mot": "Médecin",
+    "definition": "Professionnel de la santé.",
+    "exemple": "Je dois voir un médecin.",
+    "theme": "Santé",
+    "pack": "1_survie",
+    "id": "mot_0135",
+    "niveau": "urgence"
+  },
+  {
+    "mot": "Hôpital",
+    "definition": "Établissement médical.",
+    "exemple": "L'hôpital le plus proche.",
+    "theme": "Santé",
+    "pack": "1_survie",
+    "id": "mot_0136",
+    "niveau": "urgence"
+  },
+  {
+    "mot": "Pharmacie",
+    "definition": "Lieu pour médicaments.",
+    "exemple": "Où est la pharmacie?",
+    "theme": "Santé",
+    "pack": "1_survie",
+    "id": "mot_0137",
+    "niveau": "urgence"
+  },
+  {
+    "mot": "Malade",
+    "definition": "Pas en bonne santé.",
+    "exemple": "Je me sens malade.",
+    "theme": "Santé",
+    "pack": "1_survie",
+    "id": "mot_0138",
+    "niveau": "urgence"
+  },
+  {
+    "mot": "Chambre",
+    "definition": "Pièce pour dormir.",
+    "exemple": "Une chambre à louer.",
+    "theme": "Logement",
+    "pack": "1_survie",
+    "id": "mot_0139",
+    "niveau": 1
+  },
+  {
+    "mot": "Lit",
+    "definition": "Meuble pour dormir.",
+    "exemple": "Le lit est confortable.",
+    "theme": "Logement",
+    "pack": "1_survie",
+    "id": "mot_0140",
+    "niveau": 1
+  },
+  {
+    "mot": "Faire la file",
+    "definition": "Attendre en ligne (faire la queue).",
+    "exemple": "Il faut faire la file.",
+    "theme": "Transport",
+    "pack": "1_survie",
+    "id": "mot_0142",
+    "niveau": 3
+  },
+  {
+    "mot": "Appartement",
+    "definition": "Logement dans un immeuble.",
+    "exemple": "J'ai un appartement.",
+    "theme": "Logement",
+    "pack": "2_installation",
+    "id": "mot_0143",
+    "niveau": 2
+  },
+  {
+    "mot": "Propriétaire",
+    "definition": "Personne à qui appartient le logement.",
+    "exemple": "Le propriétaire demande...",
+    "theme": "Logement",
+    "pack": "2_installation",
+    "id": "mot_0144",
+    "niveau": 3
+  },
+  {
+    "mot": "Dépôt",
+    "definition": "Somme de garantie.",
+    "exemple": "Un dépôt pour les clés.",
+    "theme": "Logement",
+    "pack": "2_installation",
+    "id": "mot_0145",
+    "niveau": 3
+  },
+  {
+    "mot": "Chauffé/Éclairé",
+    "definition": "Inclus dans le loyer.",
+    "exemple": "1000$ chauffé/éclairé.",
+    "theme": "Logement",
+    "pack": "2_installation",
+    "id": "mot_0146",
+    "niveau": 2
+  },
+  {
+    "mot": "3 ½",
+    "definition": "Appart avec 1 chambre ferme.",
+    "exemple": "Je cherche un 3 ½.",
+    "theme": "Logement",
+    "pack": "2_installation",
+    "id": "mot_0147",
+    "niveau": 3
+  },
+  {
+    "mot": "Permis",
+    "definition": "Autorisation (ex: conduire).",
+    "exemple": "Mon permis.",
+    "theme": "Administration",
+    "pack": "2_installation",
+    "id": "mot_0148",
+    "niveau": 2
+  },
+  {
+    "mot": "Impôt",
+    "definition": "Contribution exigée par l'État.",
+    "exemple": "Déclaration d'impôt.",
+    "theme": "Administration",
+    "pack": "2_installation",
+    "id": "mot_0149",
+    "niveau": 3
+  },
+  {
+    "mot": "Caisse",
+    "definition": "Banque coopérative.",
+    "exemple": "Ouvrir un compte à la caisse.",
+    "theme": "Banque",
+    "pack": "2_installation",
+    "id": "mot_0150",
+    "niveau": 3
+  },
+  {
+    "mot": "Compte",
+    "definition": "Espace bancaire.",
+    "exemple": "Compte chèque.",
+    "theme": "Banque",
+    "pack": "2_installation",
+    "id": "mot_0151",
+    "niveau": 3
+  },
+  {
+    "mot": "Facture",
+    "definition": "Document réclamant un paiement.",
+    "exemple": "Payer la facture.",
+    "theme": "Banque",
+    "pack": "2_installation",
+    "id": "mot_0152",
+    "niveau": 2
+  },
+  {
+    "mot": "Rabais",
+    "definition": "Réduction (soldes).",
+    "exemple": "Un rabais.",
+    "theme": "Magasinage",
+    "pack": "2_installation",
+    "id": "mot_0153",
+    "niveau": 2
+  },
+  {
+    "mot": "Reçu",
+    "definition": "Preuve de paiement.",
+    "exemple": "Votre reçu.",
+    "theme": "Magasinage",
+    "pack": "2_installation",
+    "id": "mot_0154",
+    "niveau": 2
+  },
+  {
+    "mot": "Taxes",
+    "definition": "Montant ajouté au prix (TPS/TVQ).",
+    "exemple": "Plus taxes.",
+    "theme": "Magasinage",
+    "pack": "2_installation",
+    "id": "mot_0155",
+    "niveau": 2
+  },
+  {
+    "mot": "Pourboire",
+    "definition": "Montant pour le service (15%).",
+    "exemple": "Laisser un pourboire.",
+    "theme": "Quotidien",
+    "pack": "2_installation",
+    "id": "mot_0156",
+    "niveau": 1
+  },
+  {
+    "mot": "Clinique",
+    "definition": "Établissement de soins.",
+    "exemple": "Clinique sans rendez-vous.",
+    "theme": "Santé",
+    "pack": "2_installation",
+    "id": "mot_0157",
+    "niveau": "urgence"
+  },
+  {
+    "mot": "Assurance",
+    "definition": "Protection financière.",
+    "exemple": "Assurance habitation.",
+    "theme": "Administration",
+    "pack": "2_installation",
+    "id": "mot_0158",
+    "niveau": 3
+  },
+  {
+    "mot": "Rendez-vous",
+    "definition": "Rencontre fixée.",
+    "exemple": "J'ai rendez-vous.",
+    "theme": "Quotidien",
+    "pack": "2_installation",
+    "id": "mot_0159",
+    "niveau": 3
+  },
+  {
+    "mot": "OPUS",
+    "definition": "Carte de transport.",
+    "exemple": "Passe OPUS.",
+    "theme": "Transport",
+    "pack": "2_installation",
+    "id": "mot_0160",
+    "niveau": 3
+  },
+  {
+    "mot": "CV",
+    "definition": "Curriculum Vitae.",
+    "exemple": "Mon CV.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0161",
+    "niveau": 4
+  },
+  {
+    "mot": "Entrevue",
+    "definition": "Entretien d'embauche.",
+    "exemple": "J'ai une entrevue.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0162",
+    "niveau": 4
+  },
+  {
+    "mot": "Employeur",
+    "definition": "Personne qui donne du travail.",
+    "exemple": "Mon employeur.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0163",
+    "niveau": 4
+  },
+  {
+    "mot": "Candidature",
+    "definition": "Se proposer pour un poste.",
+    "exemple": "Soumettre ma candidature.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0164",
+    "niveau": 4
+  },
+  {
+    "mot": "Paie",
+    "definition": "Salaire.",
+    "exemple": "Jour de paie.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0165",
+    "niveau": 4
+  },
+  {
+    "mot": "Postuler",
+    "definition": "Appliquer pour un emploi.",
+    "exemple": "Je vais postuler.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0166",
+    "niveau": 4
+  },
+  {
+    "mot": "Quart",
+    "definition": "Période (shift).",
+    "exemple": "Quart de nuit.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0167",
+    "niveau": 4
+  },
+  {
+    "mot": "Superviseur",
+    "definition": "Chef d'équipe.",
+    "exemple": "Mon superviseur.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0168",
+    "niveau": 4
+  },
+  {
+    "mot": "Réunion",
+    "definition": "Rencontre de travail.",
+    "exemple": "En réunion.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0169",
+    "niveau": 4
+  },
+  {
+    "mot": "Temps plein",
+    "definition": "35-40h/semaine.",
+    "exemple": "Emploi temps plein.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0170",
+    "niveau": 4
+  },
+  {
+    "mot": "Temps partiel",
+    "definition": "Moins de 30h/sem.",
+    "exemple": "Je travaille à temps partiel.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0171",
+    "niveau": 4
+  },
+  {
+    "mot": "Contrat",
+    "definition": "Entente.",
+    "exemple": "Contrat d'un an.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0172",
+    "niveau": 4
+  },
+  {
+    "mot": "Échéance",
+    "definition": "Deadline.",
+    "exemple": "L'échéance est courte.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0173",
+    "niveau": 4
+  },
+  {
+    "mot": "Réseautage",
+    "definition": "S'y faire des contacts.",
+    "exemple": "Faire du réseautage.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0174",
+    "niveau": 4
+  },
+  {
+    "mot": "DEP",
+    "definition": "Diplôme pro.",
+    "exemple": "Il a un DEP.",
+    "theme": "Éducation",
+    "pack": "3_travail",
+    "id": "mot_0175",
+    "niveau": 4
+  },
+  {
+    "mot": "Ordre professionnel",
+    "definition": "Réglemente la profession.",
+    "exemple": "L'Ordre des infirmières.",
+    "theme": "Emploi",
+    "pack": "3_travail",
+    "id": "mot_0176",
+    "niveau": 4
+  },
+  {
+    "mot": "5 à 7",
+    "definition": "Verre après le travail.",
+    "exemple": "Un 5 à 7.",
+    "theme": "Culture",
+    "pack": "3_travail",
+    "id": "mot_0177",
+    "niveau": 4
+  },
+  {
+    "mot": "Compréhension",
+    "definition": "Saisir le sens.",
+    "exemple": "Compréhension orale.",
+    "theme": "TEFAQ",
+    "pack": "3_travail",
+    "id": "mot_0178",
+    "niveau": 4
+  },
+  {
+    "mot": "CEI",
+    "definition": "Conseiller intégration.",
+    "exemple": "Mon CEI.",
+    "theme": "Administration",
+    "pack": "3_travail",
+    "id": "mot_0179",
+    "niveau": 4
+  },
+  {
+    "mot": "AET",
+    "definition": "Avis évaluation tarif.",
+    "exemple": "Reçu mon AET.",
+    "theme": "Administration",
+    "pack": "3_travail",
+    "id": "mot_0180",
+    "niveau": 4
+  },
+  {
+    "mot": "REER",
+    "definition": "Épargne retraite.",
+    "exemple": "Cotiser REER.",
+    "theme": "Banque",
+    "pack": "3_travail",
+    "id": "mot_0181",
+    "niveau": 4
+  },
+  {
+    "mot": "CÉLI",
+    "definition": "Compte libre impôt.",
+    "exemple": "Placer en CÉLI.",
+    "theme": "Banque",
+    "pack": "3_travail",
+    "id": "mot_0182",
+    "niveau": 4
+  },
+  {
+    "mot": "Le fun",
+    "definition": "Amusant.",
+    "exemple": "C'est le fun.",
+    "theme": "Expressions",
+    "pack": "4_culture",
+    "id": "mot_0184",
+    "niveau": 6
+  },
+  {
+    "mot": "Chandail",
+    "definition": "Haut de vêtement.",
+    "exemple": "Beau chandail.",
+    "theme": "Vêtements",
+    "pack": "4_culture",
+    "id": "mot_0185",
+    "niveau": 3
+  },
+  {
+    "mot": "Espadrilles",
+    "definition": "Baskets.",
+    "exemple": "Mets tes espadrilles.",
+    "theme": "Vêtements",
+    "pack": "4_culture",
+    "id": "mot_0186",
+    "niveau": 3
+  },
+  {
+    "mot": "Souliers",
+    "definition": "Chaussures.",
+    "exemple": "Mes souliers.",
+    "theme": "Vêtements",
+    "pack": "4_culture",
+    "id": "mot_0187",
+    "niveau": 2
+  },
+  {
+    "mot": "Icitte",
+    "definition": "Ici.",
+    "exemple": "Viens icitte.",
+    "theme": "Expressions",
+    "pack": "4_culture",
+    "id": "mot_0188",
+    "niveau": 2
+  },
+  {
+    "mot": "Correct",
+    "definition": "C'est bien/ok.",
+    "exemple": "C'est correct.",
+    "theme": "Expressions",
+    "pack": "4_culture",
+    "id": "mot_0189",
+    "niveau": 3
+  },
+  {
+    "mot": "Tanné",
+    "definition": "Fatigué, agacé.",
+    "exemple": "Je suis tanné.",
+    "theme": "Émotions",
+    "pack": "4_culture",
+    "id": "mot_0190",
+    "niveau": 2
+  },
+  {
+    "mot": "De l'allure",
+    "definition": "Du bon sens.",
+    "exemple": "Ça a de l'allure.",
+    "theme": "Expressions",
+    "pack": "4_culture",
+    "id": "mot_0191",
+    "niveau": 3
+  },
+  {
+    "mot": "Capoter",
+    "definition": "Être excité/paniquer.",
+    "exemple": "Je capote!",
+    "theme": "Émotions",
+    "pack": "4_culture",
+    "id": "mot_0192",
+    "niveau": 5
+  },
+  {
+    "mot": "Chialer",
+    "definition": "Se plaindre.",
+    "exemple": "Arrête de chialer.",
+    "theme": "Émotions",
+    "pack": "4_culture",
+    "id": "mot_0193",
+    "niveau": 2
+  },
+  {
+    "mot": "Magané",
+    "definition": "Abîmé/fatigué.",
+    "exemple": "Il est magané.",
+    "theme": "Adjectif",
+    "pack": "4_culture",
+    "id": "mot_0194",
+    "niveau": 2
+  },
+  {
+    "mot": "Garnotte",
+    "definition": "Gravelle.",
+    "exemple": "La garnotte.",
+    "theme": "Nature",
+    "pack": "4_culture",
+    "id": "mot_0195",
+    "niveau": 2
+  },
+  {
+    "mot": "Jaser",
+    "definition": "Parler amicalement.",
+    "exemple": "On a jasé.",
+    "theme": "Action",
+    "pack": "4_culture",
+    "id": "mot_0196",
+    "niveau": 3
+  },
+  {
+    "mot": "Hydro",
+    "definition": "Électricité.",
+    "exemple": "Compte d'hydro.",
+    "theme": "Culture",
+    "pack": "4_culture",
+    "id": "mot_0197",
+    "niveau": 2
+  },
+  {
+    "mot": "Saint-Jean",
+    "definition": "Fête 24 juin.",
+    "exemple": "La St-Jean.",
+    "theme": "Culture",
+    "pack": "4_culture",
+    "id": "mot_0198",
+    "niveau": 2
+  },
+  {
+    "mot": "Tabarnak",
+    "definition": "Juron (surprise/colère).",
+    "exemple": "C'est beau en tabarnak!",
+    "theme": "Expressions",
+    "pack": "4_culture",
+    "id": "mot_0199",
+    "niveau": 7
+  },
+  {
+    "mot": "La fraise",
+    "definition": "Se paqueter la fraise = se saouler.",
+    "exemple": "Il s'est paqueté la fraise.",
+    "theme": "Expressions",
+    "pack": "4_culture",
+    "id": "mot_0200",
+    "niveau": 3
+  },
+  {
+    "mot": "Misère",
+    "definition": "Difficulté.",
+    "exemple": "De la misère.",
+    "theme": "Expressions",
+    "pack": "4_culture",
+    "id": "mot_0201",
+    "niveau": 2
+  },
+  {
+    "mot": "Pas pire",
+    "definition": "Pas mal.",
+    "exemple": "C'est pas pire.",
+    "theme": "Expressions",
+    "pack": "4_culture",
+    "id": "mot_0202",
+    "niveau": 2
+  },
+  {
+    "mot": "Céduler",
+    "definition": "Planifier.",
+    "exemple": "Céduler une rencontre.",
+    "theme": "Franglais",
+    "pack": "4_culture",
+    "id": "mot_0203",
+    "niveau": 4
+  },
+  {
+    "mot": "Canceller",
+    "definition": "Annuler.",
+    "exemple": "Canceller la réunion.",
+    "theme": "Franglais",
+    "pack": "4_culture",
+    "id": "mot_0204",
+    "niveau": 6
+  },
+  {
+    "mot": "Céler",
+    "definition": "Cacher.",
+    "exemple": "Céler la vérité.",
+    "theme": "Franglais",
+    "pack": "4_culture",
+    "id": "mot_0205",
+    "niveau": 2
+  },
+  {
+    "id": "mot_0206",
+    "mot": "À cause tu fais simple de même ?",
+    "definition": "Désigne un comportement étrange, impulsif ou niais.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0207",
+    "mot": "Accrocher ses patins",
+    "definition": "Prendre sa retraite, abandonner une activité après une longue carrière.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0208",
+    "mot": "Aller aux vues",
+    "definition": "Aller au cinéma.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0209",
+    "mot": "Attacher sa tuque (avec de la broche)",
+    "definition": "Se préparer mentalement à affronter quelque chose d'intense, de difficile ou de très mouvementé.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0210",
+    "mot": "Au plus sacrant (OPC",
+    "definition": "Au plus crisse) : Le plus rapidement possible, urgemment.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 7,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0211",
+    "mot": "Avoir de l'eau dans la cave",
+    "definition": "Porter un pantalon trop court.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0212",
+    "mot": "Avoir de la broue dans le toupet",
+    "definition": "Être très occupé, être débordé.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0213",
+    "mot": "Avoir des croûtes à manger",
+    "definition": "Avoir encore beaucoup à apprendre, manquer d'expérience.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0214",
+    "mot": "Avoir du front tout le tour de la tête",
+    "definition": "Être extrêmement effronté, avoir beaucoup d'audace, manquer de gêne.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0215",
+    "mot": "Avoir l'air de la chienne à Jacques",
+    "definition": "Être très mal habillé, accoutré de façon désordonnée ou totalement ridicule.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0216",
+    "mot": "Avoir la fly à l'air",
+    "definition": "Oublier de remonter la fermeture éclair de son pantalon.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0217",
+    "mot": "Avoir le feu au cul",
+    "definition": "Être extrêmement pressé ou, selon le contexte, être très en colère.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0218",
+    "mot": "Avoir le motton",
+    "definition": "Avoir la gorge serrée par l'émotion, lutter pour retenir ses larmes.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0219",
+    "mot": "Avoir les deux yeux dans le même trou",
+    "definition": "Être extrêmement fatigué, à peine réveillé.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0220",
+    "mot": "Avoir les yeux dans la graisse de bines",
+    "definition": "Avoir le regard vitreux ou perdu, souvent causé par l'amour, la fatigue ou l'ivresse.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0221",
+    "mot": "Avoir son voyage",
+    "definition": "Être complètement exaspéré, à bout de patience.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0222",
+    "mot": "Avoir un six pack",
+    "definition": "Avoir des abdominaux bien dessinés (en référence aux paquets de 6 bières).",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0223",
+    "mot": "Avoir une crotte sur le cœur",
+    "definition": "Garder rancune, en vouloir à quelqu'un.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0224",
+    "mot": "Beurrer épais",
+    "definition": "Exagérer fortement une histoire, ou en faire beaucoup trop pour se vanter.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0225",
+    "mot": "Broche à foin",
+    "definition": "Quelque chose de mal organisé, de mauvaise qualité ou non professionnel.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0226",
+    "mot": "C'est de valeur",
+    "definition": "C'est dommage, c'est fâcheux.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0227",
+    "mot": "C'est pas pire",
+    "definition": "C'est plutôt bien, c'est satisfaisant (malgré la tournure négative).",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0228",
+    "mot": "Ça m'écœure",
+    "definition": "Ça me dégoûte ou ça m'énerve au plus haut point.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0229",
+    "mot": "Ça prend pas la tête à Papineau",
+    "definition": "C'est simple à comprendre, ça ne demande pas une grande intelligence.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0230",
+    "mot": "Ça prend tout mon petit change",
+    "definition": "Quelque chose qui demande beaucoup d'énergie ou d'efforts.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0231",
+    "mot": "Capoter",
+    "definition": "Être extrêmement enthousiaste ou, au contraire, paniquer complètement.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 5,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0232",
+    "mot": "Chanter la pomme",
+    "definition": "Faire la cour à quelqu'un, flirter.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0233",
+    "mot": "Chauffer en pépère",
+    "definition": "Conduire un véhicule très lentement et de manière exagérément prudente.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0234",
+    "mot": "Chiquer la guenille",
+    "definition": "Bougonner, rouspéter.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0235",
+    "mot": "Cogner des clous",
+    "definition": "Lutter contre le sommeil en position assise (la tête qui tombe et se redresse brusquement).",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0236",
+    "mot": "Courir comme une poule pas de tête",
+    "definition": "S'agiter dans tous les sens sans but précis, céder à la panique et à la désorganisation.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0237",
+    "mot": "Donner son 4%",
+    "definition": "Licencier ou congédier un employé.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0238",
+    "mot": "Dormir au gaz",
+    "definition": "Être trop passif, manquer de réactivité.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0239",
+    "mot": "En arracher",
+    "definition": "Avoir beaucoup de difficulté dans une situation, souffrir ou peiner à accomplir une tâche.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0240",
+    "mot": "Enfirouaper",
+    "definition": "Duper quelqu'un, l'arnaquer par la ruse.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0241",
+    "mot": "Être assis sur son steak",
+    "definition": "Être paresseux, ne rien faire.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0242",
+    "mot": "Être aux oiseaux",
+    "definition": "Être comblé de joie, baigner dans le bonheur.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0243",
+    "mot": "Être dans les patates",
+    "definition": "Se tromper complètement, être dans l'erreur.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0244",
+    "mot": "Être de bonne heure sur le piton",
+    "definition": "Se lever très tôt le matin, être prêt à l'action.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0245",
+    "mot": "Être en maudit",
+    "definition": "Être très en colère.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0246",
+    "mot": "Être vite sur ses patins",
+    "definition": "Être vif d'esprit, avoir une excellente répartie et s'adapter rapidement à un imprévu.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0247",
+    "mot": "Faire à sa tête",
+    "definition": "Être têtu, n'en faire qu'à sa tête.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0248",
+    "mot": "Faire du train",
+    "definition": "Faire du bruit, faire du vacarme.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0249",
+    "mot": "Faire dur",
+    "definition": "Avoir très mauvaise apparence, ou faire preuve de médiocrité dans une situation donnée.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0250",
+    "mot": "Faire le bacon",
+    "definition": "Faire une crise de nerfs ou un caprice en s'agitant.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0251",
+    "mot": "Faire patate",
+    "definition": "Échouer lamentablement, ne pas fonctionner comme prévu.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0252",
+    "mot": "Frapper son Waterloo",
+    "definition": "Subir un échec, rencontrer un obstacle majeur.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0253",
+    "mot": "Il tombe des peaux de lièvre",
+    "definition": "Il neige à très gros flocons.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0254",
+    "mot": "L'affaire est ketchup",
+    "definition": "Tout est parfait, la situation est sous contrôle.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0255",
+    "mot": "La cerise sur le sundae",
+    "definition": "L'équivalent de « la cerise sur le gâteau ».",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0256",
+    "mot": "Lâche pas la patate",
+    "definition": "Ne perds pas courage, tiens le coup.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0257",
+    "mot": "Lâcher son fou",
+    "definition": "Se laisser aller à la joie, exploser de rire.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0258",
+    "mot": "Le diable est aux vaches",
+    "definition": "La situation est très tendue, il y a de la dispute dans l'air.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0259",
+    "mot": "Manger ses bas",
+    "definition": "Être très inquiet ou impatient.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0260",
+    "mot": "Mélangé comme un sac de clous",
+    "definition": "Être très confus ou désorganisé.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0261",
+    "mot": "Mettre ses culottes",
+    "definition": "Prendre ses responsabilités, s'affirmer dans une situation difficile.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0262",
+    "mot": "Niaiser avec la puck",
+    "definition": "Tergiverser, hésiter ou perdre son temps au lieu d'agir.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0263",
+    "mot": "Pantoute",
+    "definition": "Pas du tout.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 5,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0264",
+    "mot": "Parler à travers son chapeau",
+    "definition": "S'exprimer avec assurance sur un sujet que l'on ne maîtrise pas du tout.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0265",
+    "mot": "Passer la gratte",
+    "definition": "Déneiger une rue ou une entrée avec un équipement ou une charrue.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 2,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0266",
+    "mot": "Passer un sapin",
+    "definition": "Arnaquer, duper ou se faire avoir.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0267",
+    "mot": "Pelleter par en avant",
+    "definition": "Reporter un problème à plus tard.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0268",
+    "mot": "Péter au frette",
+    "definition": "Se casser ou briser soudainement (pour un objet) ou mourir de froid.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0269",
+    "mot": "Péter plus haut que le trou",
+    "definition": "Être prétentieux, se croire supérieur aux autres.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0270",
+    "mot": "Péter sa coche",
+    "definition": "Perdre patience soudainement, faire une crise de colère.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0271",
+    "mot": "Piquer une fouille",
+    "definition": "Faire une chute, tomber.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0272",
+    "mot": "Pleuvoir à boire debout",
+    "definition": "Pleuvoir à verse, des trombes d'eau.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0273",
+    "mot": "Prendre une brosse",
+    "definition": "S'enivrer fortement lors d'une soirée, se soûler.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0274",
+    "mot": "Refouler au lavage",
+    "definition": "Rétrécir au lavage (en parlant d'un vêtement).",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0275",
+    "mot": "Sacrer son camp",
+    "definition": "S'en aller, fuir, ou demander à quelqu'un de partir au plus vite.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 7,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0276",
+    "mot": "S'enfarger dans les fleurs du tapis",
+    "definition": "Se compliquer la vie avec des détails insignifiants et perdre de vue l'objectif principal.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0277",
+    "mot": "S'habiller en pelure d'oignon",
+    "definition": "Superposer plusieurs couches de vêtements pour affronter le froid de l'hiver.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0278",
+    "mot": "Se bourrer la fraise",
+    "definition": "Manger à l'excès, s'empiffrer.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0279",
+    "mot": "Se fendre le cul",
+    "definition": "Se donner beaucoup de mal, faire de gros efforts.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0280",
+    "mot": "Se paqueter la fraise",
+    "definition": "Faire la fête, boire de l'alcool avec excès.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0281",
+    "mot": "Se payer la traite",
+    "definition": "S'offrir du bon temps, se gâter.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 2,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0282",
+    "mot": "Se péter les bretelles",
+    "definition": "Se vanter d'une réussite, être très fier de soi.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0283",
+    "mot": "Tiguidou",
+    "definition": "C'est parfait, c'est super.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0284",
+    "mot": "Tirer au renard",
+    "definition": "Vomir.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 2,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0285",
+    "mot": "Tirer la couverte de son bord",
+    "definition": "Agir de façon égoïste en ramenant tous les avantages vers soi.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0286",
+    "mot": "Tirer la plogue",
+    "definition": "Mettre fin définitivement à un projet, annuler ou abandonner une situation.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0287",
+    "mot": "Tirer sa bûche",
+    "definition": "Prendre une chaise, s'approcher et se joindre à un groupe pour discuter.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 6,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0288",
+    "mot": "Tourner les coins ronds",
+    "definition": "Bâcler une tâche en allant trop vite, faire preuve de laxisme.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0289",
+    "mot": "Tricoté serré",
+    "definition": "Très uni, très soudé.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0290",
+    "mot": "Virer sur un 10 cents",
+    "definition": "Changer brusquement de direction ou d'avis.",
+    "exemple": "",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0291",
+    "mot": "Tire-toi une bûche",
+    "definition": "Prendre une chaise pour s'installer et jaser.",
+    "exemple": "Hé mon chum, tire-toi une bûche !",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0292",
+    "mot": "Y fait frette",
+    "definition": "Un froid glacial, bien plus que simplement froid.",
+    "exemple": "Mets ta tuque, y fait frette dehors !",
+    "theme": "Expressions",
+    "niveau": 1,
+    "pack": "4_culture"
+  },
+  {
+    "id": "mot_0293",
+    "mot": "Ah blé d'inde !",
+    "definition": "Un juron doux ou une interjection de surprise (équivalent de 'Mince alors !').",
+    "exemple": "Ah blé d'inde, j'ai oublié mes clés !",
+    "theme": "Expressions",
+    "niveau": 3,
+    "pack": "4_culture"
+  }
+]

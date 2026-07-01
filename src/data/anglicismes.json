@@ -1,0 +1,587 @@
+[
+  {
+    "id": "anglo_001",
+    "standard": "Annuler",
+    "quebecois": "Canceller",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "Vient directement de l'anglais 'to cancel'. Bien que l'Office québécois de la langue française recommande 'annuler', 'canceller' est dominant à l'oral dans tous les milieux, y compris professionnel. On conjugue ce verbe comme un verbe du 1er groupe.",
+    "exemple": "Je vais devoir canceller notre réunion de demain, j'ai un empêchement.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_002",
+    "standard": "Planifier / Programmer",
+    "quebecois": "Céduler",
+    "contexte": "Professionnel",
+    "explication": "De l'anglais 'to schedule'. 'Céduler' signifie inscrire quelque chose à l'agenda, planifier une rencontre. 'Une cédule' désigne un horaire ou un calendrier de travail. Très courant en milieu de bureau et dans les métiers techniques.",
+    "exemple": "On peut-tu céduler une réunion pour jeudi après-midi ?",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_003",
+    "standard": "Voiture / Automobile",
+    "quebecois": "Char",
+    "contexte": "Quotidien",
+    "explication": "De l'anglais 'car'. Au Québec, 'char' désigne la voiture et non un char d'assaut comme en France. C'est le terme le plus courant à l'oral dans tous les registres informels. 'Beau char !' est un vrai compliment. 'Char' peut aussi désigner un camion dans certains contextes.",
+    "exemple": "Mon char refuse de partir ce matin, je pense que c'est la batterie.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_004",
+    "standard": "Vérifier / Regarder",
+    "quebecois": "Checker",
+    "contexte": "Quotidien / Professionnel",
+    "explication": "De l'anglais 'to check'. Signifie vérifier, regarder, surveiller ou constater. Extrêmement polyvalent : 'checker ton téléphone', 'checker si la porte est barrée', 'checker ça' (= regarde ça). L'un des anglicismes les plus fréquents au Québec toutes générations confondues.",
+    "exemple": "Checke si le four est éteint avant de partir, j'ai un doute.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_005",
+    "standard": "Tomber amoureux",
+    "quebecois": "Tomber en amour",
+    "contexte": "Vie sociale",
+    "explication": "Calque syntaxique de l'anglais 'to fall in love'. En français standard : 'tomber amoureux de quelqu'un'. Au Québec : 'tomber en amour avec quelqu'un'. La préposition 'en' est directement copiée de l'anglais. Très courant et non perçu comme un anglicisme par la majorité des Québécois.",
+    "exemple": "Il est tombé en amour avec elle la première fois qu'il l'a vue.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_006",
+    "standard": "Faire une demande d'emploi / Postuler",
+    "quebecois": "Appliquer",
+    "contexte": "Professionnel",
+    "explication": "De l'anglais 'to apply'. En français standard, 'appliquer' n'a aucun lien avec la candidature à un emploi. Au Québec, 'appliquer sur un poste' = postuler à un emploi. Faux ami parfait : un immigrant qui entend 'as-tu appliqué sur le poste ?' peut ne pas comprendre la question.",
+    "exemple": "J'ai appliqué sur trois postes cette semaine, j'attends des nouvelles.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_007",
+    "standard": "Petit ami / Copain",
+    "quebecois": "Chum",
+    "contexte": "Vie sociale",
+    "explication": "De l'anglais 'chum' (ami). Au Québec, 'mon chum' désigne le petit ami ou le meilleur ami selon le contexte. 'Mon chum et moi' dans une phrase peut signifier 'mon copain et moi'. Utilisé par toutes les générations. La distinction se fait au contexte.",
+    "exemple": "Mon chum vient me chercher à l'aéroport ce soir, on sort après.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_008",
+    "standard": "Petite amie / Copine",
+    "quebecois": "Blonde",
+    "contexte": "Vie sociale",
+    "explication": "Calque de l'anglais 'girlfriend' mal traduit. 'Ma blonde' désigne la petite amie, quelle que soit la couleur de ses cheveux. Piège classique pour les immigrants : 'j'adore ta blonde' ne parle pas de la couleur des cheveux mais de la petite amie. Utilisé universellement au Québec.",
+    "exemple": "Ma blonde et moi on fête notre deuxième anniversaire la semaine prochaine.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_009",
+    "standard": "Avoir du sens / Être logique",
+    "quebecois": "Faire du sens",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "Calque syntaxique de l'anglais 'to make sense'. En français standard : 'avoir du sens', 'être logique', 'être cohérent'. Au Québec : 'ça fait du sens' = c'est logique, c'est raisonnable. Extrêmement fréquent en réunion et dans les échanges professionnels. Souvent perçu comme une erreur par les Européens, mais parfaitement compris au Québec.",
+    "exemple": "Ton plan d'affaires fait du sens, je pense qu'on devrait l'adopter.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_010",
+    "standard": "Se concentrer / Focaliser",
+    "quebecois": "Focusser",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'to focus'. Signifie se concentrer sur quelque chose, mettre son attention sur un objectif. 'Focusse sur ton travail' = concentre-toi. Très courant en milieu de travail québécois. On dit aussi 'rester focussé' pour parler de quelqu'un de concentré et productif.",
+    "exemple": "On a besoin de focusser sur les priorités cette semaine, on est en retard sur le projet.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_011",
+    "standard": "Flancher / Craquer sous la pression",
+    "quebecois": "Choker",
+    "contexte": "Professionnel / Vie sociale",
+    "explication": "De l'anglais 'to choke'. Signifie perdre ses moyens sous la pression, flancher au moment crucial. 'Il a choké pendant la présentation' = il a perdu ses moyens. S'utilise aussi en sport : 'l'équipe a choké en finale'. Très imagé et courant dans les contextes de compétition ou de performance.",
+    "exemple": "J'ai choké pendant l'entrevue, j'avais tellement de pression que j'ai oublié mes réponses.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_012",
+    "standard": "Rendez-vous galant / Sortie romantique",
+    "quebecois": "Date",
+    "contexte": "Vie sociale",
+    "explication": "De l'anglais 'date' (rendez-vous romantique). 'Avoir une date' = avoir un rendez-vous galant. 'Dater quelqu'un' = sortir avec quelqu'un de façon romantique. En France, 'date' existe aussi mais reste un anglicisme récent. Au Québec, c'est le terme standard depuis des décennies.",
+    "exemple": "On a eu notre première date hier soir, on a soupé au Vieux-Port.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_013",
+    "standard": "Boisson / Boisson gazeuse",
+    "quebecois": "Breuvage",
+    "contexte": "Quotidien",
+    "explication": "Faux ami par rapport au français de France : en France 'breuvage' désigne une potion mystérieuse. Au Québec, 'breuvage' (de l'anglais 'beverage') désigne toute boisson, qu'il s'agisse d'eau, de jus, de café ou d'alcool. Terme neutre du quotidien utilisé même dans les restaurants.",
+    "exemple": "Quel breuvage vous désirez avec votre repas ? Jus, eau ou liqueur ?",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_014",
+    "standard": "Téléphone portable / Mobile",
+    "quebecois": "Cellulaire",
+    "contexte": "Quotidien / Professionnel",
+    "explication": "De l'anglais 'cellular phone'. En France, 'cellulaire' est uniquement un adjectif scientifique. Au Québec, c'est le terme standard pour désigner le téléphone portable. Un immigrant qui dit 'mon portable' sera compris mais sonnera européen. 'Cellulaire' est utilisé dans tous les registres.",
+    "exemple": "Mon cellulaire n'a plus de batterie, peux-tu me prêter ton chargeur ?",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_015",
+    "standard": "Entraîneur / Coach sportif",
+    "quebecois": "Coach",
+    "contexte": "Professionnel / Vie sociale",
+    "explication": "De l'anglais 'coach'. Utilisé tant pour l'entraîneur sportif que pour le coach de vie ou d'entreprise. 'Se faire coacher' = être encadré. Très répandu dans le milieu sportif et en développement professionnel. Verbe dérivé : 'coacher quelqu'un' = l'entraîner ou le guider.",
+    "exemple": "Mon coach au hockey m'a dit de travailler mon lancer ce printemps.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_016",
+    "standard": "Traiter / Gérer",
+    "quebecois": "Dealer",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'to deal with'. 'Dealer avec quelque chose' = composer avec, gérer une situation difficile. 'Je suis capable de dealer avec ça' = je suis capable de gérer ça. Courant pour parler de situations professionnelles ou personnelles complexes. Ne pas confondre avec le sens argotique de 'dealer de drogue' qui existe aussi.",
+    "exemple": "J'ai de la misère à dealer avec la pression des deadlines à la fin du mois.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_017",
+    "standard": "Date limite / Délai",
+    "quebecois": "Deadline",
+    "contexte": "Professionnel",
+    "explication": "Emprunté directement à l'anglais sans adaptation. 'La deadline' = la date limite de remise d'un travail ou d'un projet. Omniprésent dans tous les milieux professionnels québécois. L'Office québécois de la langue française recommande 'date limite' ou 'échéance', mais 'deadline' reste dominant dans la pratique.",
+    "exemple": "La deadline pour soumettre le rapport est vendredi 17h, on a pas le temps de slacker.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_018",
+    "standard": "Réunion / Rencontre de travail",
+    "quebecois": "Meeting",
+    "contexte": "Professionnel",
+    "explication": "De l'anglais 'meeting'. 'Avoir un meeting' = avoir une réunion. Extrêmement courant dans les milieux de bureau québécois. L'Office québécois recommande 'réunion', mais 'meeting' s'entend dans 80% des conversations professionnelles informelles. 'Appeler un meeting' = convoquer une réunion.",
+    "exemple": "J'ai pas le temps, j'ai un meeting de 9h à 11h pis après un lunch d'affaires.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_019",
+    "standard": "Faire du surplace / Ne pas avancer",
+    "quebecois": "Staller",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'to stall'. 'Staller' signifie stagner, faire du surplace, retarder volontairement. 'Il stalle' = il traîne les pieds, il n'avance pas. S'utilise aussi pour les projets : 'le projet stalle depuis des semaines'. Très imagé et courant dans les conversations sur la productivité.",
+    "exemple": "Le projet stalle depuis deux semaines, faut qu'on prenne une décision rapidement.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_020",
+    "standard": "Se détendre / Relaxer",
+    "quebecois": "Relaxer",
+    "contexte": "Quotidien / Vie sociale",
+    "explication": "De l'anglais 'to relax'. En français standard, 'relaxer' existe mais reste moins courant que 'se détendre' ou 'se reposer'. Au Québec, 'relaxer' est très fréquent et naturel dans toutes les conversations. 'Prends le temps de relaxer ce week-end' est une formule bienveillante courante.",
+    "exemple": "Le week-end, j'aime relaxer au chalet et me déconnecter du travail.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_021",
+    "standard": "Gérer / S'occuper de quelque chose",
+    "quebecois": "Handler",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'to handle'. 'Handler une situation' = gérer une situation. 'Je peux handler ça' = je peux m'en occuper, je peux gérer ça. Courant dans les milieux professionnels dynamiques. S'utilise aussi dans les contextes personnels pour exprimer sa capacité à faire face à quelque chose de difficile.",
+    "exemple": "Inquiète-toi pas, je vais handler le client difficile, t'as assez à faire.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_022",
+    "standard": "Réseau professionnel / Réseautage",
+    "quebecois": "Networker",
+    "contexte": "Professionnel",
+    "explication": "De l'anglais 'to network'. 'Networker' = réseauter, créer des contacts professionnels. 'Aller networker' = aller à un événement de réseautage. Le terme 'networking' désigne l'activité elle-même. Incontournable dans les contextes de développement de carrière au Québec.",
+    "exemple": "Je vais au 5 à 7 de la Chambre de commerce pour networker avec des gens du domaine.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_023",
+    "standard": "Faire une pause / Pauser",
+    "quebecois": "Prendre une break",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'to take a break'. 'Prendre une break' = faire une pause. 'Break' est féminin au Québec ('une break'). Très courant en milieu de travail pour parler de la pause-café ou de la pause-repas. On dit aussi 'prendre une break' dans la vie personnelle pour marquer une pause dans une relation.",
+    "exemple": "Ça fait deux heures qu'on travaille, on prend-tu une break de 10 minutes ?",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_024",
+    "standard": "Flâner / Traîner / Perdre son temps",
+    "quebecois": "Slacker",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'to slack'. 'Slacker' = traîner, ne pas travailler sérieusement, ne pas donner son plein effort. 'Arrête de slacker' = arrête de perdre du temps. 'Un slack' = une personne paresseuse. Très courant pour critiquer gentiment quelqu'un qui manque d'ardeur au travail.",
+    "exemple": "Arrête de slacker sur ton téléphone, le boss arrive dans dix minutes.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_025",
+    "standard": "Magasin à grande surface / Superficie commerciale",
+    "quebecois": "Store",
+    "contexte": "Quotidien",
+    "explication": "De l'anglais 'store'. 'Le store' désigne un grand magasin ou une boutique. 'Je vais au store' = je vais faire des courses, je vais en magasin. Très courant à l'oral. 'Store' peut aussi désigner la marque ou l'enseigne elle-même dans certains contextes.",
+    "exemple": "Je passe au store après le travail, on manque de papier d'imprimante au bureau.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_026",
+    "standard": "Fin de semaine / Week-end",
+    "quebecois": "Fin de semaine",
+    "contexte": "Quotidien / Professionnel",
+    "explication": "Spécificité québécoise : le Québec dit 'fin de semaine' là où la France dit 'week-end'. Ce n'est pas un anglicisme à proprement parler — c'est la traduction québécoise officielle de 'week-end'. Un immigrant européen habitué à 'week-end' sera étonné d'entendre systématiquement 'fin de semaine' dans tous les contextes.",
+    "exemple": "On se voit-tu en fin de semaine ? Samedi ou dimanche, c'est correct pour moi.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_027",
+    "standard": "Achat payant / Bonne affaire",
+    "quebecois": "Deal",
+    "contexte": "Quotidien / Professionnel",
+    "explication": "De l'anglais 'deal'. 'Un bon deal' = une bonne affaire, une transaction avantageuse. 'Dealer un deal' = conclure une entente. 'Faire un deal' = passer un accord. Très courant dans les achats, les négociations et les ententes commerciales ou personnelles.",
+    "exemple": "J'ai trouvé un super deal sur Marketplace : un sofa en cuir à 75 $.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_028",
+    "standard": "Envoyer par texto / Texter",
+    "quebecois": "Texter",
+    "contexte": "Quotidien / Vie sociale",
+    "explication": "De l'anglais 'to text'. 'Texter quelqu'un' = envoyer un texto, écrire un message par SMS. L'Office québécois de la langue française recommande 'envoyer un texto' ou 'textualiser', mais 'texter' est dominant dans la langue orale de toutes les générations. 'Texte-moi quand t'arrives' est une formule très naturelle.",
+    "exemple": "Texte-moi quand tu laisses la maison, je vais aller te rejoindre en char.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_029",
+    "standard": "Recharger / Mettre à jour",
+    "quebecois": "Updater",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'to update'. 'Updater' = mettre à jour un logiciel, un système ou une information. 'Mettre quelqu'un à jour' = 'updater quelqu'un' sur une situation. Courant dans les milieux technologiques et de plus en plus dans tous les secteurs. On dit aussi 'faire un update' pour une mise à jour.",
+    "exemple": "Penses-tu updater ton ordi avant la présentation ? Il tourne sur une vieille version.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_030",
+    "standard": "Sauvegarder / Enregistrer",
+    "quebecois": "Sauvegarder / Saver",
+    "contexte": "Professionnel",
+    "explication": "De l'anglais 'to save'. 'Saver un fichier' ou 'sauvegarder un fichier' coexistent au Québec. La forme 'saver' [seve] est la version orale populaire. 'As-tu savé tes changements ?' = as-tu sauvegardé ? Très courant dans les milieux de bureau. 'Sauvegarder' est aussi utilisé et est la forme officielle recommandée.",
+    "exemple": "Surtout, save ton document avant de fermer, t'as travaillé là-dessus toute la journée.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_031",
+    "standard": "Faire du bénévolat / Contribuer",
+    "quebecois": "Volontérer / Volunteerer",
+    "contexte": "Vie sociale / Professionnel",
+    "explication": "De l'anglais 'to volunteer'. 'Volunteerer' ou 'volontérer' = se porter volontaire, faire du bénévolat. Moins courant que les autres anglicismes mais présent dans les milieux communautaires et corporatifs. 'Je me suis volontéré pour le comité' = je me suis proposé bénévolement.",
+    "exemple": "Je vais volunteerer au Festival ce fin de semaine, ils ont besoin de monde.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_032",
+    "standard": "Postuler pour / Demander accès à",
+    "quebecois": "Appliquer pour",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "'Appliquer pour' est la version élargie de l'anglicisme 'appliquer'. On l'utilise non seulement pour un emploi ('appliquer sur un poste') mais aussi pour un logement, un programme, une bourse ou une carte de crédit. Calque direct de l'anglais 'to apply for'. Très fréquent dans les démarches administratives.",
+    "exemple": "As-tu appliqué pour le programme d'aide aux nouveaux arrivants ? Les délais sont courts.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_033",
+    "standard": "Appuyer sur / Cliquer sur",
+    "quebecois": "Peser sur",
+    "contexte": "Quotidien",
+    "explication": "Vieux calque de l'anglais 'to press'. 'Peser sur un bouton' = appuyer sur un bouton. Au Québec, 'pèse sur le bouton de l'ascenseur', 'pèse sur enter' sont des expressions très naturelles. 'Peser' au sens d'exercer une pression physique sur une touche ou un bouton est un québécisme courant.",
+    "exemple": "Pèse sur le bouton vert pour confirmer ta commande, pis sur rouge pour annuler.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_034",
+    "standard": "Travail par quarts / Travail posté",
+    "quebecois": "Shift",
+    "contexte": "Professionnel / Travail manuel",
+    "explication": "De l'anglais 'shift'. 'Faire un shift' = travailler un quart de travail. 'J'ai un shift de nuit' = je travaille la nuit. Omniprésent dans les milieux de la restauration, la santé, le commerce de détail et la manufacture. On 'swapper des shifts' (échanger des quarts) avec ses collègues.",
+    "exemple": "Je peux pas sortir ce soir, j'ai un shift de 23h à 7h du matin au Tim Hortons.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "anglo_035",
+    "standard": "Écraser / Dépasser les attentes",
+    "quebecois": "Crasher",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'to crash'. 'L'ordi a crashé' = l'ordinateur a planté. Mais aussi 'crasher une soirée' = s'inviter sans invitation (de 'to crash a party'). Deux sens distincts très courants. 'Crasher' pour un système informatique est universel en Amérique du Nord francophone.",
+    "exemple": "Mon système a crashé juste avant la présentation, j'ai perdu tout mon travail.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_036",
+    "standard": "Vérifier ses courriels / Regarder sa boîte de réception",
+    "quebecois": "Checker ses emails",
+    "contexte": "Professionnel",
+    "explication": "Cumul de deux anglicismes : 'checker' (to check) + 'emails'. Même si l'OQLF recommande 'courriel', 'email' reste très courant dans les conversations informelles au bureau. 'Checker ses emails' est la formulation la plus fréquente dans les échanges oraux entre collègues.",
+    "exemple": "Checke tes emails, je t'ai envoyé le document il y a une heure.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_037",
+    "standard": "Partir à temps / Ne pas être en retard",
+    "quebecois": "Être à date / Être on time",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "Deux anglicismes pour la même idée : 'être à date' (= être à jour, à temps, de l'anglais 'up to date') et 'être on time' (= être ponctuel). 'Tes vaccins sont-tu à date ?' = tes vaccinations sont-elles à jour ? Ne pas confondre 'à date' avec 'une date' (rendez-vous galant).",
+    "exemple": "Assure-toi que ton dossier est à date avant le rendez-vous avec l'immigration.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_038",
+    "standard": "Faire la promotion de / Promouvoir",
+    "quebecois": "Promouvoir / Plugger",
+    "contexte": "Professionnel / Vie sociale",
+    "explication": "De l'anglais 'to plug' (brancher, promouvoir). 'Plugger quelque chose' = en faire la promotion, recommander. 'Je vais te plugger à mon boss' = je vais te recommander à mon supérieur. Aussi : 'plugger son entreprise' = promouvoir son entreprise. Très courant dans les milieux créatifs et commerciaux.",
+    "exemple": "Je vais te plugger à la gérante du restaurant, elle cherche du monde comme toi.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_039",
+    "standard": "Rencontrer quelqu'un / Sortir avec",
+    "quebecois": "Dater quelqu'un",
+    "contexte": "Vie sociale",
+    "explication": "De l'anglais 'to date someone'. 'Dater quelqu'un' = fréquenter quelqu'un romantiquement, sortir avec quelqu'un. 'On date depuis trois mois' = on se fréquente depuis trois mois. Distinct de 'avoir une date' (un rendez-vous unique). 'Dater' implique une relation romantique en cours.",
+    "exemple": "Ça fait six mois qu'ils datent, je pense que ça devient sérieux entre eux.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_040",
+    "standard": "Être dans une impasse / Ne plus avancer",
+    "quebecois": "Être stuck",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'stuck' (coincé). 'Être stuck' = être bloqué, coincé, dans une impasse. 'Je suis stuck sur ce problème' = je bloque sur ce problème. Très courant pour exprimer une difficulté technique ou personnelle. On dit aussi 'je suis pogné' dans le même sens, mais 'stuck' est très répandu.",
+    "exemple": "Je suis stuck sur ce bug depuis hier, j'arrive pas à trouver l'erreur dans mon code.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_041",
+    "standard": "Logiciel / Application informatique",
+    "quebecois": "Software / App",
+    "contexte": "Professionnel",
+    "explication": "'Software' (de l'anglais) = logiciel. 'App' (de l'anglais 'application') = application mobile ou logicielle. Ces deux termes ont largement supplanté leurs équivalents français dans la langue courante au Québec. 'Une app' est féminin dans l'usage québécois. 'Télécharger une app' = télécharger une application.",
+    "exemple": "As-tu téléchargé l'app du club ? C'est là que tu trouves tous les horaires de cours.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_042",
+    "standard": "Appeler / Contacter par téléphone",
+    "quebecois": "Caller",
+    "contexte": "Quotidien / Professionnel",
+    "explication": "De l'anglais 'to call'. 'Caller quelqu'un' = appeler quelqu'un par téléphone. 'Appelle-moi' et 'calle-moi' coexistent, mais 'caller' est très fréquent à l'oral. On dit aussi 'je te calle tantôt' = je t'appelle tout à l'heure. Particulièrement courant chez les jeunes générations.",
+    "exemple": "Calle-moi quand t'as des nouvelles du médecin, je veux savoir comment ça s'est passé.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "anglo_043",
+    "standard": "Persévérer / Continuer malgré les obstacles",
+    "quebecois": "Pusher",
+    "contexte": "Professionnel / Vie sociale",
+    "explication": "De l'anglais 'to push'. 'Pusher' = pousser ses limites, insister, faire pression. 'Pushe-toi' = fais des efforts, dépasse-toi. 'Pusher un projet' = faire avancer un projet en insistant. 'Un pusher' = quelqu'un qui force ou qui insiste. Très courant dans les contextes sportifs et professionnels.",
+    "exemple": "Pousse-toi encore un peu, tu es presque à la fin du marathon, lâche pas !",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_044",
+    "standard": "Avoir de la difficulté / Peiner",
+    "quebecois": "Stroggler / Straggler",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'to struggle'. 'Stroggler' = avoir de la difficulté, peiner à accomplir quelque chose. 'Je stroggle avec les mathématiques' = j'ai beaucoup de mal avec les maths. Courant chez les jeunes et dans les contextes éducatifs. Souvent prononcé [stʁɔglɛ] ou [stʁɑglɛ] selon le locuteur.",
+    "exemple": "Elle stroggle beaucoup en français écrit, mais elle a fait des gros progrès depuis le début.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_045",
+    "standard": "Surveiller / Garder un œil sur",
+    "quebecois": "Watcher",
+    "contexte": "Quotidien / Vie sociale",
+    "explication": "De l'anglais 'to watch'. 'Watcher' = surveiller, regarder, garder un œil sur quelque chose. 'Watche tes affaires' = surveille tes affaires. 'Watcher un film' = regarder un film. Très polyvalent. 'Watche-le, il est pas fiable' = méfie-toi de lui, surveille-le.",
+    "exemple": "Peux-tu watcher mon sac deux minutes ? Je vais aux toilettes rapidement.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_046",
+    "standard": "Faire des heures supplémentaires",
+    "quebecois": "Faire de l'overtime",
+    "contexte": "Professionnel / Travail manuel",
+    "explication": "De l'anglais 'overtime'. 'Faire de l'overtime' = travailler au-delà de ses heures régulières, faire des heures supplémentaires. 'Être payé en overtime' = être payé au taux majoré. Très courant dans les usines, les hôpitaux, les restaurants et tous les milieux où les quarts de travail existent.",
+    "exemple": "J'ai fait deux heures d'overtime hier, on était à court de personnel au département.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_047",
+    "standard": "Rappel / Suivi d'un message",
+    "quebecois": "Follow-up",
+    "contexte": "Professionnel",
+    "explication": "De l'anglais 'follow-up'. 'Faire un follow-up' = assurer le suivi d'un dossier, d'un appel ou d'un courriel. 'Je vais faire un follow-up avec le client' = je vais relancer le client. Omniprésent dans les contextes de vente, de service à la clientèle et de gestion de projets au Québec.",
+    "exemple": "J'attends encore leur réponse, je pense que je vais faire un follow-up demain matin.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_048",
+    "standard": "Être disponible / Avoir du temps libre",
+    "quebecois": "Être available",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'available'. 'Es-tu available ?' = es-tu disponible ? Très courant dans les échanges professionnels rapides, surtout par texto ou Slack. Utilisé tant pour la disponibilité au travail que dans la vie personnelle. L'adjectif français 'disponible' est aussi utilisé mais 'available' est plus rapide et courant.",
+    "exemple": "T'es-tu available jeudi après-midi pour une réunion d'équipe sur Zoom ?",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_049",
+    "standard": "Retour d'ascenseur / Remerciement pratique",
+    "quebecois": "Donner du feedback",
+    "contexte": "Professionnel",
+    "explication": "De l'anglais 'feedback'. 'Donner du feedback' = donner une rétroaction, des commentaires constructifs. L'OQLF recommande 'rétroaction' mais 'feedback' s'entend dans 95% des échanges professionnels oraux. 'J'ai eu du bon feedback sur ma présentation' = j'ai reçu de bons commentaires.",
+    "exemple": "As-tu du feedback sur mon projet ? Je voudrais l'améliorer avant de le soumettre.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_050",
+    "standard": "Tâche accomplie / Dossier terminé",
+    "quebecois": "C'est done",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'done'. 'C'est done' = c'est terminé, c'est fini, c'est fait. Très courant dans les échanges rapides au bureau. 'Done !' seul = terminé ! Peut aussi signifier une décision irrévocable : 'C'est done, on en parle pu' = c'est décidé, la discussion est close.",
+    "exemple": "Le rapport est done, je l'ai envoyé au client il y a une heure. On peut passer à autre chose.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_051",
+    "standard": "Bien installé / Établi",
+    "quebecois": "Settled",
+    "contexte": "Quotidien / Vie sociale",
+    "explication": "De l'anglais 'settled'. 'Être settled' = être bien installé dans sa nouvelle vie, avoir trouvé ses repères. 'T'es-tu settled dans ton nouvel appart ?' = es-tu bien installé ? Souvent utilisé pour demander à un immigrant s'il s'est bien intégré et s'est trouvé ses marques dans son nouvel environnement.",
+    "exemple": "Ça fait six mois que t'es arrivé, t'es-tu settled ? T'as trouvé des amis dans le quartier ?",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_052",
+    "standard": "Dépêche-toi / Grouille-toi",
+    "quebecois": "Hurry-up",
+    "contexte": "Quotidien / Vie sociale",
+    "explication": "De l'anglais 'hurry up'. 'Hurry-up !' = dépêche-toi ! Grouille-toi ! Souvent utilisé avec des enfants ou dans des contextes urgents. S'utilise aussi comme verbe : 'hurry-up toé !' = dépêche-toi ! Très expressif. Souvent accompagné du pronom emphatique québécois 'toé' (= toi).",
+    "exemple": "Hurry-up, on est déjà en retard pour l'école, l'autobus part dans cinq minutes !",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_053",
+    "standard": "Renouveler / Reconduire un contrat",
+    "quebecois": "Renouveler / Renewer",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'to renew'. 'Renewer son abonnement' = renouveler son abonnement. 'Renewer son bail' = renouveler son contrat de location. Courant dans les contextes d'abonnement téléphonique, de bail immobilier, d'assurances. La forme française 'renouveler' coexiste mais 'renewer' s'entend souvent à l'oral.",
+    "exemple": "Penses-tu renewer ton bail ou tu changes d'appartement au printemps ?",
+    "niveau": "urgence"
+  },
+  {
+    "id": "anglo_054",
+    "standard": "Dépasser / Terminer dans les délais",
+    "quebecois": "Respecter la deadline / Meet the deadline",
+    "contexte": "Professionnel",
+    "explication": "Calque syntaxique complet de l'anglais 'to meet the deadline'. 'Meetez-vous la deadline ?' = Allez-vous respecter la date limite ? Deux anglicismes combinés ('meet' + 'deadline'). Très courant dans les milieux de projet. Montre comment plusieurs anglicismes peuvent se combiner naturellement dans une même phrase.",
+    "exemple": "Avec tout le retard accumulé, je sais pas si on va être capables de meetez la deadline.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_055",
+    "standard": "Sans effort / Facile",
+    "quebecois": "Easy",
+    "contexte": "Quotidien / Vie sociale",
+    "explication": "De l'anglais 'easy'. 'C'est easy' = c'est facile, c'est simple. 'Prends ça easy' = prends les choses avec calme, ne t'en fais pas. Ces deux expressions sont très fréquentes dans la langue orale québécoise. 'Take it easy' (anglais intégral) s'entend aussi parfois comme expression complète.",
+    "exemple": "Stresse pas pour le test, les questions sont super easy si t'as étudié tes notes.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_056",
+    "standard": "Impressionner / Épater",
+    "quebecois": "Impressionner / Blow away",
+    "contexte": "Vie sociale / Professionnel",
+    "explication": "De l'anglais 'to blow away'. 'Ça m'a blow away' = ça m'a époustouflé, j'étais soufflé. Peut se conjuguer : 'J'ai été complètement blown away par sa présentation'. Très expressif. Utilisé pour décrire une réaction d'admiration intense, tant pour une performance professionnelle que pour une expérience artistique.",
+    "exemple": "La présentation de la nouvelle recrue m'a complètement blown away, c'était incroyable.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_057",
+    "standard": "Être surchargé / Avoir trop de travail",
+    "quebecois": "Être overwhelmed",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'overwhelmed'. 'Être overwhelmed' = être submergé, dépassé par les événements. Très courant pour décrire un état de surcharge mentale ou professionnelle. Souvent prononcé [ovɛʁwɛlmd]. Reflète l'influence croissante de l'anglais dans le vocabulaire des émotions et de la santé mentale.",
+    "exemple": "Je suis complètement overwhelmed en ce moment, j'ai trop de projets en même temps.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "anglo_058",
+    "standard": "Régler les détails / Clarifier",
+    "quebecois": "Figurer out",
+    "contexte": "Professionnel / Quotidien",
+    "explication": "De l'anglais 'to figure out'. 'Figure out' = comprendre, résoudre, trouver la solution. 'J'ai pas encore figuré out comment ça marche' = je n'ai pas encore compris comment ça fonctionne. Très fréquent pour parler de résolution de problèmes. La forme verbale 'figurer out' est typique du mélange franco-anglais québécois.",
+    "exemple": "J'arrive pas à figurer out comment configurer cette imprimante, c'est trop compliqué.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_059",
+    "standard": "Être dans les temps / Avancer conformément au plan",
+    "quebecois": "Être on track",
+    "contexte": "Professionnel",
+    "explication": "De l'anglais 'on track'. 'Être on track' = être dans les temps, avancer selon le plan prévu. 'Le projet est-tu on track ?' = le projet avance-t-il comme prévu ? Expression omniprésente dans les réunions de suivi de projet, les bilans d'étape et les discussions sur l'avancement des dossiers.",
+    "exemple": "On est-tu encore on track pour livrer la phase 2 avant la fin du mois ?",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_060",
+    "standard": "Avoir une discussion / Clarifier un point",
+    "quebecois": "Avoir un talk / Talker",
+    "contexte": "Vie sociale / Professionnel",
+    "explication": "De l'anglais 'to talk / talk'. 'Avoir un talk' = avoir une conversation sérieuse avec quelqu'un. 'Faut qu'on ait un talk' = on doit se parler sérieusement. 'Talker avec quelqu'un' = discuter, s'entretenir. Ces expressions sont typiques des conversations intimes et des discussions de fond en milieu de travail ou familial.",
+    "exemple": "Faut qu'on ait un talk tous les deux avant la réunion d'équipe, y'a des affaires à clarifier.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_061",
+    "standard": "Essayer / Tenter quelque chose",
+    "quebecois": "Tryez / Trier",
+    "contexte": "Quotidien / Professionnel",
+    "explication": "De l'anglais 'to try'. 'Trie ça' ou 'essaie ça' coexistent. 'J'ai trié une nouvelle approche' = j'ai essayé une nouvelle approche. Moins répandu que les autres anglicismes de cette liste, mais présent dans les milieux bilingues. La forme 'essayer' reste dominante mais 'trier' s'entend.",
+    "exemple": "T'as-tu trié la nouvelle mise à jour ? Il paraît que ça règle le bug qu'on avait.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_062",
+    "standard": "Faire le lien / Faire la connexion",
+    "quebecois": "Connecter les points",
+    "contexte": "Professionnel",
+    "explication": "Calque de l'anglais 'to connect the dots'. 'Connecter les points' = faire le lien entre différentes informations, avoir une révélation. En français standard : 'faire le lien', 'assembler les pièces du puzzle'. Au Québec professionnel, 'connecter les points' s'entend régulièrement dans les réunions stratégiques.",
+    "exemple": "C'est en relisant les rapports que j'ai réussi à connecter les points et trouver le problème.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_063",
+    "standard": "Donner la priorité à quelque chose",
+    "quebecois": "Prioriser",
+    "contexte": "Professionnel",
+    "explication": "Calque de l'anglais 'to prioritize'. 'Prioriser' = donner la priorité, établir un ordre de priorité. L'OQLF accepte 'prioriser' comme néologisme, mais il reste un calque de l'anglais. Omniprésent dans les milieux de gestion. 'Priorise tes tâches' = classe tes tâches par ordre d'importance.",
+    "exemple": "Faut qu'on priorise les dossiers urgents avant d'attaquer les projets à long terme.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_064",
+    "standard": "Trouver un compromis / S'arranger",
+    "quebecois": "Faire un compromis / Settler",
+    "contexte": "Professionnel / Vie sociale",
+    "explication": "De l'anglais 'to settle'. 'Settler sur un prix' = s'entendre sur un prix, trouver un terrain d'entente. 'Settler' implique un accord mutuel après négociation. Très courant lors de transactions commerciales, de négociations salariales ou d'ententes personnelles. 'On a settlé à 50/50' = on a trouvé un compromis équitable.",
+    "exemple": "Après deux heures de négociation, on a finally settlé sur un prix acceptable pour les deux parties.",
+    "niveau": 6
+  },
+  {
+    "id": "anglo_065",
+    "standard": "Finalement / En définitive",
+    "quebecois": "Finally",
+    "contexte": "Quotidien / Professionnel",
+    "explication": "De l'anglais 'finally'. 'Finally' s'utilise seul comme adverbe exclamatif ou intégré dans une phrase. 'Finally, c'est réglé !' = enfin, c'est réglé ! Ou 'On a finally trouvé une solution' = on a finalement trouvé une solution. Ce type de mot-pont (ni français ni anglais) est typique du parler québécois bilingue.",
+    "exemple": "On a finally réglé le problème avec le fournisseur, ça faisait trois semaines qu'on attendait.",
+    "niveau": 6
+  }
+]

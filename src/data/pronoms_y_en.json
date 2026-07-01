@@ -1,0 +1,658 @@
+[
+  {
+    "id": "pron_001",
+    "standard": "Je lui ai dit de venir.",
+    "quebecois": "J'y ai dit de venir.",
+    "chunks": [
+      "J'y",
+      "ai dit",
+      "de venir",
+      "."
+    ],
+    "explication": "Au Québec, le pronom objet indirect 'lui' est presque systématiquement remplacé par 'y' à l'oral. 'Je lui' se contracte en 'J'y' [ʒi]. Ce remplacement s'applique à tous les verbes construits avec un complément indirect introduit par 'à'. Un Québécois qui dirait 'je lui ai dit' sonnerait très scolaire ou très formel.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_002",
+    "standard": "Je lui ai parlé hier soir.",
+    "quebecois": "J'y ai parlé hier soir.",
+    "chunks": [
+      "J'y",
+      "ai parlé",
+      "hier soir",
+      "."
+    ],
+    "explication": "'Parler à quelqu'un' : le 'lui' complément indirect devient 'y' à l'oral québécois. 'J'y' se prononce en une seule syllabe [ʒi]. Ce phénomène est si systématique qu'il touche tous les registres oraux, des conversations entre amis aux réunions de travail informelles.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_003",
+    "standard": "Je lui ai expliqué le problème.",
+    "quebecois": "J'y ai expliqué le problème.",
+    "chunks": [
+      "J'y",
+      "ai expliqué",
+      "le problème",
+      "."
+    ],
+    "explication": "'Expliquer quelque chose à quelqu'un' : 'lui → y'. Le 'y' québécois remplace tout complément indirect, qu'il soit masculin ou féminin, sans distinction de genre. C'est une simplification du système pronominal qui évite les distinctions 'lui/leur'. Seul le complément direct ('le problème') reste intact.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_004",
+    "standard": "Je lui ai donné mon numéro de téléphone.",
+    "quebecois": "J'y ai donné mon numéro de téléphone.",
+    "chunks": [
+      "J'y",
+      "ai donné",
+      "mon numéro",
+      "de téléphone",
+      "."
+    ],
+    "explication": "'Donner quelque chose à quelqu'un' est un des contextes les plus fréquents du 'y' québécois. La structure 'J'y ai + participe passé' est un patron oral très courant. Remarquez que le complément direct 'mon numéro' reste inchangé — seul le complément indirect 'lui' est remplacé par 'y'.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_005",
+    "standard": "Je lui ai demandé de l'aide.",
+    "quebecois": "J'y ai demandé de l'aide.",
+    "chunks": [
+      "J'y",
+      "ai demandé",
+      "de l'aide",
+      "."
+    ],
+    "explication": "'Demander à quelqu'un' : le 'lui' devient 'y'. Attention à ne pas confondre avec le 'y' locatif qui remplace un lieu : ici, 'y' représente une personne. C'est le verbe utilisé et le contexte de la conversation qui permettent de distinguer les deux usages du pronom 'y' en québécois.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_006",
+    "standard": "Je lui fais confiance.",
+    "quebecois": "J'y fais confiance.",
+    "chunks": [
+      "J'y",
+      "fais confiance",
+      "."
+    ],
+    "explication": "'Faire confiance à quelqu'un' : le complément indirect 'lui' est remplacé par 'y'. Au présent, sans auxiliaire, 'Je lui → J'y' fonctionne de la même façon. Se prononce [ʒifɛ̃kɔ̃fjɑ̃s] en débit rapide. Cette construction est universelle au Québec, qu'il s'agisse d'un ami, d'un collègue ou d'un inconnu.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_007",
+    "standard": "Je lui ai répondu tout à l'heure.",
+    "quebecois": "J'y ai répondu tantôt.",
+    "chunks": [
+      "J'y",
+      "ai répondu",
+      "tantôt",
+      "."
+    ],
+    "explication": "Double phénomène : 'lui → y' ET 'tout à l'heure → tantôt'. En québécois, 'tantôt' peut désigner un moment passé récent ou un futur proche selon le contexte. Ici, 'J'y ai répondu tantôt' = je lui ai répondu il y a peu de temps. Un immigrant doit apprendre à intégrer ces deux changements simultanément.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_008",
+    "standard": "Je lui ai envoyé un courriel.",
+    "quebecois": "J'y ai envoyé un courriel.",
+    "chunks": [
+      "J'y",
+      "ai envoyé",
+      "un courriel",
+      "."
+    ],
+    "explication": "Notez l'usage de 'courriel' — mot québécois officiel recommandé par l'Office québécois de la langue française pour désigner un e-mail. En France on dirait 'je lui ai envoyé un mail'. 'J'y ai envoyé' illustre comment le 'y' s'applique naturellement même dans les contextes de communication numérique moderne.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_009",
+    "standard": "Je lui ai montré le chemin.",
+    "quebecois": "J'y ai montré le chemin.",
+    "chunks": [
+      "J'y",
+      "ai montré",
+      "le chemin",
+      "."
+    ],
+    "explication": "'Montrer quelque chose à quelqu'un' : double complément — 'le chemin' (direct) et 'lui' (indirect). Au Québec, seul le complément indirect 'lui' est remplacé par 'y'. Le complément direct reste toujours intact. Structure invariable : J'y (indirect) + ai montré + le chemin (direct).",
+    "niveau": 5
+  },
+  {
+    "id": "pron_010",
+    "standard": "Je lui ai promis de revenir.",
+    "quebecois": "J'y ai promis de revenir.",
+    "chunks": [
+      "J'y",
+      "ai promis",
+      "de revenir",
+      "."
+    ],
+    "explication": "'Promettre à quelqu'un' : 'lui → y'. La proposition infinitive 'de revenir' reste complètement intacte. Point pédagogique important : seul le complément indirect change en québécois oral. Tout le reste de la phrase demeure identique au français standard. Le 'y' est la seule modification systématique.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_011",
+    "standard": "Je lui ai menti et maintenant je le regrette.",
+    "quebecois": "J'y ai menti pis là je le regrette.",
+    "chunks": [
+      "J'y",
+      "ai menti",
+      "pis là",
+      "je le regrette",
+      "."
+    ],
+    "explication": "Double phénomène : 'lui → y' ET 'et maintenant → pis là'. 'Pis' est la contraction québécoise de 'puis' (= et/ensuite), et 'là' est un marqueur temporel ou discursif très fréquent. 'Pis là' est une des formules de liaison les plus courantes dans la narration orale québécoise.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_012",
+    "standard": "Je lui ai acheté un cadeau pour son anniversaire.",
+    "quebecois": "J'y ai acheté un cadeau pour sa fête.",
+    "chunks": [
+      "J'y",
+      "ai acheté",
+      "un cadeau",
+      "pour sa fête",
+      "."
+    ],
+    "explication": "Deux différences culturelles ici : 'lui → y' ET 'anniversaire → fête'. Au Québec, on dit couramment 'bonne fête !' pour souhaiter un bon anniversaire — l'expression 'joyeux anniversaire' existe mais 'bonne fête' est beaucoup plus fréquente. 'J'y ai acheté un cadeau pour sa fête' est une phrase entièrement naturelle au Québec.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_013",
+    "standard": "Je leur ai dit de venir.",
+    "quebecois": "J'y ai dit de venir.",
+    "chunks": [
+      "J'y",
+      "ai dit",
+      "de venir",
+      "."
+    ],
+    "explication": "Point crucial : en québécois oral, 'y' remplace non seulement 'lui' (singulier) mais aussi 'leur' (pluriel) ! La forme 'J'y ai dit' peut donc signifier 'je lui ai dit' OU 'je leur ai dit'. C'est l'ambiguïté caractéristique du 'y' québécois, levée uniquement par le contexte de la conversation.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_014",
+    "standard": "Je leur ai expliqué la situation en détail.",
+    "quebecois": "J'y ai expliqué la situation en détail.",
+    "chunks": [
+      "J'y",
+      "ai expliqué",
+      "la situation",
+      "en détail",
+      "."
+    ],
+    "explication": "'Leur' (pluriel) → 'y', identique à 'lui' (singulier) → 'y'. Pour un locuteur européen, cette fusion est déstabilisante car en français standard lui ≠ leur. Au Québec oral, ces deux formes convergent vers un 'y' unique. Le nombre est porté uniquement par le contexte de la conversation.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_015",
+    "standard": "Je leur ai donné les documents importants.",
+    "quebecois": "J'y ai donné les documents importants.",
+    "chunks": [
+      "J'y",
+      "ai donné",
+      "les documents",
+      "importants",
+      "."
+    ],
+    "explication": "'Leur → y' au Québec. Pour clarifier si 'y' remplace 'lui' ou 'leur', les Québécois peuvent ajouter 'eux autres' : 'J'y ai donné les documents, à eux autres'. Cette clarification optionnelle est naturelle quand le contexte ne suffit pas. 'Eux autres' est le pronom emphatique pluriel de la 3e personne en québécois.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_016",
+    "standard": "Je leur ai parlé ce matin.",
+    "quebecois": "J'y ai parlé à matin.",
+    "chunks": [
+      "J'y",
+      "ai parlé",
+      "à matin",
+      "."
+    ],
+    "explication": "Double phénomène : 'leur → y' ET 'ce matin → à matin'. 'À matin' est une expression temporelle archaïque conservée au Québec pour dire 'ce matin'. Les mêmes formes existent pour 'à soir' (ce soir) et 'à l'heure' (tout de suite). Ces expressions héritées du vieux français sont totalement absentes du français européen actuel.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_017",
+    "standard": "Je leur ai envoyé un message ce matin.",
+    "quebecois": "J'y ai envoyé un message à matin.",
+    "chunks": [
+      "J'y",
+      "ai envoyé",
+      "un message",
+      "à matin",
+      "."
+    ],
+    "explication": "La substitution 'leur → y' est identique à 'lui → y'. Pour lever l'ambiguïté lors d'une vraie conversation, les Québécois peuvent ajouter 'à eux autres' en fin de phrase pour insister sur le pluriel : 'J'y ai envoyé un message, à matin, à eux autres'. Cette précision optionnelle est naturelle quand le contexte ne suffit pas.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_018",
+    "standard": "Je leur ai montré comment faire.",
+    "quebecois": "J'y ai montré comment faire.",
+    "chunks": [
+      "J'y",
+      "ai montré",
+      "comment faire",
+      "."
+    ],
+    "explication": "Singulier ou pluriel, la forme québécoise est identique : 'J'y ai montré comment faire' peut signifier les deux. La proposition interrogative indirecte 'comment faire' reste intacte. Ce cas illustre parfaitement l'ambiguïté structurelle du 'y' québécois, qui ne crée pourtant aucun problème de compréhension pour les locuteurs natifs grâce au contexte.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_019",
+    "standard": "Je leur ai souhaité bonne chance avant l'examen.",
+    "quebecois": "J'y ai souhaité bonne chance avant l'examen.",
+    "chunks": [
+      "J'y",
+      "ai souhaité",
+      "bonne chance",
+      "avant l'examen",
+      "."
+    ],
+    "explication": "La neutralisation leur/lui est totale dans ce type de construction. Notez aussi que 'bonne chance' est l'expression québécoise standard pour souhaiter la réussite — authentique et sincère. En France, dans certains contextes artistiques on préfère 'merde', mais au Québec 'bonne chance' s'utilise universellement et sans connotation négative.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_020",
+    "standard": "Je leur ai répondu rapidement.",
+    "quebecois": "J'y ai répondu vite.",
+    "chunks": [
+      "J'y",
+      "ai répondu",
+      "vite",
+      "."
+    ],
+    "explication": "Double différence : 'leur → y' ET 'rapidement → vite'. À l'oral québécois, l'adverbe court 'vite' est nettement préféré à 'rapidement', jugé formel. Cet exemple illustre la préférence générale du québécois oral pour les formes brèves et directes. 'Vite' s'entend dans tous les registres, même en contexte professionnel.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_021",
+    "standard": "Donne-lui ça !",
+    "quebecois": "Donne-y ça !",
+    "chunks": [
+      "Donne-y",
+      "ça",
+      "!"
+    ],
+    "explication": "À l'impératif positif, 'lui' devient 'y' et se place après le verbe avec un trait d'union. 'Donne-y ça !' est un ordre courant et naturel. On peut aussi entendre 'Donne-y ça toute' (= donne-lui tout ça) ou 'Donne-y-en' (= donne-lui-en). La structure de base impératif + -y reste toujours la même.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_022",
+    "standard": "Dis-lui que je suis là.",
+    "quebecois": "Dis-y que chu là.",
+    "chunks": [
+      "Dis-y",
+      "que",
+      "chu là",
+      "."
+    ],
+    "explication": "Double phénomène à l'impératif : 'lui → y' ET 'je suis → chu'. 'Dis-y' est la forme impérative naturelle québécoise [dizi]. 'Chu là' = je suis ici/présent. Trois mots du français standard ('que je suis là') deviennent trois syllabes en québécois. Cette phrase illustre bien comment les contractions se cumulent.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_023",
+    "standard": "Parle-lui de ton problème.",
+    "quebecois": "Parle-y de ton problème.",
+    "chunks": [
+      "Parle-y",
+      "de ton problème",
+      "."
+    ],
+    "explication": "'Parler à quelqu'un' à l'impératif : 'lui → y' après le verbe. 'Parle-y' [paʁlwi] est la forme naturelle. Comparaison utile pour l'immigrant : en France on dit 'Parle-lui' (compris au Québec aussi), au Québec on dit 'Parle-y' (incompris en France). Les deux coexistent, mais 'Parle-y' est de loin la plus fréquente à l'oral québécois.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_024",
+    "standard": "Montre-lui comment tu fais.",
+    "quebecois": "Montre-y comment tu fais.",
+    "chunks": [
+      "Montre-y",
+      "comment",
+      "tu fais",
+      "."
+    ],
+    "explication": "'Montrer à quelqu'un' à l'impératif : 'lui → y'. 'Montre-y' se prononce [mɔ̃tʁwi] en débit rapide. La proposition subordonnée 'comment tu fais' reste intacte. Cet impératif est typique des situations d'apprentissage ou de transmission d'un savoir-faire, très fréquentes dans la culture québécoise du travail et du bricolage.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_025",
+    "standard": "Envoie-lui un message dès que possible.",
+    "quebecois": "Envoie-y un message dès que possible.",
+    "chunks": [
+      "Envoie-y",
+      "un message",
+      "dès que possible",
+      "."
+    ],
+    "explication": "'Envoyer à quelqu'un' à l'impératif : 'lui → y'. 'Envoie-y' [ɑ̃vwaji] est la forme orale courante. L'expression 'dès que possible' est partagée par les deux variétés du français. Au Québec, on entend aussi 'aussitôt que possible' ou le calque de l'anglais 'ASAP' dans les contextes professionnels.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_026",
+    "standard": "Demande-lui son avis avant de décider.",
+    "quebecois": "Demande-y son avis avant de décider.",
+    "chunks": [
+      "Demande-y",
+      "son avis",
+      "avant de décider",
+      "."
+    ],
+    "explication": "'Demander à quelqu'un' à l'impératif : 'lui → y'. 'Demande-y' [dəmɑ̃di] est la forme naturelle. 'Son avis' reste complément direct intact. Ce type de conseil bienveillant est très fréquent dans les échanges québécois — la culture du consensus et de la consultation est valorisée, et 'Demande-y son avis' s'entend souvent dans les contextes de prise de décision.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_027",
+    "standard": "Dis-leur la vérité, c'est mieux ainsi.",
+    "quebecois": "Dis-y la vérité, c'est mieux de même.",
+    "chunks": [
+      "Dis-y",
+      "la vérité",
+      ",",
+      "c'est mieux",
+      "de même",
+      "."
+    ],
+    "explication": "Double phénomène : 'leur → y' à l'impératif ET 'ainsi → de même'. 'De même' est l'expression québécoise héritée du vieux français pour dire 'comme ça' ou 'ainsi'. Parfaitement naturelle au Québec, elle est pratiquement inconnue en France moderne. 'C'est mieux de même' s'entend dans de nombreux contextes pratiques et quotidiens.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_028",
+    "standard": "Donne-leur une chance de s'expliquer.",
+    "quebecois": "Donne-y une chance de s'expliquer.",
+    "chunks": [
+      "Donne-y",
+      "une chance",
+      "de s'expliquer",
+      "."
+    ],
+    "explication": "'Donner à eux' (pluriel) à l'impératif : 'leur → y'. 'Donne-y une chance' fonctionne aussi bien au singulier (donne-lui) qu'au pluriel (donne-leur) — même forme, contexte différent. L'expression 'donner une chance à quelqu'un' est très courante au Québec. En France on dirait plutôt 'laisse-leur l'occasion' ou 'laisse-leur le temps de s'expliquer'.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_029",
+    "standard": "N'y va pas !",
+    "quebecois": "Vas-y pas !",
+    "chunks": [
+      "Vas-y",
+      "pas",
+      "!"
+    ],
+    "explication": "L'impératif négatif est radicalement différent du français standard ! En français standard : 'N'y va pas' (ne + verbe + y + pas). En québécois oral : 'Vas-y pas' (verbe + y + pas, sans 'ne'). La structure québécoise ressemble à l'impératif positif 'Vas-y !' auquel on ajoute simplement 'pas' à la fin. Ce renversement de structure est très déroutant pour les immigrants.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_030",
+    "standard": "Ne lui touche pas !",
+    "quebecois": "Touche-y pas !",
+    "chunks": [
+      "Touche-y",
+      "pas",
+      "!"
+    ],
+    "explication": "Impératif négatif avec 'y' représentant une personne (= lui) : 'Ne lui touche pas → Touche-y pas !'. Même inversion qu'avec le 'y' locatif. Structure : verbe + -y + pas, sans 'ne'. Cette forme est particulièrement fréquente pour avertir les enfants ou signaler une interdiction urgente. En France : 'Ne lui touche pas !' ou 'N'y touche pas !'",
+    "niveau": 5
+  },
+  {
+    "id": "pron_031",
+    "standard": "Ne lui parle plus de cette histoire.",
+    "quebecois": "Parle-y pu de cette histoire-là.",
+    "chunks": [
+      "Parle-y",
+      "pu",
+      "de cette histoire-là",
+      "."
+    ],
+    "explication": "Deux phénomènes : 'Ne lui parle plus → Parle-y pu' et l'ajout du déictique '-là'. 'Pu' est la contraction québécoise de 'plus' dans les constructions négatives ('ne... plus → ... pu'). Le '-là' s'attache après un nom pour renforcer le référent, comme 'cette fameuse histoire dont on parle'. 'Parle-y pu de cette histoire-là' = ne lui parle vraiment plus de ça.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_032",
+    "standard": "Ne lui dis pas ça !",
+    "quebecois": "Dis-y pas ça !",
+    "chunks": [
+      "Dis-y",
+      "pas",
+      "ça",
+      "!"
+    ],
+    "explication": "Structure de l'impératif négatif québécois : verbe + -y + pas + complément. En français standard : ne + verbe + lui + pas + complément. L'ordre est inversé. 'Dis-y pas ça !' est une mise en garde très fréquente, souvent utilisée pour protéger quelqu'un d'une information embarrassante ou d'une vérité blessante.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_033",
+    "standard": "Ne lui réponds pas, laisse tomber.",
+    "quebecois": "Réponds-y pas, laisse faire.",
+    "chunks": [
+      "Réponds-y",
+      "pas",
+      ",",
+      "laisse faire",
+      "."
+    ],
+    "explication": "Double différence : 'Ne lui réponds pas → Réponds-y pas' ET 'laisse tomber → laisse faire'. 'Laisse faire' est l'expression québécoise pour 'laisse tomber', 'n'insiste pas' ou 'ne t'en occupe pas'. L'impératif négatif québécois (verbe + -y + pas) est illustré parfaitement. 'Laisse faire' s'entend dans des dizaines de contextes au quotidien.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_034",
+    "standard": "Ne lui donne surtout pas ça.",
+    "quebecois": "Donne-y pas ça pantoute.",
+    "chunks": [
+      "Donne-y",
+      "pas",
+      "ça",
+      "pantoute",
+      "."
+    ],
+    "explication": "Nouveau phénomène : 'surtout pas → pas... pantoute'. 'Pantoute' est un intensifieur de la négation québécois, issu de l'archaïsme 'point du tout'. 'Pas pantoute' = absolument pas, pas du tout. 'Donne-y pas ça pantoute' = ne lui donne surtout, absolument pas ça. Très expressif et authentiquement québécois, totalement inconnu en France.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_035",
+    "standard": "Ne lui fais pas confiance, il va te décevoir.",
+    "quebecois": "Fais-y pas confiance, y va te décevoir.",
+    "chunks": [
+      "Fais-y",
+      "pas confiance",
+      ",",
+      "y va",
+      "te décevoir",
+      "."
+    ],
+    "explication": "Double phénomène dans la même phrase : impératif négatif 'Fais-y pas' (ne lui fais pas) ET réduction 'il → y' dans la seconde proposition. 'Y va te décevoir' = il va te décevoir. Cet exemple illustre comment les réductions pronominales se cumulent naturellement dans une seule intervention orale québécoise.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_036",
+    "standard": "Je vais là-bas maintenant.",
+    "quebecois": "J'y vais astheure.",
+    "chunks": [
+      "J'y",
+      "vais",
+      "astheure",
+      "."
+    ],
+    "explication": "Ici, 'y' est locatif : il remplace un lieu (là-bas, à cet endroit déjà mentionné). 'J'y vais' = je vais là. De plus, 'maintenant → astheure' [astoer], contraction de l'expression vieux-française 'à cette heure', conservée exclusivement au Québec et en Acadie. 'Astheure' est totalement inconnu en France — un immigrant l'entendra souvent et doit l'apprendre.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_037",
+    "standard": "J'étais là-bas hier soir.",
+    "quebecois": "J'y étais hier soir.",
+    "chunks": [
+      "J'y",
+      "étais",
+      "hier soir",
+      "."
+    ],
+    "explication": "Le 'y' locatif à l'imparfait. 'J'y étais' = j'étais là, j'étais à cet endroit. Cette construction est identique en français standard et québécois. Ce qui change au Québec, c'est la fréquence : le 'y' locatif est très courant pour éviter de répéter un nom de lieu déjà mentionné, bien plus qu'en France où on répète souvent le nom du lieu.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_038",
+    "standard": "Est-ce qu'on y va ?",
+    "quebecois": "On y va-tu ?",
+    "chunks": [
+      "On",
+      "y va-tu",
+      "?"
+    ],
+    "explication": "Le 'y' locatif combiné avec le marqueur interrogatif québécois '-tu'. 'On y va-tu ?' cumule le pronom inclusif 'on' (= nous), le 'y' locatif et la particule interrogative '-tu'. Trois phénomènes caractéristiques en 4 mots seulement. La particule '-tu' n'a ici aucun lien avec le pronom 'tu' — c'est une marque de question invariable.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_039",
+    "standard": "Je retourne là-bas demain matin.",
+    "quebecois": "J'y retourne demain matin.",
+    "chunks": [
+      "J'y",
+      "retourne",
+      "demain matin",
+      "."
+    ],
+    "explication": "'Y' locatif avec le verbe 'retourner'. 'J'y retourne' = je retourne là, je retourne à cet endroit précis. Le lieu a généralement été mentionné juste avant dans la conversation. C'est l'un des rares usages où le québécois et le français standard sont identiques — le 'y' locatif existe dans les deux variétés.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_040",
+    "standard": "As-tu pensé à aller là-bas ?",
+    "quebecois": "T'as-tu pensé à y aller ?",
+    "chunks": [
+      "T'as-tu",
+      "pensé",
+      "à y aller",
+      "?"
+    ],
+    "explication": "'Y' locatif enchâssé dans une proposition infinitive : 'à y aller' = à aller là-bas. Combiné avec la contraction 'tu as → t'as' et la particule interrogative '-tu', cette phrase cumule trois phénomènes oraux québécois simultanément. Un immigrant doit apprendre à décoder cette densité progressive plutôt que de chercher à analyser chaque mot séparément.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_041",
+    "standard": "J'ai vraiment beaucoup de difficulté, je n'y arrive pas.",
+    "quebecois": "J'en arrache.",
+    "chunks": [
+      "J'en",
+      "arrache",
+      "."
+    ],
+    "explication": "'J'en arrache' est une expression idiomatique québécoise signifiant 'j'ai énormément de difficulté, je peine à m'en sortir'. Le 'en' réfère à la situation difficile. Cette expression est très courante — on dit 'j'en arrache au travail', 'j'en arrache financièrement'. Un immigrant européen ne devinerait jamais ce sens sans l'apprendre : 'arracher' n'évoque pas la difficulté en France.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_042",
+    "standard": "J'en ai vraiment assez, je n'en peux plus.",
+    "quebecois": "J'en ai plein mon cass.",
+    "chunks": [
+      "J'en ai",
+      "plein",
+      "mon cass",
+      "."
+    ],
+    "explication": "'J'en ai plein mon cass' exprime la saturation et l'exaspération totale. 'Cass' est la prononciation populaire québécoise de 'cas' [kɑs], évoquant ici 'ma situation'. Équivalent français : 'J'en ai ras le bol', 'J'en ai marre'. On entend aussi 'j'en ai plein les bras' ou 'j'en ai plein le dos'. Ces variantes sont toutes interchangeables au Québec.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_043",
+    "standard": "Je n'en reviens pas, c'est incroyable !",
+    "quebecois": "J'en reviens pas, c'est pas croyable !",
+    "chunks": [
+      "J'en reviens pas",
+      ",",
+      "c'est pas croyable",
+      "!"
+    ],
+    "explication": "'J'en reviens pas' exprime la stupéfaction ou l'émerveillement. Le 'en' réfère à ce dont on vient de parler. 'C'est pas croyable' est la version orale de 'c'est incroyable' — la négation orale sans 'ne' remplace le préfixe 'in-'. Ces deux expressions se combinent souvent pour exprimer une réaction spontanée d'étonnement intense.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_044",
+    "standard": "J'en ai vraiment assez de cette situation.",
+    "quebecois": "J'en ai plein le dos de cette situation-là.",
+    "chunks": [
+      "J'en ai",
+      "plein le dos",
+      "de cette situation-là",
+      "."
+    ],
+    "explication": "'J'en ai plein le dos' — autre variante exprimant l'exaspération, identique à 'j'en ai plein mon cass'. Le 'en' réfère à ce qui exaspère. Le '-là' après 'situation' est le déictique québécois qui renforce le référent ('cette fameuse situation précise, celle dont on parle depuis le début'). Expressions interchangeables selon le locuteur.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_045",
+    "standard": "Est-ce que tu en veux ?",
+    "quebecois": "T'en veux-tu ?",
+    "chunks": [
+      "T'en",
+      "veux-tu",
+      "?"
+    ],
+    "explication": "'En' partitif dans une question : 'T'en veux-tu ?' cumule la contraction 'tu → t'' + pronom partitif 'en' + verbe + particule interrogative '-tu'. Quatre éléments comprimés en 3 mots. 'T'en veux-tu ?' est la façon la plus naturelle d'offrir quelque chose au Québec, que ce soit de la nourriture, un service ou n'importe quelle chose concrète.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_046",
+    "standard": "Je n'en ai pas.",
+    "quebecois": "J'en ai pas.",
+    "chunks": [
+      "J'en ai",
+      "pas",
+      "."
+    ],
+    "explication": "'J'en ai pas' = je n'en ai pas, je n'en possède pas. La chute du 'ne' de négation est universelle en français oral, mais encore plus systématique au Québec, même dans des contextes semi-formels. 'En' partitif représente la chose dont on parle. Structure très fréquente pour signaler l'absence ou le manque de quelque chose.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_047",
+    "standard": "Donne-m'en un peu, s'il te plaît.",
+    "quebecois": "Donne-m'en un peu, s'il vous plaît.",
+    "chunks": [
+      "Donne-m'en",
+      "un peu",
+      ",",
+      "s'il vous plaît",
+      "."
+    ],
+    "explication": "Curiosité culturelle québécoise : 's'il vous plaît' est souvent utilisé au Québec même en s'adressant à une seule personne tutoyée, là où en France on alternerait entre 's'il te plaît' et 's'il vous plaît'. Au Québec, 's'il vous plaît' est une formule de politesse universelle et ne signifie pas nécessairement du vouvoiement. 'Donne-m'en' est identique en standard.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_048",
+    "standard": "Je n'en peux plus, je suis épuisé.",
+    "quebecois": "J'en peux pu, chu épuisé.",
+    "chunks": [
+      "J'en peux pu",
+      ",",
+      "chu épuisé",
+      "."
+    ],
+    "explication": "'J'en peux pu' cumule deux réductions : 'ne... plus → ... pu' (chute du 'ne' et contraction de 'plus' en 'pu') et 'je suis → chu'. 'Pu' pour 'plus' dans les négations est spécifiquement québécois. 'J'en peux plus' existe aussi en France familièrement, mais la forme 'j'en peux pu' ne s'entend qu'au Québec et en Acadie.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_049",
+    "standard": "Des affaires comme ça, j'en veux vraiment !",
+    "quebecois": "J'en veux-tu des affaires de même !",
+    "chunks": [
+      "J'en veux-tu",
+      "des affaires",
+      "de même",
+      "!"
+    ],
+    "explication": "Pléonasme expressif québécois : 'en' et 'des affaires' réfèrent au même objet, créant un renforcement stylistique. 'J'en veux-tu des affaires !' n'est pas vraiment une question — le '-tu' sert ici d'intensifieur exclamatif pour souligner l'enthousiasme. 'De même' = comme ça. Structure : 'en' anticipateur + verbe + -tu (exclamatif) + le nom qu'il représente.",
+    "niveau": 5
+  },
+  {
+    "id": "pron_050",
+    "standard": "Ne t'en mêle pas, ce n'est pas ton problème.",
+    "quebecois": "T'en mêle pas, c'est pas ton problème.",
+    "chunks": [
+      "T'en mêle pas",
+      ",",
+      "c'est pas",
+      "ton problème",
+      "."
+    ],
+    "explication": "'T'en mêle pas' = ne t'en mêle pas : chute du 'ne' et contraction 'tu → t''. 'S'en mêler' = s'impliquer dans quelque chose, interférer. 'C'est pas ton problème' (sans 'ne') est la négation orale standard au Québec. Cette formule directe mais pas nécessairement agressive s'entend fréquemment pour conseiller quelqu'un de ne pas intervenir dans une situation qui ne le concerne pas.",
+    "niveau": 5
+  }
+]

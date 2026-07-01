@@ -1,0 +1,20 @@
+{
+  "name": "Mots & Blocs",
+  "short_name": "MotsBlocs",
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "/money/100.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/money/100.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

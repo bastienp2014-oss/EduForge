@@ -1,0 +1,37 @@
+[
+  {
+    "id": "survie",
+    "icon": "ShieldCheck",
+    "color": "red",
+    "title": "La Survie",
+    "description": "Régler la paperasse (NAS, RAMQ, permis) et éviter les arnaques de logement."
+  },
+  {
+    "id": "travail",
+    "icon": "Briefcase",
+    "color": "blue",
+    "title": "Trouver la Job",
+    "description": "Refaire le CV aux normes, survivre aux entrevues, comprendre la culture RH."
+  },
+  {
+    "id": "social",
+    "icon": "MessageCircle",
+    "color": "emerald",
+    "title": "S'intégrer & Culture",
+    "description": "L'argot, les tics à perdre, se faire de vrais amis, éviter les faux pas sociaux."
+  },
+  {
+    "id": "etudes",
+    "icon": "GraduationCap",
+    "color": "amber",
+    "title": "Études",
+    "description": "Cégep, universités, logement étudiant, budget et vie sociale universitaire."
+  },
+  {
+    "id": "famille",
+    "icon": "Users",
+    "color": "purple",
+    "title": "Famille",
+    "description": "Gestion des enfants : garderies, inscriptions scolaires, pédiatrie."
+  }
+]

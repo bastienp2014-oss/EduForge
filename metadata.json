@@ -1,0 +1,8 @@
+{
+  "name": "Arrive en ville",
+  "description": "Application ludique d'intégration et d'apprentissage du français québécois (vocabulaire, slang, culture).",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

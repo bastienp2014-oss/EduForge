@@ -1,0 +1,402 @@
+[
+  {
+    "id": "tutoiement_001",
+    "contexte": "Vous rencontrez votre nouveau collègue de travail le premier jour.",
+    "erreur_frequente": "Bonjour monsieur, ça va bien ? Vous travaillez ici depuis longtemps ?",
+    "approche_quebecoise": "Salut, ça va bien ? Ça fait longtemps que tu travailles ici ?",
+    "explication": "Au Québec, le tutoiement entre collègues est la norme dès la première rencontre, peu importe l'écart d'âge ou de statut. Le vouvoiement persistant est perçu comme distant, voire arrogant — comme si vous mettiez une barrière sociale intentionnelle. On vous dira souvent : 'Tu peux me tutoyer, on n'est pas au bureau du premier ministre !'",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_002",
+    "contexte": "Vous rencontrez votre nouveau patron lors de votre première journée de travail.",
+    "erreur_frequente": "Bonjour Monsieur Tremblay. Je voulais vous remercier pour cette opportunité. Comment préférez-vous travailler ?",
+    "approche_quebecoise": "Salut Martin ! Merci beaucoup pour la chance. Comment tu aimes travailler, toi ?",
+    "explication": "Même avec un supérieur hiérarchique direct, le tutoiement est attendu au Québec dans la grande majorité des milieux professionnels. La plupart des gestionnaires québécois se présentent d'emblée par leur prénom et vont eux-mêmes initier le tutoiement. Vouvoyer son patron pendant des semaines signale qu'on ne s'intègre pas à la culture de l'équipe.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_003",
+    "contexte": "Vous passez à la caisse d'une épicerie et la caissière vous demande si vous avez la carte fidélité.",
+    "erreur_frequente": "Non merci, madame. Avez-vous des sacs de réutilisables à me vendre ?",
+    "approche_quebecoise": "Non, merci ! T'as des sacs réutilisables à me vendre ?",
+    "explication": "Les échanges commerciaux au Québec sont informels et chaleureux. Tutoyer la caissière n'est pas irrespectueux — c'est exactement ce qu'elle attend. Le vouvoiement dans ce contexte crée une distance qui peut même la mettre mal à l'aise ou lui faire croire que vous êtes mécontent. Les immigrants sont souvent surpris de voir les clients québécois plaisanter spontanément avec les caissiers.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_004",
+    "contexte": "Vous rencontrez le père ou la mère de votre partenaire québécois pour la première fois.",
+    "erreur_frequente": "Bonsoir madame Bouchard. C'est un plaisir de vous rencontrer. Puis-je vous appeler par votre prénom ?",
+    "approche_quebecoise": "Bonsoir Sylvie ! Ça me fait vraiment plaisir de te rencontrer enfin !",
+    "explication": "Au Québec, les beaux-parents s'attendent presque universellement à être tutoyés et appelés par leur prénom dès la première rencontre. Vouvoyer sa belle-mère pendant des mois est un signal que vous la tenez à distance et peut créer un malaise réel dans la famille. Elle pourrait même se sentir 'vieillie' ou exclue par votre vouvoiement.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_005",
+    "contexte": "Vous consultez un médecin de famille pour la première fois dans une clinique québécoise.",
+    "erreur_frequente": "Docteur, je voulais vous parler d'un problème que j'ai depuis quelques semaines. Avez-vous le temps ?",
+    "approche_quebecoise": "Bonjour docteur Côté. J'ai un problème depuis quelques semaines, je voulais t'en parler.",
+    "explication": "La relation médecin-patient au Québec est beaucoup moins hiérarchique qu'en Europe. Beaucoup de médecins québécois tutoient spontanément leurs patients et s'attendent à être tutoyés en retour. Le vouvoiement n'est pas incorrect ici, mais le tutoiement est très courant et signale une relation de confiance naturelle plutôt qu'une marque d'irrespect.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "tutoiement_006",
+    "contexte": "Vous participez à votre première réunion d'équipe et le directeur général prend la parole.",
+    "erreur_frequente": "Merci pour votre présentation, monsieur le directeur. Pourriez-vous développer ce point ?",
+    "approche_quebecoise": "Merci pour la présentation, Pierre. Peux-tu développer ce point-là ?",
+    "explication": "Au Québec, interpeller le directeur général par son titre et en le vouvoyant lors d'une réunion d'équipe détonne fortement. Les entreprises québécoises valorisent une culture d'égalité et de proximité. Même le PDG sera souvent appelé par son prénom. Utiliser 'monsieur le directeur' peut être perçu comme de la flatterie ou un signal que vous venez d'une culture très hiérarchique.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_007",
+    "contexte": "Vous prenez le taxi et engagez la conversation avec le chauffeur.",
+    "erreur_frequente": "Excusez-moi, monsieur. Est-ce que vous connaissez bien le secteur de Rosemont ? Il y a beaucoup de circulation ce soir ?",
+    "approche_quebecoise": "Hey, tu connais-tu ben le coin de Rosemont ? Y'a-tu ben du trafic ce soir ?",
+    "explication": "Les échanges avec les chauffeurs de taxi, de bus ou d'Uber sont très informels au Québec. Le tutoiement y est naturel et instaure une complicité de trajet agréable. Un immigrant qui vouvoie avec beaucoup de formalité risque d'obtenir des réponses courtes et une conversation monotone, là où un tutoiement décontracté peut donner lieu à une vraie conversation sur la ville et la vie québécoise.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_008",
+    "contexte": "Vous participez à un barbecue de quartier et rencontrez un voisin de 70 ans pour la première fois.",
+    "erreur_frequente": "Bonsoir monsieur. Vous habitez dans le quartier depuis longtemps ? C'est une belle maison que vous avez là.",
+    "approche_quebecoise": "Bonsoir ! Ça fait longtemps que tu restes dans le quartier ? T'as une belle maison !",
+    "explication": "L'âge n'est pas un déterminant du vouvoiement au Québec comme il l'est en France ou en Belgique. Vouvoyer un voisin âgé dans un contexte informel comme un barbecue peut le faire se sentir 'vieux' et mis à l'écart. La plupart des aînés québécois préfèrent le tutoiement et le prénom dans les contextes sociaux de voisinage. C'est une marque d'inclusion, pas d'irrespect.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_009",
+    "contexte": "Vous appelez le service à la clientèle de votre fournisseur d'internet pour signaler une panne.",
+    "erreur_frequente": "Bonjour madame. Je vous appelle car j'ai un problème de connexion. Pourriez-vous m'aider ?",
+    "approche_quebecoise": "Allô ! J'appelle parce que j'ai un problème de connexion depuis hier. Peux-tu m'aider ?",
+    "explication": "Dans les centres d'appels québécois, les agents tutoient presque systématiquement les clients et s'attendent à être tutoyés. L'échange se veut humain et décontracté, pas formel. Un immigrant qui vouvoie sera compris mais pourrait percevoir une légère asymétrie inconfortable si l'agent le tutoie et lui répond avec 'vous'. Le tutoiement symétrique facilite la résolution de problèmes dans une atmosphère détendue.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_010",
+    "contexte": "Vous assistez à une réunion de parents d'élèves à l'école primaire et vous adressez à l'enseignante de votre enfant.",
+    "erreur_frequente": "Bonsoir madame l'enseignante. Je voulais vous parler des difficultés que mon fils rencontre en lecture.",
+    "approche_quebecoise": "Bonsoir Sophie ! Je voulais te parler des difficultés que mon gars a en lecture.",
+    "explication": "La relation parent-enseignant au Québec est très collaborative et peu hiérarchique. Les enseignants québécois se présentent généralement par leur prénom et tutoyent les parents. Vouvoyer l'enseignante de façon très formelle peut créer une distance qui nuit à la collaboration. Les parents qui s'impliquent avec naturel et tutoiement sont perçus comme des partenaires actifs dans l'éducation de l'enfant.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_011",
+    "contexte": "Vous visitez une propriété avec un agent immobilier pour acheter votre premier appartement à Montréal.",
+    "erreur_frequente": "Monsieur l'agent, pourriez-vous me dire depuis combien de temps cet appartement est sur le marché ? Que pensez-vous du prix demandé ?",
+    "approche_quebecoise": "Hey, ça fait combien de temps que le appart est sur le marché ? C'est quoi ton avis sur le prix ?",
+    "explication": "Le secteur immobilier québécois fonctionne dans un registre décontracté et convivial. Les agents immobiliers sont habitués à un rapport de proximité et de confiance rapide avec leurs clients. Un immigrant très formel peut involontairement signaler qu'il se méfie ou qu'il n'est pas à l'aise, ce qui peut compliquer l'établissement du lien de confiance essentiel à une bonne transaction.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_012",
+    "contexte": "Vous prenez un verre dans un bar et le barman vous demande ce que vous désirez.",
+    "erreur_frequente": "Bonsoir monsieur. Auriez-vous une bière locale que vous me recommanderiez ?",
+    "approche_quebecoise": "Salut ! T'aurais-tu une bonne bière locale à me recommander ?",
+    "explication": "Le bar est par excellence le lieu de l'informalité totale au Québec. Vouvoyer un barman dans un bar est si inhabituel qu'il pourrait croire que vous êtes mécontent ou que vous plaisantez. La culture des bars québécois repose sur une convivialité immédiate — le barman est souvent un personnage clé de la sociabilité locale, et le tutoiement est le code social de base pour s'y intégrer.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_013",
+    "contexte": "Vous faites appel à un plombier pour une urgence à votre appartement. Il arrive et vous saluez.",
+    "erreur_frequente": "Bonjour monsieur. Merci de vous être déplacé aussi vite. Le problème vient de là, sous l'évier. Pensez-vous pouvoir le régler rapidement ?",
+    "approche_quebecoise": "Salut ! Merci d'être venu vite, j'apprécie ! Le problème est en dessous de l'évier. Tu penses que c'est long à régler ?",
+    "explication": "Les artisans et travailleurs de métier au Québec (plombiers, électriciens, menuisiers) fonctionnent dans un registre très décontracté. Vouvoyer un plombier avec beaucoup de formalité crée une gêne des deux côtés. Ces travailleurs sont fiers de leur expertise et apprécient être traités comme des pairs, pas comme des prestataires de service subordonnés. Le tutoiement signale le respect à la québécoise.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "tutoiement_014",
+    "contexte": "Vous rencontrez pour la première fois un ami de longue date de votre partenaire québécois lors d'un souper.",
+    "erreur_frequente": "Enchantée de faire votre connaissance. Mon partenaire m'a beaucoup parlé de vous. Vous travaillez dans quel domaine ?",
+    "approche_quebecoise": "Ah, enfin ! J'ai tellement entendu parler de toi ! Tu travailles dans quoi, toi ?",
+    "explication": "Les présentations sociales au Québec sont immédiatement chaleureuses et au tutoiement. Un immigrant qui vouvoie lors d'un souper entre amis sera immédiatement perçu comme distant ou mal à l'aise socialement. Les amis d'amis sont traités d'emblée comme des amis potentiels — le vouvoiement met symboliquement un mur entre vous et le groupe qui cherche à vous accueillir.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "tutoiement_015",
+    "contexte": "Vous rencontrez votre propriétaire pour la signature du bail de votre nouvel appartement.",
+    "erreur_frequente": "Bonjour monsieur Lapointe. Je vous remercie de me confier cet appartement. Avez-vous des règles particulières que je devrais connaître ?",
+    "approche_quebecoise": "Bonjour Gilles ! Merci beaucoup ! T'as des règles particulières que je devrais savoir ?",
+    "explication": "La relation propriétaire-locataire au Québec est beaucoup moins formelle qu'en Europe. La plupart des propriétaires québécois préfèrent une relation humaine et directe avec leurs locataires. Un immigrant qui démarre la relation en vouvoyant de façon soutenue peut sembler froid ou méfiant. Beaucoup de propriétaires québécois initient eux-mêmes le tutoiement et le prénom dès la signature — suivre ce signal est une forme d'intelligence culturelle précieuse.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "tutoiement_016",
+    "contexte": "Vous assistez à votre premier cours de yoga et l'instructrice vous accueille avant le début.",
+    "erreur_frequente": "Bonjour madame. C'est mon premier cours. Auriez-vous des conseils particuliers pour un débutant comme moi ?",
+    "approche_quebecoise": "Salut ! C'est ma première fois ici. T'aurais des conseils pour quelqu'un qui commence ?",
+    "explication": "Les studios de yoga, de danse, de conditionnement physique et tous les espaces de bien-être au Québec fonctionnent dans un registre très informel et bienveillant. Les instructeurs tutoient systématiquement leurs élèves et s'attendent à la réciprocité. Le vouvoiement dans ce contexte rompt l'atmosphère de groupe et de confiance mutuelle que l'instructrice cherche à créer dès les premières minutes.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_017",
+    "contexte": "Vous êtes à la pharmacie et vous demandez conseil au pharmacien sur un médicament sans ordonnance.",
+    "erreur_frequente": "Excusez-moi monsieur le pharmacien. Pourriez-vous me recommander quelque chose pour un mal de gorge persistant ?",
+    "approche_quebecoise": "Excusez-moi ! Peux-tu me recommander quelque chose pour un mal de gorge ? Ça dure depuis trois jours.",
+    "explication": "Les pharmaciens québécois jouent un rôle de proximité important dans le système de santé et adoptent un registre chaleureux et accessible. La plupart tutoient leurs clients réguliers et même les nouveaux venus. Garder le vouvoiement très formel avec 'monsieur le pharmacien' sonne anachronique et peut inhiber l'échange spontané d'informations de santé importantes.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "tutoiement_018",
+    "contexte": "Vous participez à une réunion de bénévoles pour un organisme communautaire de votre quartier.",
+    "erreur_frequente": "Bonsoir à tous. Je suis nouveau dans le quartier et je voudrais vous offrir mon aide. Comment puis-je me rendre utile ?",
+    "approche_quebecoise": "Bonsoir tout le monde ! Je suis nouveau dans le quartier, je voulais vous donner un coup de main. Comment je peux aider ?",
+    "explication": "Le milieu communautaire québécois est parmi les plus égalitaires qui soit : on y tutoie tout le monde dès la première réunion, peu importe le rôle ou l'ancienneté. Un immigrant qui vouvoie dans ce contexte sera perçu comme distant alors qu'il cherche précisément à s'intégrer. Les organismes communautaires sont souvent le premier lieu d'appartenance des nouveaux arrivants — le tutoiement y est le premier pas vers l'inclusion.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_019",
+    "contexte": "Vous rencontrez votre nouveau colocataire qui vient de s'installer dans votre appartement.",
+    "erreur_frequente": "Bonjour. Je suis content de faire votre connaissance. Avez-vous besoin d'aide pour installer vos affaires ?",
+    "approche_quebecoise": "Salut ! Content de te rencontrer enfin ! T'as besoin d'aide pour rentrer tes affaires ?",
+    "explication": "Le vouvoiement entre colocataires est pratiquement inexistant au Québec. Dès le premier contact, la vie partagée implique une proximité immédiate qui appelle le tutoiement. Un immigrant qui vouvoie son colocataire lors de leur première rencontre enverrait un signal très étrange — comme si la cohabitation était une relation de service plutôt qu'une vie commune.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_020",
+    "contexte": "Vous assistez à une conférence professionnelle et vous approchez l'un des conférenciers après sa présentation.",
+    "erreur_frequente": "Bonjour monsieur. Votre présentation était très intéressante. Auriez-vous un moment pour répondre à ma question ?",
+    "approche_quebecoise": "Salut ! Super présentation ! T'aurais deux minutes pour répondre à une question ?",
+    "explication": "Les conférences et événements professionnels québécois sont des espaces de réseautage très informels. Les conférenciers sont accessibles et s'attendent à être approchés directement et chaleureusement. Un immigrant trop formel peut rater une opportunité de réseautage clé : les Québécois valorisent l'authenticité et la spontanéité dans ces contextes, et un vouvoiement soutenu peut refroidir l'échange avant même qu'il commence.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_021",
+    "contexte": "Vous vous adressez à un agent de la STM (Société de transport de Montréal) pour demander votre chemin dans le métro.",
+    "erreur_frequente": "Excusez-moi monsieur l'agent. Pourriez-vous m'indiquer comment me rendre à la station Berri-UQAM ?",
+    "approche_quebecoise": "Hey, excuse-moi ! Peux-tu me dire comment aller à Berri-UQAM ?",
+    "explication": "Les interactions avec les agents de transport ou de service public au Québec sont très directes et informelles. Le titre 'monsieur l'agent' sonne désuet et peut même amuser l'interlocuteur. Un simple 'excuse-moi' suivi du tutoiement et d'une question claire est la norme. L'essentiel est d'être direct, souriant et naturel — le vouvoiement formel crée inutilement de la distance dans un échange de 30 secondes.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_022",
+    "contexte": "Vous rencontrez votre conseiller bancaire pour la première fois afin d'ouvrir un compte.",
+    "erreur_frequente": "Bonjour monsieur. Je souhaiterais ouvrir un compte bancaire. Pourriez-vous m'expliquer vos différentes options ?",
+    "approche_quebecoise": "Bonjour ! Je cherche à ouvrir un compte. Peux-tu m'expliquer c'est quoi les options ?",
+    "explication": "Le milieu bancaire québécois a beaucoup évolué vers l'informalité, surtout dans les institutions coopératives comme Desjardins. Les conseillers bancaires tutoient souvent spontanément leurs clients après les premières minutes. Un immigrant peut commencer plus formellement, mais devrait suivre le signal du conseiller quand celui-ci bascule vers le tutoiement — ne pas le faire crée une asymétrie inconfortable pour les deux parties.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_023",
+    "contexte": "Vous participez à un match de soccer amateur dans une ligue de quartier et rencontrez les autres joueurs.",
+    "erreur_frequente": "Bonjour messieurs. Je suis nouveau dans l'équipe. Je suis heureux de vous rencontrer.",
+    "approche_quebecoise": "Salut la gang ! Je suis nouveau. Content d'être là !",
+    "explication": "Le sport amateur au Québec est un univers d'égalité totale où le tutoiement collectif est immédiat et absolu. 'La gang' est le terme québécois naturel pour désigner le groupe. Un immigrant qui se présente avec 'bonjour messieurs' dans un vestiaire de sport provoquera des sourires amusés. Le registre sportif est peut-être le contexte où le vouvoiement est le plus incongru — personne ne vouvoie sur un terrain de soccer.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_024",
+    "contexte": "Vous êtes invité à un souper chez votre patron et rencontrez sa conjointe pour la première fois.",
+    "erreur_frequente": "Bonsoir madame. C'est très généreux de nous accueillir chez vous. Vous avez une très belle maison.",
+    "approche_quebecoise": "Bonsoir ! Merci de nous inviter, c'est vraiment fin ! T'as une belle maison !",
+    "explication": "Même chez le patron, la conjointe de celui-ci sera presque universellement tutoyée au Québec dans un contexte de souper social. Vouvoyer l'hôtesse qui vous reçoit chez elle pour un repas crée une atmosphère guindée que les Québécois cherchent précisément à éviter dans leurs soirées. Le mot 'fin' (= gentil) et le tutoiement signalent ensemble que vous êtes à l'aise et reconnaissant.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "tutoiement_025",
+    "contexte": "Vous demandez de l'aide à un employé d'un magasin de rénovation comme Rona ou Canac.",
+    "erreur_frequente": "Excusez-moi monsieur. Pourriez-vous m'aider à trouver les vis appropriées pour ce type de bois ?",
+    "approche_quebecoise": "Hey ! Peux-tu m'aider ? Je cherche les bonnes vis pour ce type de bois-là.",
+    "explication": "Les quincailleries et magasins de rénovation québécois sont des espaces de culture masculine traditionnelle très décontractée. Les employés de plancher sont des experts pratiques qui adorent aider et partager leurs connaissances. Un immigrant qui vouvoie et formalise excessivement risque de créer une distance là où ces employés cherchent précisément à avoir une conversation pratique, naturelle et utile.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_026",
+    "contexte": "Vous êtes au restaurant et vous adressez à votre serveur pour la première fois.",
+    "erreur_frequente": "Bonsoir monsieur. Pourriez-vous nous apporter la carte des vins s'il vous plaît ?",
+    "approche_quebecoise": "Bonsoir ! Peux-tu nous apporter la carte des vins ?",
+    "explication": "La relation client-serveur au Québec est décontractée et cordiale. Les serveurs tutoient automatiquement les clients dans la majorité des restaurants, y compris dans les établissements assez haut de gamme. Vouvoyer le serveur n'est pas impoli, mais crée une asymétrie inconfortable si lui vous tutoie. Tutoyer en retour est la façon la plus naturelle d'installer un service agréable et fluide.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_027",
+    "contexte": "Vous rencontrez le frère ou la sœur de votre partenaire lors d'un souper de famille.",
+    "erreur_frequente": "Bonsoir. Je suis ravi de faire votre connaissance. Mon partenaire m'a beaucoup parlé de vous.",
+    "approche_quebecoise": "Salut ! J'suis content de te rencontrer enfin ! Il m'a tellement parlé de toi !",
+    "explication": "Dans la famille élargie québécoise, le tutoiement est immédiat et absolu, même pour une première rencontre. Vouvoyer le beau-frère ou la belle-sœur lors d'un souper de famille enverrait un signal de rejet ou d'indifférence. L'appartenance à la famille — même par alliance — implique une familiarité immédiate au Québec. Les familles québécoises valorisent l'inclusion chaleureuse de l'étranger dans le cercle intime.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "tutoiement_028",
+    "contexte": "Vous avez un entretien d'embauche dans une startup technologique montréalaise.",
+    "erreur_frequente": "Bonjour monsieur Gagnon. Je vous remercie de me recevoir. J'ai préparé quelques questions que j'aimerais vous soumettre.",
+    "approche_quebecoise": "Salut Alex ! Merci de me recevoir. J'ai quelques questions à te poser aussi si t'as le temps.",
+    "explication": "Dans les startups et entreprises tech québécoises, vouvoyer lors d'un entretien peut paradoxalement nuire à votre candidature : la culture d'entreprise recherchée est horizontale, collaborative et informelle. Un recruteur qui vous tutoie d'emblée et que vous continuez à vouvoyer peut se demander si vous vous adapteriez à leur culture. Suivre le registre de votre interlocuteur est une compétence culturelle évaluée implicitement.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_029",
+    "contexte": "Vous participez à une assemblée de copropriété de votre immeuble pour la première fois.",
+    "erreur_frequente": "Bonsoir mesdames et messieurs. Je suis nouveau propriétaire et je souhaitais me présenter à vous.",
+    "approche_quebecoise": "Bonsoir tout le monde ! Je suis nouveau dans l'immeuble, je voulais me présenter !",
+    "explication": "Les assemblées de copropriété québécoises sont des espaces de démocratie de voisinage très informels. 'Mesdames et messieurs' sonne comme un discours politique et déclenche parfois des sourires. 'Tout le monde' est l'équivalent québécois naturel pour s'adresser à un groupe. Le tutoiement s'installe spontanément avec chaque personne qu'on rencontre lors de ces assemblées.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_030",
+    "contexte": "Vous appelez votre assureur pour modifier votre couverture d'assurance automobile.",
+    "erreur_frequente": "Bonjour madame. Je souhaiterais modifier ma couverture d'assurance. Pourriez-vous m'expliquer les options disponibles ?",
+    "approche_quebecoise": "Allô ! Je voudrais modifier ma couverture d'assurance auto. Peux-tu m'expliquer c'est quoi mes options ?",
+    "explication": "Les centres de service clientèle des assureurs québécois fonctionnent dans un registre décontracté et chaleureux. L'agent vous tutoyera presque certainement dès les premières secondes. Vouvoyer de votre côté tout au long de l'appel crée une asymétrie qui alourdit inutilement l'échange. Adopter le tutoiement facilite aussi l'obtention de meilleurs conseils : l'agent se sent alors dans une conversation, pas dans un service formel.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_031",
+    "contexte": "Vous rencontrez un parent d'élève de la classe de votre enfant lors d'une sortie scolaire.",
+    "erreur_frequente": "Bonjour madame. Votre fils est dans la même classe que le mien, n'est-ce pas ? C'est un plaisir de vous rencontrer.",
+    "approche_quebecoise": "Salut ! Ton gars est dans la même classe que le mien ? Super, content de te rencontrer !",
+    "explication": "Les parents d'élèves se tutoient spontanément au Québec dès qu'ils se rencontrent dans le contexte scolaire de leurs enfants. Le fait d'avoir des enfants du même âge crée une solidarité parentale immédiate qui appelle le tutoiement. Un immigrant qui vouvoie sera perçu comme distant ou difficile d'approche, ce qui peut nuire aux relations sociales de son enfant dans la classe.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_032",
+    "contexte": "Vous suivez des cours de francisation et vous rencontrez votre professeure pour la première fois.",
+    "erreur_frequente": "Bonjour madame la professeure. Je suis très heureux de suivre ce cours. J'espère ne pas vous décevoir.",
+    "approche_quebecoise": "Bonjour ! Je suis vraiment content d'être dans ton cours. J'espère progresser vite !",
+    "explication": "Les cours de francisation au Québec sont des espaces de bienveillance et d'inclusion pensés pour les immigrants. Les professeures de francisation tutoient généralement leurs étudiants adultes et s'attendent à être tutoyées en retour — c'est même pédagogiquement intentionnel pour que les apprenants pratiquent le registre oral québécois réel. 'Madame la professeure' est une formule que les enseignants québécois trouvent amusante ou touchante, mais peu naturelle.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_033",
+    "contexte": "Vous achetez un véhicule d'occasion chez un particulier trouvé sur Marketplace.",
+    "erreur_frequente": "Bonjour monsieur. J'ai vu votre annonce pour la voiture. Pourriez-vous me la faire visiter ?",
+    "approche_quebecoise": "Salut ! J'ai vu ton annonce pour le char. Je peux-tu le voir ?",
+    "explication": "Les transactions entre particuliers au Québec se font dans un registre ultra-informel. Vouvoyer quelqu'un qui vend son char sur Marketplace serait extrêmement inhabituel. Le vendeur pourrait même se méfier — la formalité excessive dans ce contexte peut sembler artificielle ou calculée. Le tutoiement spontané établit une relation de confiance naturelle qui facilite la négociation.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_034",
+    "contexte": "Vous rencontrez un avocat commis d'office lors d'une procédure administrative.",
+    "erreur_frequente": "Bonjour maître. Je voulais vous expliquer ma situation en détail. Avez-vous eu le temps de lire mon dossier ?",
+    "approche_quebecoise": "Bonjour ! J'voulais t'expliquer ma situation. T'as eu le temps de regarder mon dossier ?",
+    "explication": "Bien que le vouvoiement soit plus acceptable dans certains contextes juridiques formels, beaucoup d'avocats québécois tutoient leurs clients et s'attendent à la réciprocité dans les échanges informels avant audience. La règle générale demeure : suivez le signal de votre interlocuteur. Si l'avocat vous tutoie et vous présente, tutoyez en retour — la réciprocité est un signe de respect à la québécoise.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_035",
+    "contexte": "Vous participez à une retraite fermée d'entreprise avec vos collègues dans un chalet pour deux jours.",
+    "erreur_frequente": "Bonsoir à tous. Je voulais vous remercier pour cet accueil. Je suis touché par votre hospitalité.",
+    "approche_quebecoise": "Bonsoir la gang ! C'est vraiment le boutte votre accueil, je suis vraiment content d'être là !",
+    "explication": "Un chalet de retraite d'entreprise est l'endroit où la hiérarchie disparaît totalement au Québec. Directeurs, gestionnaires et employés se retrouvent à égalité autour du feu. Un immigrant qui vouvoie encore ses collègues dans ce contexte sera perçu comme quelqu'un qui n'arrive pas à décrocher du mode formel. 'La gang', 'le boutte' (= génial) et le tutoiement sont les marqueurs d'une intégration réussie à cette culture de groupe.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_036",
+    "contexte": "Vous participez à un groupe de soutien pour nouveaux immigrants et vous adressez à l'animateur.",
+    "erreur_frequente": "Bonjour monsieur l'animateur. Je voulais vous remercier pour ce que vous faites. Pourriez-vous m'expliquer comment fonctionne le groupe ?",
+    "approche_quebecoise": "Bonjour ! Je voulais te remercier pour ce que tu fais. Peux-tu m'expliquer comment ça marche ici ?",
+    "explication": "Les groupes de soutien, cercles d'entraide et associations pour immigrants sont des espaces de chaleur et de solidarité où le tutoiement est quasi obligatoire pour que le groupe fonctionne. Un immigrant qui vouvoie l'animateur peut involontairement empêcher la création du lien de confiance nécessaire au soutien mutuel. Ces espaces sont souvent le premier terrain d'apprentissage pratique du tutoiement québécois.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_037",
+    "contexte": "Vous rencontrez votre nouveau dentiste lors de votre première visite.",
+    "erreur_frequente": "Bonjour docteur. J'ai un peu peur des dentistes, je vous préviens. Pourriez-vous être délicat ?",
+    "approche_quebecoise": "Bonjour ! Je te préviens, j'ai un peu peur des dentistes. Tu vas être doux ?",
+    "explication": "Les dentistes québécois, comme la plupart des professionnels de la santé, fonctionnent dans un registre de proximité et de réassurance. Tutoyer son dentiste contribue à humaniser une expérience anxiogène. La majorité des dentistes québécois tutoient leurs patients, même à la première rencontre. Le registre décontracté fait partie de leur approche thérapeutique pour réduire l'anxiété du patient.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "tutoiement_038",
+    "contexte": "Vous rencontrez un ancien camarade de classe de votre conjoint lors d'une sortie au restaurant.",
+    "erreur_frequente": "Bonsoir. Je suis le partenaire de Julie. Enchantée de faire votre connaissance.",
+    "approche_quebecoise": "Salut ! Moi c'est Marc, le chum de Julie ! Content de te rencontrer !",
+    "explication": "Se présenter comme 'le partenaire de Julie' avec vouvoiement lors d'une sortie entre amis crée un effet de distanciation immédiat. Au Québec, on se présente par son prénom seul ou avec une courte explication informelle. 'Chum' (petit ami) est le terme naturel. Vouvoyer l'ami d'un ami dans un restaurant entre amis est pratiquement impensable — le tutoiement est la condition d'entrée dans le cercle social.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_039",
+    "contexte": "Vous participez à votre premier comité de travail dans votre nouvelle entreprise avec des collègues de différents services.",
+    "erreur_frequente": "Bonjour à tous. Je voudrais me présenter. Je viens du département des finances. Est-ce que vous travaillez tous depuis longtemps dans cette entreprise ?",
+    "approche_quebecoise": "Salut tout le monde ! Je me présente, je viens des finances. Vous faites ça depuis longtemps ?",
+    "explication": "Même dans un comité inter-départements où vous ne connaissez personne, le tutoiement collectif est la norme au Québec. Le 'vous' de politesse dans ce contexte peut être interprété comme de la condescendance ou de la rigidité. Notez que le 'vous' final dans 'Vous faites ça depuis longtemps ?' est ici pluriel non-poli — il s'adresse au groupe — et non un vouvoiement de politesse, ce qui est parfaitement naturel.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_040",
+    "contexte": "Vous demandez de l'aide à un étudiant plus jeune que vous dans une bibliothèque universitaire.",
+    "erreur_frequente": "Excusez-moi. Pourriez-vous m'aider à trouver la section des ouvrages de droit comparé ?",
+    "approche_quebecoise": "Hey excuse-moi ! Tu saurais-tu où c'est les livres de droit comparé ?",
+    "explication": "Même si vous êtes significativement plus âgé que la personne à qui vous demandez de l'aide, le tutoiement s'impose au Québec dans un contexte informel comme une bibliothèque. Vouvoyer un étudiant plus jeune que soi peut le surprendre ou le mettre mal à l'aise. Au Québec, l'âge n'est pas un critère de vouvoiement — c'est le contexte et la relation qui déterminent le registre, pas la hiérarchie générationnelle.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_041",
+    "contexte": "Vous vous adressez à un policier lors d'un contrôle routier.",
+    "erreur_frequente": "Bonjour monsieur l'agent. Voici mes documents. Je vous en prie, pourriez-vous m'expliquer pourquoi vous m'avez arrêté ?",
+    "approche_quebecoise": "Bonjour officier. Voici mes papiers. Peux-tu me dire pourquoi tu m'as arrêté ?",
+    "explication": "C'est l'un des rares contextes où le vouvoiement reste acceptable et même parfois préférable au Québec — une interaction avec les forces de l'ordre. Cependant, beaucoup de policiers québécois tutoient eux-mêmes les citoyens et n'attendent pas nécessairement le vouvoiement en retour. 'Officier' est le titre approprié. Si le policier vous tutoie, tutoyer en retour est tout à fait correct et naturel.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_042",
+    "contexte": "Vous rencontrez un notaire pour la signature de votre acte d'achat immobilier.",
+    "erreur_frequente": "Bonjour maître. Je voulais vous remercier d'avoir préparé tous ces documents. Pourriez-vous m'expliquer chaque clause avant la signature ?",
+    "approche_quebecoise": "Bonjour ! Merci d'avoir tout préparé. Peux-tu m'expliquer les clauses importantes avant qu'on signe ?",
+    "explication": "Bien que la notairie soit un contexte professionnel sérieux, la majorité des notaires québécois tutoient leurs clients dans les échanges directs. 'Maître' est un titre peu utilisé au Québec dans la conversation, contrairement à la France. Le registre chaleureux mais professionnel est la norme : on peut être sérieux et traiter des actes importants tout en tutoyant — les deux ne sont pas incompatibles au Québec.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_043",
+    "contexte": "Vous discutez avec un animateur de radio lors d'une émission participative où les auditeurs appellent.",
+    "erreur_frequente": "Bonjour monsieur. Je voulais vous appeler pour réagir à ce que vous avez dit plus tôt sur l'immigration.",
+    "approche_quebecoise": "Allô ! Je t'appelais pour réagir à ce que t'as dit tantôt sur l'immigration.",
+    "explication": "La radio québécoise, surtout les émissions de libre expression et d'opinion, est un espace d'informalité totale. Les animateurs tutoient systématiquement leurs auditeurs qui appellent. 'Tantôt' est l'expression québécoise pour 'tout à l'heure'. Un auditeur qui vouvoie l'animateur peut être taquiné gentiment à l'antenne — la radio québécoise se nourrit de cette complicité familière avec ses auditeurs.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_044",
+    "contexte": "Vous consultez un conseiller d'orientation professionnelle dans un centre d'emploi.",
+    "erreur_frequente": "Bonjour monsieur. Je cherche à réorienter ma carrière et j'aurais besoin de vos conseils. Avez-vous de l'expérience avec les immigrants qualifiés ?",
+    "approche_quebecoise": "Bonjour ! Je veux changer de carrière et j'aurais besoin de conseils. T'as de l'expérience avec les immigrants qualifiés ?",
+    "explication": "Les conseillers en emploi, agents d'Emploi-Québec et orienteurs professionnels fonctionnent dans un registre d'accompagnement chaleureux et tutoyant. Ces professionnels accompagnent souvent des personnes en situation de vulnérabilité et le tutoiement fait partie de leur approche bienveillante. Un immigrant qui vouvoie dans ce contexte peut lui-même se priver de la relation de confiance nécessaire à un accompagnement efficace.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_045",
+    "contexte": "Vous rencontrez votre mentor professionnel qui vous a été assigné dans le cadre d'un programme d'intégration.",
+    "erreur_frequente": "Bonjour madame Larivée. Je suis très honoré que vous acceptiez d'être ma mentore. Je ne voudrait pas abuser de votre temps.",
+    "approche_quebecoise": "Bonjour Josée ! Je suis vraiment content qu'on soit jumelés. J'espère que je vais pas trop te prendre de temps !",
+    "explication": "La relation de mentorat au Québec est conçue comme un partenariat humain basé sur la confiance et l'échange. Vouvoyer son mentor de façon soutenue crée une distance émotionnelle qui contredit la nature même du mentorat. La mentore québécoise voudra rapidement établir un lien personnel — le tutoiement rapide est la façon la plus efficace de lui signaler que vous êtes prêt à vous investir dans cette relation authentique.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_046",
+    "contexte": "Vous participez à une soirée de speed networking et vous présentez à un comptable d'expérience.",
+    "erreur_frequente": "Bonsoir monsieur. Je suis ingénieur de formation et je cherche à m'établir ici. Pourriez-vous me donner quelques conseils ?",
+    "approche_quebecoise": "Salut ! Je suis ingénieur, j'essaie de m'établir ici. T'aurais des conseils à me donner ?",
+    "explication": "Le speed networking québécois est un format ultra-rapide et informel. Vouvoyer lors de ces événements fait perdre un temps précieux à établir un registre quand l'objectif est de créer un maximum de liens en peu de temps. Au Québec, le réseau professionnel (le 'réseau' ou le 'network') se construit sur des relations humaines directes — le tutoiement immédiat signale une volonté d'authenticité très appréciée.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_047",
+    "contexte": "Vous êtes dans un ascenseur avec le président de votre entreprise que vous n'avez jamais rencontré.",
+    "erreur_frequente": "Bonjour monsieur le président. Je travaille au service marketing depuis trois mois. C'est un honneur de vous rencontrer.",
+    "approche_quebecoise": "Bonjour ! Moi c'est Karim, je suis au marketing depuis cet automne. Content de te rencontrer !",
+    "explication": "L'anecdote de l'ascenseur avec le grand patron est un test culturel classique. Au Québec, vouvoyer et titrer le président dans cet échange informel de 30 secondes crée une maladresse. La plupart des PDG québécois apprécient qu'on se présente simplement par son prénom et son département. Le tutoiement dans ce bref contexte est non seulement acceptable, mais souvent apprécié comme un signe de confiance en soi saine.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_048",
+    "contexte": "Vous rencontrez votre futur beau-père pour demander la main de sa fille lors d'un café.",
+    "erreur_frequente": "Bonjour monsieur Simard. Je vous remercie d'avoir accepté ce café. Je voulais vous parler de mon avenir avec votre fille.",
+    "approche_quebecoise": "Bonjour Gilles ! Merci d'avoir accepté qu'on se voie. Je voulais te parler de mon avenir avec ta fille.",
+    "explication": "Même dans ce moment potentiellement intimidant, le tutoiement du beau-père s'impose au Québec. Vouvoyer un futur beau-père dans une conversation intime signalerait que vous êtes trop rigide ou que vous ne vous sentez pas encore comme un membre de la famille — alors que c'est précisément ce que vous cherchez à devenir. Beaucoup de beaux-pères québécois initieront d'ailleurs eux-mêmes le tutoiement dès le début du café.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_049",
+    "contexte": "Vous laissez un message sur la boîte vocale de votre nouveau collègue que vous n'avez jamais rencontré.",
+    "erreur_frequente": "Bonjour monsieur Tremblay. Je me permets de vous laisser ce message. Pourriez-vous me rappeler quand vous aurez un moment ?",
+    "approche_quebecoise": "Salut Mathieu ! C'est Léa du département RH. Rappelle-moi quand t'as une chance, merci !",
+    "explication": "Même à distance et sans contact préalable, le tutoiement s'applique entre collègues au Québec, y compris dans un message vocal. Un message vocal très formel avec vouvoiement entre collègues du même niveau hiérarchique peut être perçu comme étrange ou condescendant. Utiliser le prénom et le tutoiement dans un message vocal signale que vous avez intégré la culture de l'entreprise québécoise.",
+    "niveau": 3
+  },
+  {
+    "id": "tutoiement_050",
+    "contexte": "Vous êtes invité chez des amis québécois et vous rencontrez un prêtre de paroisse qui est aussi invité au repas.",
+    "erreur_frequente": "Bonsoir mon père. C'est un honneur de vous rencontrer. Vous exercez depuis longtemps dans cette paroisse ?",
+    "approche_quebecoise": "Bonsoir ! Je m'appelle Fatima, je suis une amie de Marie. Ça fait longtemps que tu es dans la paroisse ?",
+    "explication": "La relation aux religieux au Québec a profondément changé depuis la Révolution tranquille des années 1960. Les prêtres québécois d'aujourd'hui sont généralement très accessibles, informels et apprécient le tutoiement dans les contextes sociaux. Vouvoyer un prêtre lors d'un repas chez des amis peut le faire se sentir mis sur un piédestal qu'il ne cherche pas à occuper. Beaucoup initieront eux-mêmes le tutoiement et le prénom dans ce contexte convivial.",
+    "niveau": 3
+  }
+]

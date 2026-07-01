@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; }
+  @keyframes floatUp { 0% { transform: translateY(0); opacity: 0; } 15% { opacity: 1; } 100% { transform: translateY(-46px); opacity: 0; } }
+  @keyframes pop { 0% { transform: scale(0.8); } 60% { transform: scale(1.08); } 100% { transform: scale(1); } }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .scrollarea::-webkit-scrollbar { width: 0; }
+</style>
+</helmet>
+<div style="--bg:oklch(0.97 0.012 70); --surface:#ffffff; --surface2:oklch(0.955 0.015 70); --ink:oklch(0.27 0.02 50); --muted:oklch(0.56 0.02 55); --line:oklch(0.91 0.012 70); --primary:oklch(0.60 0.17 36); --primaryD:oklch(0.52 0.16 34); --tint:oklch(0.60 0.17 36 / 0.10); --accent:oklch(0.48 0.10 250); --gold:oklch(0.80 0.14 85); --goldD:oklch(0.62 0.13 80); --success:oklch(0.66 0.16 150); --night:oklch(0.29 0.035 258); width:390px; height:844px; display:flex; flex-direction:column; overflow:hidden; background:var(--bg); color:var(--ink); font-family:Inter, system-ui, sans-serif; position:relative; box-shadow:0 24px 60px rgba(0,0,0,.18);">
+
+  <!-- ════ HUD GLOBAL (persistant) ════ -->
+  <div style="background:var(--night); color:#fff; padding:14px 16px 12px; flex-shrink:0; box-shadow:0 2px 10px rgba(0,0,0,.12); z-index:30;">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <div style="width:40px; height:40px; border-radius:999px; background:rgba(255,255,255,.12); border:1.5px solid rgba(255,255,255,.18); display:grid; place-items:center; font-size:20px; flex-shrink:0;">🧑‍🚀</div>
+      <div style="flex:1; min-width:0;">
+        <div style="font-weight:700; font-size:14px; line-height:1.1;">Explorateur</div>
+        <div style="font-size:11px; color:rgba(255,255,255,.6); font-weight:500; margin-top:1px;">Niveau 4 · Apprenti d'icitte</div>
+      </div>
+      <!-- Streak -->
+      <div style="display:flex; align-items:center; gap:4px; background:rgba(255,255,255,.08); border-radius:999px; padding:6px 10px; font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:13px;">
+        <span style="font-size:13px;">🔥</span><span>7</span>
+      </div>
+      <!-- Piasses (jeton or unifié) -->
+      <div style="display:flex; align-items:center; gap:6px; background:rgba(255,255,255,.08); border-radius:999px; padding:5px 11px 5px 5px; white-space:nowrap;">
+        <span style="width:22px; height:22px; border-radius:999px; background:linear-gradient(150deg, var(--gold), var(--goldD)); display:grid; place-items:center; font-size:11px; font-weight:800; color:oklch(0.30 0.05 80); box-shadow:inset 0 1px 1px rgba(255,255,255,.5);">$</span>
+        <span style="font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:14px;">{{ piassesLabel }}</span>
+      </div>
+    </div>
+    <!-- Barre XP persistante -->
+    <div style="display:flex; align-items:center; gap:8px; margin-top:11px;">
+      <div style="flex:1; height:6px; border-radius:999px; background:rgba(255,255,255,.14); overflow:hidden;">
+        <div style="height:100%; border-radius:999px; background:linear-gradient(90deg, var(--primary), oklch(0.70 0.16 55)); width:{{ xpPct }}" ></div>
+      </div>
+      <span style="font-family:'Space Grotesk', sans-serif; font-size:10px; font-weight:600; color:rgba(255,255,255,.7); letter-spacing:.02em;">320 / 500 XP</span>
+    </div>
+  </div>
+
+  <!-- ════ ZONE DE CONTENU (change selon l'écran) ════ -->
+  <div class="scrollarea" style="flex:1; overflow-y:auto; overflow-x:hidden; position:relative;">
+
+    <!-- ───── ACCUEIL ───── -->
+    <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:18px 16px 24px;">
+      <!-- Bannière -->
+      <div style="border-radius:18px; overflow:hidden; position:relative; min-height:148px; display:flex; align-items:center; background:linear-gradient(135deg, var(--night), var(--accent));">
+        <div style="position:absolute; inset:0; background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.05) 0 10px, transparent 10px 20px);"></div>
+        <div style="position:relative; padding:20px; max-width:72%;">
+          <div style="font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:19px; color:#fff; line-height:1.15; margin-bottom:4px;">Prêt pour aujourd'hui?</div>
+          <div style="font-size:12px; color:rgba(255,255,255,.85); font-weight:500; margin-bottom:14px;">Ton parcours culturel t'attend.</div>
+          <button onClick="{{ navHome }}" style="border:0; cursor:pointer; background:var(--primary); color:#fff; font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:13px; padding:10px 18px; border-radius:999px; box-shadow:0 4px 12px rgba(0,0,0,.2);">Lancer ma journée</button>
+        </div>
+      </div>
+
+      <!-- Section Apprendre -->
+      <div style="font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:18px; margin:24px 0 12px;">Apprendre</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,.05); display:flex; flex-direction:column; gap:18px; aspect-ratio:2/1.35;">
+          <div style="font-size:30px;">🪵</div>
+          <div style="font-weight:700; font-size:14px; line-height:1.15;">Blocs<br>Québec</div>
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,.05); display:flex; flex-direction:column; gap:18px; aspect-ratio:2/1.35;">
+          <div style="font-size:30px;">🍁</div>
+          <div style="font-weight:700; font-size:14px; line-height:1.15;">Mots du<br>Québec</div>
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,.05); display:flex; flex-direction:column; gap:18px; aspect-ratio:2/1.35; opacity:.62;">
+          <div style="font-size:30px;">💬</div>
+          <div style="display:flex; justify-content:space-between; align-items:flex-end;"><span style="font-weight:700; font-size:14px; line-height:1.15;">"Tu"<br>Interrogatif</span><span style="font-size:13px;">🔒</span></div>
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,.05); display:flex; flex-direction:column; gap:18px; aspect-ratio:2/1.35; opacity:.62;">
+          <div style="font-size:30px;">⚡</div>
+          <div style="display:flex; justify-content:space-between; align-items:flex-end;"><span style="font-weight:700; font-size:14px; line-height:1.15;">Contractions<br>Orales</span><span style="font-size:13px;">🔒</span></div>
+        </div>
+      </div>
+
+      <!-- Aller en ville -->
+      <div style="font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:18px; margin:24px 0 12px;">Aller en ville</div>
+      <button onClick="{{ navVille }}" style="width:100%; text-align:left; border:1px solid var(--line); cursor:pointer; border-radius:16px; overflow:hidden; position:relative; min-height:120px; display:flex; align-items:center; background:linear-gradient(120deg, var(--surface2), var(--surface));">
+        <div style="position:absolute; right:-10px; bottom:-6px; font-size:96px; opacity:.18;">🏙️</div>
+        <div style="position:relative; padding:18px;">
+          <div style="font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:16px; margin-bottom:3px;">Explore la Ville</div>
+          <div style="font-size:12px; color:var(--muted); font-weight:500; margin-bottom:12px;">Pratique en contexte réel.</div>
+          <span style="display:inline-flex; align-items:center; gap:6px; background:var(--primary); color:#fff; font-weight:700; font-size:12px; padding:8px 14px; border-radius:999px;">📍 Ouvrir la carte</span>
+        </div>
+      </button>
+
+      <!-- Progression -->
+      <div style="margin-top:18px; background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:20px; box-shadow:0 2px 8px rgba(0,0,0,.05);">
+        <div style="font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px; margin-bottom:20px;">Chemin du Pure Laine</div>
+        <div style="position:relative; height:8px; border-radius:999px; background:var(--surface2); margin-bottom:26px;">
+          <div style="position:absolute; inset:0 50% 0 0; border-radius:999px; background:var(--primary);"></div>
+          <div style="position:absolute; left:0; top:50%; transform:translateY(-50%); width:18px; height:18px; border-radius:999px; background:var(--primary); border:3px solid var(--surface); box-shadow:0 1px 3px rgba(0,0,0,.15);"></div>
+          <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:18px; height:18px; border-radius:999px; background:var(--primary); border:3px solid var(--surface); box-shadow:0 1px 3px rgba(0,0,0,.15);"></div>
+          <div style="position:absolute; right:0; top:50%; transform:translateY(-50%); width:18px; height:18px; border-radius:999px; background:oklch(0.88 0.01 70); border:3px solid var(--surface);"></div>
+          <div style="position:absolute; top:18px; left:0; font-size:11px; font-weight:600; color:var(--muted);">Débutant</div>
+          <div style="position:absolute; top:18px; left:50%; transform:translateX(-50%); font-size:11px; font-weight:600; color:var(--muted);">Intermédiaire</div>
+          <div style="position:absolute; top:18px; right:0; font-size:11px; font-weight:600; color:var(--muted);">Expert</div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; padding-top:14px; border-top:1px solid var(--line);">
+          <div>
+            <div style="font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px;">Apprenti d'icitte</div>
+            <div style="font-size:11px; color:var(--muted); font-weight:500; margin-top:2px;">Prochain palier : 500 XP</div>
+          </div>
+          <span style="background:var(--surface2); border:1px solid var(--line); color:var(--ink); font-weight:700; font-size:12px; padding:8px 12px; border-radius:10px;">Succès</span>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ───── VILLE ───── -->
+    <sc-if value="{{ isVille }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:16px 16px 24px;">
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+        <span style="font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:17px;">🏘️ Rue Principale</span>
+        <span style="font-size:11px; font-weight:600; color:var(--muted); background:var(--surface2); border:1px solid var(--line); padding:3px 8px; border-radius:999px;">Tu es ici</span>
+      </div>
+
+      <!-- "Rue" : commerces le long d'une route -->
+      <div style="position:relative; border-radius:18px; overflow:hidden; background:linear-gradient(180deg, oklch(0.93 0.02 250), oklch(0.96 0.014 70)); padding:18px 14px; border:1px solid var(--line);">
+        <!-- route centrale -->
+        <div style="position:absolute; top:0; bottom:0; left:50%; transform:translateX(-50%); width:46px; background:repeating-linear-gradient(180deg, oklch(0.78 0.01 260) 0 18px, oklch(0.74 0.01 260) 18px 36px);"></div>
+        <div style="position:absolute; top:0; bottom:0; left:50%; transform:translateX(-50%); width:3px; background:repeating-linear-gradient(180deg, var(--gold) 0 14px, transparent 14px 30px);"></div>
+
+        <div style="position:relative; display:flex; flex-direction:column; gap:14px;">
+          <!-- rangée 1 -->
+          <div style="display:grid; grid-template-columns:1fr 46px 1fr; gap:8px; align-items:center;">
+            <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:12px; box-shadow:0 2px 8px rgba(0,0,0,.06); text-align:center;">
+              <div style="font-size:30px;">🏪</div>
+              <div style="font-weight:700; font-size:12px; margin-top:4px;">Dépanneur</div>
+              <div style="font-size:10px; font-weight:700; color:var(--success); margin-top:2px;">● Ouvert</div>
+            </div>
+            <div></div>
+            <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:12px; box-shadow:0 2px 8px rgba(0,0,0,.06); text-align:center;">
+              <div style="font-size:30px;">🕹️</div>
+              <div style="font-weight:700; font-size:12px; margin-top:4px;">Arcade</div>
+              <div style="font-size:10px; font-weight:700; color:var(--success); margin-top:2px;">● Ouvert</div>
+            </div>
+          </div>
+          <!-- pin joueur -->
+          <div style="text-align:center; font-size:24px; filter:drop-shadow(0 3px 4px rgba(0,0,0,.25));">📍</div>
+          <!-- rangée 2 -->
+          <div style="display:grid; grid-template-columns:1fr 46px 1fr; gap:8px; align-items:center;">
+            <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:12px; box-shadow:0 2px 8px rgba(0,0,0,.06); text-align:center;">
+              <div style="font-size:30px;">🏥</div>
+              <div style="font-weight:700; font-size:12px; margin-top:4px;">Hôpital</div>
+              <div style="font-size:10px; font-weight:700; color:var(--success); margin-top:2px;">● Ouvert</div>
+            </div>
+            <div></div>
+            <div style="background:var(--surface2); border:1px dashed var(--line); border-radius:14px; padding:12px; text-align:center; opacity:.7;">
+              <div style="font-size:30px; filter:grayscale(1);">🏫</div>
+              <div style="font-weight:700; font-size:12px; margin-top:4px;">École</div>
+              <div style="font-size:10px; font-weight:700; color:var(--muted); margin-top:2px;">🔒 Niv. 6</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rues secondaires : directions cardinales -->
+      <div style="font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:14px; margin:22px 0 12px;">Quitter la rue principale</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px; display:flex; align-items:center; gap:10px; box-shadow:0 2px 8px rgba(0,0,0,.05);">
+          <span style="font-size:24px;">💼</span><div><div style="font-weight:700; font-size:13px;">Travail</div><div style="font-size:10px; color:var(--muted); font-weight:600;">↑ Nord</div></div>
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px; display:flex; align-items:center; gap:10px; box-shadow:0 2px 8px rgba(0,0,0,.05);">
+          <span style="font-size:24px;">🏠</span><div><div style="font-weight:700; font-size:13px;">Logement</div><div style="font-size:10px; color:var(--muted); font-weight:600;">← Ouest</div></div>
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px; display:flex; align-items:center; gap:10px; box-shadow:0 2px 8px rgba(0,0,0,.05);">
+          <span style="font-size:24px;">🏛️</span><div><div style="font-weight:700; font-size:13px;">Services</div><div style="font-size:10px; color:var(--muted); font-weight:600;">→ Est</div></div>
+        </div>
+        <div style="background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:14px; display:flex; align-items:center; gap:10px; box-shadow:0 2px 8px rgba(0,0,0,.05);">
+          <span style="font-size:24px;">🎓</span><div><div style="font-weight:700; font-size:13px;">Études</div><div style="font-size:10px; color:var(--muted); font-weight:600;">↓ Sud</div></div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <!-- ───── MINI-JEU (gabarit standard) ───── -->
+    <sc-if value="{{ isJeu }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:16px 16px 24px; min-height:100%; display:flex; flex-direction:column;">
+      <!-- bandeau de jeu standard -->
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+        <button onClick="{{ navHome }}" style="border:1px solid var(--line); background:var(--surface); cursor:pointer; width:36px; height:36px; border-radius:11px; display:grid; place-items:center; font-size:15px;">←</button>
+        <div style="flex:1; font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:16px;">Le Pendu</div>
+        <div style="display:flex; gap:3px; font-size:14px;">❤️❤️🤍</div>
+      </div>
+      <div style="font-size:12px; color:var(--muted); font-weight:500; margin-bottom:20px;">Devine l'expression québécoise</div>
+
+      <!-- aire de jeu -->
+      <div style="background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:26px 18px; box-shadow:0 2px 8px rgba(0,0,0,.05); text-align:center;">
+        <div style="font-size:64px; margin-bottom:8px;">🪢</div>
+        <div style="display:flex; justify-content:center; gap:8px; font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:26px; letter-spacing:.04em;">
+          <span>A</span><span style="color:var(--muted);">_</span><span>O</span><span style="color:var(--muted);">_</span><span>I</span><span>N</span>
+        </div>
+        <div style="font-size:12px; color:var(--muted); margin-top:10px; font-weight:500;">Indice : être très content</div>
+      </div>
+
+      <!-- clavier -->
+      <div style="display:grid; grid-template-columns:repeat(7, 1fr); gap:7px; margin-top:18px;">
+        <span style="aspect-ratio:1; border-radius:10px; background:var(--surface); border:1px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:14px; box-shadow:0 1px 3px rgba(0,0,0,.04);">B</span>
+        <span style="aspect-ratio:1; border-radius:10px; background:var(--surface); border:1px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:14px;">C</span>
+        <span style="aspect-ratio:1; border-radius:10px; background:var(--success); color:#fff; border:1px solid var(--success); display:grid; place-items:center; font-weight:700; font-size:14px;">A</span>
+        <span style="aspect-ratio:1; border-radius:10px; background:var(--surface); border:1px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:14px;">D</span>
+        <span style="aspect-ratio:1; border-radius:10px; background:var(--surface); border:1px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:14px;">E</span>
+        <span style="aspect-ratio:1; border-radius:10px; background:oklch(0.60 0.20 25); color:#fff; border:1px solid oklch(0.60 0.20 25); display:grid; place-items:center; font-weight:700; font-size:14px;">F</span>
+        <span style="aspect-ratio:1; border-radius:10px; background:var(--surface); border:1px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:14px;">G</span>
+        <span style="aspect-ratio:1; border-radius:10px; background:var(--surface); border:1px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:14px;">H</span>
+        <span style="aspect-ratio:1; border-radius:10px; background:var(--surface); border:1px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:14px;">I</span>
+        <span style="aspect-ratio:1; border-radius:10px; background:var(--surface); border:1px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:14px;">J</span>
+        <span style="aspect-ratio:1; border-radius:10px; background:var(--surface); border:1px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:14px;">K</span>
+        <span style="aspect-ratio:1; border-radius:10px; background:var(--surface); border:1px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:14px;">L</span>
+        <span style="aspect-ratio:1; border-radius:10px; background:var(--surface); border:1px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:14px;">M</span>
+        <span style="aspect-ratio:1; border-radius:10px; background:var(--surface); border:1px solid var(--line); display:grid; place-items:center; font-weight:700; font-size:14px;">N</span>
+      </div>
+
+      <div style="flex:1;"></div>
+
+      <!-- feedback de récompense unifié (démo) -->
+      <div style="position:relative; margin-top:20px;">
+        <sc-if value="{{ showReward }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; left:50%; top:-6px; transform:translateX(-50%); font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:18px; color:var(--goldD); animation:floatUp 1.2s ease forwards; pointer-events:none;">+10 $</div>
+        </sc-if>
+        <button onClick="{{ demoReward }}" style="width:100%; border:0; cursor:pointer; background:var(--primary); color:#fff; font-family:'Space Grotesk', sans-serif; font-weight:700; font-size:15px; padding:15px; border-radius:14px; box-shadow:0 6px 16px oklch(0.60 0.17 36 / 0.3); animation:pop .3s ease;">Bonne réponse ! (démo récompense)</button>
+      </div>
+    </div>
+    </sc-if>
+
+  </div>
+
+  <!-- ════ NAV GLOBALE (persistante) ════ -->
+  <div style="flex-shrink:0; background:var(--surface); border-top:1px solid var(--line); display:grid; grid-template-columns:repeat(5,1fr); padding:8px 6px calc(8px + env(safe-area-inset-bottom)); box-shadow:0 -2px 12px rgba(0,0,0,.04); z-index:30;">
+    <button onClick="{{ navHome }}" style="border:0; background:transparent; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; padding:5px 0;">
+      <span style="width:42px; height:30px; border-radius:999px; display:grid; place-items:center; font-size:18px; background:{{ homeBg }};">🏠</span>
+      <span style="font-size:10px; font-weight:700; color:{{ homeFg }};">Accueil</span>
+    </button>
+    <button onClick="{{ navVille }}" style="border:0; background:transparent; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; padding:5px 0;">
+      <span style="width:42px; height:30px; border-radius:999px; display:grid; place-items:center; font-size:18px; background:{{ villeBg }};">🗺️</span>
+      <span style="font-size:10px; font-weight:700; color:{{ villeFg }};">Ville</span>
+    </button>
+    <button onClick="{{ navJeu }}" style="border:0; background:transparent; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; padding:5px 0;">
+      <span style="width:42px; height:30px; border-radius:999px; display:grid; place-items:center; font-size:18px; background:{{ jeuBg }};">🎮</span>
+      <span style="font-size:10px; font-weight:700; color:{{ jeuFg }};">Jeux</span>
+    </button>
+    <button style="border:0; background:transparent; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; padding:5px 0;">
+      <span style="width:42px; height:30px; border-radius:999px; display:grid; place-items:center; font-size:18px;">📖</span>
+      <span style="font-size:10px; font-weight:700; color:var(--muted);">Dico</span>
+    </button>
+    <button style="border:0; background:transparent; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; padding:5px 0;">
+      <span style="width:42px; height:30px; border-radius:999px; display:grid; place-items:center; font-size:18px;">👤</span>
+      <span style="font-size:10px; font-weight:700; color:var(--muted);">Profil</span>
+    </button>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 390, &quot;height&quot;: 844}}">
+class Component extends DCLogic {
+  state = { screen: 'home', piasses: 42.5, reward: false };
+
+  nav(screen) { this.setState({ screen }); }
+
+  demoReward() {
+    this.setState(s => ({ piasses: s.piasses + 10, reward: true }));
+    clearTimeout(this._rt);
+    this._rt = setTimeout(() => this.setState({ reward: false }), 1200);
+  }
+
+  renderVals() {
+    const s = this.state.screen;
+    const PRIM = 'oklch(0.60 0.17 36)';
+    const MUT = 'oklch(0.56 0.02 55)';
+    const TINT = 'oklch(0.60 0.17 36 / 0.12)';
+    const tab = (id) => ({
+      fg: s === id ? PRIM : MUT,
+      bg: s === id ? TINT : 'transparent',
+    });
+    const h = tab('home'), v = tab('ville'), j = tab('jeu');
+    return {
+      isHome: s === 'home',
+      isVille: s === 'ville',
+      isJeu: s === 'jeu',
+      piassesLabel: this.state.piasses.toFixed(2).replace('.', ','),
+      xpPct: '64%',
+      showReward: this.state.reward,
+      nav: () => {},
+      navHome: () => this.nav('home'),
+      navVille: () => this.nav('ville'),
+      navJeu: () => this.nav('jeu'),
+      demoReward: () => this.demoReward(),
+      homeFg: h.fg, homeBg: h.bg,
+      villeFg: v.fg, villeBg: v.bg,
+      jeuFg: j.fg, jeuBg: j.bg,
+    };
+  }
+}
+</script>
+</body>
+</html>

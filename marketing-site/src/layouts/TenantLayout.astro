@@ -1,0 +1,65 @@
+---
+import { SEO } from 'astro-seo';
+import type { TenantConfig } from '../lib/tenantApi';
+import { generateSEOMetaTags } from '../utils/seo';
+import Schema from '../components/Schema.astro';
+
+interface Props {
+  config: TenantConfig;
+  title?: string;
+  description?: string;
+  image?: string;
+  schemaItem?: Record<string, any>;
+}
+
+const { config, title, description, image, schemaItem } = Astro.props;
+
+// Génération dynamique des méta-données SEO via notre utilitaire
+const seoProps = generateSEOMetaTags(config, { title, description, image });
+---
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <SEO
+      title={seoProps.title}
+      description={seoProps.description}
+      openGraph={seoProps.openGraph}
+      extend={seoProps.extend}
+    />
+
+    {schemaItem && <Schema item={schemaItem} />}
+    
+    <!-- Fonts optionnelles selon le CMS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Injection des variables CSS générées depuis la config du CMS (SSR) -->
+    <style define:vars={{
+      primaryColor: config.theme.primary,
+      secondaryColor: config.theme.secondary,
+      backgroundColor: config.theme.background,
+      textColor: config.theme.text,
+      fontFamily: config.theme.fontFamily
+    }}>
+      :root {
+        --theme-primary: var(--primaryColor);
+        --theme-secondary: var(--secondaryColor);
+        --theme-bg: var(--backgroundColor);
+        --theme-text: var(--textColor);
+        --theme-font: var(--fontFamily);
+      }
+      body {
+        background-color: var(--theme-bg);
+        color: var(--theme-text);
+        font-family: var(--theme-font), sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Le header et le reste du contenu viendront s'injecter ici -->
+    <slot />
+  </body>
+</html>

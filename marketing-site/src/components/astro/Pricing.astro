@@ -1,0 +1,113 @@
+---
+// Pricing.astro
+---
+
+<section id="pricing" class="py-24 bg-white">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl" style="color: var(--theme-text)">
+        Tarifs simples et transparents
+      </h2>
+      <p class="mt-4 text-lg opacity-80" style="color: var(--theme-text)">
+        Choisissez le plan qui correspond le mieux à vos besoins de formation.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+      
+      {/* Plan Basique */}
+      <div class="bg-gray-50/50 rounded-2xl border border-gray-200 p-8 shadow-sm flex flex-col h-full">
+        <div class="mb-4">
+          <h3 class="text-xl font-bold" style="color: var(--theme-text)">Basique</h3>
+          <p class="text-sm opacity-70" style="color: var(--theme-text)">Pour les créateurs qui se lancent</p>
+        </div>
+        <div class="my-4">
+          <span class="text-4xl font-bold" style="color: var(--theme-text)">29€</span>
+          <span class="opacity-60" style="color: var(--theme-text)">/mois</span>
+        </div>
+        <ul class="space-y-3 mt-6 mb-8 flex-1">
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Jusqu'à 100 apprenants
+          </li>
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            3 cours actifs
+          </li>
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Support par email
+          </li>
+        </ul>
+        <button class="w-full py-2.5 px-4 rounded-lg font-medium border transition-colors hover:bg-gray-100 mt-auto" style="color: var(--theme-text); border-color: var(--theme-text)">
+          Commencer
+        </button>
+      </div>
+
+      {/* Plan Pro (Mise en avant) */}
+      <div class="relative bg-white rounded-2xl border-2 shadow-xl p-8 flex flex-col h-[105%] md:-translate-y-4 z-10" style="border-color: var(--theme-primary)">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase text-white shadow-sm" style="background-color: var(--theme-primary)">
+          Populaire
+        </div>
+        <div class="mb-4">
+          <h3 class="text-xl font-bold" style="color: var(--theme-text)">Pro</h3>
+          <p class="text-sm opacity-70" style="color: var(--theme-text)">Pour les entreprises en croissance</p>
+        </div>
+        <div class="my-4">
+          <span class="text-4xl font-bold" style="color: var(--theme-text)">79€</span>
+          <span class="opacity-60" style="color: var(--theme-text)">/mois</span>
+        </div>
+        <ul class="space-y-3 mt-6 mb-8 flex-1">
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Apprenants illimités
+          </li>
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Cours illimités
+          </li>
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Analytiques avancées
+          </li>
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Support prioritaire
+          </li>
+        </ul>
+        <button class="w-full py-2.5 px-4 rounded-lg font-medium text-white transition-opacity hover:opacity-90 shadow-sm mt-auto" style="background-color: var(--theme-primary)">
+          Essai gratuit de 14 jours
+        </button>
+      </div>
+
+      {/* Plan Entreprise */}
+      <div class="bg-gray-50/50 rounded-2xl border border-gray-200 p-8 shadow-sm flex flex-col h-full">
+        <div class="mb-4">
+          <h3 class="text-xl font-bold" style="color: var(--theme-text)">Entreprise</h3>
+          <p class="text-sm opacity-70" style="color: var(--theme-text)">Pour les grandes organisations</p>
+        </div>
+        <div class="my-4">
+          <span class="text-4xl font-bold" style="color: var(--theme-text)">Sur mesure</span>
+        </div>
+        <ul class="space-y-3 mt-6 mb-8 flex-1">
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Tout le plan Pro
+          </li>
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Marque blanche (SSO)
+          </li>
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Account Manager dédié
+          </li>
+        </ul>
+        <button class="w-full py-2.5 px-4 rounded-lg font-medium border transition-colors hover:bg-gray-100 mt-auto" style="color: var(--theme-text); border-color: var(--theme-text)">
+          Nous contacter
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>

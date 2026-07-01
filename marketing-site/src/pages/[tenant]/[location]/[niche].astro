@@ -1,0 +1,157 @@
+---
+// Mode SSR : Exécuté à chaque requête
+import TenantLayout from '../../../layouts/TenantLayout.astro';
+import { getTenantConfig } from '../../../lib/tenantApi';
+import { GoogleGenAI } from '@google/genai';
+
+const { tenant, location, niche } = Astro.params;
+const tenantConfig = await getTenantConfig(tenant);
+
+if (!tenantConfig) {
+  return Astro.redirect('/404');
+}
+
+// Initialisation de la clé d'API s'il y a lieu
+const apiKey = import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
+
+// Contenu par défaut (fallback si pas d'API Key ou erreur)
+let generatedContent = {
+  heroTitle: `${niche} à ${location} avec ${tenantConfig.marketing.siteTitle}`,
+  heroSubtitle: `Découvrez la meilleure méthode interactive pour ${niche} dans la région de ${location}.`,
+  features: [
+    { title: `Adapté à ${location}`, description: `Une approche pédagogique qui prend en compte les spécificités de ${location} pour un apprentissage optimal.` },
+    { title: `Expertise en ${niche}`, description: `Nos outils interactifs sont conçus sur mesure pour faciliter la maîtrise de ${niche}.` }
+  ]
+};
+
+if (apiKey) {
+  try {
+    const ai = new GoogleGenAI({ apiKey });
+    
+    const prompt = `Agis comme un expert SEO et Copywriter.
+    Génère du contenu marketing ciblé pour une landing page.
+    
+    Paramètres:
+    - Niche (sujet d'apprentissage) : ${niche}
+    - Localisation : ${location}
+    - Nom de la plateforme : ${tenantConfig.marketing.siteTitle}
+    
+    Réponds UNIQUEMENT avec un objet JSON valide suivant exactement ce format:
+    {
+      "heroTitle": "Un titre H1 ultra accrocheur SEO",
+      "heroSubtitle": "Un sous-titre détaillé, orienté bénéfice utilisateur",
+      "features": [
+        { "title": "Avantage 1 (lié à la localisation ou niche)", "description": "Détail convaincant" },
+        { "title": "Avantage 2", "description": "Détail convaincant" }
+      ]
+    }`;
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: prompt,
+      config: {
+        responseMimeType: "application/json"
+      }
+    });
+    
+    const text = response.text();
+    if (text) {
+      generatedContent = JSON.parse(text);
+    }
+  } catch (error) {
+    console.error("Erreur lors de la génération IA SEO:", error);
+  }
+}
+
+// On overide les meta données SEO pour correspondre à cette page générée
+tenantConfig.seo = {
+  ...(tenantConfig.seo || {}),
+  description: generatedContent.heroSubtitle,
+  keywords: [niche || '', location || '', tenantConfig.marketing.siteTitle, 'apprentissage'],
+};
+
+// Titre de l'onglet du navigateur
+const pageTitle = `${niche} à ${location} | ${tenantConfig.marketing.siteTitle}`;
+---
+
+<TenantLayout config={tenantConfig}>
+  <!-- En-tête minimalist de la landing page -->
+  <header class="w-full p-6 border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="font-bold text-xl" style="color: var(--theme-primary)">
+        {tenantConfig.marketing.siteTitle}
+      </div>
+      <button class="px-4 py-2 rounded-lg font-medium text-white transition-opacity hover:opacity-90" style="background-color: var(--theme-primary)">
+        S'inscrire
+      </button>
+    </div>
+  </header>
+
+  <main class="min-h-screen bg-white">
+    <!-- Hero Section avec génération SEO -->
+    <section class="py-24 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden" style="background-color: color-mix(in srgb, var(--theme-primary) 5%, transparent);">
+      <!-- Élément décoratif en background -->
+      <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full blur-3xl opacity-20" style="background-color: var(--theme-primary)"></div>
+      <div class="absolute -bottom-24 -left-24 w-72 h-72 rounded-full blur-3xl opacity-20" style="background-color: var(--theme-secondary)"></div>
+      
+      <div class="max-w-4xl mx-auto relative z-10">
+        <!-- Badges SEO/GEO -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white shadow-sm border border-gray-200 text-sm font-medium text-gray-600 mb-8">
+          <span class="flex h-2 w-2 rounded-full" style="background-color: var(--theme-primary)"></span>
+          Disponible à <span class="capitalize">{location?.replace(/-/g, ' ')}</span>
+        </div>
+        
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight text-gray-900">
+          {generatedContent.heroTitle}
+        </h1>
+        
+        <p class="text-xl sm:text-2xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+          {generatedContent.heroSubtitle}
+        </p>
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <button class="px-8 py-4 rounded-xl font-bold text-white text-lg transition-all hover:-translate-y-1 shadow-lg shadow-black/10" style="background-color: var(--theme-primary)">
+            Découvrir le programme
+          </button>
+          <button class="px-8 py-4 rounded-xl font-bold text-gray-900 text-lg transition-all hover:bg-gray-100 bg-white border border-gray-200">
+            Voir la démo
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section Générées -->
+    <section class="py-24 px-4 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">Pourquoi choisir notre approche pour <span class="capitalize" style="color: var(--theme-primary)">{niche?.replace(/-/g, ' ')}</span> ?</h2>
+          <div class="h-1 w-20 mx-auto rounded-full" style="background-color: var(--theme-primary)"></div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          {generatedContent.features.map(feature => (
+            <div class="p-8 rounded-2xl bg-gray-50 border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all group">
+              <div class="w-12 h-12 rounded-xl mb-6 flex items-center justify-center text-white" style="background-color: var(--theme-primary)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <h3 class="text-2xl font-bold mb-4 text-gray-900 group-hover:text-primary transition-colors">{feature.title}</h3>
+              <p class="text-gray-600 leading-relaxed text-lg">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="py-24 px-4 text-center text-white relative overflow-hidden" style="background-color: var(--theme-primary)">
+      <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+      <div class="max-w-3xl mx-auto relative z-10">
+        <h2 class="text-3xl md:text-5xl font-bold mb-6">Prêt à maîtriser {niche?.replace(/-/g, ' ')} à {location?.replace(/-/g, ' ')} ?</h2>
+        <p class="text-xl mb-10 text-white/80">Rejoignez des centaines d'apprenants dans votre région.</p>
+        <button class="px-8 py-4 rounded-xl font-bold text-gray-900 bg-white text-lg transition-all hover:scale-105 shadow-xl">
+          Commencer l'apprentissage
+        </button>
+      </div>
+    </section>
+  </main>
+</TenantLayout>

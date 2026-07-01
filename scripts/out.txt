@@ -1,0 +1,4 @@
+[2026-06-27T20:44:21.705Z]  @firebase/firestore: Firestore (12.15.0): GrpcConnection RPC 'Listen' stream 0x7b9f4a4b error. Code: 5 Message: 5 NOT_FOUND: 
+[2026-06-27T20:44:21.707Z]  @firebase/firestore: Firestore (12.15.0): Could not reach Cloud Firestore backend. Connection failed 1 times. Most recent error: FirebaseError: [code=not-found]: 5 NOT_FOUND: 
+This typically indicates that your device does not have a healthy Internet connection at the moment. The client will operate in offline mode until it is able to successfully connect to the backend.
+Read Error: Failed to get document because the client is offline.

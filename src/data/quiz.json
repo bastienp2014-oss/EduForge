@@ -1,0 +1,842 @@
+[
+  {
+    "id": "quiz_001",
+    "mot_id": "mot_001",
+    "question": "Que mettez-vous sur votre tête quand il neige au Québec ?",
+    "options": [
+      "Une casquette",
+      "Une tuque",
+      "Un béret",
+      "Une mitaine"
+    ],
+    "bonne_reponse": 1,
+    "explication": "La tuque est le chapeau d'hiver classique des Québécois pour se protéger du frette (froid).",
+    "niveau": 1
+  },
+  {
+    "id": "quiz_002",
+    "mot_id": "mot_002",
+    "question": "Si une Québécoise vous parle de son « chum », de qui parle-t-elle principalement ?",
+    "options": [
+      "De son patron",
+      "De son chat",
+      "De son conjoint ou amoureux",
+      "De son père"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Le terme « chum » désigne un amoureux ou un conjoint, ou encore un très bon ami (pour les hommes).",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_003",
+    "mot_id": "mot_003",
+    "question": "Où allez-vous si vous manquez de lait à 23h un mardi soir ?",
+    "options": [
+      "Au dépotoir",
+      "À la quincaillerie",
+      "Au dépanneur",
+      "À l'épicerie fine"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Le dépanneur est le commerce de quartier indispensable au Québec, ouvert souvent à toute heure.",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_004",
+    "mot_id": "mot_004",
+    "question": "Quel est le synonyme québécois de « faire du lèche-vitrine » ou « faire des courses » ?",
+    "options": [
+      "Acheter",
+      "Magasiner",
+      "Boutiquer",
+      "Marchander"
+    ],
+    "bonne_reponse": 1,
+    "explication": "« Magasiner » est le verbe officiel pour exprimer l'action d'aller dans les magasins pour acheter ou regarder.",
+    "niveau": 2
+  },
+  {
+    "id": "quiz_005",
+    "mot_id": "mot_005",
+    "question": "Si votre ami vous dit que le plan pour ce soir est « tiguidou », ça veut dire...",
+    "options": [
+      "Que c'est annulé",
+      "Que c'est compliqué",
+      "Que c'est excellent et réglé",
+      "Que c'est ennuyeux"
+    ],
+    "bonne_reponse": 2,
+    "explication": "« Tiguidou » est une expression très joyeuse qui signifie que tout va bien ou qu'on est parfaitement d'accord.",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_006",
+    "mot_id": "mot_006",
+    "question": "Comment décririez-vous une personne qui vous dérange sans arrêt pendant que vous travaillez ?",
+    "options": [
+      "Attachante",
+      "Achalante",
+      "Plaisante",
+      "Courageuse"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Quelqu'un de dérangeant ou d'énervant est qualifié de très « achalant ».",
+    "niveau": 4
+  },
+  {
+    "id": "quiz_007",
+    "mot_id": "mot_007",
+    "question": "Vous êtes en voiture en plein mois de janvier et le vent souffle la neige au sol. C'est de la...",
+    "options": [
+      "Gadoue",
+      "Glace noire",
+      "Poudrerie",
+      "Slush"
+    ],
+    "bonne_reponse": 2,
+    "explication": "La poudrerie est la neige balayée par des vents turbulents et qui réduit fortement la vue.",
+    "niveau": 4
+  },
+  {
+    "id": "quiz_008",
+    "mot_id": "mot_008",
+    "question": "Avez-vous faim ? « Non, ______ ! »",
+    "options": [
+      "Pantoute",
+      "Toujours",
+      "Tantôt",
+      "Peut-être"
+    ],
+    "bonne_reponse": 0,
+    "explication": "« Pantoute » est souvent utilisé seul ou après « pas » (Pas pantoute!) pour signifier un refus fort ou « pas du tout ».",
+    "niveau": 5
+  },
+  {
+    "id": "quiz_009",
+    "mot_id": "mot_009",
+    "question": "Combien de « piastres » vous coûte généralement un café filtre au dépanneur ?",
+    "options": [
+      "Environ deux ou trois",
+      "Environ cent",
+      "Zéro",
+      "Mille"
+    ],
+    "bonne_reponse": 0,
+    "explication": "La « piastre » signifie un dollar. Un café filtre régulier ne coûtera que quelques piastres.",
+    "niveau": 2
+  },
+  {
+    "id": "quiz_010",
+    "mot_id": "mot_010",
+    "question": "Qu'est-ce qu'on s'offre pour se désaltérer ?",
+    "options": [
+      "Une collation",
+      "Un repas",
+      "Un breuvage",
+      "Un souper"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Au Québec, un breuvage désigne toute boisson, froide ou chaude.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "quiz_011",
+    "mot_id": "mot_011",
+    "question": "Vous croisez un collègue québécois dans le couloir à 14h et il vous dit 'Allô!'. Que signifie cette salutation dans ce contexte?",
+    "options": [
+      "Il vous demande de répondre à un appel téléphonique",
+      "Il vous salue informellement, comme on dirait bonjour",
+      "Il vous dit au revoir avant de partir",
+      "Il exprime une surprise à vous voir là"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Au Québec, Allô est une salutation universelle utilisée à toute heure pour dire bonjour, contrairement au français de France où ce mot est réservé au téléphone. Un Québécois dira Allô le matin, le midi et le soir, dans la rue ou au bureau.",
+    "niveau": 4
+  },
+  {
+    "id": "quiz_012",
+    "mot_id": "mot_012",
+    "question": "Il est 22h30, vous avez besoin de lait d'urgence et tous les supermarchés sont fermés. Où allez-vous au Québec?",
+    "options": [
+      "Au restaurant du quartier",
+      "Au dépanneur",
+      "À la pharmacie Jean Coutu",
+      "Au centre d'achat"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Le dépanneur est le petit commerce de quartier ouvert tard le soir (parfois 24h/24) qui dépanne en cas de besoin urgent. On y trouve lait, bière, cigarettes, collations et articles de base. Le surnom affectueux dép est très couramment utilisé.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "quiz_013",
+    "mot_id": "mot_013",
+    "question": "Un collègue vous dit: 'Il fait -25°C ce matin, n'oublie pas ta tuque!' Quel accessoire vestimentaire doit-il apporter?",
+    "options": [
+      "Ses bottes d'hiver imperméables",
+      "Une écharpe en laine",
+      "Un bonnet de laine tricoté",
+      "Des mitaines en duvet"
+    ],
+    "bonne_reponse": 2,
+    "explication": "La tuque est le bonnet de laine tricoté, accessoire hivernal emblématique du Québec. Elle est si représentative de la culture québécoise qu'elle est devenue un symbole reconnu à l'international. Les Québécois en portent souvent de très colorées!",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_014",
+    "mot_id": "mot_014",
+    "question": "Un Québécois vous dit: 'Mon char a refusé de démarrer ce matin à cause du froid.' Qu'est-ce qui n'a pas démarré?",
+    "options": [
+      "Son camion de pompier",
+      "Sa motoneige",
+      "Sa voiture",
+      "Son vélo électrique"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Char est le terme familier québécois pour désigner une voiture. Ce mot vient du vieux français et s'est maintenu au Québec pendant que la France adoptait voiture. Par grand froid (sous -30°C), les moteurs de voiture peuvent effectivement refuser de démarrer.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "quiz_015",
+    "mot_id": "mot_015",
+    "question": "La météo annonce: 'Ciel couvert toute la journée avec risques de précipitations.' Quel temps est prévu?",
+    "options": [
+      "Une journée ensoleillée avec quelques nuages",
+      "Un ciel entièrement recouvert de nuages",
+      "Une pluie abondante toute la journée",
+      "Du brouillard épais en matinée"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Au Québec, couvert décrit un ciel uniformément gris, sans soleil visible. C'est un terme météorologique très courant dans les bulletins locaux. Un ciel couvert annonce souvent de la pluie ou de la neige imminente, surtout en hiver ou au printemps.",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_016",
+    "mot_id": "mot_016",
+    "question": "Votre collègue québécois vous invite: 'Viens déjeuner avec moi demain matin à 7h30 avant la réunion.' À quel repas vous invite-t-il?",
+    "options": [
+      "Au repas du soir",
+      "Au repas du midi",
+      "Au repas du matin",
+      "À un goûter en après-midi"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Au Québec, les noms des repas diffèrent de la France: déjeuner = matin (petit-déjeuner en France), dîner = midi, souper = soir. Cette différence peut créer des quiproquos entre Français et Québécois. Un rendez-vous pour dîner à 19h confondra un Québécois!",
+    "niveau": "urgence"
+  },
+  {
+    "id": "quiz_017",
+    "mot_id": "mot_017",
+    "question": "Quelle est la principale différence entre des mitaines et des gants ordinaires?",
+    "options": [
+      "Les mitaines sont fabriquées uniquement en cuir",
+      "Les mitaines n'ont pas de séparation individuelle pour les doigts",
+      "Les mitaines se portent sous d'autres gants",
+      "Les mitaines sont exclusivement réservées aux enfants"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Les mitaines (moufles en France) regroupent tous les doigts ensemble sauf le pouce, ce qui les rend plus chaudes car les doigts se réchauffent mutuellement. Par grand froid québécois (-30°C et moins), elles sont nettement supérieures aux gants à doigts séparés.",
+    "niveau": 1
+  },
+  {
+    "id": "quiz_018",
+    "mot_id": "mot_018",
+    "question": "Une affiche dans la rue indique: 'Stationnement interdit de 7h à 9h - Déneigement'. Qu'est-ce qui est interdit pendant ces heures?",
+    "options": [
+      "De conduire sur cette rue",
+      "De garer son véhicule dans cette zone",
+      "De marcher sur le trottoir",
+      "De livrer des marchandises aux commerces"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Le stationnement désigne l'action et le lieu où l'on gare un véhicule. À Montréal, les interdictions de stationnement pour le déneigement sont très strictes: laisser son char peut entraîner une contravention salée et un remorquage. Il faut apprendre les panneaux rapidement en hiver!",
+    "niveau": 2
+  },
+  {
+    "id": "quiz_019",
+    "mot_id": "mot_019",
+    "question": "Dans un restaurant québécois, le serveur vous demande: 'Désirez-vous un breuvage pour commencer?' Que vous propose-t-il?",
+    "options": [
+      "Un plat principal du menu",
+      "Un dessert maison",
+      "Une boisson de votre choix",
+      "Une mise en bouche gratuite"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Breuvage est le terme québécois standard pour désigner une boisson, calqué sur l'anglais beverage. On l'entend partout dans les restaurants, cafétérias et menus québécois. Il désigne aussi bien l'eau, le café, le jus qu'une boisson alcoolisée.",
+    "niveau": 5
+  },
+  {
+    "id": "quiz_020",
+    "mot_id": "mot_020",
+    "question": "Votre amie québécoise vous dit: 'Je vais magasiner toute la journée samedi avec ma mère.' Que prévoit-elle de faire?",
+    "options": [
+      "Ranger et organiser la maison de sa mère",
+      "Faire du sport dans un centre de conditionnement",
+      "Faire des achats dans les magasins",
+      "Travailler comme vendeuse dans un magasin"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Magasiner signifie faire du shopping, faire des emplettes. Ce verbe est un calque de l'anglais to shop. On peut magasiner pour des vêtements, des meubles, une voiture ou même une maison. Aller au centre d'achat pour magasiner est une activité de loisirs très populaire au Québec.",
+    "niveau": 4
+  },
+  {
+    "id": "quiz_021",
+    "mot_id": "mot_021",
+    "question": "Marie dit à une collègue: 'Mon chum et moi, on part en voyage en Europe la semaine prochaine.' Avec qui Marie part-elle en voyage?",
+    "options": [
+      "Son patron au bureau",
+      "Son frère aîné",
+      "Son copain romantique",
+      "Sa colocataire"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Dans ce contexte, chum désigne le petit ami ou compagnon romantique de Marie. Chum peut aussi signifier ami proche (viens-tu, mon chum?), mais le contexte d'un voyage en couple lève toute ambiguïté. Pour une femme, l'équivalent romantique est blonde (ma blonde = ma petite amie).",
+    "niveau": 4
+  },
+  {
+    "id": "quiz_022",
+    "mot_id": "mot_022",
+    "question": "Une grand-mère québécoise tend la joue à son petit-fils en disant: 'Viens me donner un bec avant de partir!' Que lui demande-t-elle?",
+    "options": [
+      "Un dessin pour mettre sur le réfrigérateur",
+      "Un bisou sur la joue",
+      "Un câlin bien serré",
+      "Un verre d'eau fraîche"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Un bec est un bisou ou une bise affectueuse. Ce terme tendre est omniprésent dans les familles québécoises. Bec sucré désigne aussi quelqu'un qui adore les sucreries. Donner un bec et recevoir un bec sont des formules très naturelles dans le quotidien québécois.",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_023",
+    "mot_id": "mot_023",
+    "question": "Environnement Canada émet un avertissement: 'Poudrerie intense sur les routes, visibilité réduite à moins de 200 mètres.' Quel phénomène météorologique décrit-on?",
+    "options": [
+      "Une forte chute de neige fraîche",
+      "Des précipitations de grésil verglaçant",
+      "De la neige sèche soufflée par le vent près du sol",
+      "Du brouillard givrant sur les routes"
+    ],
+    "bonne_reponse": 2,
+    "explication": "La poudrerie est distincte d'une tempête de neige: c'est de la neige déjà tombée (ou en train de tomber) que le vent soulève et souffle près du sol, créant des conditions de quasi-blizzard. Ce phénomène est particulièrement dangereux sur les routes de la plaine du Saint-Laurent.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "quiz_024",
+    "mot_id": "mot_024",
+    "question": "Un ami vous propose: 'On va au centre d'achat Carrefour Laval ce soir, t'embarques?' Où vous propose-t-il d'aller?",
+    "options": [
+      "Dans un quartier d'affaires de Laval",
+      "Dans un grand centre commercial avec de nombreux magasins",
+      "Dans un marché public en plein air",
+      "Dans une grande épicerie avec livraison"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Le centre d'achat est l'équivalent québécois d'un centre commercial ou d'un mall. Parmi les plus connus: Carrefour Laval, Place Montréal Trust, Les Galeries de la Capitale à Québec. La visite au centre d'achat est une activité sociale et de magasinage très populaire, surtout en hiver.",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_025",
+    "mot_id": "mot_025",
+    "question": "Votre colocataire vous dit: 'Je vais faire l'épicerie, t'as besoin de quelque chose?' Que va-t-il faire?",
+    "options": [
+      "Acheter des articles ménagers et de nettoyage",
+      "Faire le ménage complet de l'appartement",
+      "Acheter des provisions alimentaires au supermarché",
+      "Aller manger au restaurant du quartier"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Faire l'épicerie signifie faire ses courses alimentaires au supermarché. Les grandes chaînes québécoises incluent IGA, Metro, Provigo (Loblaw) et les épiceries à prix réduit Maxi. Les épiceries ethniques sont aussi très populaires dans les quartiers multiculturaux de Montréal.",
+    "niveau": 2
+  },
+  {
+    "id": "quiz_026",
+    "mot_id": "mot_026",
+    "question": "Une annonce immobilière propose un '4½ à louer, 1 200$/mois, disponible le 1er juillet.' Combien de pièces cet appartement comporte-t-il approximativement?",
+    "options": [
+      "Un studio d'une seule grande pièce",
+      "Deux chambres, salon, cuisine et salle de bain",
+      "Quatre chambres à coucher avec salle de bain privée",
+      "Un appartement situé au 4e étage et demi d'un immeuble"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Au Québec, un 4½ désigne un logement avec 4 pièces et demie: généralement cuisine, salon, 2 chambres, et une salle de bain (le ½). Cette notation unique est essentielle pour tout nouvel arrivant qui cherche un logement. Un 3½ = 1 chambre + cuisine + salon + salle de bain.",
+    "niveau": 2
+  },
+  {
+    "id": "quiz_027",
+    "mot_id": "mot_027",
+    "question": "Un passant québécois vous dit en frissonnant: 'Man, il fait ben frette à matin!' Quel temps fait-il dehors?",
+    "options": [
+      "Il fait très chaud et humide",
+      "Il pleut très fort",
+      "Il fait très froid",
+      "Il y a beaucoup de vent sans pluie ni neige"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Frette est l'adjectif populaire québécois pour froid. Ben frette signifie très froid. À matin est la façon québécoise de dire ce matin. Man est une interjection d'exaspération. Ces quatre éléments réunis dressent un portrait parfait d'un Québécois par -25°C en janvier!",
+    "niveau": 1
+  },
+  {
+    "id": "quiz_028",
+    "mot_id": "mot_028",
+    "question": "Quels sont les trois ingrédients obligatoires d'une poutine traditionnelle québécoise authentique?",
+    "options": [
+      "Frites, mayonnaise et cornichons marinés",
+      "Frites, sauce brune chaude et fromage en grains frais",
+      "Riz, sauce aux champignons et poulet grillé",
+      "Pommes de terre pilées, crème sure et bacon croustillant"
+    ],
+    "bonne_reponse": 1,
+    "explication": "La poutine authentique est obligatoirement composée de frites croustillantes, de fromage en grains frais (cheddar qui couine sous la dent, signe de fraîcheur) et de sauce brune (gravy) chaude. Inventée vers 1957 au Centre-du-Québec, elle est aujourd'hui servie dans le monde entier.",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_029",
+    "mot_id": "mot_029",
+    "question": "Une étudiante affiche: 'Cherche coloc sérieux et propre pour partager 4½, 600$/mois chacun.' Que cherche-t-elle?",
+    "options": [
+      "Un employeur pour un emploi à temps partiel",
+      "Un ami pour sortir et visiter la ville",
+      "Une personne pour partager son appartement et les frais",
+      "Un professeur particulier pour l'aider dans ses études"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Coloc est l'abréviation de colocataire. La colocation est très courante au Québec, surtout chez les étudiants et les nouveaux arrivants qui souhaitent réduire les coûts élevés de logement dans les grandes villes comme Montréal. Elle facilite aussi l'intégration sociale.",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_030",
+    "mot_id": "mot_030",
+    "question": "Quelle est la principale différence entre un CPE (Centre de la petite enfance) et une garderie privée non subventionnée au Québec?",
+    "options": [
+      "Le CPE est réservé aux enfants ayant des besoins spéciaux",
+      "Le CPE est financé par le gouvernement et propose des tarifs largement réduits",
+      "La garderie privée offre toujours de meilleures heures d'ouverture",
+      "Le CPE n'accepte que les enfants de 4 ans et plus avant la maternelle"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Les CPE sont subventionnés par le gouvernement du Québec. Pour les familles admissibles, le tarif est d'environ 10$ à 13$ par jour selon le revenu familial, contre 40$ à 60$ par jour en garderie privée. Les places sont très convoitées et les listes d'attente peuvent durer des années.",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_031",
+    "mot_id": "mot_031",
+    "question": "Après une tempête de 40 centimètres de neige, votre voisin sort sa souffleuse. Que fait-il avec cet appareil?",
+    "options": [
+      "Il souffle de l'air chaud sur sa voiture pour faire fondre la glace",
+      "Il dégage la neige de son entrée en la projetant sur le côté grâce à une machine motorisée",
+      "Il aspire la neige dans de grands sacs pour la récupérer",
+      "Il pulvérise du sel liquide sur les surfaces glacées"
+    ],
+    "bonne_reponse": 1,
+    "explication": "La souffleuse (snow blower) aspire la neige et la projette à plusieurs mètres via un tube orientable. Elle est quasi indispensable pour les propriétaires québécois après les grosses tempêtes. Déneiger manuellement une longue entrée après 40 cm de neige est un travail épuisant que la souffleuse règle en quelques minutes.",
+    "niveau": 4
+  },
+  {
+    "id": "quiz_032",
+    "mot_id": "mot_032",
+    "question": "Pour traverser le fleuve Saint-Laurent de Québec à Lévis sans passer par les ponts, quel moyen de transport utilise-t-on?",
+    "options": [
+      "Un tramway sous-fluvial",
+      "Un hydroglisseur privé",
+      "Le traversier de la STQ",
+      "Un taxi nautique"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Le traversier Québec-Lévis, opéré par la Société des traversiers du Québec, est l'un des plus emblématiques de la province. Il offre une vue spectaculaire sur le Château Frontenac et le Vieux-Québec. La traversée dure environ 10 minutes et le service fonctionne presque 24h/24.",
+    "niveau": 5
+  },
+  {
+    "id": "quiz_033",
+    "mot_id": "mot_033",
+    "question": "Votre collègue vous dit: 'Je vais te rappeler tantôt.' À quel moment pouvez-vous vous attendre à recevoir son appel?",
+    "options": [
+      "Obligatoirement demain matin avant 9h",
+      "La semaine prochaine sans faute",
+      "Dans un futur proche et indéfini, bientôt",
+      "Jamais, c'est une façon polie de mettre fin à la conversation"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Tantôt est volontairement vague et peut signifier dans quelques minutes, dans quelques heures, cet après-midi ou même ce soir selon le contexte. Cette ambiguïté est bien connue des Québécois eux-mêmes! Si vous avez besoin d'un horaire précis, il vaut mieux demander une heure exacte.",
+    "niveau": 5
+  },
+  {
+    "id": "quiz_034",
+    "mot_id": "mot_034",
+    "question": "Quelle est la particularité fondamentale d'une caisse populaire Desjardins par rapport à une banque traditionnelle comme la Banque Royale?",
+    "options": [
+      "Elle est réservée exclusivement aux nouveaux immigrants au Québec",
+      "Elle est administrée directement par le gouvernement provincial",
+      "C'est une coopérative financière dont les clients sont aussi les propriétaires membres",
+      "Elle n'offre pas de prêts hypothécaires ni de placements"
+    ],
+    "bonne_reponse": 2,
+    "explication": "La caisse populaire est une coopérative: ses membres en sont copropriétaires et participent à sa gouvernance. Desjardins, fondé par Alphonse Desjardins à Lévis en 1900, est devenu le plus grand groupe financier coopératif en Amérique du Nord, avec des actifs de plus de 400 milliards de dollars.",
+    "niveau": 5
+  },
+  {
+    "id": "quiz_035",
+    "mot_id": "mot_035",
+    "question": "Un collègue masculin vous annonce: 'Je prends un congé de paternité de cinq semaines grâce au RQAP.' Qu'est-ce que cela implique?",
+    "options": [
+      "Il part à la retraite anticipée pour s'occuper d'un parent malade",
+      "Il reçoit des prestations gouvernementales pour rester à la maison avec son nouveau-né",
+      "Il bénéficie d'un congé maladie payé intégralement par son employeur",
+      "Il suit une formation professionnelle subventionnée par le gouvernement"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Le RQAP est unique en Amérique du Nord car il offre des congés payés aux DEUX parents. Les pères ont droit à 5 semaines de congé à 70% de leur salaire (congé de paternité exclusif). Le Québec est un leader mondial en congés parentaux, avec des conditions plus généreuses que le régime fédéral canadien.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "quiz_036",
+    "mot_id": "mot_036",
+    "question": "Quel est le trait architectural distinctif d'un bungalow québécois par rapport aux autres types de maisons?",
+    "options": [
+      "Il possède obligatoirement plus de trois étages",
+      "C'est une maison individuelle de plain-pied, sans étage",
+      "C'est toujours une maison jumelée avec celle du voisin",
+      "Il est construit uniquement en brique rouge traditionnelle"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Le bungalow est une maison de plain-pied sans escalier intérieur, très populaire dans les banlieues québécoises construites dans les années 1950 à 1970 (baby-boom). Facile d'accès et pratique pour les familles avec de jeunes enfants ou les personnes âgées, il est devenu un symbole du rêve de la banlieue québécoise.",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_037",
+    "mot_id": "mot_037",
+    "question": "Lors d'une visite à la cabane à sucre au printemps, quelle est l'activité principale pratiquée sur place?",
+    "options": [
+      "La récolte et la vente de fruits de saison",
+      "La fabrication de fromages artisanaux régionaux",
+      "La transformation de la sève d'érable en produits sucrés comme le sirop et la tire",
+      "La fabrication de cidre de pomme et de vin de glace"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Le temps des sucres en mars-avril est une tradition festive unique au Québec. On y récolte la sève d'érable pour en faire du sirop, du beurre et des bonbons d'érable. On y mange aussi des oreilles de crisse (couenne de porc frite), du jambon à l'érable et des fèves au lard. C'est une célébration de la fin de l'hiver.",
+    "niveau": 7
+  },
+  {
+    "id": "quiz_038",
+    "mot_id": "mot_038",
+    "question": "Deux voisines sont assises sur leur balcon et placotent depuis deux bonnes heures. Que font-elles?",
+    "options": [
+      "Elles font du jardinage en se donnant des conseils",
+      "Elles bavardent de façon détendue, probablement sur des sujets légers",
+      "Elles se disputent à voix basse",
+      "Elles jouent aux cartes ensemble"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Placoter signifie bavarder, jaser ou raconter des histoires de façon détendue. Placoter dans le dos de quelqu'un signifie faire des ragots. C'est un verbe très expressif qui capture bien cette culture québécoise du bavardage amical entre voisins, un lien social important dans les quartiers.",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_039",
+    "mot_id": "mot_039",
+    "question": "Quelle caractéristique technique distingue le métro de Montréal de la plupart des autres métros en Amérique du Nord?",
+    "options": [
+      "Il roule sur des pneus en caoutchouc plutôt que sur des roues en acier classiques",
+      "Il est entièrement gratuit pour tous les résidents permanents de Montréal",
+      "Il circule uniquement en surface sur des voies surélevées",
+      "Il fonctionne 24 heures sur 24, 7 jours sur 7 toute l'année"
+    ],
+    "bonne_reponse": 0,
+    "explication": "Le métro de Montréal, inauguré en 1966, utilise des rames sur pneumatiques (pneus en caoutchouc) comme le métro de Paris dont il s'est inspiré. Il est entièrement souterrain, offrant une protection contre les hivers rigoureux. Chaque station a été conçue par un architecte différent, en faisant un musée d'architecture unique.",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_040",
+    "mot_id": "mot_040",
+    "question": "Un superviseur vous demande lors d'une formation: 'T'as-tu pogné comment fonctionne notre logiciel de paie?' Que veut-il savoir?",
+    "options": [
+      "Si vous avez physiquement pris le manuel d'instructions dans l'armoire",
+      "Si vous avez compris et assimilé le fonctionnement du logiciel",
+      "Si vous avez intercepté des données confidentielles du système",
+      "Si vous avez bloqué le système en cas de panne"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Pogner est extrêmement polyvalent en québécois. Dans ce contexte, pogner = comprendre. Autres usages: se faire pogner = se faire attraper, ça pogne = c'est populaire, pogner une grippe = attraper la grippe, se pogner = se bagarrer. Le contexte est indispensable pour bien interpréter ce mot!",
+    "niveau": 5
+  },
+  {
+    "id": "quiz_041",
+    "mot_id": "mot_041",
+    "question": "Dans le système scolaire québécois, à quelle étape le cégep se situe-t-il?",
+    "options": [
+      "Avant l'école primaire, pour les enfants de 4 à 6 ans",
+      "Entre le secondaire (lycée) et l'université",
+      "Après l'université, pour les études de troisième cycle",
+      "C'est l'équivalent exact du lycée français, pour les 15-18 ans"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Le cégep est une institution unique au monde, propre au Québec. Obligatoire pour accéder à l'université québécoise, il dure 2 ans (formation pré-universitaire) ou 3 ans (formation technique menant directement au marché du travail). Il n'existe nulle part ailleurs au Canada ni dans le monde.",
+    "niveau": 4
+  },
+  {
+    "id": "quiz_042",
+    "mot_id": "mot_042",
+    "question": "Quelle communauté culturelle est historiquement à l'origine de la popularisation du smoked meat à Montréal?",
+    "options": [
+      "La communauté italienne du quartier de la Petite Italie",
+      "La communauté irlandaise de Griffintown",
+      "La communauté juive ashkénaze d'Europe de l'Est",
+      "La communauté haïtienne de Saint-Michel"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Le smoked meat montréalais a été popularisé par les immigrants juifs ashkénazes arrivés d'Europe de l'Est à la fin du XIXe siècle. La charcuterie Schwartz's, fondée en 1928 au 3895, boulevard Saint-Laurent, est la plus célèbre et génère des files d'attente légendaires depuis des décennies.",
+    "niveau": 6
+  },
+  {
+    "id": "quiz_043",
+    "mot_id": "mot_043",
+    "question": "Quelle conséquence typique et dangereuse un redoux hivernal peut-il provoquer sur les routes québécoises?",
+    "options": [
+      "Des tempêtes de neige encore plus intenses que d'habitude",
+      "La formation de glace noire invisible lorsque la neige fondue regèle la nuit",
+      "Une hausse permanente des températures jusqu'au printemps",
+      "Des pannes d'électricité généralisées dans les quartiers résidentiels"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Un redoux fait fondre la neige en journée, mais la nuit, si les températures rechutent sous zéro, l'eau forme de la glace noire (black ice) presque invisible sur les routes et les trottoirs. Ce cycle gel-dégel est particulièrement dangereux et caractéristique du climat québécois de mars-avril.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "quiz_044",
+    "mot_id": "mot_044",
+    "question": "Pourquoi le 1er juillet est-il surnommé la 'fête du déménagement' au Québec?",
+    "options": [
+      "C'est la fête nationale du Canada et les festivités envahissent les rues",
+      "La quasi-totalité des baux de logement se terminent ce jour-là, créant un déménagement massif simultané",
+      "C'est le début officiel des vacances estivales scolaires au Québec",
+      "Les magasins de meubles font des soldes importants pour encourager les achats"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Le 1er juillet est la date de fin de bail la plus répandue au Québec, créant un phénomène social unique: des dizaines de milliers de ménages déménagent le même jour. Les rues de Montréal se transforment en ballet surréaliste de camions de déménagement et de meubles abandonedés sur les trottoirs.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "quiz_045",
+    "mot_id": "mot_045",
+    "question": "Votre patron vous dit en grimaçant: 'Cette semaine, je suis dans le jus jusqu'au cou avec l'audit.' Que comprend-on de sa situation?",
+    "options": [
+      "Il travaille dans une usine de transformation de jus de fruits",
+      "Il est complètement débordé et submergé de travail",
+      "Il suit des cours de natation intensifs après le bureau",
+      "Il traverse une grave crise financière personnelle"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Être dans le jus signifie être débordé, avoir une surcharge de travail. Jusqu'au cou amplifie l'image: on est complètement submergé. D'autres expressions québécoises synonymes: être sur les nerfs, avoir trop de pain sur la planche ou être tout croché (désorganisé à cause du stress).",
+    "niveau": 4
+  },
+  {
+    "id": "quiz_046",
+    "mot_id": "mot_046",
+    "question": "Un travailleur se blesse gravement à l'épaule en soulevant une charge sur son lieu de travail. Quel organisme québécois doit-il contacter en priorité?",
+    "options": [
+      "Le bureau de l'assurance-emploi pour arrêter les cotisations",
+      "La Régie de l'assurance maladie du Québec (RAMQ) pour le remboursement",
+      "La CNESST pour déclarer l'accident et obtenir une indemnisation",
+      "La caisse populaire Desjardins pour une avance sur salaire"
+    ],
+    "bonne_reponse": 2,
+    "explication": "La CNESST (anciennement CSST) est l'organisme dédié à la santé et sécurité au travail au Québec. Elle indemnise les travailleurs blessés (remplacement du revenu à 90%), coordonne leur réhabilitation et réinsertion professionnelle. Tout accident doit être déclaré rapidement. Connaître ses droits est essentiel pour tout travailleur au Québec.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "quiz_047",
+    "mot_id": "quiz_047",
+    "question": "Dans le cadre des relations de travail au Québec, qu'est-ce qu'une convention collective?",
+    "options": [
+      "Une grande réunion annuelle obligatoire de tous les employés",
+      "Un contrat négocié entre un syndicat et un employeur qui définit les conditions de travail",
+      "Un programme de formation professionnelle subventionné par le gouvernement",
+      "Un règlement interne non écrit respecté par tradition dans une entreprise"
+    ],
+    "bonne_reponse": 1,
+    "explication": "La convention collective est le résultat de négociations formelles entre le syndicat et l'employeur. Elle protège les travailleurs syndiqués en fixant par écrit: échelles salariales, horaires, vacances, avantages sociaux, sécurité d'emploi et procédures de griefs. Elle a force de loi pendant sa durée.",
+    "niveau": 4
+  },
+  {
+    "id": "quiz_048",
+    "mot_id": "mot_048",
+    "question": "Quel auteur québécois est célèbre pour avoir été le premier à faire entrer le joual sur la grande scène théâtrale québécoise?",
+    "options": [
+      "Anne Hébert, avec Les Fous de Bassan",
+      "Gaston Miron, avec L'Homme rapaillé",
+      "Michel Tremblay, avec Les Belles-Sœurs",
+      "Marie-Claire Blais, avec Une saison dans la vie d'Emmanuel"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Michel Tremblay, avec sa pièce Les Belles-Sœurs créée en 1968, a révolutionné le théâtre québécois en écrivant entièrement en joual. Cette décision courageuse et controversée a contribué à la légitimation du parler populaire québécois comme langue littéraire digne de la scène.",
+    "niveau": 5
+  },
+  {
+    "id": "quiz_049",
+    "mot_id": "mot_049",
+    "question": "Quel plat traditionnel est le plus emblématique du réveillon de Noël dans les familles québécoises?",
+    "options": [
+      "La poutine au smoked meat gratinée",
+      "Les spaghettis à la bolognaise maison",
+      "La tourtière, une tarte à la viande épicée",
+      "Le smoked meat servi sur pain de seigle"
+    ],
+    "bonne_reponse": 2,
+    "explication": "La tourtière est une tarte à la viande hachée (porc, veau, bœuf ou gibier selon les régions) aromatisée aux épices, indissociable du réveillon québécois. La tourtière du Lac-Saint-Jean est particulièrement réputée pour ses généreuses couches de viande en morceaux. Chaque famille a sa recette secrète transmise de génération en génération.",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_050",
+    "mot_id": "mot_050",
+    "question": "Que désigne le mot rang dans le contexte de la géographie rurale du Québec?",
+    "options": [
+      "Le classement d'une ville selon sa taille et sa population",
+      "Une route rurale longeant des terres agricoles, héritage du régime seigneurial français",
+      "Un bataillon militaire de la Nouvelle-France du XVIIe siècle",
+      "Un niveau hiérarchique dans l'administration du gouvernement provincial"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Le système des rangs est un héritage du régime seigneurial français en Nouvelle-France. Les terres étaient divisées en longues bandes étroites perpendiculaires aux cours d'eau, donnant des rangs de fermes parallèles. Ce découpage unique a créé le paysage rural caractéristique du Québec, visible depuis les airs.",
+    "niveau": 5
+  },
+  {
+    "id": "quiz_051",
+    "mot_id": "mot_051",
+    "question": "Le Québec affiche l'un des taux de syndicalisation les plus élevés d'Amérique du Nord. Quel secteur est particulièrement concerné?",
+    "options": [
+      "Le secteur privé des technologies de l'information",
+      "Les grandes entreprises multinationales américaines",
+      "Le secteur public: éducation, santé et services gouvernementaux",
+      "Les travailleurs autonomes et les pigistes"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Le secteur public québécois est fortement syndiqué. Les grandes centrales syndicales comme la CSN (Confédération des syndicats nationaux), la FTQ (Fédération des travailleurs du Québec) et la CSQ jouent un rôle social et politique important. Les négociations avec le gouvernement provincial donnent parfois lieu à de grandes grèves historiques.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "quiz_052",
+    "mot_id": "mot_052",
+    "question": "À quoi sert une vignette de stationnement résidentiel dans les arrondissements de Montréal?",
+    "options": [
+      "À obtenir un rabais sur l'essence dans les stations-service du quartier",
+      "À permettre aux résidents de stationner dans leur rue sans recevoir de contraventions",
+      "À utiliser les voies réservées aux autobus sur les grandes artères",
+      "À payer son abonnement mensuel au réseau de transport en commun STM"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Dans plusieurs arrondissements montréalais, les rues résidentielles sont réservées aux détenteurs de vignettes pour empêcher les automobilistes de passage de s'y garer. Ce système est géré par arrondissement. Sans vignette, une contravention et même un remorquage peuvent survenir, surtout lors des opérations de déneigement.",
+    "niveau": 2
+  },
+  {
+    "id": "quiz_053",
+    "mot_id": "mot_053",
+    "question": "Un voisin dit en parlant d'un autre résidant: 'Depuis qu'il a vendu sa compagnie, il a vraiment le motton.' Que comprend-on?",
+    "options": [
+      "Il est très stressé et anxieux depuis la vente",
+      "Il est très à l'aise financièrement, voire riche",
+      "Il a de graves problèmes de santé depuis la transaction",
+      "Il est devenu très populaire et influent dans le quartier"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Avoir le motton signifie avoir beaucoup d'argent. Attention: le motton peut aussi s'utiliser dans avoir le motton dans la gorge, qui signifie avoir une boule dans la gorge sous l'effet de l'émotion. Le contexte (vente d'une compagnie) indique clairement ici le sens financier.",
+    "niveau": "urgence"
+  },
+  {
+    "id": "quiz_054",
+    "mot_id": "mot_054",
+    "question": "La crise du verglas de janvier 1998 est un événement profondément ancré dans la mémoire collective québécoise. Pourquoi?",
+    "options": [
+      "C'était la plus grande tempête de neige jamais enregistrée au Québec avec 2 mètres de neige",
+      "Des jours de pluie verglaçante ont brisé des milliers de pylônes électriques, privant des millions de personnes d'électricité",
+      "C'était le premier hiver sans neige de l'histoire du Québec moderne",
+      "De violentes tornades ont détruit plusieurs municipalités de la Rive-Sud"
+    ],
+    "bonne_reponse": 1,
+    "explication": "La crise du verglas de janvier 1998 a duré 5 jours et recouvert tout le sud du Québec d'une chape de glace. Elle a détruit 24 000 pylônes électriques et plongé 1,4 million de foyers dans le noir pendant parfois plusieurs semaines en plein hiver. Cette catastrophe a profondément marqué une génération entière de Québécois.",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_055",
+    "mot_id": "mot_055",
+    "question": "Un candidat en entrevue 'fait du millage' avec son expérience à l'international. Que fait-il concrètement?",
+    "options": [
+      "Il ment sur ses compétences et invente des expériences fictives",
+      "Il conduit sa voiture personnelle pour se rendre à chaque entrevue",
+      "Il valorise et exploite au maximum son expérience pour impressionner le recruteur",
+      "Il refuse toute offre qui ne rembourse pas ses frais de déplacement"
+    ],
+    "bonne_reponse": 2,
+    "explication": "Faire du millage vient de l'anglais mileage et signifie tirer le meilleur parti d'un avantage, d'une expérience ou d'une situation. Dans un sens positif: un immigrant qui met de l'avant ses compétences acquises à l'étranger. Dans un sens négatif: exploiter excessivement une situation pour en bénéficier sans réelle justification.",
+    "niveau": 4
+  },
+  {
+    "id": "quiz_056",
+    "mot_id": "mot_056",
+    "question": "Un chroniqueur politique écrit: 'Le ministre a viré sa crêpe sur la question des taxes scolaires.' Que signifie cette affirmation?",
+    "options": [
+      "Le ministre a préparé des crêpes lors d'un événement culinaire public",
+      "Le ministre a changé radicalement et publiquement de position sur ce sujet",
+      "Le ministre a démissionné de ses fonctions suite aux pressions",
+      "Le ministre a remporté de justesse un vote à l'Assemblée nationale"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Virer sa crêpe (ou virer de bord) signifie changer complètement et brusquement d'opinion. L'image de la crêpe retournée dans la poêle illustre ce retournement radical. Cette expression est très utilisée en politique pour dénoncer l'inconséquence d'un élu. L'équivalent approximatif serait retourner sa veste en France.",
+    "niveau": 1
+  },
+  {
+    "id": "quiz_057",
+    "mot_id": "mot_057",
+    "question": "Quel est l'avantage principal d'une coopérative d'habitation pour ses membres résidents à long terme?",
+    "options": [
+      "Les logements sont toujours beaucoup plus grands qu'ailleurs pour le même prix",
+      "Les loyers augmentent moins vite car la coopérative est à but non lucratif",
+      "Les membres ne paient jamais de loyer une fois leur adhésion payée",
+      "Le gouvernement fédéral finance l'intégralité des coûts de logement"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Les coopératives d'habitation sont des organismes à but non lucratif. Les loyers sont fixés selon les coûts réels et augmentent moins vite que le marché locatif spéculatif. En échange, les membres participent activement à la gestion de leur immeuble (assemblées, comités). C'est une alternative stable et communautaire au logement locatif classique.",
+    "niveau": 3
+  },
+  {
+    "id": "quiz_058",
+    "mot_id": "mot_058",
+    "question": "Pour faire du covoiturage sur le trajet Montréal-Québec à faible coût, quelle plateforme québécoise est la plus populaire?",
+    "options": [
+      "Uber Pool, le service de covoiturage d'Uber",
+      "Amigo Express, la plateforme québécoise de covoiturage interurbain",
+      "BlaBlaCar, la plateforme européenne",
+      "Communauto, le service d'autopartage montréalais"
+    ],
+    "bonne_reponse": 1,
+    "explication": "Amigo Express est la plateforme québécoise de covoiturage la plus connue pour les trajets interurbains. Elle met en contact des conducteurs et des passagers pour partager les frais sur des trajets comme Montréal-Québec (2h45 de route). Communauto est différent: c'est un service d'autopartage en ville, pas du covoiturage interurbain.",
+    "niveau": 5
+  },
+  {
+    "id": "quiz_059",
+    "mot_id": "mot_059",
+    "question": "Comment prépare-t-on la tire d'érable traditionnelle lors d'une visite à la cabane à sucre?",
+    "options": [
+      "On mélange du sirop d'érable avec de la crème fouettée dans un bol froid",
+      "On verse du sirop d'érable chaud et bouilli sur de la neige fraîche, puis on l'enroule sur un bâtonnet",
+      "On fait cuire du sirop d'érable avec du sucre brun en pain jusqu'à solidification",
+      "On congèle le sirop d'érable pur dans des moules en forme d'étoile"
+    ],
+    "bonne_reponse": 1,
+    "explication": "La tire sur la neige est le moment le plus attendu à la cabane à sucre: le sirop d'érable est bouilli jusqu'au stade de tire, puis versé en filets sur de la neige fraîche tassée. Il se fige légèrement en une friandise collante et sucrée que l'on enroule sur un bâtonnet de bois. Expérience gustative et culturelle unique au monde.",
+    "niveau": 1
+  },
+  {
+    "id": "quiz_060",
+    "mot_id": "mot_060",
+    "question": "Quelle condition principale un travailleur doit-il remplir pour être admissible à l'assurance-emploi au Canada?",
+    "options": [
+      "Avoir résidé au Canada depuis au moins dix ans de façon ininterrompue",
+      "Avoir perdu son emploi sans faute de sa part et avoir accumulé suffisamment d'heures de travail assurables",
+      "Être propriétaire d'une résidence principale au Canada depuis au moins deux ans",
+      "Être membre en règle d'un syndicat accrédité au moment de la perte d'emploi"
+    ],
+    "bonne_reponse": 1,
+    "explication": "L'assurance-emploi est un programme fédéral canadien. Pour y être admissible, le travailleur doit: 1) avoir perdu son emploi involontairement (mise à pied, fin de contrat) et non par démission ou congédiement pour faute grave; 2) avoir accumulé entre 420 et 700 heures assurables selon le taux de chômage régional. Les prestations représentent environ 55% du salaire assurable.",
+    "niveau": 4
+  }
+]

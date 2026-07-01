@@ -1,0 +1,68 @@
+[
+ {
+ "id": "principale",
+ "nom": "Rue Principale",
+ "emoji": "🛒",
+ "direction": null,
+ "couleur": "#2563eb",
+ "statut": "active",
+ "niveau_requis": 1,
+ "apercu": []
+ },
+ {
+ "id": "services",
+ "nom": "Rue des Services Publics",
+ "emoji": "🏛️",
+ "direction": "nord",
+ "couleur": "#475569",
+ "statut": "bientot",
+ "niveau_requis": 2,
+ "apercu": [
+ { "emoji": "🚗", "label": "Simulateur SAAQ" },
+ { "emoji": "🏛️", "label": "Services publics" },
+ { "emoji": "💰", "label": "Impôts et TPS/TVQ" }
+ ]
+ },
+ {
+ "id": "logement",
+ "nom": "Rue du Logement",
+ "emoji": "🏠",
+ "direction": "ouest",
+ "couleur": "#059669",
+ "statut": "bientot",
+ "niveau_requis": 2,
+ "apercu": [
+ { "emoji": "⚖️", "label": "Simulateur Loi 31" },
+ { "emoji": "🏢", "label": "Trouver un appartement" },
+ { "emoji": "🔨", "label": "Quincaillerie et réparations" }
+ ]
+ },
+ {
+ "id": "travail",
+ "nom": "Rue du Travail",
+ "emoji": "💼",
+ "direction": "est",
+ "couleur": "#d97706",
+ "statut": "bientot",
+ "niveau_requis": 3,
+ "apercu": [
+ { "emoji": "💼", "label": "Simulateur d'entrevue" },
+ { "emoji": "⚖️", "label": "Droits CNESST" },
+ { "emoji": "📝", "label": "Écrire un CV québécois" }
+ ]
+ },
+ {
+ "id": "etudes",
+ "nom": "Rue des Études",
+ "emoji": "🎓",
+ "direction": "sud",
+ "couleur": "#7c3aed",
+ "statut": "bientot",
+ "niveau_requis": 3,
+ "apercu": [
+ { "emoji": "🎓", "label": "Système scolaire QC" },
+ { "emoji": "📚", "label": "Cégep et université" },
+ { "emoji": "👶", "label": "Services de garde" }
+ ]
+ }
+]
