@@ -1,4 +1,5 @@
 import { auth } from '../../services/firebase';
+import { secureFetch } from '../../utils/secureFetch';
 import React, { useState } from 'react';
 import { useProgression, NiveauConfig, ChapitreConfig, LeconConfig, ProgressionConfig } from '../../store/useProgression';
 import { useAdminTheme } from '../../store/useAdminTheme';
@@ -48,7 +49,7 @@ export default function AdminParcours() {
   const genererContenuLeconRAG = async (leconId: string, subject: string, nIndex: number, cIndex: number, lIndex: number) => {
     setGeneratingLessonId(leconId);
     try {
-      const response = await fetch('/api/gemini/generate-lesson-rag', {
+      const response = await secureFetch('/api/gemini/generate-lesson-rag', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -168,7 +169,7 @@ Tu dois répondre EXCLUSIVEMENT avec un JSON ayant cette structure:
   }
 }`;
 
-      const res = await fetch('/api/gemini/generate-json-rag', {
+      const res = await secureFetch('/api/gemini/generate-json-rag', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}` },
         body: JSON.stringify({
@@ -281,7 +282,7 @@ Le résultat doit être un objet JSON respectant exactement cette structure:
 Assure-toi de générer 2 chapitres, avec chacun 2 leçons (une théorie, un jeu).
 N'écris aucune introduction, n'inclus pas de balises markdown, réponds EXCLUSIVEMENT avec le JSON brut.`;
 
-      const res = await fetch('/api/gemini/generate-json-rag', {
+      const res = await secureFetch('/api/gemini/generate-json-rag', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}` },
         body: JSON.stringify({

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { auth } from '../services/firebase';
+import { secureFetch } from '../utils/secureFetch';
 
 interface SuggestionResult {
   mechanic: string;
@@ -15,7 +16,7 @@ export function useSuggestMechanic() {
     setError(null);
 
     try {
-      const response = await fetch('/api/gemini/suggest-mechanic', {
+      const response = await secureFetch('/api/gemini/suggest-mechanic', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -142,7 +142,7 @@ export default function AdminIA() {
     if (!inputAppPrompt) return;
     setIsGeneratingScaffold(true);
     try {
-      const response = await fetch('/api/gemini/generate-scaffold-rag', {
+      const response = await secureFetch('/api/gemini/generate-scaffold-rag', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
@@ -242,7 +242,7 @@ export default function AdminIA() {
     if (!gameIdea) return;
     setIsGeneratingGame(true);
     try {
-      const response = await fetch('/api/gemini/generate-json-rag', {
+      const response = await secureFetch('/api/gemini/generate-json-rag', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
@@ -291,7 +291,7 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
     if (!lessonSubject) return;
     setIsGeneratingLesson(true);
     try {
-      const response = await fetch('/api/gemini/generate-lesson-rag', {
+      const response = await secureFetch('/api/gemini/generate-lesson-rag', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
@@ -352,7 +352,7 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
 
       const data = await response.json();
       
-      const ingestResponse = await fetch('/api/gemini/rag-ingest', {
+      const ingestResponse = await secureFetch('/api/gemini/rag-ingest', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
@@ -391,7 +391,7 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
     setIsGeneratingImg(true);
     setGeneratedImg(null);
     try {
-      const response = await fetch('/api/gemini/generate-image', {
+      const response = await secureFetch('/api/gemini/generate-image', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAdminTheme } from '../../store/useAdminTheme';
+import { secureFetch } from '../../utils/secureFetch';
 import { Wand2, Loader2, CheckCircle2, ChevronDown, ChevronUp, Search, Activity, AlertCircle } from 'lucide-react';
 
 interface MarketingData {
@@ -84,11 +85,10 @@ export default function AdminMarketingGenerator({ productName, productType, desc
     setIsGenerating(true);
     setError(null);
     try {
-      const response = await fetch('/api/gemini/generate-marketing', {
+      const response = await secureFetch('/api/gemini/generate-marketing', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${(window as any).firebaseToken || ''}`, // In a real scenario, use actual auth token retrieval
         },
         body: JSON.stringify({
           productName,

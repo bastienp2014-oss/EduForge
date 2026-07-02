@@ -1,4 +1,5 @@
 import { auth } from '../../services/firebase';
+import { secureFetch } from '../../utils/secureFetch';
 /**
  * ADMIN SCENARIOS — Mots & Blocs (Phase 13)
  * Éditeur visuel de scénarios style n8n.
@@ -491,7 +492,7 @@ export default function AdminScenarios() {
     setIsGenerating(true);
     try {
       const { apiKey, persona, context, documents } = useSettings.getState();
-      const response = await fetch('/api/gemini/generate-scenario', {
+      const response = await secureFetch('/api/gemini/generate-scenario', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,

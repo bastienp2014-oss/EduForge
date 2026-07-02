@@ -1,5 +1,6 @@
 import { auth } from '../../services/firebase';
 import React, { useState, useEffect, useRef } from 'react';
+import { secureFetch } from '../../utils/secureFetch';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { db } from '../../services/firebase';
 import { AppTheme, useTheme, PREDEFINED_THEMES } from '../../store/useTheme';
@@ -186,7 +187,7 @@ export default function AdminTheme() {
       
       const aiPrompt = `Génère une image de style application mobile. Description de l'utilisateur: ${prompt[key]}. Contexte UI: ${contextualPrompt} Utilise prioritairement ces couleurs (Palette de l'app): ${currentTheme.colors.primary}, ${currentTheme.colors.accent}, ${currentTheme.colors.bg}. ${globalStyle} ${aiContextPrompt} Pas de texte, pas de mots sur l'image.`;
       
-      const response = await fetch('/api/gemini/generate-image', {
+      const response = await secureFetch('/api/gemini/generate-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}` },
         body: JSON.stringify({ 

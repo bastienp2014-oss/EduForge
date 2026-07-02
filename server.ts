@@ -45,18 +45,25 @@ const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 
 // Firebase App Check middleware
 const requireAppCheck = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const appCheckToken = req.header('X-Firebase-AppCheck');
+  const enforce = process.env.APP_CHECK_ENFORCE === 'true';
 
   if (!appCheckToken) {
-    return res.status(401).json({ error: 'Non autorisé: Token App Check manquant' });
+    console.warn(`[App Check Monitor] Token App Check manquant pour la requête ${req.method} ${req.path}`);
+    if (enforce) {
+      return res.status(401).json({ error: 'Non autorisé: Token App Check manquant' });
+    }
+    return next();
   }
 
   try {
-    const appCheckClaims = await getAppCheck().verifyToken(appCheckToken);
-    // If verifyToken() succeeds, the request is allowed to proceed
+    await getAppCheck().verifyToken(appCheckToken);
     next();
-  } catch (err) {
-    console.error('Erreur de vérification App Check:', err);
-    return res.status(401).json({ error: 'Non autorisé: Token App Check invalide' });
+  } catch (err: any) {
+    console.warn(`[App Check Monitor] Token App Check invalide pour la requête ${req.method} ${req.path}:`, err?.message || err);
+    if (enforce) {
+      return res.status(401).json({ error: 'Non autorisé: Token App Check invalide' });
+    }
+    next();
   }
 };
 
@@ -105,7 +112,7 @@ async function startServer() {
     res.json({ status: "ok" });
   });
 
-  app.post("/api/admin/bootstrap", requireAuth, async (req, res) => {
+  app.post("/api/admin/bootstrap", requireAppCheck, requireAuth, async (req, res) => {
     try {
       const { token } = req.body;
       const user = (req as any).user;
@@ -169,7 +176,7 @@ async function startServer() {
     }
   });
 
-  app.post("/api/admin/members/remove", requireAuth, async (req, res) => {
+  app.post("/api/admin/members/remove", requireAppCheck, requireAuth, async (req, res) => {
     try {
       const caller = (req as any).user;
       const { uid, tenantId } = req.body;
@@ -511,7 +518,7 @@ async function startServer() {
     }
   });
 
-  app.post("/api/gemini/generate-scenario", requireAuth, geminiLimiter, async (req, res) => {
+  app.post("/api/gemini/generate-scenario", requireAppCheck, requireAuth, geminiLimiter, async (req, res) => {
     try {
       const tenantId = (req as any).user?.tenantId;
       const { prompt, count, subject, persona, context } = req.body;
@@ -594,7 +601,7 @@ async function startServer() {
     }
   });
 
-  app.post("/api/gemini/generate-image", requireAuth, geminiLimiter, async (req, res) => {
+  app.post("/api/gemini/generate-image", requireAppCheck, requireAuth, geminiLimiter, async (req, res) => {
     try {
       const tenantId = (req as any).user?.tenantId;
       const ai = await getGoogleAIInstance(tenantId);
@@ -642,7 +649,7 @@ async function startServer() {
     }
   });
 
-  app.post("/api/gemini/generate-marketing", requireAuth, geminiLimiter, async (req, res) => {
+  app.post("/api/gemini/generate-marketing", requireAppCheck, requireAuth, geminiLimiter, async (req, res) => {
     try {
       const tenantId = (req as any).user?.tenantId;
       const { productName, productType, description, targetAudience, tone } = req.body;
@@ -704,7 +711,7 @@ Génère une réponse au format JSON contenant:
     }
   });
 
-  app.post("/api/gemini/generate-json", requireAuth, geminiLimiter, async (req, res) => {
+  app.post("/api/gemini/generate-json", requireAppCheck, requireAuth, geminiLimiter, async (req, res) => {
     try {
       const tenantId = (req as any).user?.tenantId;
       const { prompt, schema, persona, context } = req.body;
@@ -726,7 +733,7 @@ Génère une réponse au format JSON contenant:
     }
   });
 
-  app.post("/api/gemini/chat", requireAuth, geminiLimiter, async (req, res) => {
+  app.post("/api/gemini/chat", requireAppCheck, requireAuth, geminiLimiter, async (req, res) => {
     try {
       const tenantId = (req as any).user?.tenantId;
       const { history, message, persona, context } = req.body;
@@ -746,7 +753,7 @@ Génère une réponse au format JSON contenant:
     }
   });
 
-  app.post("/api/gemini/rag-ingest", requireAuth, geminiLimiter, async (req, res) => {
+  app.post("/api/gemini/rag-ingest", requireAppCheck, requireAuth, geminiLimiter, async (req, res) => {
     try {
       const tenantId = (req as any).user?.tenantId;
       const ai = await getGoogleAIInstance(tenantId);
@@ -768,7 +775,7 @@ Génère une réponse au format JSON contenant:
     }
   });
 
-  app.post("/api/gemini/generate-lesson-rag", requireAuth, geminiLimiter, async (req, res) => {
+  app.post("/api/gemini/generate-lesson-rag", requireAppCheck, requireAuth, geminiLimiter, async (req, res) => {
     try {
       const tenantId = (req as any).user?.tenantId;
       const ai = await getGoogleAIInstance(tenantId);
@@ -804,7 +811,7 @@ Génère une réponse au format JSON contenant:
     }
   });
 
-  app.post("/api/gemini/generate-json-rag", requireAuth, geminiLimiter, async (req, res) => {
+  app.post("/api/gemini/generate-json-rag", requireAppCheck, requireAuth, geminiLimiter, async (req, res) => {
     try {
       const tenantId = (req as any).user?.tenantId;
       const ai = await getGoogleAIInstance(tenantId);
@@ -840,7 +847,7 @@ Génère une réponse au format JSON contenant:
     }
   });
 
-  app.post("/api/gemini/generate-scaffold-rag", requireAuth, geminiLimiter, async (req, res) => {
+  app.post("/api/gemini/generate-scaffold-rag", requireAppCheck, requireAuth, geminiLimiter, async (req, res) => {
     try {
       const tenantId = (req as any).user?.tenantId;
       const ai = await getGoogleAIInstance(tenantId);
@@ -934,7 +941,7 @@ Génère une réponse au format JSON contenant:
     }
   });
 
-  app.post("/api/gemini/generate-items-rag", requireAuth, geminiLimiter, async (req, res) => {
+  app.post("/api/gemini/generate-items-rag", requireAppCheck, requireAuth, geminiLimiter, async (req, res) => {
     try {
       const tenantId = (req as any).user?.tenantId;
       const ai = await getGoogleAIInstance(tenantId);
@@ -981,7 +988,7 @@ Génère une réponse au format JSON contenant:
     }
   });
 
-  app.post("/api/gemini/suggest-mechanic", requireAuth, geminiLimiter, async (req, res) => {
+  app.post("/api/gemini/suggest-mechanic", requireAppCheck, requireAuth, geminiLimiter, async (req, res) => {
     try {
       const tenantId = (req as any).user?.tenantId;
       const { subject, description } = req.body;

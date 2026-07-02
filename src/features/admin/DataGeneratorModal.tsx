@@ -1,5 +1,6 @@
 import { auth } from '../../services/firebase';
 import React, { useState } from 'react';
+import { secureFetch } from '../../utils/secureFetch';
 import { X, Sparkles, Loader, Brain, AlertTriangle, Info, Check, HelpCircle, Target } from 'lucide-react';
 import { useAdminTheme } from '../../store/useAdminTheme';
 
@@ -35,7 +36,7 @@ export default function DataGeneratorModal({ tabId, sampleItem, onClose, onSave 
     try {
       const schemaString = sampleItem ? JSON.stringify(sampleItem, null, 2) : "{}";
       
-      const res = await fetch('/api/gemini/generate-items-rag', {
+      const res = await secureFetch('/api/gemini/generate-items-rag', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}` },
         body: JSON.stringify({

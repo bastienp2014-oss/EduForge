@@ -5,6 +5,7 @@ import { TenantMember, RevenueShareAgreement, TenantRole } from '../../types';
 import { UserPlus, Shield, Mail, Edit2, Trash2, Percent, DollarSign, X } from 'lucide-react';
 import { collection, onSnapshot, query } from 'firebase/firestore';
 import { db, auth } from '../../services/firebase';
+import { secureFetch } from '../../utils/secureFetch';
 
 export default function AdminMembers() {
   const { theme } = useAdminTheme();
@@ -53,7 +54,7 @@ export default function AdminMembers() {
     
     setIsInviting(true);
     try {
-      const response = await fetch('/api/admin/members/invite', {
+      const response = await secureFetch('/api/admin/members/invite', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

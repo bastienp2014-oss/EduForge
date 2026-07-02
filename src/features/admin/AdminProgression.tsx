@@ -1,5 +1,6 @@
 import { auth } from '../../services/firebase';
 import React, { useState, useEffect } from 'react';
+import { secureFetch } from '../../utils/secureFetch';
 import { useProgression, ProgressionConfig, NiveauConfig, PointsConfig } from '../../store/useProgression';
 import { 
   Award, Trophy, Star, Settings, Save, Plus, Trash2, 
@@ -58,7 +59,7 @@ export default function AdminProgression() {
       const globalStyle = theme.visualStyle?.description ? `STYLE VISUEL GLOBAL À RESPECTER: ${theme.visualStyle.description}` : '';
       const aiPrompt = `Génère une image de badge 2D. Description: ${prompt}. Contexte: ${contextualPrompt} Utilise ces couleurs (Palette de l'app): ${theme.colors.primary}, ${theme.colors.accent}, ${theme.colors.bg}. ${globalStyle}`;
       
-      const response = await fetch('/api/gemini/generate-image', {
+      const response = await secureFetch('/api/gemini/generate-image', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}` },
         body: JSON.stringify({ 

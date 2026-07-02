@@ -1,9 +1,9 @@
 import { getToken } from 'firebase/app-check';
-import { appCheck } from '../services/firebase';
+import { appCheck, auth } from '../services/firebase';
 
 /**
  * Wrapper autour de fetch() pour inclure automatiquement :
- * 1. Le token d'authentification (si l'utilisateur est connecté)
+ * 1. Le token d'authentification (si l'utilisateur est connecté et que le header n'est pas déjà présent)
  * 2. Le token Firebase App Check pour protéger nos endpoints Express.
  */
 export async function secureFetch(url: string, options: RequestInit = {}): Promise<Response> {
@@ -22,8 +22,15 @@ export async function secureFetch(url: string, options: RequestInit = {}): Promi
     // On continue quand même, le serveur rejettera si l'App Check est requis.
   }
 
-  // 2. Auth Token (s'il y en a un - géré souvent par un state ou getAuth().currentUser.getIdToken())
-  // Note: C'est optionnel ici, à adapter selon comment l'appli gère déjà l'auth.
+  // 2. Auth Token (s'il y en a un - géré de manière transparente si l'utilisateur est connecté)
+  try {
+    if (!headers.has('Authorization') && auth?.currentUser) {
+      const idToken = await auth.currentUser.getIdToken();
+      headers.set('Authorization', `Bearer ${idToken}`);
+    }
+  } catch (error) {
+    console.warn("Erreur lors de la récupération du token Auth dans secureFetch:", error);
+  }
 
   const secureOptions: RequestInit = {
     ...options,

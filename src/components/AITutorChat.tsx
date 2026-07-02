@@ -1,4 +1,5 @@
 import { auth } from '../services/firebase';
+import { secureFetch } from '../utils/secureFetch';
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Send, X, Bot, User, Sparkles } from 'lucide-react';
 import { useTheme } from '../store/useTheme';
@@ -68,7 +69,7 @@ export default function AITutorChat({ onClose, gameContext }: AITutorChatProps) 
       // Combine global context with game specific context and recent failures
       const fullContext = [context, gameContext, recentFailedItemsContext].filter(Boolean).join('\n\nContexte actuel: ');
 
-      const res = await fetch('/api/gemini/chat', {
+      const res = await secureFetch('/api/gemini/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
