@@ -72,7 +72,7 @@ service cloud.firestore {
     // TENANTS (SaaS B2B configs)
     // -----------------------------------------------------------------------------
     match /tenants/{tenantId} {
-      allow read: if isAdmin() || isTenantMember(tenantId);
+      allow read: if true;
       allow write: if isAdmin() || isTenantAdmin(tenantId);
       
       // Members subcollection (managed via Admin API in server.ts)
@@ -83,7 +83,7 @@ service cloud.firestore {
 
       // Configuration subcollection
       match /configuration/{document=**} {
-        allow read: if isAdmin() || isTenantMember(tenantId);
+        allow read: if true;
         allow write: if isAdmin() || isTenantAdmin(tenantId);
       }
 
