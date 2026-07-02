@@ -239,7 +239,7 @@ export default function HacheScreen({ onBack }: { onBack: () => void }) {
   const [axeChallenges, setAxeChallenges] = useState<Challenge[]>([]);
   const targetRef = React.useRef<HTMLDivElement>(null);
 
-  const { addPiasses, getNiveau, getPointsConfig } = useProgression();
+  const { claimReward, getNiveau, getPointsConfig } = useProgression();
   const { theme } = useTheme();
 
   const availableWords = useMemo(() => {
@@ -279,7 +279,7 @@ export default function HacheScreen({ onBack }: { onBack: () => void }) {
         const newStreak = streak + 1;
         setStreak(newStreak);
         if (newStreak > highStreak) setHighStreak(newStreak);
-        addPiasses(getPointsConfig().hacheCorrect);
+        claimReward('hache_correct');
 
         setChips(Array.from({ length: 18 }).map((_, i) => ({
           id: Math.random() + i,

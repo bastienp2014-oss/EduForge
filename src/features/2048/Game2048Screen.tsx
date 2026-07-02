@@ -230,7 +230,7 @@ export default function Game2048Screen({ onBack }: { onBack: () => void }) {
   const [successTitle, setSuccessTitle] = useState("");
   const [isLocked, setIsLocked] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
-  const { addPiasses, getPointsConfig } = useProgression();
+  const { claimReward, getPointsConfig } = useProgression();
   const { theme } = useTheme();
   const tileColorsConfig = React.useMemo(() => getTileColors(theme.colors.primary), [theme.colors.primary]);
 
@@ -311,7 +311,7 @@ export default function Game2048Screen({ onBack }: { onBack: () => void }) {
               return popped;
            });
            
-           addPiasses(getPointsConfig().game2048Correct * result.completedWords.length);
+           claimReward('game2048_correct', { quantity: result.completedWords.length });
            
            setProgress(p => {
               const np = p + result.completedWords.length;
@@ -334,7 +334,7 @@ export default function Game2048Screen({ onBack }: { onBack: () => void }) {
          }
       }
     }
-  }, [board, levelIdx, gameOver, showSuccess, isLocked, wordsStr, components, currentLevel.targetCount, addPiasses, getPointsConfig]);
+  }, [board, levelIdx, gameOver, showSuccess, isLocked, wordsStr, components, currentLevel.targetCount, claimReward, getPointsConfig]);
 
   const [touchStart, setTouchStart] = useState<{x: number, y: number} | null>(null);
 

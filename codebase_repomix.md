@@ -32,7 +32,7 @@ The content is organized as follows:
 <notes>
 - Some files may have been excluded based on .gitignore rules and Repomix's configuration
 - Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
-- Files matching these patterns are excluded: public/**, src/data/**, marketing-site/**, design_handoff_theme_system/**, assets/**, scripts/**, *.md, *.txt, *.json
+- Files matching these patterns are excluded: src/data/**/*.json, public/**/*, assets/**/*, package-lock.json, marketing-site/package-lock.json, design_handoff_theme_system/design_reference/**/*.html
 - Files matching patterns in .gitignore are excluded
 - Files matching default ignore patterns are excluded
 - Files are sorted by Git change count (files with more changes are at the bottom)
@@ -41,9 +41,98 @@ The content is organized as follows:
 </file_summary>
 
 <directory_structure>
-.astro/
-  content.d.ts
-  types.d.ts
+design_handoff_theme_system/
+  components/
+    GameButton.tsx
+    GameCard.tsx
+    GameHUD.tsx
+    GameProgress.tsx
+    GameResult.tsx
+  mechanics/
+    01_FlashcardSRS.jsx
+    02_MultipleChoice.jsx
+    03_BinarySwipe.jsx
+    04_MemoryMatch.jsx
+    05_Hangman.jsx
+    06_Anagram.jsx
+    07_ClozeTest.jsx
+    08_Sequencing.jsx
+    09_SortGroup.jsx
+    10_LineMatching.jsx
+    11_Bingo.jsx
+    12_SituationalChoice.jsx
+    13_CategoryBlaster.jsx
+    14_TileMerge.jsx
+    15_WordSearch.jsx
+    16_ChainReaction.jsx
+    17_CombinationBuilder.jsx
+    18_DialogueTree.jsx
+    19_RebusPuzzle.jsx
+    20_AudioTranscription.jsx
+    21_ErrorCorrection.jsx
+    22_DeceptivePairs.jsx
+    23_DiagramLabeling.jsx
+    24_VoiceRecording.jsx
+    25_AudioAB.jsx
+    index.js
+    README.md
+  ApparenceScreen.jsx
+  AppShell.jsx
+  ColorPicker.jsx
+  GameButton.jsx
+  GameCard.jsx
+  GameHUD.jsx
+  GameProgress.jsx
+  GameResult.jsx
+  PROMPT_GOOGLE_AI_STUDIO.md
+  README.md
+  tileColors.js
+  useTheme.extended.ts
+  useTheme.js
+marketing-site/
+  src/
+    components/
+      astro/
+        DeviceFrame.astro
+        Features.astro
+        Footer.astro
+        Hero.astro
+        Pricing.astro
+      Schema.astro
+    layouts/
+      TenantLayout.astro
+    lib/
+      tenantApi.ts
+    pages/
+      [tenant]/
+        [location]/
+          [niche].astro
+        bundle/
+          [bundleId].astro
+        course/
+          [courseId].astro
+        index.astro
+        sitemap.xml.ts
+      index.astro
+      sitemap.xml.ts
+    utils/
+      seo.ts
+    middleware.ts
+  astro.config.mjs
+  package.json
+  SEO_ARCHITECTURE_PLAN.md
+  tailwind.config.mjs
+  tsconfig.json
+scripts/
+  add_auth_headers.cjs
+  directus-setup.cjs
+  fix_syntax.cjs
+  fix_useProgression.cjs
+  listTenants.js
+  migrate_mechanics.cjs
+  out.txt
+  remove_sample.cjs
+  testDb.js
 src/
   components/
     AITutorChat.tsx
@@ -64,20 +153,28 @@ src/
     ModalInstructions.tsx
     MoneyVisualizer.tsx
     OnboardingScreen.tsx
+    PrivateNotesWidget.tsx
+  data/
+    badges.ts
   features/
     2048/
       Game2048Screen.tsx
     admin/
+      AccessibleDataViewer.tsx
+      AdminBundleEditor.tsx
       AdminConfiguration.tsx
+      AdminCourseEditor.tsx
       AdminCreatorHub.tsx
       AdminDataTab.tsx
       AdminForfaits.tsx
       AdminIA.tsx
+      AdminMarketingGenerator.tsx
       AdminMechanics.tsx
       AdminMembers.tsx
       AdminParcours.tsx
       AdminPlatformConfig.tsx
       AdminProgression.tsx
+      AdminRichTextEditor.tsx
       AdminRoyalties.tsx
       AdminScenarios.tsx
       AdminScreen.tsx
@@ -112,6 +209,8 @@ src/
       HacheScreen.tsx
     leaderboard/
       LeaderboardScreen.tsx
+    memoire/
+      DashboardMemorielScreen.tsx
     paywall/
       PaywallModal.tsx
       PaywallScreen.tsx
@@ -147,6 +246,7 @@ src/
     useCurrency.ts
     useQuebecVoice.ts
     useScenarioTrigger.ts
+    useSuggestMechanic.ts
   mechanics/
     01_FlashcardSRS.tsx
     02_MultipleChoice.tsx
@@ -174,10 +274,13 @@ src/
     24_VoiceRecording.tsx
     25_AudioAB.tsx
     index.ts
+  server/
+    rag.ts
   services/
     analytics.ts
     contentProvider.ts
     firebase.ts
+    mechanicDataMapper.ts
     notifications.ts
     plansConfig.ts
     srs.ts
@@ -194,7 +297,9 @@ src/
     useAdminTheme.ts
     useAppConfig.ts
     useAuth.ts
+    useCreatorHub.ts
     useGames.ts
+    useNotes.ts
     useProgression.ts
     useSettings.ts
     useSrs.ts
@@ -203,7 +308,9 @@ src/
     useTheme.ts
   types/
     index.ts
+    mechanics.ts
   utils/
+    array.ts
     revenue.test.ts
     revenue.ts
     secureFetch.ts
@@ -217,12 +324,26 @@ src/
   main.tsx
 .env.example
 .gitignore
+APP_OVERVIEW.md
+ASTRO_ARCHITECTURE_PLAN.md
+CHANGELOG.md
 DRAFT_firestore.rules
 eslint.config.js
+firebase-applet-config.json
+firebase-blueprint.json
 firestore.rules
 fix.js
 index.html
+metadata.json
+package.json
+plan.md
+security_spec.md
+seed_course.ts
+SEO_DASHBOARD_PLAN.md
 server.ts
+spec.md
+test_dirs.js
+tsconfig.json
 tsconfig.tsbuildinfo
 vite.config.ts
 </directory_structure>
@@ -230,175 +351,8145 @@ vite.config.ts
 <files>
 This section contains the contents of the repository's files.
 
-<file path=".astro/content.d.ts">
-declare module 'astro:content' {
-	export interface RenderResult {
-		Content: import('astro/runtime/server/index.js').AstroComponentFactory;
-		headings: import('astro').MarkdownHeading[];
-		remarkPluginFrontmatter: Record<string, any>;
-	}
-	interface Render {
-		'.md': Promise<RenderResult>;
-	}
+<file path="design_handoff_theme_system/components/GameButton.tsx">
+/**
+ * GameButton — Bouton standard pour tous les jeux
+ *
+ * Variantes :
+ *   primary   — Bouton principal (fond primary, texte blanc)
+ *   secondary — Bouton secondaire (contour, fond surface)
+ *   ghost     — Transparent, texte primary
+ *   danger    — Fond danger (confirmation suppression, abandon)
+ *   success   — Fond success (confirmation bonne réponse)
+ *
+ * Usage :
+ *   <GameButton variant="primary" onPress={valider} size="lg">Valider</GameButton>
+ *   <GameButton variant="secondary" onPress={aide}>Aide</GameButton>
+ *   <GameButton variant="primary" onPress={fn} fullWidth>Rejouer</GameButton>
+ */
 
-	export interface RenderedContent {
-		html: string;
-		metadata?: {
-			imagePaths: Array<string>;
-			[key: string]: unknown;
-		};
-	}
+import React from 'react';
+import { useTheme, useThemeTokens } from '../../store/useTheme';
 
-	type Flatten<T> = T extends { [K: string]: infer U } ? U : never;
+type Variant = 'primary' | 'secondary' | 'ghost' | 'danger' | 'success';
+type Size    = 'sm' | 'md' | 'lg';
 
-	export type CollectionKey = keyof DataEntryMap;
-	export type CollectionEntry<C extends CollectionKey> = Flatten<DataEntryMap[C]>;
+interface GameButtonProps {
+  variant?: Variant;
+  size?: Size;
+  fullWidth?: boolean;
+  disabled?: boolean;
+  onPress?: () => void;
+  children: React.ReactNode;
+  style?: React.CSSProperties;
+}
 
-	type AllValuesOf<T> = T extends any ? T[keyof T] : never;
+export default function GameButton({
+  variant = 'primary', size = 'md', fullWidth = false,
+  disabled = false, onPress, children, style,
+}: GameButtonProps) {
+  const { theme } = useTheme();
+  const { radBtn, border } = useThemeTokens();
+  const c = theme.colors;
 
-	export type ReferenceDataEntry<
-		C extends CollectionKey,
-		E extends keyof DataEntryMap[C] = string,
-	> = {
-		collection: C;
-		id: E;
-	};
+  const BG: Record<Variant, string> = {
+    primary:   c.primary,
+    secondary: c.surface,
+    ghost:     'transparent',
+    danger:    c.danger,
+    success:   c.success,
+  };
+  const FG: Record<Variant, string> = {
+    primary:   '#fff',
+    secondary: c.ink,
+    ghost:     c.primary,
+    danger:    '#fff',
+    success:   '#fff',
+  };
+  const BORDER: Record<Variant, string> = {
+    primary:   'none',
+    secondary: `1px solid ${border}`,
+    ghost:     'none',
+    danger:    'none',
+    success:   'none',
+  };
+  const PAD: Record<Size, string> = {
+    sm: `7px 14px`, md: `11px 18px`, lg: `14px 22px`,
+  };
+  const FS: Record<Size, number> = { sm: 12, md: 13, lg: 15 };
 
-	export type ReferenceLiveEntry<C extends keyof LiveContentConfig['collections']> = {
-		collection: C;
-		id: string;
-	};
-
-	export function getCollection<C extends keyof DataEntryMap, E extends CollectionEntry<C>>(
-		collection: C,
-		filter?: (entry: CollectionEntry<C>) => entry is E,
-	): Promise<E[]>;
-	export function getCollection<C extends keyof DataEntryMap>(
-		collection: C,
-		filter?: (entry: CollectionEntry<C>) => unknown,
-	): Promise<CollectionEntry<C>[]>;
-
-	export function getLiveCollection<C extends keyof LiveContentConfig['collections']>(
-		collection: C,
-		filter?: LiveLoaderCollectionFilterType<C>,
-	): Promise<
-		import('astro').LiveDataCollectionResult<LiveLoaderDataType<C>, LiveLoaderErrorType<C>>
-	>;
-
-	export function getEntry<
-		C extends keyof DataEntryMap,
-		E extends keyof DataEntryMap[C] | (string & {}),
-	>(
-		entry: ReferenceDataEntry<C, E>,
-	): E extends keyof DataEntryMap[C]
-		? Promise<DataEntryMap[C][E]>
-		: Promise<CollectionEntry<C> | undefined>;
-	export function getEntry<
-		C extends keyof DataEntryMap,
-		E extends keyof DataEntryMap[C] | (string & {}),
-	>(
-		collection: C,
-		id: E,
-	): E extends keyof DataEntryMap[C]
-		? string extends keyof DataEntryMap[C]
-			? Promise<DataEntryMap[C][E]> | undefined
-			: Promise<DataEntryMap[C][E]>
-		: Promise<CollectionEntry<C> | undefined>;
-	export function getLiveEntry<C extends keyof LiveContentConfig['collections']>(
-		collection: C,
-		filter: string | LiveLoaderEntryFilterType<C>,
-	): Promise<import('astro').LiveDataEntryResult<LiveLoaderDataType<C>, LiveLoaderErrorType<C>>>;
-
-	/** Resolve an array of entry references from the same collection */
-	export function getEntries<C extends keyof DataEntryMap>(
-		entries: ReferenceDataEntry<C, keyof DataEntryMap[C]>[],
-	): Promise<CollectionEntry<C>[]>;
-
-	export function render<C extends keyof DataEntryMap>(
-		entry: DataEntryMap[C][string],
-	): Promise<RenderResult>;
-
-	export function reference<
-		C extends
-			| keyof DataEntryMap
-			// Allow generic `string` to avoid excessive type errors in the config
-			// if `dev` is not running to update as you edit.
-			// Invalid collection names will be caught at build time.
-			| (string & {}),
-	>(
-		collection: C,
-	): import('astro/zod').ZodPipe<
-		import('astro/zod').ZodString,
-		import('astro/zod').ZodTransform<
-			C extends keyof DataEntryMap
-				? {
-						collection: C;
-						id: string;
-					}
-				: never,
-			string
-		>
-	>;
-
-	type ReturnTypeOrOriginal<T> = T extends (...args: any[]) => infer R ? R : T;
-	type InferEntrySchema<C extends keyof DataEntryMap> = import('astro/zod').infer<
-		ReturnTypeOrOriginal<Required<ContentConfig['collections'][C]>['schema']>
-	>;
-	type ExtractLoaderConfig<T> = T extends { loader: infer L } ? L : never;
-	type InferLoaderSchema<
-		C extends keyof DataEntryMap,
-		L = ExtractLoaderConfig<ContentConfig['collections'][C]>,
-	> = L extends { schema: import('astro/zod').ZodSchema }
-		? import('astro/zod').infer<L['schema']>
-		: any;
-
-	type DataEntryMap = {
-		
-	};
-
-	type ExtractLoaderTypes<T> = T extends import('astro/loaders').LiveLoader<
-		infer TData,
-		infer TEntryFilter,
-		infer TCollectionFilter,
-		infer TError
-	>
-		? { data: TData; entryFilter: TEntryFilter; collectionFilter: TCollectionFilter; error: TError }
-		: { data: never; entryFilter: never; collectionFilter: never; error: never };
-	type ExtractEntryFilterType<T> = ExtractLoaderTypes<T>['entryFilter'];
-	type ExtractCollectionFilterType<T> = ExtractLoaderTypes<T>['collectionFilter'];
-	type ExtractErrorType<T> = ExtractLoaderTypes<T>['error'];
-	type ExtractDataType<T> = ExtractLoaderTypes<T>['data'];
-
-	type LiveLoaderDataType<C extends keyof LiveContentConfig['collections']> =
-		LiveContentConfig['collections'][C]['schema'] extends undefined
-			? ExtractDataType<LiveContentConfig['collections'][C]['loader']>
-			: import('astro/zod').infer<
-					Exclude<LiveContentConfig['collections'][C]['schema'], undefined>
-				>;
-	type LiveLoaderEntryFilterType<C extends keyof LiveContentConfig['collections']> =
-		ExtractEntryFilterType<LiveContentConfig['collections'][C]['loader']>;
-	type LiveLoaderCollectionFilterType<C extends keyof LiveContentConfig['collections']> =
-		ExtractCollectionFilterType<LiveContentConfig['collections'][C]['loader']>;
-	type LiveLoaderErrorType<C extends keyof LiveContentConfig['collections']> = ExtractErrorType<
-		LiveContentConfig['collections'][C]['loader']
-	>;
-
-	export type ContentConfig = never;
-	export type LiveContentConfig = never;
+  return (
+    <button
+      onClick={onPress}
+      disabled={disabled}
+      style={{
+        width: fullWidth ? '100%' : undefined,
+        background: BG[variant],
+        color: FG[variant],
+        border: BORDER[variant],
+        borderRadius: radBtn,
+        padding: PAD[size],
+        fontFamily: theme.fonts.display,
+        fontWeight: 700,
+        fontSize: `${FS[size] * theme.scale}px`,
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        opacity: disabled ? 0.5 : 1,
+        transition: 'opacity 0.15s, transform 0.1s',
+        ...style,
+      }}
+    >
+      {children}
+    </button>
+  );
 }
 </file>
 
-<file path=".astro/types.d.ts">
-/// <reference types="astro/client" />
-/// <reference path="content.d.ts" />
+<file path="design_handoff_theme_system/components/GameCard.tsx">
+/**
+ * GameCard — Carte / panneau standard
+ *
+ * Applique automatiquement : radius, shadow, border, surface du thème.
+ * Utiliser pour toute surface (carte de mot, panneau d'options, indice…).
+ *
+ * Usage :
+ *   <GameCard>
+ *     <p>Contenu</p>
+ *   </GameCard>
+ *
+ *   <GameCard highlighted accent="primary">
+ *     <p>Carte sélectionnée</p>
+ *   </GameCard>
+ */
+
+import React from 'react';
+import { useTheme, useThemeTokens } from '../../store/useTheme';
+
+type AccentColor = 'primary' | 'accent' | 'success' | 'danger';
+
+interface GameCardProps {
+  children: React.ReactNode;
+  /** Affiche un contour coloré */
+  highlighted?: boolean;
+  accent?: AccentColor;
+  /** Padding interne (défaut: 16px) */
+  padding?: number | string;
+  style?: React.CSSProperties;
+  onClick?: () => void;
+}
+
+export default function GameCard({
+  children, highlighted = false, accent = 'primary',
+  padding = 16, style, onClick,
+}: GameCardProps) {
+  const { theme } = useTheme();
+  const { radCard, shadow, border } = useThemeTokens();
+  const c = theme.colors;
+
+  const ACCENT_COLORS: Record<AccentColor, string> = {
+    primary: c.primary, accent: c.accent, success: c.success, danger: c.danger,
+  };
+
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        background: c.surface,
+        borderRadius: radCard,
+        boxShadow: shadow,
+        border: highlighted
+          ? `2px solid ${ACCENT_COLORS[accent]}`
+          : `1px solid ${border}`,
+        padding,
+        cursor: onClick ? 'pointer' : undefined,
+        transition: 'border-color 0.15s, box-shadow 0.15s',
+        ...style,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/components/GameHUD.tsx">
+/**
+ * GameHUD — Header universel de tous les jeux
+ *
+ * RÈGLE : Ce composant NE DOIT PAS être redessiné jeu par jeu.
+ * C'est le repère spatial de l'utilisateur dans l'app.
+ *
+ * Usage :
+ *   <GameHUD title="Hache" onBack={onBack} />
+ *   <GameHUD title="Pendu" onBack={onBack} extra={<span>🔥 3</span>} />
+ */
+
+import React from 'react';
+import { ArrowLeft } from 'lucide-react';
+import { useTheme } from '../../store/useTheme';
+import { useProgression } from '../../store/useProgression';
+
+interface GameHUDProps {
+  title: string;
+  onBack: () => void;
+  /** Élément optionnel à droite du titre (ex: streak) */
+  extra?: React.ReactNode;
+}
+
+export default function GameHUD({ title, onBack, extra }: GameHUDProps) {
+  const { theme } = useTheme();
+  const { piasses } = useProgression();
+  const c = theme.colors;
+
+  return (
+    <div
+      style={{
+        background: c.header,
+        padding: '12px 16px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: 8,
+        flexShrink: 0,
+      }}
+    >
+      {/* Bouton retour */}
+      <button
+        onClick={onBack}
+        style={{
+          width: 38, height: 38, borderRadius: '50%',
+          background: 'rgba(255,255,255,0.16)',
+          border: 'none', cursor: 'pointer',
+          display: 'grid', placeItems: 'center',
+          flexShrink: 0,
+        }}
+        aria-label="Retour"
+      >
+        <ArrowLeft size={18} color="#fff" />
+      </button>
+
+      {/* Titre + extra */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, justifyContent: 'center' }}>
+        <span style={{
+          fontFamily: theme.fonts.display,
+          fontWeight: 700,
+          fontSize: `${15 * theme.scale}px`,
+          color: '#fff',
+          letterSpacing: '0.02em',
+        }}>
+          {title}
+        </span>
+        {extra && <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: 13 }}>{extra}</span>}
+      </div>
+
+      {/* Jeton piasses */}
+      <div style={{
+        background: 'rgba(255,255,255,0.16)',
+        borderRadius: 999,
+        padding: '5px 11px',
+        display: 'flex', alignItems: 'center', gap: 5,
+        flexShrink: 0,
+      }}>
+        <span style={{ fontSize: 14, lineHeight: 1 }}>⚜️</span>
+        <span style={{
+          fontFamily: theme.fonts.display,
+          fontWeight: 700,
+          fontSize: 13,
+          color: c.gold,
+        }}>
+          {Math.floor(piasses)}
+        </span>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/components/GameProgress.tsx">
+/**
+ * GameProgress — Barre de progression / vies standard
+ *
+ * Affiche une combinaison configurable de :
+ *   - Barre de progression (current / total)
+ *   - Cœurs (vies)
+ *   - Score textuel
+ *
+ * Usage :
+ *   <GameProgress lives={3} maxLives={3} score={320} current={2} total={5} />
+ *   <GameProgress lives={2} maxLives={3} />           // sans barre
+ *   <GameProgress current={3} total={10} showBar />   // sans vies
+ */
+
+import React from 'react';
+import { useTheme, useThemeTokens } from '../../store/useTheme';
+
+interface GameProgressProps {
+  /** Vies restantes */
+  lives?: number;
+  maxLives?: number;
+  /** Score actuel (affiché à droite) */
+  score?: number;
+  /** Progression (pour la barre) */
+  current?: number;
+  total?: number;
+  showBar?: boolean;
+}
+
+export default function GameProgress({
+  lives, maxLives = 3, score, current, total, showBar = true,
+}: GameProgressProps) {
+  const { theme } = useTheme();
+  const { border, shadow } = useThemeTokens();
+  const c = theme.colors;
+
+  const pct = (showBar && current != null && total) ? Math.min(current / total, 1) : null;
+
+  return (
+    <div style={{
+      background: c.surface,
+      borderBottom: `1px solid ${border}`,
+      padding: '8px 16px',
+    }}>
+      {pct !== null && (
+        <div style={{
+          background: border,
+          borderRadius: 99, height: 5, overflow: 'hidden', marginBottom: 5,
+        }}>
+          <div style={{
+            width: `${pct * 100}%`, height: '100%',
+            background: c.primary, borderRadius: 99,
+            transition: 'width 0.4s ease',
+          }} />
+        </div>
+      )}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        {/* Vies */}
+        {lives != null && (
+          <div style={{ display: 'flex', gap: 3 }}>
+            {Array.from({ length: maxLives }).map((_, i) => (
+              <span key={i} style={{ fontSize: 13, opacity: i < lives ? 1 : 0.25 }}>❤️</span>
+            ))}
+          </div>
+        )}
+        {/* Progression textuelle */}
+        {current != null && total != null && (
+          <span style={{
+            fontFamily: theme.fonts.body,
+            fontSize: `${11 * theme.scale}px`,
+            color: c.muted, fontWeight: 600,
+          }}>
+            {current} / {total}
+          </span>
+        )}
+        {/* Score */}
+        {score != null && (
+          <span style={{
+            fontFamily: theme.fonts.display,
+            fontSize: `${12 * theme.scale}px`,
+            color: c.primary, fontWeight: 700,
+          }}>
+            {score} XP
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/components/GameResult.tsx">
+/**
+ * GameResult — Modale de fin de jeu universelle
+ *
+ * RÈGLE : Toujours utiliser ce composant pour l'écran de fin.
+ * Ne jamais créer un écran de fin custom par jeu.
+ *
+ * Usage :
+ *   <GameResult
+ *     state="win"
+ *     title="Bravo !"
+ *     subtitle="Tu as trouvé tous les mots"
+ *     points={150}
+ *     streak={5}
+ *     onReplay={() => restart()}
+ *     onBack={onBack}
+ *     nextLabel="Prochain défi"
+ *     onNext={() => goNext()}
+ *   />
+ */
+
+import React from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useTheme, useThemeTokens } from '../../store/useTheme';
+import GameButton from './GameButton';
+
+interface GameResultProps {
+  state: 'win' | 'lose';
+  title?: string;
+  subtitle?: string;
+  /** Piasses / XP gagnés */
+  points?: number;
+  /** Série actuelle */
+  streak?: number;
+  onReplay: () => void;
+  onBack: () => void;
+  nextLabel?: string;
+  onNext?: () => void;
+}
+
+export default function GameResult({
+  state, title, subtitle, points, streak,
+  onReplay, onBack, nextLabel, onNext,
+}: GameResultProps) {
+  const { theme } = useTheme();
+  const { radCard, shadow, border } = useThemeTokens();
+  const c = theme.colors;
+
+  const isWin = state === 'win';
+  const defaultTitle    = isWin ? 'Bravo !' : 'Pas de chance…';
+  const defaultSubtitle = isWin ? 'Continue comme ça !' : 'Réessaie, tu vas y arriver !';
+  const emoji           = isWin ? '🎉' : '😅';
+  const accentColor     = isWin ? c.success : c.danger;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        style={{
+          position: 'fixed', inset: 0, zIndex: 50,
+          background: 'rgba(0,0,0,0.55)',
+          display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
+          padding: '0 16px 24px',
+        }}
+      >
+        <motion.div
+          initial={{ y: 80, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type: 'spring', damping: 22, stiffness: 260 }}
+          style={{
+            width: '100%', maxWidth: 440,
+            background: c.surface,
+            borderRadius: radCard,
+            boxShadow: shadow,
+            border: `1px solid ${border}`,
+            padding: 24, overflow: 'hidden',
+          }}
+        >
+          {/* Bande colorée */}
+          <div style={{ height: 5, background: accentColor, margin: '-24px -24px 20px', borderRadius: `${radCard} ${radCard} 0 0` }} />
+
+          {/* Emoji + titre */}
+          <div style={{ textAlign: 'center', marginBottom: 16 }}>
+            <div style={{ fontSize: 48, lineHeight: 1, marginBottom: 8 }}>{emoji}</div>
+            <div style={{ fontFamily: theme.fonts.display, fontWeight: 800, fontSize: `${22 * theme.scale}px`, color: c.ink }}>
+              {title || defaultTitle}
+            </div>
+            <div style={{ fontFamily: theme.fonts.body, fontSize: `${13 * theme.scale}px`, color: c.muted, marginTop: 4 }}>
+              {subtitle || defaultSubtitle}
+            </div>
+          </div>
+
+          {/* Stats */}
+          {(points != null || streak != null) && (
+            <div style={{
+              display: 'flex', gap: 12, marginBottom: 20,
+              background: c.bg, borderRadius: 12, padding: '12px 16px',
+              border: `1px solid ${border}`,
+            }}>
+              {points != null && (
+                <div style={{ flex: 1, textAlign: 'center' }}>
+                  <div style={{ fontFamily: theme.fonts.display, fontWeight: 800, fontSize: 22, color: c.gold }}>
+                    +{points}
+                  </div>
+                  <div style={{ fontSize: 11, color: c.muted, fontWeight: 600 }}>piasses</div>
+                </div>
+              )}
+              {streak != null && streak > 0 && (
+                <div style={{ flex: 1, textAlign: 'center' }}>
+                  <div style={{ fontFamily: theme.fonts.display, fontWeight: 800, fontSize: 22, color: c.primary }}>
+                    🔥 {streak}
+                  </div>
+                  <div style={{ fontSize: 11, color: c.muted, fontWeight: 600 }}>série</div>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Actions */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {onNext && nextLabel && (
+              <GameButton variant="primary" size="lg" fullWidth onPress={onNext}>
+                {nextLabel}
+              </GameButton>
+            )}
+            <GameButton variant="secondary" size="md" fullWidth onPress={onReplay}>
+              Rejouer
+            </GameButton>
+            <GameButton variant="ghost" size="sm" fullWidth onPress={onBack}>
+              Retour à l'accueil
+            </GameButton>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/01_FlashcardSRS.jsx">
+import React, { useState, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { sessionSize: 5 },
+  cards: [
+    { id:'c1', front:{ text:'Achaler' }, back:{ text:'Agacer, déranger', explanation:'Mot québécois issu de l'anglais "harass".' } },
+    { id:'c2', front:{ text:'Débarbouillette' }, back:{ text:'Gant de toilette', explanation:'Inconnu en France, courant au Québec.' } },
+    { id:'c3', front:{ text:'Magasiner' }, back:{ text:'Faire du shopping', explanation:'Du français "magasin" + suffixe verbal.' } },
+    { id:'c4', front:{ text:'Tuque' }, back:{ text:'Bonnet de laine', explanation:'Mot d'origine canadienne-française.' } },
+    { id:'c5', front:{ text:'Pogner' }, back:{ text:'Attraper, saisir', explanation:'Contraction populaire de "poigner".' } },
+  ]
+};
+
+const COLORS = {
+  bg:'#0f1117', card:'#1a1d2e', surface:'#232640',
+  ink:'#fff', muted:'rgba(255,255,255,.5)', border:'rgba(255,255,255,.1)',
+  primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b',
+  rating: ['#c0392b','#e67e22','#f1c40f','#27ae60','#1abc9c'],
+  ratingLabel: ['Oublié','Difficile','Hésitant','Bon','Facile'],
+};
+
+const RATINGS = [1,2,3,4,5];
+
+export default function FlashcardSRS({ data = SAMPLE, onBack, onComplete }) {
+  const cards = data.cards.slice(0, data.config?.sessionSize || 10);
+  const [idx, setIdx] = useState(0);
+  const [phase, setPhase] = useState('front'); // 'front' | 'back'
+  const [scores, setScores] = useState([]);
+  const [done, setDone] = useState(false);
+
+  const card = cards[idx];
+  const totalXP = scores.reduce((a, r) => a + r * 15, 0);
+
+  const flip = () => setPhase(p => p === 'front' ? 'back' : 'front');
+
+  const rate = useCallback((r) => {
+    const next = [...scores, r];
+    setScores(next);
+    if (idx + 1 >= cards.length) { setDone(true); onComplete?.(totalXP); }
+    else { setIdx(i => i + 1); setPhase('front'); }
+  }, [idx, scores, cards.length, totalXP, onComplete]);
+
+  if (done) return (
+    <div style={{ background:COLORS.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:60, marginBottom:16 }}>🎉</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:COLORS.ink, marginBottom:8 }}>Session terminée !</div>
+      <div style={{ fontSize:14, color:COLORS.muted, marginBottom:32 }}>{cards.length} cartes révisées · +{totalXP} pts</div>
+      <button onClick={onBack} style={btnStyle(COLORS.primary)}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:COLORS.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      {/* HUD */}
+      <div style={hudStyle}>
+        <button onClick={onBack} style={backBtn}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:COLORS.ink }}>Flashcard SRS</span>
+        <span style={{ fontSize:12, color:COLORS.muted }}>{idx+1}/{cards.length}</span>
+      </div>
+      {/* Progress */}
+      <div style={{ height:4, background:COLORS.border }}>
+        <div style={{ height:4, background:COLORS.primary, width:`${((idx)/cards.length)*100}%`, transition:'width .3s' }} />
+      </div>
+      {/* Card */}
+      <div style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24, gap:24 }}>
+        <div onClick={flip} style={{
+          width:'100%', maxWidth:340, minHeight:200, background:COLORS.card,
+          borderRadius:20, border:`1px solid ${COLORS.border}`, cursor:'pointer',
+          display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center',
+          padding:28, boxShadow:'0 8px 32px rgba(0,0,0,.3)', userSelect:'none'
+        }}>
+          <div style={{ fontSize:11, color:COLORS.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:16 }}>
+            {phase === 'front' ? 'QUESTION' : 'RÉPONSE'}
+          </div>
+          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:22, color:COLORS.ink, textAlign:'center', marginBottom: phase==='back' ? 12 : 0 }}>
+            {phase === 'front' ? card.front.text : card.back.text}
+          </div>
+          {phase === 'back' && card.back.explanation && (
+            <div style={{ fontSize:13, color:COLORS.muted, textAlign:'center', lineHeight:1.6, marginTop:8 }}>{card.back.explanation}</div>
+          )}
+          {phase === 'front' && <div style={{ fontSize:11, color:COLORS.muted, marginTop:16 }}>Tapez pour révéler</div>}
+        </div>
+
+        {phase === 'back' && (
+          <div style={{ width:'100%', maxWidth:340 }}>
+            <div style={{ fontSize:11, color:COLORS.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:10, textAlign:'center' }}>
+              Comment l'avez-vous su ?
+            </div>
+            <div style={{ display:'flex', gap:8 }}>
+              {RATINGS.map(r => (
+                <button key={r} onClick={() => rate(r)} style={{
+                  flex:1, padding:'10px 0', borderRadius:12, border:'none', cursor:'pointer',
+                  background:COLORS.rating[r-1], color:'#fff', fontFamily:'Sora,sans-serif',
+                  fontWeight:700, fontSize:11, display:'flex', flexDirection:'column',
+                  alignItems:'center', gap:3
+                }}>
+                  <span style={{ fontSize:14 }}>{r}</span>
+                  <span style={{ fontSize:9 }}>{COLORS.ratingLabel[r-1]}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+const hudStyle = { background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' };
+const backBtn = { background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 };
+const btnStyle = (bg) => ({ background:bg, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' });
+</file>
+
+<file path="design_handoff_theme_system/mechanics/02_MultipleChoice.jsx">
+import React, { useState, useEffect, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { timerSeconds: 15, shuffle: true, showExplanation: true },
+  questions: [
+    { id:'q1', question:'Que signifie "achaler" en québécois ?', choices:[
+      {id:'a',text:'Acheter',correct:false},{id:'b',text:'Agacer',correct:true},
+      {id:'c',text:'Appeler',correct:false},{id:'d',text:'Attendre',correct:false}],
+      explanation:'Achaler vient de l'anglais "harass" et signifie agacer, déranger.' },
+    { id:'q2', question:'Comment dit-on "gant de toilette" au Québec ?', choices:[
+      {id:'a',text:'Lavette',correct:false},{id:'b',text:'Flanelle',correct:false},
+      {id:'c',text:'Débarbouillette',correct:true},{id:'d',text:'Mitaine',correct:false}],
+      explanation:'Débarbouillette est typiquement québécois. En France on dit "gant de toilette".' },
+    { id:'q3', question:'Que veut dire "magasiner" ?', choices:[
+      {id:'a',text:'Travailler en magasin',correct:false},{id:'b',text:'Faire du shopping',correct:true},
+      {id:'c',text:'Trier des vêtements',correct:false},{id:'d',text:'Livrer des colis',correct:false}],
+      explanation:'Magasiner = faire les magasins, faire du shopping. Verbe typiquement québécois.' },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.5)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+
+export default function MultipleChoice({ data = SAMPLE, onBack, onComplete }) {
+  const questions = data.questions;
+  const timer = data.config?.timerSeconds || 20;
+  const [idx, setIdx] = useState(0);
+  const [selected, setSelected] = useState(null);
+  const [answered, setAnswered] = useState(false);
+  const [score, setScore] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(timer);
+  const [done, setDone] = useState(false);
+
+  const q = questions[idx];
+  const totalXP = score * 30;
+
+  useEffect(() => {
+    if (answered || done) return;
+    setTimeLeft(timer);
+    const iv = setInterval(() => {
+      setTimeLeft(t => {
+        if (t <= 1) { clearInterval(iv); setAnswered(true); return 0; }
+        return t - 1;
+      });
+    }, 1000);
+    return () => clearInterval(iv);
+  }, [idx, answered, done, timer]);
+
+  const select = (choice) => {
+    if (answered) return;
+    setSelected(choice.id);
+    setAnswered(true);
+    if (choice.correct) setScore(s => s + 1);
+  };
+
+  const next = () => {
+    if (idx + 1 >= questions.length) { setDone(true); onComplete?.(totalXP); }
+    else { setIdx(i => i+1); setSelected(null); setAnswered(false); }
+  };
+
+  const choiceColor = (c) => {
+    if (!answered) return C.surface;
+    if (c.correct) return C.success;
+    if (c.id === selected && !c.correct) return C.danger;
+    return C.surface;
+  };
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:60, marginBottom:16 }}>🏆</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{score}/{questions.length} bonnes réponses</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{totalXP} pts</div>
+      <button onClick={onBack} style={btnS(C.primary)}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={hud}>
+        <button onClick={onBack} style={back}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Quiz</span>
+        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{questions.length}</span>
+      </div>
+      {/* Timer */}
+      <div style={{ height:4, background:C.border }}>
+        <div style={{ height:4, background: timeLeft > timer*0.4 ? C.success : C.danger, width:`${(timeLeft/timer)*100}%`, transition:'width 1s linear' }} />
+      </div>
+      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
+        {/* Question */}
+        <div style={{ background:C.card, borderRadius:18, padding:20, border:`1px solid ${C.border}` }}>
+          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:10 }}>Question {idx+1}</div>
+          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:17, color:C.ink, lineHeight:1.5 }}>{q.question}</div>
+          <div style={{ marginTop:10, fontSize:13, color: timeLeft <= 5 ? C.danger : C.muted, fontWeight:700 }}>⏱ {timeLeft}s</div>
+        </div>
+        {/* Choices */}
+        <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+          {q.choices.map(c => (
+            <button key={c.id} onClick={() => select(c)} style={{
+              background:choiceColor(c), border:`1px solid ${answered && c.correct ? C.success : C.border}`,
+              borderRadius:14, padding:'14px 16px', cursor: answered ? 'default' : 'pointer',
+              textAlign:'left', fontFamily:'Sora,sans-serif', fontWeight:600, fontSize:14, color:C.ink, transition:'background .2s'
+            }}>
+              {answered && c.correct && '✓ '}{answered && c.id===selected && !c.correct && '✗ '}{c.text}
+            </button>
+          ))}
+        </div>
+        {/* Explanation */}
+        {answered && data.config?.showExplanation && q.explanation && (
+          <div style={{ background:'rgba(255,255,255,.05)', borderRadius:14, padding:14, fontSize:13, color:C.muted, lineHeight:1.6 }}>
+            💡 {q.explanation}
+          </div>
+        )}
+        {answered && (
+          <button onClick={next} style={btnS(C.primary)}>{idx+1<questions.length ? 'Question suivante →' : 'Voir résultats'}</button>
+        )}
+      </div>
+    </div>
+  );
+}
+const hud = { background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' };
+const back = { background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 };
+const btnS = (bg) => ({ background:bg, color:'#fff', border:'none', borderRadius:14, padding:'14px 20px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer', width:'100%', marginTop:4 });
+</file>
+
+<file path="design_handoff_theme_system/mechanics/03_BinarySwipe.jsx">
+import React, { useState, useRef, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { left:{ label:'Joual', emoji:'🗣️', color:'#2D7A4F' }, right:{ label:'Anglicisme', emoji:'🇬🇧', color:'#2B5AA0' } },
+  cards: [
+    { id:'s1', text:'Pogner',      answer:'left',  explanation:'Verbe populaire québécois = attraper.' },
+    { id:'s2', text:'Le chum',     answer:'left',  explanation:'Québécois = ami/copain.' },
+    { id:'s3', text:'Checker',     answer:'right', explanation:'De l'anglais "to check" = vérifier.' },
+    { id:'s4', text:'Canceller',   answer:'right', explanation:'De l'anglais "to cancel" = annuler.' },
+    { id:'s5', text:'Magasiner',   answer:'left',  explanation:'Québécois = faire du shopping.' },
+    { id:'s6', text:'Parker',      answer:'right', explanation:'De l'anglais "to park" = se garer.' },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', ink:'#fff', muted:'rgba(255,255,255,.5)', border:'rgba(255,255,255,.1)', primary:'#C75B39' };
+
+export default function BinarySwipe({ data = SAMPLE, onBack, onComplete }) {
+  const left = data.config.left, right = data.config.right;
+  const cards = data.cards;
+  const [idx, setIdx] = useState(0);
+  const [score, setScore] = useState(0);
+  const [dx, setDx] = useState(0);
+  const [result, setResult] = useState(null); // 'correct'|'wrong'
+  const [done, setDone] = useState(false);
+  const [lastAnswer, setLastAnswer] = useState(null);
+  const touchStart = useRef(null);
+
+  const card = cards[idx];
+  const swipeSide = dx > 60 ? 'right' : dx < -60 ? 'left' : null;
+
+  const commit = useCallback((side) => {
+    const correct = side === card.answer;
+    setLastAnswer({ side, correct, explanation: card.explanation });
+    setResult(correct ? 'correct' : 'wrong');
+    if (correct) setScore(s => s+1);
+    setTimeout(() => {
+      setResult(null); setLastAnswer(null); setDx(0);
+      if (idx+1 >= cards.length) { setDone(true); onComplete?.(score*25); }
+      else setIdx(i => i+1);
+    }, 1100);
+  }, [card, idx, cards.length, score, onComplete]);
+
+  const onTouchStart = (e) => { touchStart.current = e.touches[0].clientX; };
+  const onTouchMove = (e) => {
+    if (!touchStart.current || result) return;
+    setDx(e.touches[0].clientX - touchStart.current);
+  };
+  const onTouchEnd = () => {
+    if (result) return;
+    if (dx > 80) commit('right');
+    else if (dx < -80) commit('left');
+    else setDx(0);
+    touchStart.current = null;
+  };
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🎯</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{score}/{cards.length} correct</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score*25} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  const rotation = dx * 0.08;
+  const opacity = result ? (result==='correct' ? 1 : 0.4) : 1;
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Swipe</span>
+        <span style={{ fontSize:12, color:C.muted }}>⭐ {score}</span>
+      </div>
+      <div style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24, gap:20 }}>
+        {/* Indicateurs */}
+        <div style={{ display:'flex', width:'100%', maxWidth:340, justifyContent:'space-between' }}>
+          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color: dx<-30 ? left.color : C.muted, transition:'color .15s' }}>{left.emoji} {left.label}</div>
+          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color: dx>30 ? right.color : C.muted, transition:'color .15s' }}>{right.label} {right.emoji}</div>
+        </div>
+        {/* Card */}
+        <div
+          onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
+          style={{
+            width:'100%', maxWidth:340, minHeight:180,
+            background: result==='correct' ? C.card : result==='wrong' ? '#2a1010' : C.card,
+            borderRadius:22, border:`2px solid ${result==='correct' ? '#2D7A4F' : result==='wrong' ? '#c0392b' : 'rgba(255,255,255,.1)'}`,
+            display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:28,
+            transform:`translateX(${dx}px) rotate(${rotation}deg)`,
+            transition: dx===0 ? 'transform .3s, border-color .2s' : 'border-color .2s',
+            boxShadow:'0 8px 32px rgba(0,0,0,.3)', userSelect:'none', cursor:'grab', opacity
+          }}>
+          {result ? (
+            <>
+              <div style={{ fontSize:36, marginBottom:8 }}>{result==='correct' ? '✓' : '✗'}</div>
+              <div style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, color:C.ink, marginBottom:8 }}>{result==='correct' ? 'Correct !' : 'Mauvais'}</div>
+              {lastAnswer?.explanation && <div style={{ fontSize:12, color:C.muted, textAlign:'center' }}>{lastAnswer.explanation}</div>}
+            </>
+          ) : (
+            <>
+              <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:26, color:C.ink, textAlign:'center' }}>{card.text}</div>
+              <div style={{ fontSize:11, color:C.muted, marginTop:16 }}>← glisse pour classer →</div>
+            </>
+          )}
+        </div>
+        {/* Boutons fallback */}
+        <div style={{ display:'flex', gap:12, width:'100%', maxWidth:340 }}>
+          <button onClick={() => !result && commit('left')} style={{ flex:1, background:left.color, color:'#fff', border:'none', borderRadius:12, padding:'12px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>{left.emoji} {left.label}</button>
+          <button onClick={() => !result && commit('right')} style={{ flex:1, background:right.color, color:'#fff', border:'none', borderRadius:12, padding:'12px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>{right.emoji} {right.label}</button>
+        </div>
+        <div style={{ fontSize:11, color:C.muted }}>{idx+1}/{cards.length} cartes</div>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/04_MemoryMatch.jsx">
+import React, { useState, useEffect, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { gridCols: 4, flipBackDelay: 1100 },
+  pairs: [
+    { id:'p1', cardA:{ text:'Achaler' },     cardB:{ text:'Agacer' } },
+    { id:'p2', cardA:{ text:'Tuque' },        cardB:{ text:'Bonnet' } },
+    { id:'p3', cardA:{ text:'Magasiner' },    cardB:{ text:'Shopping' } },
+    { id:'p4', cardA:{ text:'Chum' },         cardB:{ text:'Ami' } },
+    { id:'p5', cardA:{ text:'Débarbouillette'},cardB:{ text:'Gant bain'} },
+    { id:'p6', cardA:{ text:'Pogner' },       cardB:{ text:'Attraper' } },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F' };
+
+function shuffle(arr) { return [...arr].sort(() => Math.random()-.5); }
+function buildCards(pairs) {
+  return shuffle(pairs.flatMap(p => [
+    { uid: p.id+'A', pairId: p.id, text: p.cardA.text, image: p.cardA.image },
+    { uid: p.id+'B', pairId: p.id, text: p.cardB.text, image: p.cardB.image },
+  ]));
+}
+
+export default function MemoryMatch({ data = SAMPLE, onBack, onComplete }) {
+  const [cards] = useState(() => buildCards(data.pairs));
+  const [flipped, setFlipped] = useState([]);
+  const [matched, setMatched] = useState([]);
+  const [moves, setMoves] = useState(0);
+  const [locked, setLocked] = useState(false);
+  const [done, setDone] = useState(false);
+  const cols = data.config?.gridCols || 4;
+
+  const flip = useCallback((uid) => {
+    if (locked || flipped.includes(uid) || matched.includes(uid)) return;
+    const next = [...flipped, uid];
+    setFlipped(next);
+    if (next.length === 2) {
+      setMoves(m => m+1);
+      setLocked(true);
+      const [a, b] = next.map(id => cards.find(c => c.uid===id));
+      if (a.pairId === b.pairId) {
+        const newMatched = [...matched, a.uid, b.uid];
+        setMatched(newMatched);
+        setFlipped([]);
+        setLocked(false);
+        if (newMatched.length === cards.length) { setDone(true); onComplete?.(Math.max(100-moves*5,20)); }
+      } else {
+        setTimeout(() => { setFlipped([]); setLocked(false); }, data.config?.flipBackDelay || 1100);
+      }
+    }
+  }, [locked, flipped, matched, cards, moves, data.config, onComplete]);
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🃏</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Toutes les paires !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>{moves} coups · +{Math.max(100-moves*5,20)} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Memory</span>
+        <span style={{ fontSize:12, color:C.muted }}>{matched.length/2}/{data.pairs.length} paires · {moves} coups</span>
+      </div>
+      <div style={{ flex:1, padding:16, display:'grid', gridTemplateColumns:`repeat(${cols}, 1fr)`, gap:10, alignContent:'start', paddingTop:20 }}>
+        {cards.map(card => {
+          const isFlipped = flipped.includes(card.uid);
+          const isMatched = matched.includes(card.uid);
+          return (
+            <div key={card.uid} onClick={() => flip(card.uid)} style={{
+              aspectRatio:'1', borderRadius:14, cursor: isMatched ? 'default' : 'pointer',
+              background: isMatched ? C.success : isFlipped ? C.surface : C.card,
+              border:`1px solid ${isMatched ? C.success : 'rgba(255,255,255,.1)'}`,
+              display:'flex', alignItems:'center', justifyContent:'center',
+              fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color:C.ink,
+              transition:'background .2s, transform .15s', textAlign:'center', padding:6,
+              transform: isFlipped || isMatched ? 'scale(1)' : 'scale(0.97)',
+              opacity: isMatched ? 0.6 : 1,
+            }}>
+              {isFlipped || isMatched ? card.text : '?'}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/05_Hangman.jsx">
+import React, { useState, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { maxErrors: 6 },
+  words: [
+    { id:'h1', word:'ACHALER',        hint:'Agacer, énerver quelqu'un' },
+    { id:'h2', word:'MAGASINER',       hint:'Faire des achats dans les magasins' },
+    { id:'h3', word:'DEBARBOUILLETTE', hint:'Petit tissu pour se laver le visage' },
+    { id:'h4', word:'POUDRERIE',       hint:'Neige soulevée par le vent' },
+    { id:'h5', word:'TURLUTAINE',      hint:'Idée fixe, refrain répétitif' },
+  ]
+};
+
+const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+const EMOJIS = ['😎','😬','😰','😓','😨','😱','💀'];
+
+function shuffle(arr) { return [...arr].sort(() => Math.random()-.5); }
+
+export default function Hangman({ data = SAMPLE, onBack, onComplete }) {
+  const words = data.words;
+  const maxErr = data.config?.maxErrors || 6;
+  const [wordIdx, setWordIdx] = useState(0);
+  const [guessed, setGuessed] = useState([]);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+
+  const wordObj = words[wordIdx];
+  const word = wordObj.word.toUpperCase();
+  const errors = guessed.filter(l => !word.includes(l)).length;
+  const won = word.split('').every(l => guessed.includes(l) || l===' ');
+  const lost = errors >= maxErr;
+  const roundDone = won || lost;
+
+  const guess = useCallback((letter) => {
+    if (guessed.includes(letter) || roundDone) return;
+    const next = [...guessed, letter];
+    setGuessed(next);
+  }, [guessed, roundDone]);
+
+  const nextWord = () => {
+    const pts = won ? Math.max(50 - errors*8, 10) : 0;
+    const newScore = score + pts;
+    setScore(newScore);
+    if (wordIdx+1 >= words.length) { setDone(true); onComplete?.(newScore); }
+    else { setWordIdx(i=>i+1); setGuessed([]); }
+  };
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🎉</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Fini !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Pendu</span>
+        <span style={{ fontSize:12, color:C.muted }}>{wordIdx+1}/{words.length}</span>
+      </div>
+      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:20 }}>
+        {/* Erreur visual */}
+        <div style={{ textAlign:'center' }}>
+          <div style={{ fontSize:48 }}>{EMOJIS[Math.min(errors, 6)]}</div>
+          <div style={{ display:'flex', justifyContent:'center', gap:6, marginTop:8 }}>
+            {Array.from({length:maxErr}).map((_,i) => (
+              <div key={i} style={{ width:14, height:14, borderRadius:'50%', background: i<errors ? C.danger : 'rgba(255,255,255,.12)' }} />
+            ))}
+          </div>
+        </div>
+        {/* Indice */}
+        <div style={{ background:C.card, borderRadius:14, padding:'10px 14px', border:`1px solid ${C.border}`, fontSize:12, color:C.muted, textAlign:'center' }}>
+          💡 {wordObj.hint}
+        </div>
+        {/* Mot */}
+        <div style={{ display:'flex', flexWrap:'wrap', gap:8, justifyContent:'center' }}>
+          {word.split('').map((l, i) => (
+            <div key={i} style={{
+              width:l===' '?20:36, height:44, borderBottom:l===' '?'none':`2px solid ${guessed.includes(l)?C.success:C.muted}`,
+              display:'flex', alignItems:'center', justifyContent:'center',
+              fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:20,
+              color: guessed.includes(l) ? C.ink : (lost ? C.danger : 'transparent')
+            }}>{l}</div>
+          ))}
+        </div>
+        {/* Résultat intermédiaire */}
+        {roundDone && (
+          <div style={{ background: won?'rgba(45,122,79,.2)':'rgba(192,57,43,.15)', borderRadius:14, padding:14, textAlign:'center', border:`1px solid ${won?C.success:C.danger}` }}>
+            <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color:C.ink, marginBottom:6 }}>
+              {won ? '✓ Correct !' : `✗ C'était : ${word}`}
+            </div>
+            <button onClick={nextWord} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:10, padding:'10px 24px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>
+              {wordIdx+1<words.length ? 'Mot suivant' : 'Résultats'}
+            </button>
+          </div>
+        )}
+        {/* Clavier */}
+        {!roundDone && (
+          <div style={{ display:'flex', flexWrap:'wrap', gap:6, justifyContent:'center' }}>
+            {ALPHABET.map(l => {
+              const used = guessed.includes(l);
+              const correct = used && word.includes(l);
+              const wrong = used && !word.includes(l);
+              return (
+                <button key={l} onClick={() => guess(l)} disabled={used} style={{
+                  width:36, height:36, borderRadius:8, border:'none', cursor: used?'default':'pointer',
+                  background: correct?C.success : wrong?'rgba(192,57,43,.3)' : C.surface,
+                  color: used?C.muted:C.ink, fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13,
+                  opacity: used?0.5:1
+                }}>{l}</button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/06_Anagram.jsx">
+import React, { useState, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { timerSeconds: 30 },
+  words: [
+    { id:'a1', word:'ACHALER',  hint:'Agacer quelqu'un' },
+    { id:'a2', word:'POGNER',   hint:'Attraper, saisir' },
+    { id:'a3', word:'MAGASINER',hint:'Faire du shopping' },
+    { id:'a4', word:'CALICE',   hint:'Terme d'exclamation québécois' },
+    { id:'a5', word:'POUDRERIE',hint:'Neige soulevée par le vent' },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+function shuffleStr(str) {
+  const arr = str.split('');
+  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  return arr.join('')===str ? shuffleStr(str) : arr;
+}
+
+export default function Anagram({ data = SAMPLE, onBack, onComplete }) {
+  const words = data.words;
+  const [idx, setIdx] = useState(0);
+  const [tiles, setTiles] = useState(() => shuffleStr(words[0].word).map((l,i) => ({ id:i, letter:l, used:false })));
+  const [answer, setAnswer] = useState([]);
+  const [result, setResult] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+
+  const word = words[idx];
+
+  const pickTile = useCallback((tile) => {
+    if (tile.used || result) return;
+    setTiles(ts => ts.map(t => t.id===tile.id ? {...t, used:true} : t));
+    setAnswer(a => [...a, tile]);
+  }, [result]);
+
+  const removeLast = useCallback(() => {
+    if (!answer.length || result) return;
+    const last = answer[answer.length-1];
+    setAnswer(a => a.slice(0,-1));
+    setTiles(ts => ts.map(t => t.id===last.id ? {...t, used:false} : t));
+  }, [answer, result]);
+
+  const validate = useCallback(() => {
+    const ans = answer.map(t=>t.letter).join('');
+    const correct = ans === word.word;
+    setResult(correct ? 'correct' : 'wrong');
+    if (correct) setScore(s => s+40);
+    setTimeout(() => {
+      setResult(null);
+      if (idx+1 >= words.length) { setDone(true); onComplete?.(score + (correct?40:0)); }
+      else {
+        const ni = idx+1;
+        setIdx(ni);
+        setTiles(shuffleStr(words[ni].word).map((l,i)=>({id:i,letter:l,used:false})));
+        setAnswer([]);
+      }
+    }, 1200);
+  }, [answer, word, idx, words, score, onComplete]);
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🔤</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Bravo !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Anagramme</span>
+        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{words.length}</span>
+      </div>
+      <div style={{ flex:1, padding:'24px 16px', display:'flex', flexDirection:'column', gap:20, alignItems:'center' }}>
+        {/* Indice */}
+        <div style={{ background:C.card, borderRadius:14, padding:'10px 16px', border:`1px solid ${C.border}`, fontSize:12, color:C.muted, textAlign:'center', width:'100%', maxWidth:340 }}>
+          💡 {word.hint}
+        </div>
+        {/* Réponse slots */}
+        <div style={{ display:'flex', flexWrap:'wrap', gap:8, justifyContent:'center', minHeight:52 }}>
+          {answer.map((t,i) => (
+            <div key={i} style={{ width:40, height:48, borderRadius:10, background:C.surface, border:`2px solid ${result==='correct'?C.success:result==='wrong'?C.danger:C.primary}`, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:18, color:C.ink }}>
+              {t.letter}
+            </div>
+          ))}
+          {Array.from({length: word.word.length - answer.length}).map((_,i) => (
+            <div key={'empty'+i} style={{ width:40, height:48, borderRadius:10, border:`2px dashed rgba(255,255,255,.15)`, display:'flex', alignItems:'center', justifyContent:'center' }} />
+          ))}
+        </div>
+        {/* Tuiles source */}
+        <div style={{ display:'flex', flexWrap:'wrap', gap:10, justifyContent:'center', maxWidth:340 }}>
+          {tiles.map(t => (
+            <button key={t.id} onClick={() => pickTile(t)} disabled={t.used} style={{
+              width:44, height:48, borderRadius:10, border:'none', cursor:t.used?'default':'pointer',
+              background:t.used?'rgba(255,255,255,.05)':C.card,
+              border:`2px solid ${t.used?'transparent':C.border}`,
+              fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:18, color:t.used?'transparent':C.ink,
+              transition:'all .15s'
+            }}>{t.used?'':t.letter}</button>
+          ))}
+        </div>
+        {/* Actions */}
+        <div style={{ display:'flex', gap:10, width:'100%', maxWidth:340 }}>
+          <button onClick={removeLast} disabled={!answer.length} style={{ flex:1, background:C.surface, color:C.ink, border:`1px solid ${C.border}`, borderRadius:12, padding:'12px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>⌫ Effacer</button>
+          <button onClick={validate} disabled={answer.length!==word.word.length || !!result} style={{
+            flex:2, background: answer.length===word.word.length ? C.primary : 'rgba(255,255,255,.08)',
+            color:'#fff', border:'none', borderRadius:12, padding:'12px 0',
+            fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer'
+          }}>Valider ✓</button>
+        </div>
+        {result && (
+          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color: result==='correct'?C.success:C.danger }}>
+            {result==='correct' ? '✓ Correct !' : `✗ C'était : ${word.word}`}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/07_ClozeTest.jsx">
+import React, { useState, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { inputMode: 'click', showWordBank: true },
+  exercises: [
+    {
+      id: 'ex1',
+      text: 'Au Québec, on dit [1] plutôt que "faire du shopping". Le mot [2] désigne un bonnet de laine, et [3] signifie agacer quelqu'un.',
+      blanks: [
+        { id:'1', answer:'magasiner', alternatives:[] },
+        { id:'2', answer:'tuque',     alternatives:[] },
+        { id:'3', answer:'achaler',   alternatives:['énerver'] },
+      ]
+    },
+    {
+      id: 'ex2',
+      text: 'Le [1] est un ami ou copain en québécois. On dit aussi [2] pour attraper quelque chose, et [3] pour une gant de toilette.',
+      blanks: [
+        { id:'1', answer:'chum',             alternatives:[] },
+        { id:'2', answer:'pogner',           alternatives:[] },
+        { id:'3', answer:'débarbouillette',  alternatives:[] },
+      ]
+    }
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+
+function buildWordBank(exercises) {
+  const all = exercises.flatMap(ex => ex.blanks.map(b => b.answer));
+  return [...new Set(all)].sort(() => Math.random() - .5);
+}
+
+function parseText(text, blanks, fills, onPick, answered) {
+  const parts = [];
+  let last = 0;
+  const regex = /[(d+)]/g;
+  let m;
+  while ((m = regex.exec(text)) !== null) {
+    if (m.index > last) parts.push(<span key={last} style={{ color:'rgba(255,255,255,.75)', lineHeight:1.8 }}>{text.slice(last, m.index)}</span>);
+    const bid = m[1];
+    const blank = blanks.find(b => b.id === bid);
+    const filled = fills[bid];
+    const correct = answered && blank && (filled === blank.answer || (blank.alternatives||[]).includes(filled));
+    const wrong = answered && filled && !correct;
+    parts.push(
+      <span key={bid} style={{
+        display:'inline-block', minWidth:90, borderBottom: filled ? 'none' : '2px solid rgba(255,255,255,.3)',
+        background: filled ? (answered ? (correct?'rgba(45,122,79,.25)':'rgba(192,57,43,.2)') : 'rgba(199,91,57,.15)') : 'transparent',
+        borderRadius: filled ? 6 : 0, padding: filled ? '1px 8px' : '1px 4px',
+        color: answered ? (correct?'#4ade80':wrong?'#f87171':C.ink) : C.primary,
+        fontWeight:700, fontSize:14, cursor: filled&&!answered ? 'pointer' : 'default',
+        margin:'0 2px'
+      }} onClick={() => !answered && filled && onPick(bid, null)}>{filled || '___'}</span>
+    );
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) parts.push(<span key='end' style={{ color:'rgba(255,255,255,.75)', lineHeight:1.8 }}>{text.slice(last)}</span>);
+  return parts;
+}
+
+export default function ClozeTest({ data = SAMPLE, onBack, onComplete }) {
+  const [exIdx, setExIdx] = useState(0);
+  const [fills, setFills] = useState({});
+  const [answered, setAnswered] = useState(false);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const [wordBank] = useState(() => buildWordBank(data.exercises));
+
+  const ex = data.exercises[exIdx];
+  const allFilled = ex.blanks.every(b => fills[b.id]);
+
+  const pick = useCallback((word) => {
+    if (answered) return;
+    const firstEmpty = ex.blanks.find(b => !fills[b.id]);
+    if (!firstEmpty) return;
+    setFills(f => ({ ...f, [firstEmpty.id]: word }));
+  }, [answered, ex, fills]);
+
+  const clearBlank = useCallback((bid) => {
+    if (answered) return;
+    setFills(f => { const n = {...f}; delete n[bid]; return n; });
+  }, [answered]);
+
+  const validate = () => {
+    let pts = 0;
+    ex.blanks.forEach(b => {
+      const f = fills[b.id];
+      if (f === b.answer || (b.alternatives||[]).includes(f)) pts += 20;
+    });
+    setScore(s => s + pts);
+    setAnswered(true);
+  };
+
+  const next = () => {
+    if (exIdx+1 >= data.exercises.length) { setDone(true); onComplete?.(score); }
+    else { setExIdx(i=>i+1); setFills({}); setAnswered(false); }
+  };
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>📝</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Exercices terminés !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  const usedWords = Object.values(fills);
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Texte à trous</span>
+        <span style={{ fontSize:12, color:C.muted }}>{exIdx+1}/{data.exercises.length}</span>
+      </div>
+      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
+        {/* Texte */}
+        <div style={{ background:C.card, borderRadius:16, padding:18, border:`1px solid ${C.border}`, lineHeight:2, fontSize:15 }}>
+          {parseText(ex.text, ex.blanks, fills, clearBlank, answered)}
+        </div>
+        {/* Banque de mots */}
+        <div>
+          <div style={{ fontSize:10, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:8 }}>Banque de mots</div>
+          <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
+            {wordBank.map(w => {
+              const used = usedWords.includes(w);
+              return (
+                <button key={w} onClick={() => !used && !answered && pick(w)} style={{
+                  background: used ? 'rgba(255,255,255,.04)' : C.surface,
+                  color: used ? C.muted : C.ink, border: `1px solid ${used ? C.border : C.primary}`,
+                  borderRadius:999, padding:'6px 14px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:12,
+                  cursor: used||answered ? 'default' : 'pointer', opacity: used ? 0.5 : 1, textDecoration: used?'line-through':'none'
+                }}>{w}</button>
+              );
+            })}
+          </div>
+        </div>
+        {!answered ? (
+          <button onClick={validate} disabled={!allFilled} style={{ background: allFilled?C.primary:'rgba(255,255,255,.08)', color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor: allFilled?'pointer':'default' }}>Valider</button>
+        ) : (
+          <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>
+            {exIdx+1 < data.exercises.length ? 'Exercice suivant →' : 'Voir résultats'}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/08_Sequencing.jsx">
+import React, { useState, useRef, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { sequenceType:'chronological', showLabels:false },
+  items: [
+    { id:'s1', text:'Arrivée des premiers colons français',    label:'1534', order:1 },
+    { id:'s2', text:'Conquête britannique de la Nouvelle-France', label:'1759', order:2 },
+    { id:'s3', text:'Confédération canadienne',               label:'1867', order:3 },
+    { id:'s4', text:'Loi sur les langues officielles',        label:'1969', order:4 },
+    { id:'s5', text:'Référendum sur la souveraineté du Québec', label:'1995', order:5 },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+
+function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
+function score(items) {
+  let correct = 0;
+  items.forEach((it,i) => { if(it.order === i+1) correct++; });
+  return correct;
+}
+
+export default function Sequencing({ data = SAMPLE, onBack, onComplete }) {
+  const [items, setItems] = useState(() => shuffle(data.items));
+  const [submitted, setSubmitted] = useState(false);
+  const [dragging, setDragging] = useState(null);
+  const [done, setDone] = useState(false);
+  const dragOver = useRef(null);
+
+  const correct = submitted ? score(items) : 0;
+  const total = items.length;
+
+  const onDragStart = (i) => setDragging(i);
+  const onDragEnter = (i) => { dragOver.current = i; };
+  const onDragEnd = () => {
+    if (dragging === null || dragOver.current === null || dragging === dragOver.current) { setDragging(null); dragOver.current=null; return; }
+    const arr = [...items];
+    const [moved] = arr.splice(dragging, 1);
+    arr.splice(dragOver.current, 0, moved);
+    setItems(arr);
+    setDragging(null); dragOver.current=null;
+  };
+
+  // Touch drag
+  const touchStart = useRef(null);
+  const touchIdx = useRef(null);
+  const onTouchStart = (e, i) => { touchStart.current = e.touches[0].clientY; touchIdx.current = i; };
+  const onTouchEnd = (e, i) => {
+    const dy = e.changedTouches[0].clientY - touchStart.current;
+    if (Math.abs(dy) < 20) return;
+    const target = dy > 0 ? Math.min(i+1, items.length-1) : Math.max(i-1, 0);
+    const arr = [...items];
+    const [moved] = arr.splice(i, 1);
+    arr.splice(target, 0, moved);
+    setItems(arr);
+  };
+
+  const validate = () => setSubmitted(true);
+  const finish = () => { setDone(true); onComplete?.(correct*20); };
+
+  const isCorrect = (item, i) => submitted && item.order === i+1;
+  const isWrong = (item, i) => submitted && item.order !== i+1;
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>📅</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{correct}/{total} dans le bon ordre</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{correct*20} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Séquençage</span>
+        <span style={{ fontSize:12, color:C.muted }}>{total} éléments</span>
+      </div>
+      <div style={{ flex:1, padding:'16px', display:'flex', flexDirection:'column', gap:10 }}>
+        <div style={{ fontSize:12, color:C.muted, textAlign:'center', marginBottom:4 }}>Glisse pour réordonner du plus ancien au plus récent</div>
+        {items.map((item, i) => (
+          <div key={item.id}
+            draggable={!submitted}
+            onDragStart={() => onDragStart(i)}
+            onDragEnter={() => onDragEnter(i)}
+            onDragEnd={onDragEnd}
+            onDragOver={e => e.preventDefault()}
+            onTouchStart={e => onTouchStart(e,i)}
+            onTouchEnd={e => onTouchEnd(e,i)}
+            style={{
+              background: isCorrect(item,i) ? 'rgba(45,122,79,.2)' : isWrong(item,i) ? 'rgba(192,57,43,.12)' : C.card,
+              border: `1px solid ${isCorrect(item,i)?C.success:isWrong(item,i)?C.danger:C.border}`,
+              borderRadius:14, padding:'12px 14px', display:'flex', alignItems:'center', gap:12,
+              cursor: submitted ? 'default' : 'grab', userSelect:'none',
+              transition:'background .2s, border-color .2s',
+              opacity: dragging===i ? 0.5 : 1
+            }}>
+            <div style={{ width:28, height:28, borderRadius:8, background:'rgba(255,255,255,.08)', display:'grid', placeItems:'center', fontSize:13, fontWeight:800, color:C.muted, flexShrink:0 }}>{i+1}</div>
+            <div style={{ flex:1, fontSize:13, color:C.ink, lineHeight:1.4 }}>{item.text}</div>
+            {submitted && (
+              <div style={{ fontSize:11, color: isCorrect(item,i)?C.success:C.danger, fontWeight:700, flexShrink:0 }}>
+                {isCorrect(item,i) ? '✓' : `→ pos.${item.order}`}
+              </div>
+            )}
+            {data.config?.showLabels && <div style={{ fontSize:10, color:C.muted, fontWeight:700, flexShrink:0 }}>{item.label}</div>}
+            {!submitted && <div style={{ fontSize:18, color:'rgba(255,255,255,.2)', flexShrink:0 }}>⠿</div>}
+          </div>
+        ))}
+        {!submitted ? (
+          <button onClick={validate} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer', marginTop:8 }}>Valider l'ordre</button>
+        ) : (
+          <>
+            {submitted && data.config?.showLabels===false && (
+              <div style={{ background:'rgba(255,255,255,.05)', borderRadius:12, padding:12 }}>
+                {[...data.items].sort((a,b)=>a.order-b.order).map(it => (
+                  <div key={it.id} style={{ fontSize:11, color:C.muted, padding:'3px 0' }}>• {it.label} — {it.text}</div>
+                ))}
+              </div>
+            )}
+            <button onClick={finish} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Terminer</button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/09_SortGroup.jsx">
+import React, { useState, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { validateMode:'immediate', shuffle:true },
+  groups: [
+    { id:'joual',      label:'Joual',      color:'#2D7A4F', emoji:'🗣️' },
+    { id:'anglicisme', label:'Anglicisme', color:'#2B5AA0', emoji:'🇬🇧' },
+    { id:'sacre',      label:'Sacre',      color:'#C75B39', emoji:'🔥' },
+  ],
+  items: [
+    { id:'i1', text:'Pogner',    groupId:'joual'      },
+    { id:'i2', text:'Checker',   groupId:'anglicisme' },
+    { id:'i3', text:'Tabarnac',  groupId:'sacre'      },
+    { id:'i4', text:'Magasiner', groupId:'joual'      },
+    { id:'i5', text:'Canceller', groupId:'anglicisme' },
+    { id:'i6', text:'Câlice',    groupId:'sacre'      },
+    { id:'i7', text:'Chum',      groupId:'joual'      },
+    { id:'i8', text:'Parker',    groupId:'anglicisme' },
+    { id:'i9', text:'Estie',     groupId:'sacre'      },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
+
+export default function SortGroup({ data = SAMPLE, onBack, onComplete }) {
+  const [queue] = useState(() => shuffle(data.items));
+  const [qIdx, setQIdx] = useState(0);
+  const [placed, setPlaced] = useState({}); // itemId -> groupId
+  const [feedback, setFeedback] = useState(null); // { correct, groupLabel }
+  const [done, setDone] = useState(false);
+
+  const current = queue[qIdx];
+  const total = queue.length;
+  const correctCount = Object.entries(placed).filter(([id, gid]) => queue.find(i=>i.id===id)?.groupId===gid).length;
+
+  const placeItem = useCallback((groupId) => {
+    if (feedback || !current) return;
+    const correct = current.groupId === groupId;
+    setPlaced(p => ({...p, [current.id]: groupId}));
+    if (data.config?.validateMode === 'immediate') {
+      const group = data.groups.find(g=>g.id===groupId);
+      setFeedback({ correct, groupLabel: group.label });
+      setTimeout(() => {
+        setFeedback(null);
+        if (qIdx+1 >= total) { setDone(true); onComplete?.((correctCount+(correct?1:0))*15); }
+        else setQIdx(i=>i+1);
+      }, 900);
+    } else {
+      if (qIdx+1 >= total) { setDone(true); onComplete?.(correctCount*15); }
+      else setQIdx(i=>i+1);
+    }
+  }, [feedback, current, data, qIdx, total, correctCount, onComplete]);
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🗂️</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{correctCount}/{total} bien classés</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{correctCount*15} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Tri par groupes</span>
+        <span style={{ fontSize:12, color:C.muted }}>{qIdx+1}/{total}</span>
+      </div>
+      <div style={{ height:4, background:C.border }}><div style={{ height:4, background:C.primary, width:`${(qIdx/total)*100}%`, transition:'width .3s' }} /></div>
+      <div style={{ flex:1, padding:'24px 16px', display:'flex', flexDirection:'column', alignItems:'center', gap:24 }}>
+        {/* Carte en cours */}
+        <div style={{ width:'100%', maxWidth:340, background:C.card, borderRadius:20, padding:'28px 20px', border:`2px solid ${feedback ? (feedback.correct?C.success:C.danger) : C.border}`, textAlign:'center', minHeight:120, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:8, transition:'border-color .2s' }}>
+          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:26, color:C.ink }}>{current?.text}</div>
+          {feedback && <div style={{ fontSize:14, fontWeight:700, color: feedback.correct?C.success:C.danger }}>{feedback.correct ? '✓ Correct !' : '✗ Mauvais'}</div>}
+        </div>
+        <div style={{ fontSize:12, color:C.muted }}>Dans quelle catégorie va ce mot ?</div>
+        {/* Groupes */}
+        <div style={{ display:'flex', flexDirection:'column', gap:10, width:'100%', maxWidth:340 }}>
+          {data.groups.map(g => (
+            <button key={g.id} onClick={() => placeItem(g.id)} style={{
+              background:`${g.color}22`, border:`2px solid ${g.color}88`, borderRadius:14,
+              padding:'14px 20px', display:'flex', alignItems:'center', gap:12,
+              fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, color:C.ink, cursor:'pointer'
+            }}>
+              <span style={{ fontSize:22 }}>{g.emoji}</span>
+              <span>{g.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/10_LineMatching.jsx">
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+
+const SAMPLE = {
+  config: { shuffleRight:true, lineColor:'#C75B39' },
+  pairs: [
+    { id:'m1', left:{ text:'Achaler' },        right:{ text:'Agacer' } },
+    { id:'m2', left:{ text:'Tuque' },           right:{ text:'Bonnet de laine' } },
+    { id:'m3', left:{ text:'Magasiner' },       right:{ text:'Faire du shopping' } },
+    { id:'m4', left:{ text:'Chum' },            right:{ text:'Ami / copain' } },
+    { id:'m5', left:{ text:'Débarbouillette' }, right:{ text:'Gant de toilette' } },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
+
+export default function LineMatching({ data = SAMPLE, onBack, onComplete }) {
+  const [rights] = useState(() => data.config?.shuffleRight ? shuffle(data.pairs.map(p=>({...p.right, pairId:p.id}))) : data.pairs.map(p=>({...p.right, pairId:p.id})));
+  const [selected, setSelected] = useState(null); // pairId of selected left
+  const [connections, setConnections] = useState({}); // leftPairId -> rightPairId
+  const [submitted, setSubmitted] = useState(false);
+  const [done, setDone] = useState(false);
+
+  const correct = Object.entries(connections).filter(([l,r]) => l===r).length;
+  const total = data.pairs.length;
+
+  const pickLeft = (pairId) => {
+    if (submitted) return;
+    setSelected(s => s===pairId ? null : pairId);
+  };
+
+  const pickRight = (pairId) => {
+    if (submitted || !selected) return;
+    setConnections(c => {
+      const next = {...c};
+      // Remove any existing connection to this right
+      Object.keys(next).forEach(k => { if(next[k]===pairId) delete next[k]; });
+      next[selected] = pairId;
+      return next;
+    });
+    setSelected(null);
+  };
+
+  const validate = () => { setSubmitted(true); };
+  const finish = () => { setDone(true); onComplete?.(correct*20); };
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🔗</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{correct}/{total} bonnes associations</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{correct*20} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Associations</span>
+        <span style={{ fontSize:12, color:C.muted }}>{Object.keys(connections).length}/{total}</span>
+      </div>
+      <div style={{ flex:1, padding:'16px', display:'flex', flexDirection:'column', gap:12 }}>
+        <div style={{ fontSize:12, color:C.muted, textAlign:'center', marginBottom:4 }}>Sélectionne un mot à gauche, puis sa définition à droite</div>
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, flex:1 }}>
+          {/* Gauche */}
+          <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+            {data.pairs.map(p => {
+              const isSelected = selected===p.id;
+              const isConnected = connections[p.id];
+              const isCorrect = submitted && connections[p.id]===p.id;
+              const isWrong = submitted && connections[p.id] && connections[p.id]!==p.id;
+              return (
+                <button key={p.id} onClick={() => pickLeft(p.id)} style={{
+                  background: isCorrect?'rgba(45,122,79,.2)':isWrong?'rgba(192,57,43,.15)':isSelected?'rgba(199,91,57,.2)':isConnected?'rgba(255,255,255,.08)':C.card,
+                  border: `2px solid ${isCorrect?C.success:isWrong?C.danger:isSelected?C.primary:C.border}`,
+                  borderRadius:12, padding:'12px 10px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color:C.ink, cursor:'pointer', textAlign:'left', transition:'all .15s'
+                }}>{p.left.text}</button>
+              );
+            })}
+          </div>
+          {/* Droite */}
+          <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+            {rights.map(r => {
+              const isLinked = Object.values(connections).includes(r.pairId);
+              const leftKey = Object.keys(connections).find(k=>connections[k]===r.pairId);
+              const isCorrect = submitted && leftKey===r.pairId;
+              const isWrong = submitted && isLinked && leftKey!==r.pairId;
+              return (
+                <button key={r.pairId} onClick={() => pickRight(r.pairId)} style={{
+                  background: isCorrect?'rgba(45,122,79,.2)':isWrong?'rgba(192,57,43,.15)':isLinked?'rgba(255,255,255,.08)':selected?'rgba(99,102,241,.1)':C.card,
+                  border: `2px solid ${isCorrect?C.success:isWrong?C.danger:isLinked?C.primary:selected?'rgba(99,102,241,.4)':C.border}`,
+                  borderRadius:12, padding:'12px 10px', fontFamily:'Sora,sans-serif', fontWeight:600, fontSize:12, color:C.ink, cursor:'pointer', textAlign:'left', transition:'all .15s'
+                }}>{r.text}</button>
+              );
+            })}
+          </div>
+        </div>
+        {!submitted ? (
+          <button onClick={validate} disabled={Object.keys(connections).length < total} style={{ background: Object.keys(connections).length>=total?C.primary:'rgba(255,255,255,.08)', color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Valider</button>
+        ) : (
+          <button onClick={finish} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Terminer → +{correct*20} pts</button>
+        )}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/11_Bingo.jsx">
+import React, { useState, useEffect, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { gridSize:4, callerMode:'auto', callerInterval:5000, winCondition:'line' },
+  items: [
+    { id:'b1',  term:'Achaler',      clue:'Agacer quelqu'un' },
+    { id:'b2',  term:'Tuque',         clue:'Bonnet de laine hivernal' },
+    { id:'b3',  term:'Magasiner',     clue:'Faire du shopping' },
+    { id:'b4',  term:'Chum',          clue:'Ami ou copain' },
+    { id:'b5',  term:'Pogner',        clue:'Attraper quelque chose' },
+    { id:'b6',  term:'Débarbouillette',clue:'Gant de toilette' },
+    { id:'b7',  term:'Pitoune',       clue:'Belle fille (familier)' },
+    { id:'b8',  term:'Câlice',        clue:'Exclamation forte' },
+    { id:'b9',  term:'Checker',       clue:'Vérifier (anglicisme)' },
+    { id:'b10', term:'Frette',        clue:'Très froid' },
+    { id:'b11', term:'Ostie',         clue:'Exclamation vive' },
+    { id:'b12', term:'Tabarnac',      clue:'Exclamation populaire' },
+    { id:'b13', term:'Coudon',        clue:'Donc / alors (exclamatif)' },
+    { id:'b14', term:'Aweille',       clue:'Allez ! Dépêche-toi !' },
+    { id:'b15', term:'Tiguidou',      clue:'Parfait, d'accord' },
+    { id:'b16', term:'Patente',       clue:'Chose, truc, bidule' },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
+function checkBingo(marked, size) {
+  const grid = Array.from({length:size}, (_,r) => Array.from({length:size}, (_,c) => marked.has(r*size+c)));
+  for(let r=0;r<size;r++) if(grid[r].every(Boolean)) return true;
+  for(let c=0;c<size;c++) if(grid.every(row=>row[c])) return true;
+  if(grid.every((row,i)=>row[i])) return true;
+  if(grid.every((row,i)=>row[size-1-i])) return true;
+  return false;
+}
+
+export default function Bingo({ data = SAMPLE, onBack, onComplete }) {
+  const size = data.config?.gridSize || 4;
+  const [grid] = useState(() => shuffle(data.items).slice(0, size*size));
+  const [called, setCalled] = useState([]);
+  const [marked, setMarked] = useState(new Set());
+  const [bingo, setBingo] = useState(false);
+  const [callerIdx, setCallerIdx] = useState(-1);
+  const [started, setStarted] = useState(false);
+  const callQueue = useRef(shuffle(data.items));
+  const callRef = useRef(null);
+
+  const callNext = useCallback(() => {
+    setCallerIdx(i => {
+      const ni = i+1;
+      if (ni >= callQueue.current.length) return i;
+      const item = callQueue.current[ni];
+      setCalled(c => [...c, item]);
+      return ni;
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!started || bingo) return;
+    if (data.config?.callerMode === 'auto') {
+      callRef.current = setInterval(callNext, data.config?.callerInterval||5000);
+      callNext();
+      return () => clearInterval(callRef.current);
+    }
+  }, [started, bingo, callNext, data.config]);
+
+  const markCell = (idx) => {
+    if (!started || bingo) return;
+    const item = grid[idx];
+    const lastCall = called[called.length-1];
+    if (!lastCall || item.id !== lastCall.id) return; // must match last called
+    const newMarked = new Set(marked);
+    newMarked.add(idx);
+    setMarked(newMarked);
+    if (checkBingo(newMarked, size)) { setBingo(true); clearInterval(callRef.current); onComplete?.(100); }
+  };
+
+  const currentCall = called[called.length-1];
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Bingo Québécois</span>
+        <span style={{ fontSize:12, color:C.muted }}>{marked.size} cochés</span>
+      </div>
+      <div style={{ flex:1, padding:'16px', display:'flex', flexDirection:'column', gap:14 }}>
+        {/* Caleur */}
+        <div style={{ background:C.card, borderRadius:16, padding:16, border:`1px solid ${currentCall?C.primary:C.border}`, textAlign:'center', minHeight:80, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center' }}>
+          {!started ? (
+            <button onClick={() => setStarted(true)} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:12, padding:'12px 28px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, cursor:'pointer' }}>▶ Commencer</button>
+          ) : currentCall ? (
+            <>
+              <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:4 }}>Le caleur dit…</div>
+              <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:15, color:C.ink }}>{currentCall.clue}</div>
+            </>
+          ) : <div style={{ fontSize:13, color:C.muted }}>En attente du premier appel…</div>}
+        </div>
+        {/* Grille */}
+        {bingo && <div style={{ textAlign:'center', fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:22, color:C.success }}>🎉 BINGO !</div>}
+        <div style={{ display:'grid', gridTemplateColumns:`repeat(${size},1fr)`, gap:6, flex:1 }}>
+          {grid.map((item, i) => {
+            const isMarked = marked.has(i);
+            const isCurrentCall = currentCall && item.id===currentCall.id && !isMarked;
+            return (
+              <button key={item.id} onClick={() => markCell(i)} style={{
+                background: isMarked ? C.success : isCurrentCall ? 'rgba(199,91,57,.2)' : C.card,
+                border: `1px solid ${isMarked?C.success:isCurrentCall?C.primary:C.border}`,
+                borderRadius:10, padding:'8px 4px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:11,
+                color: isMarked?'#fff':C.ink, cursor:'pointer', textAlign:'center', lineHeight:1.3, transition:'all .2s',
+                opacity: isMarked?0.7:1
+              }}>{item.term}</button>
+            );
+          })}
+        </div>
+        {data.config?.callerMode==='manual' && started && !bingo && (
+          <button onClick={callNext} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Appel suivant →</button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+Bingo.defaultProps = {};
+const ref = { current: null };
+</file>
+
+<file path="design_handoff_theme_system/mechanics/12_SituationalChoice.jsx">
+import React, { useState, useCallback } from 'react';
+
+const SAMPLE = {
+  scenarios: [
+    {
+      id:'sc1',
+      situation:'Tu arrives en retard au travail et ton patron te regarde d'un air mécontent.',
+      question:'Que dis-tu en québécois pour t'excuser ?',
+      choices:[
+        { id:'a', text:'Je suis vraiment désolé, j'ai eu un empêchement.', correct:false, register:'formal', feedback:'Correct en français standard, mais un peu guindé pour le Québec.' },
+        { id:'b', text:'Excuse-moé, j'ai eu du trouble en chemin !', correct:true, register:'casual', feedback:'Parfait ! "Trouble" = problème, "excuse-moé" = excuse-moi en joual.' },
+        { id:'c', text:'Wô ! J'arrive, j'arrive !', correct:false, register:'casual', feedback:'Trop désinvolte pour s'adresser à son patron.' },
+      ]
+    },
+    {
+      id:'sc2',
+      situation:'Ton ami t'offre une bière et tu veux refuser poliment.',
+      question:'Comment décliner en québécois ?',
+      choices:[
+        { id:'a', text:'Non merci, je suis correct de même.', correct:true, register:'casual', feedback:'"Être correct" = être satisfait, aller bien. Très québécois !' },
+        { id:'b', text:'Je ne désire pas de bière, merci.', correct:false, register:'formal', feedback:'Trop formel pour ce contexte social détendu.' },
+        { id:'c', text:'Pantoute ! J'en veux pas.', correct:false, register:'casual', feedback:'"Pantoute" est correct mais un peu brusque pour refuser poliment.' },
+      ]
+    },
+    {
+      id:'sc3',
+      situation:'Tu demandes à quelqu'un comment il va, et il te répond bien.',
+      question:'Quelle réponse typiquement québécoise attendrais-tu ?',
+      choices:[
+        { id:'a', text:'Je vais très bien, merci de demander.', correct:false, register:'formal', feedback:'Réponse correcte mais très formelle, peu naturelle au Québec.' },
+        { id:'b', text:'Ça va, pis toé ?', correct:true, register:'casual', feedback:'Très naturel ! "Pis toé ?" = "Et toi ?" en joual québécois.' },
+        { id:'c', text:'Je suis en pleine forme, merci !', correct:false, register:'formal', feedback:'Naturel mais peu caractéristique du registre québécois courant.' },
+      ]
+    },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+const REGISTER_COLORS = { formal:'#2B5AA0', casual:'#2D7A4F', wrong:'#c0392b' };
+
+export default function SituationalChoice({ data = SAMPLE, onBack, onComplete }) {
+  const [idx, setIdx] = useState(0);
+  const [picked, setPicked] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+
+  const sc = data.scenarios[idx];
+  const answered = picked !== null;
+
+  const pick = useCallback((choice) => {
+    if (answered) return;
+    setPicked(choice.id);
+    if (choice.correct) setScore(s=>s+30);
+  }, [answered]);
+
+  const next = () => {
+    if (idx+1 >= data.scenarios.length) { setDone(true); onComplete?.(score); }
+    else { setIdx(i=>i+1); setPicked(null); }
+  };
+
+  const choiceBg = (c) => {
+    if (!answered) return C.surface;
+    if (c.correct) return 'rgba(45,122,79,.2)';
+    if (c.id===picked) return 'rgba(192,57,43,.15)';
+    return 'rgba(255,255,255,.03)';
+  };
+  const choiceBorder = (c) => {
+    if (!answered) return C.border;
+    if (c.correct) return C.success;
+    if (c.id===picked && !c.correct) return C.danger;
+    return 'rgba(255,255,255,.05)';
+  };
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🎭</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Scénarios terminés !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Situation</span>
+        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{data.scenarios.length}</span>
+      </div>
+      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:14 }}>
+        {/* Situation */}
+        <div style={{ background:C.card, borderRadius:16, padding:18, border:`1px solid ${C.border}` }}>
+          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:8 }}>🎭 Situation</div>
+          <p style={{ fontSize:14, color:C.ink, lineHeight:1.65, margin:'0 0 10px' }}>{sc.situation}</p>
+          <p style={{ fontSize:13, color:C.primary, fontWeight:700, margin:0 }}>{sc.question}</p>
+        </div>
+        {/* Choix */}
+        <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+          {sc.choices.map(c => (
+            <button key={c.id} onClick={() => pick(c)} style={{
+              background:choiceBg(c), border:`2px solid ${choiceBorder(c)}`,
+              borderRadius:14, padding:'14px 16px', textAlign:'left', cursor: answered?'default':'pointer',
+              transition:'all .2s'
+            }}>
+              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', gap:8 }}>
+                <div style={{ fontFamily:'Sora,sans-serif', fontWeight:600, fontSize:14, color:C.ink, lineHeight:1.5 }}>{c.text}</div>
+                <div style={{ background:`${REGISTER_COLORS[c.register]}33`, color:REGISTER_COLORS[c.register], borderRadius:999, padding:'2px 8px', fontSize:9, fontWeight:700, textTransform:'uppercase', flexShrink:0 }}>{c.register}</div>
+              </div>
+              {answered && c.id===picked && (
+                <div style={{ marginTop:8, fontSize:12, color:c.correct?C.success:C.danger, lineHeight:1.5 }}>{c.feedback}</div>
+              )}
+              {answered && c.correct && c.id!==picked && (
+                <div style={{ marginTop:8, fontSize:12, color:C.success, lineHeight:1.5 }}>✓ {c.feedback}</div>
+              )}
+            </button>
+          ))}
+        </div>
+        {answered && (
+          <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>
+            {idx+1<data.scenarios.length ? 'Scénario suivant →' : 'Voir résultats'}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/13_CategoryBlaster.jsx">
+import React, { useState, useEffect, useCallback, useRef } from 'react';
+
+const SAMPLE = {
+  config: { baseTimeMs:3500, minTimeMs:1200, speedupFactor:0.92, comboBonus:true },
+  categories: [
+    { id:'joual',      label:'Joual',      emoji:'🗣️', color:'#2D7A4F' },
+    { id:'anglicisme', label:'Anglicisme', emoji:'🇬🇧', color:'#2B5AA0' },
+    { id:'sacre',      label:'Sacre',      emoji:'🔥', color:'#C75B39' },
+  ],
+  items: [
+    { id:'i1',  text:'Pogner',    categoryId:'joual'      },
+    { id:'i2',  text:'Checker',   categoryId:'anglicisme' },
+    { id:'i3',  text:'Tabarnac',  categoryId:'sacre'      },
+    { id:'i4',  text:'Magasiner', categoryId:'joual'      },
+    { id:'i5',  text:'Canceller', categoryId:'anglicisme' },
+    { id:'i6',  text:'Câlice',    categoryId:'sacre'      },
+    { id:'i7',  text:'Chum',      categoryId:'joual'      },
+    { id:'i8',  text:'Parker',    categoryId:'anglicisme' },
+    { id:'i9',  text:'Estie',     categoryId:'sacre'      },
+    { id:'i10', text:'Achaler',   categoryId:'joual'      },
+    { id:'i11', text:'Drafter',   categoryId:'anglicisme' },
+    { id:'i12', text:'Coudon',    categoryId:'joual'      },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
+
+export default function CategoryBlaster({ data = SAMPLE, onBack, onComplete }) {
+  const items = useRef(shuffle(data.items));
+  const [idx, setIdx] = useState(0);
+  const [score, setScore] = useState(0);
+  const [combo, setCombo] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(1);
+  const [timeMax, setTimeMax] = useState(data.config?.baseTimeMs || 3500);
+  const [feedback, setFeedback] = useState(null);
+  const [done, setDone] = useState(false);
+  const timerRef = useRef(null);
+
+  const startTimer = useCallback((ms) => {
+    setTimeLeft(ms);
+    setTimeMax(ms);
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setTimeLeft(t => {
+        if (t <= 50) {
+          clearInterval(timerRef.current);
+          // Time's up = wrong
+          setFeedback({ correct:false, label:'⏱ Temps !' });
+          setCombo(0);
+          setTimeout(() => {
+            setFeedback(null);
+            setIdx(i => {
+              const ni = i+1;
+              if (ni >= items.current.length) { setDone(true); return i; }
+              const nextMs = Math.max(ms * (data.config?.speedupFactor||.92), data.config?.minTimeMs||1200);
+              startTimer(nextMs);
+              return ni;
+            });
+          }, 800);
+          return 0;
+        }
+        return t - 50;
+      });
+    }, 50);
+  }, [data.config]);
+
+  useEffect(() => {
+    startTimer(data.config?.baseTimeMs || 3500);
+    return () => clearInterval(timerRef.current);
+  }, []);
+
+  const pick = useCallback((catId) => {
+    if (feedback) return;
+    clearInterval(timerRef.current);
+    const item = items.current[idx];
+    const correct = item.categoryId === catId;
+    const newCombo = correct ? combo+1 : 0;
+    const pts = correct ? (10 + (data.config?.comboBonus && newCombo>=3 ? newCombo*5 : 0)) : 0;
+    setScore(s => s+pts);
+    setCombo(newCombo);
+    setFeedback({ correct, label: correct ? (newCombo>=3 ? `🔥 COMBO x${newCombo}!` : '✓ Correct !') : '✗ Mauvais' });
+    setTimeout(() => {
+      setFeedback(null);
+      const ni = idx+1;
+      if (ni >= items.current.length) { setDone(true); onComplete?.(score+pts); return; }
+      setIdx(ni);
+      const nextMs = Math.max(timeMax * (data.config?.speedupFactor||.92), data.config?.minTimeMs||1200);
+      startTimer(nextMs);
+    }, 700);
+  }, [feedback, idx, combo, score, timeMax, data.config, startTimer, onComplete]);
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>⚡</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{score} points !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>{items.current.length} items classés</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  const item = items.current[idx];
+  const pct = timeMax > 0 ? (timeLeft/timeMax)*100 : 0;
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Blaster</span>
+        <span style={{ fontSize:12, color:C.muted }}>⭐ {score} {combo>=3?'🔥':''}</span>
+      </div>
+      {/* Timer bar */}
+      <div style={{ height:6, background:C.border, transition:'none' }}>
+        <div style={{ height:6, background: pct>50?C.success:pct>25?'#f59e0b':C.danger, width:`${pct}%`, transition:'width .05s linear' }} />
+      </div>
+      <div style={{ flex:1, padding:'24px 16px', display:'flex', flexDirection:'column', alignItems:'center', gap:24 }}>
+        {/* Item card */}
+        <div style={{ width:'100%', maxWidth:340, background:feedback?(feedback.correct?'rgba(45,122,79,.15)':'rgba(192,57,43,.12)'):C.card, borderRadius:22, border:`2px solid ${feedback?(feedback.correct?C.success:C.danger):C.border}`, padding:'36px 20px', textAlign:'center', transition:'all .15s', minHeight:160, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center' }}>
+          {feedback ? (
+            <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:20, color:feedback.correct?C.success:C.danger }}>{feedback.label}</div>
+          ) : (
+            <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:30, color:C.ink }}>{item.text}</div>
+          )}
+        </div>
+        <div style={{ fontSize:11, color:C.muted }}>{idx+1}/{items.current.length} · Combo: {combo}</div>
+        {/* Catégories */}
+        <div style={{ display:'flex', flexDirection:'column', gap:10, width:'100%', maxWidth:340 }}>
+          {data.categories.map(cat => (
+            <button key={cat.id} onClick={() => pick(cat.id)} style={{
+              background:`${cat.color}22`, border:`2px solid ${cat.color}66`,
+              borderRadius:14, padding:'16px 20px', display:'flex', alignItems:'center', gap:14,
+              fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:16, color:C.ink, cursor:'pointer'
+            }}>
+              <span style={{ fontSize:24 }}>{cat.emoji}</span>
+              <span>{cat.label}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/14_TileMerge.jsx">
+import React, { useState, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { gridSize:4 },
+  tileBank: [
+    { id:'t1', label:'Achaler',  pairId:'t2' }, { id:'t2', label:'Agacer',    pairId:'t1' },
+    { id:'t3', label:'Tuque',    pairId:'t4' }, { id:'t4', label:'Bonnet',    pairId:'t3' },
+    { id:'t5', label:'Chum',     pairId:'t6' }, { id:'t6', label:'Ami',       pairId:'t5' },
+    { id:'t7', label:'Pogner',   pairId:'t8' }, { id:'t8', label:'Attraper',  pairId:'t7' },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
+
+function initGrid(bank, size) {
+  const picked = shuffle(bank).slice(0, size*size);
+  return Array.from({length:size}, (_,r) =>
+    Array.from({length:size}, (_,c) => {
+      const t = picked[r*size+c];
+      return t ? { ...t, uid: t.id+'_'+Math.random().toString(36).slice(2) } : null;
+    })
+  );
+}
+
+export default function TileMerge({ data = SAMPLE, onBack, onComplete }) {
+  const size = data.config?.gridSize || 4;
+  const [grid, setGrid] = useState(() => initGrid(data.tileBank, size));
+  const [merged, setMerged] = useState(0);
+  const [score, setScore] = useState(0);
+  const [selected, setSelected] = useState(null); // {r,c}
+  const total = Math.floor(data.tileBank.length / 2);
+
+  const selectTile = useCallback((r, c) => {
+    const tile = grid[r][c];
+    if (!tile) return;
+    if (!selected) { setSelected({r,c}); return; }
+    if (selected.r===r && selected.c===c) { setSelected(null); return; }
+    const selTile = grid[selected.r][selected.c];
+    if (selTile && tile.pairId === selTile.id) {
+      // Match! Remove both
+      const newGrid = grid.map(row => [...row]);
+      newGrid[selected.r][selected.c] = null;
+      newGrid[r][c] = null;
+      setGrid(newGrid);
+      const newMerged = merged+1;
+      setMerged(newMerged);
+      setScore(s => s+50);
+      if (newMerged >= total) { setTimeout(() => onComplete?.(score+50), 400); }
+    }
+    setSelected(null);
+  }, [grid, selected, merged, score, total, onComplete]);
+
+  const tileColors = [
+    '#6366f1','#8b5cf6','#C75B39','#2D7A4F','#2B5AA0','#f59e0b','#06b6d4','#ec4899'
+  ];
+  const colorMap = {};
+  data.tileBank.forEach((t,i) => { colorMap[t.id]=tileColors[i%tileColors.length]; colorMap[t.pairId]=tileColors[i%tileColors.length]; });
+
+  const done = merged >= total;
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🔢</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Toutes les paires !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Fusion de Tuiles</span>
+        <span style={{ fontSize:12, color:C.muted }}>{merged}/{total} paires · {score} pts</span>
+      </div>
+      <div style={{ flex:1, padding:16, display:'flex', flexDirection:'column', alignItems:'center', gap:16, justifyContent:'center' }}>
+        <div style={{ fontSize:12, color:C.muted, textAlign:'center' }}>Sélectionne deux tuiles qui vont ensemble</div>
+        <div style={{ display:'grid', gridTemplateColumns:`repeat(${size},1fr)`, gap:8, width:'100%', maxWidth:360 }}>
+          {grid.map((row, r) => row.map((tile, c) => {
+            const isSel = selected && selected.r===r && selected.c===c;
+            const color = tile ? (colorMap[tile.id]||C.primary) : 'transparent';
+            return (
+              <div key={`${r}-${c}`} onClick={() => tile && selectTile(r,c)} style={{
+                aspectRatio:'1', borderRadius:12,
+                background: tile ? `${color}22` : 'rgba(255,255,255,.02)',
+                border: `2px solid ${isSel ? color : tile ? color+'66' : 'rgba(255,255,255,.05)'}`,
+                display:'flex', alignItems:'center', justifyContent:'center',
+                fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:11, color:C.ink,
+                cursor: tile?'pointer':'default', textAlign:'center', padding:4,
+                transform: isSel ? 'scale(1.05)' : 'scale(1)',
+                transition:'all .15s', lineHeight:1.2,
+                boxShadow: isSel ? `0 0 12px ${color}66` : 'none'
+              }}>{tile ? tile.label : ''}</div>
+            );
+          }))}
+        </div>
+        <div style={{ fontSize:12, color:C.muted }}>Tuiles restantes : {grid.flat().filter(Boolean).length}</div>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/15_WordSearch.jsx">
+import React, { useState, useRef, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { gridSize:10, directions:['H','V'], hintMode:'definition' },
+  words: [
+    { id:'w1', word:'ACHALER',    hint:'Agacer quelqu'un' },
+    { id:'w2', word:'TUQUE',      hint:'Bonnet de laine' },
+    { id:'w3', word:'CHUM',       hint:'Ami ou copain' },
+    { id:'w4', word:'POGNER',     hint:'Attraper' },
+    { id:'w5', word:'FRETTE',     hint:'Très froid' },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F' };
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const COLORS = ['#6366f1','#C75B39','#2D7A4F','#f59e0b','#06b6d4'];
+
+function buildGrid(words, size) {
+  const grid = Array.from({length:size}, () => Array(size).fill(''));
+  const placed = []; // {wordId, cells:[{r,c}]}
+  const dirs = [{dr:0,dc:1},{dr:1,dc:0}]; // H, V
+  for (const w of words) {
+    const letters = w.word.toUpperCase();
+    let tries = 0, ok = false;
+    while (tries++ < 200 && !ok) {
+      const dir = dirs[Math.floor(Math.random()*dirs.length)];
+      const r0 = Math.floor(Math.random()*(size - (dir.dr?letters.length:1)));
+      const c0 = Math.floor(Math.random()*(size - (dir.dc?letters.length:1)));
+      const cells = letters.split('').map((l,i) => ({ r:r0+dir.dr*i, c:c0+dir.dc*i, l }));
+      if (cells.every(({r,c,l}) => grid[r][c]===''||grid[r][c]===l)) {
+        cells.forEach(({r,c,l}) => grid[r][c]=l);
+        placed.push({ wordId:w.id, cells:cells.map(({r,c})=>({r,c})) });
+        ok = true;
+      }
+    }
+  }
+  for(let r=0;r<size;r++) for(let c=0;c<size;c++) if(!grid[r][c]) grid[r][c]=LETTERS[Math.floor(Math.random()*26)];
+  return { grid, placed };
+}
+
+function cellKey(r,c) { return `${r}-${c}`; }
+
+export default function WordSearch({ data = SAMPLE, onBack, onComplete }) {
+  const size = data.config?.gridSize || 10;
+  const [{ grid, placed }] = useState(() => buildGrid(data.words, size));
+  const [found, setFound] = useState([]); // wordIds
+  const [selecting, setSelecting] = useState([]); // [{r,c}]
+  const [touching, setTouching] = useState(false);
+  const gridRef = useRef(null);
+
+  const foundCells = new Set(
+    placed.filter(p=>found.includes(p.wordId)).flatMap(p=>p.cells.map(c=>cellKey(c.r,c.c)))
+  );
+  const selCells = new Set(selecting.map(c=>cellKey(c.r,c.c)));
+
+  const checkSelection = useCallback((sel) => {
+    for (const p of placed) {
+      if (found.includes(p.wordId)) continue;
+      const match = p.cells.every((c,i) => sel[i] && sel[i].r===c.r && sel[i].c===c.c);
+      const revMatch = p.cells.every((c,i) => sel[i] && sel[p.cells.length-1-i] && sel[p.cells.length-1-i].r===c.r && sel[p.cells.length-1-i].c===c.c);
+      if ((sel.length===p.cells.length) && (match||revMatch)) {
+        const newFound = [...found, p.wordId];
+        setFound(newFound);
+        if (newFound.length >= data.words.length) setTimeout(() => onComplete?.(newFound.length*30), 500);
+        return;
+      }
+    }
+  }, [found, placed, data.words.length, onComplete]);
+
+  const getCell = useCallback((clientX, clientY) => {
+    if (!gridRef.current) return null;
+    const rect = gridRef.current.getBoundingClientRect();
+    const cellW = rect.width / size;
+    const cellH = rect.height / size;
+    const c = Math.floor((clientX - rect.left) / cellW);
+    const r = Math.floor((clientY - rect.top) / cellH);
+    if (r<0||r>=size||c<0||c>=size) return null;
+    return { r, c };
+  }, [size]);
+
+  const onMouseDown = (r,c) => setSelecting([{r,c}]);
+  const onMouseEnter = (r,c) => { if (selecting.length>0) setSelecting(s => [...s.filter(x=>!(x.r===r&&x.c===c)), {r,c}]); };
+  const onMouseUp = () => { checkSelection(selecting); setSelecting([]); };
+  const onTouchStart = (e) => { e.preventDefault(); setTouching(true); const cell=getCell(e.touches[0].clientX,e.touches[0].clientY); if(cell) setSelecting([cell]); };
+  const onTouchMove = (e) => { e.preventDefault(); const cell=getCell(e.touches[0].clientX,e.touches[0].clientY); if(cell&&selecting.length>0) setSelecting(s=>{const last=s[s.length-1];return last.r===cell.r&&last.c===cell.c?s:[...s,cell]}); };
+  const onTouchEnd = () => { checkSelection(selecting); setSelecting([]); setTouching(false); };
+
+  const colorMap = {};
+  placed.forEach((p,i) => { colorMap[p.wordId] = COLORS[i%COLORS.length]; });
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Mots cachés</span>
+        <span style={{ fontSize:12, color:C.muted }}>{found.length}/{data.words.length}</span>
+      </div>
+      <div style={{ flex:1, padding:'12px', display:'flex', flexDirection:'column', gap:12 }}>
+        {/* Grid */}
+        <div ref={gridRef}
+          onMouseUp={onMouseUp} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
+          style={{ display:'grid', gridTemplateColumns:`repeat(${size},1fr)`, gap:2, userSelect:'none', touchAction:'none' }}>
+          {grid.map((row,r) => row.map((letter,c) => {
+            const key = cellKey(r,c);
+            const isFnd = foundCells.has(key);
+            const isSel = selCells.has(key);
+            const fndWord = placed.find(p=>found.includes(p.wordId)&&p.cells.some(cl=>cl.r===r&&cl.c===c));
+            const bg = isFnd ? `${colorMap[fndWord?.wordId]||C.success}44` : isSel ? 'rgba(199,91,57,.3)' : 'transparent';
+            return (
+              <div key={key} onMouseDown={() => onMouseDown(r,c)} onMouseEnter={() => onMouseEnter(r,c)}
+                style={{ aspectRatio:'1', display:'flex', alignItems:'center', justifyContent:'center', borderRadius:4, background:bg, fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:11, color: isFnd?C.ink:isSel?C.primary:C.muted, cursor:'default', transition:'background .1s' }}>
+                {letter}
+              </div>
+            );
+          }))}
+        </div>
+        {/* Words list */}
+        <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
+          {data.words.map((w,i) => (
+            <div key={w.id} style={{ background: found.includes(w.id) ? `${COLORS[i%COLORS.length]}22` : C.card, border:`1px solid ${found.includes(w.id)?COLORS[i%COLORS.length]:C.border}`, borderRadius:999, padding:'4px 12px', fontSize:12, fontWeight:700, color:C.ink, textDecoration:found.includes(w.id)?'line-through':'none', opacity:found.includes(w.id)?0.6:1 }}>
+              {data.config?.hintMode==='word' ? w.word : w.hint}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/16_ChainReaction.jsx">
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { linkType:'letter', timerSeconds:8 },
+  wordBank: [
+    { id:'g1', word:'ACHALER',    startLetter:'A', endLetter:'R' },
+    { id:'g2', word:'RONDELLE',   startLetter:'R', endLetter:'E' },
+    { id:'g3', word:'ESTIE',      startLetter:'E', endLetter:'E' },
+    { id:'g4', word:'EMBARQUER',  startLetter:'E', endLetter:'R' },
+    { id:'g5', word:'RAVIGOTE',   startLetter:'R', endLetter:'E' },
+    { id:'g6', word:'ESCOGRIFFE', startLetter:'E', endLetter:'E' },
+    { id:'g7', word:'RALLER',     startLetter:'R', endLetter:'R' },
+    { id:'g8', word:'RIGOLER',    startLetter:'R', endLetter:'R' },
+    { id:'g9', word:'MAGASINER',  startLetter:'M', endLetter:'R' },
+    { id:'g10',word:'POUDRERIE',  startLetter:'P', endLetter:'E' },
+    { id:'g11',word:'TABARNAC',   startLetter:'T', endLetter:'C' },
+    { id:'g12',word:'CÂLICE',     startLetter:'C', endLetter:'E' },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+
+export default function ChainReaction({ data = SAMPLE, onBack, onComplete }) {
+  const timer = data.config?.timerSeconds || 8;
+  const [chain, setChain] = useState([]);
+  const [input, setInput] = useState('');
+  const [timeLeft, setTimeLeft] = useState(timer);
+  const [error, setError] = useState('');
+  const [done, setDone] = useState(false);
+  const [usedIds, setUsedIds] = useState(new Set());
+  const timerRef = useRef(null);
+  const inputRef = useRef(null);
+
+  const startWord = data.wordBank[Math.floor(Math.random()*data.wordBank.length)];
+  const [firstWord] = useState(startWord);
+
+  useEffect(() => {
+    if (done) return;
+    setTimeLeft(timer);
+    clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
+      setTimeLeft(t => {
+        if (t <= 1) { clearInterval(timerRef.current); setDone(true); onComplete?.(chain.length*20); return 0; }
+        return t-1;
+      });
+    }, 1000);
+    return () => clearInterval(timerRef.current);
+  }, [chain.length, done]);
+
+  const lastWord = chain.length > 0 ? chain[chain.length-1] : firstWord;
+  const neededLetter = lastWord.endLetter;
+
+  const submit = useCallback(() => {
+    const val = input.toUpperCase().trim();
+    if (!val) return;
+    const match = data.wordBank.find(w => w.word===val && !usedIds.has(w.id) && w.startLetter===neededLetter);
+    if (!match) {
+      setError(val.startsWith(neededLetter) ? 'Mot non trouvé dans la banque !' : `Doit commencer par la lettre "${neededLetter}" !`);
+      setTimeout(() => setError(''), 1500);
+    } else {
+      setChain(c => [...c, match]);
+      setUsedIds(s => new Set([...s, match.id]));
+      setInput('');
+      setError('');
+    }
+  }, [input, data.wordBank, usedIds, neededLetter]);
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>⛓️</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Chaîne de {chain.length} mots !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:20 }}>+{chain.length*20} pts</div>
+      <div style={{ display:'flex', flexDirection:'column', gap:6, width:'100%', maxWidth:340, marginBottom:24 }}>
+        {[firstWord,...chain].map((w,i) => (
+          <div key={i} style={{ fontSize:12, color:C.muted, textAlign:'center' }}>{i===0?'🎯':'→'} {w.word}</div>
+        ))}
+      </div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Chaîne de mots</span>
+        <span style={{ fontSize:12, color: timeLeft<=3?C.danger:C.muted, fontWeight:700 }}>⏱ {timeLeft}s</span>
+      </div>
+      <div style={{ height:4, background:C.border }}><div style={{ height:4, background:timeLeft>timer*.4?C.success:C.danger, width:`${(timeLeft/timer)*100}%`, transition:'width 1s linear' }}/></div>
+      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
+        {/* Current word */}
+        <div style={{ background:C.card, borderRadius:18, padding:'20px', border:`1px solid ${C.border}`, textAlign:'center' }}>
+          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:8 }}>Mot actuel</div>
+          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:28, color:C.ink, marginBottom:8 }}>{lastWord.word}</div>
+          <div style={{ fontSize:13, color:C.primary, fontWeight:700 }}>Prochain mot commence par : <span style={{ fontSize:22 }}>"{neededLetter}"</span></div>
+        </div>
+        {/* Input */}
+        <div style={{ display:'flex', gap:8 }}>
+          <input ref={inputRef} value={input} onChange={e=>setInput(e.target.value.toUpperCase())}
+            onKeyDown={e=>e.key==='Enter'&&submit()}
+            placeholder={`Mot commençant par "${neededLetter}"…`}
+            style={{ flex:1, background:C.surface, border:`1px solid ${error?C.danger:C.border}`, borderRadius:12, padding:'12px 14px', color:C.ink, fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, outline:'none' }} />
+          <button onClick={submit} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:12, padding:'12px 18px', fontFamily:'Sora,sans-serif', fontWeight:700, cursor:'pointer' }}>→</button>
+        </div>
+        {error && <div style={{ fontSize:13, color:C.danger, textAlign:'center', fontWeight:700 }}>{error}</div>}
+        {/* Chain */}
+        <div style={{ display:'flex', flexDirection:'column', gap:6, maxHeight:200, overflow:'auto' }}>
+          {[firstWord,...chain].map((w,i) => (
+            <div key={i} style={{ fontSize:12, color:C.muted, display:'flex', alignItems:'center', gap:8 }}>
+              <span style={{ width:20, textAlign:'right', color:'rgba(255,255,255,.25)' }}>{i+1}</span>
+              <span style={{ width:20 }}>{i===0?'🎯':'→'}</span>
+              <span style={{ fontWeight:700, color:C.ink }}>{w.word}</span>
+            </div>
+          ))}
+        </div>
+        <div style={{ fontSize:11, color:C.muted, textAlign:'center' }}>Chaîne actuelle : {chain.length} mots · {chain.length*20} pts</div>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/17_CombinationBuilder.jsx">
+import React, { useState, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { reelCount:3, maxSpins:3 },
+  reels: [
+    { id:'r1', items:['ACH','MAG','POG','TUQ','CHU','FRE'] },
+    { id:'r2', items:['AL','AS','NER','UE','M','TTE'] },
+    { id:'r3', items:['ER','ER','','UE','',''] },
+  ],
+  validCombinations: [
+    { combo:['ACH','AL','ER'],  result:'ACHALER',        definition:'Agacer, énerver quelqu'un', points:60 },
+    { combo:['MAG','AS','NER'], result:'MAGASINER',      definition:'Faire du shopping',          points:80 },
+    { combo:['POG','NER',''],   result:'POGNER',         definition:'Attraper, saisir',           points:50 },
+    { combo:['TUQ','UE',''],    result:'TUQUE',          definition:'Bonnet de laine',            points:40 },
+    { combo:['CHU','M',''],     result:'CHUM',           definition:'Ami ou copain',              points:40 },
+    { combo:['FRE','TTE',''],   result:'FRETTE',         definition:'Très froid',                 points:50 },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+
+export default function CombinationBuilder({ data = SAMPLE, onBack, onComplete }) {
+  const reels = data.reels;
+  const [positions, setPositions] = useState(reels.map(() => 0));
+  const [held, setHeld] = useState(reels.map(() => false));
+  const [spinning, setSpinning] = useState(false);
+  const [spinsLeft, setSpinsLeft] = useState(data.config?.maxSpins || 3);
+  const [result, setResult] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+
+  const currentCombo = positions.map((p,i) => reels[i].items[p]);
+
+  const checkCombo = useCallback((pos) => {
+    const combo = pos.map((p,i) => reels[i].items[p]);
+    return data.validCombinations.find(v => v.combo.every((c,i) => c===combo[i]));
+  }, [reels, data.validCombinations]);
+
+  const spin = useCallback(() => {
+    if (spinning || spinsLeft <= 0) return;
+    setSpinning(true);
+    setResult(null);
+    let iters = 0;
+    const iv = setInterval(() => {
+      setPositions(pos => pos.map((p,i) => held[i] ? p : Math.floor(Math.random()*reels[i].items.length)));
+      if (++iters > 12) {
+        clearInterval(iv);
+        setSpinning(false);
+        const newSpins = spinsLeft-1;
+        setSpinsLeft(newSpins);
+        setPositions(pos => {
+          const match = checkCombo(pos);
+          if (match) { setResult({ win:true, ...match }); setScore(s=>s+match.points); onComplete?.(score+match.points); }
+          else if (newSpins<=0) { setResult({ win:false }); }
+          return pos;
+        });
+      }
+    }, 80);
+  }, [spinning, spinsLeft, held, reels, checkCombo, score, onComplete]);
+
+  const toggleHold = (i) => {
+    if (spinning || spinsLeft<=0 || result?.win) return;
+    setHeld(h => h.map((v,idx) => idx===i?!v:v));
+  };
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🎰</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:32 }}>+{score} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Loto-Vocab 🎰</span>
+        <span style={{ fontSize:12, color:C.muted }}>{spinsLeft} tours · {score} pts</span>
+      </div>
+      <div style={{ flex:1, padding:'32px 16px', display:'flex', flexDirection:'column', alignItems:'center', gap:28 }}>
+        {/* Reels */}
+        <div style={{ display:'flex', gap:12, justifyContent:'center' }}>
+          {reels.map((reel, i) => (
+            <div key={reel.id} onClick={() => toggleHold(i)} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:8, cursor:'pointer' }}>
+              <div style={{ width:80, height:80, borderRadius:16, background: spinning && !held[i] ? C.surface : C.card, border:`2px solid ${held[i]?C.success:C.border}`, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color:C.ink, transition:'border-color .15s' }}>
+                {reel.items[positions[i]] || '—'}
+              </div>
+              <div style={{ fontSize:10, fontWeight:700, color:held[i]?C.success:C.muted, textTransform:'uppercase' }}>{held[i]?'🔒 Tenu':'Tap tenir'}</div>
+            </div>
+          ))}
+        </div>
+        {/* Résultat */}
+        {result && (
+          <div style={{ background: result.win?'rgba(45,122,79,.15)':'rgba(192,57,43,.1)', borderRadius:16, padding:16, border:`1px solid ${result.win?C.success:C.danger}`, textAlign:'center', width:'100%', maxWidth:340 }}>
+            {result.win ? (
+              <>
+                <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:20, color:C.success, marginBottom:4 }}>🎉 {result.result} !</div>
+                <div style={{ fontSize:13, color:C.muted, marginBottom:8 }}>{result.definition}</div>
+                <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color:'#F5C542' }}>+{result.points} pts</div>
+                <button onClick={() => setDone(true)} style={{ marginTop:12, background:C.primary, color:'#fff', border:'none', borderRadius:12, padding:'10px 24px', fontFamily:'Sora,sans-serif', fontWeight:700, cursor:'pointer' }}>Terminer</button>
+              </>
+            ) : (
+              <>
+                <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color:C.danger, marginBottom:8 }}>Aucune combinaison valide</div>
+                <button onClick={() => setDone(true)} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:12, padding:'10px 24px', fontFamily:'Sora,sans-serif', fontWeight:700, cursor:'pointer' }}>Terminer</button>
+              </>
+            )}
+          </div>
+        )}
+        {/* Spin button */}
+        {!result && (
+          <button onClick={spin} disabled={spinning||spinsLeft<=0} style={{
+            background: spinsLeft>0?C.primary:'rgba(255,255,255,.08)', color:'#fff', border:'none', borderRadius:20,
+            padding:'18px 48px', fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:18, cursor: spinsLeft>0?'pointer':'default',
+            boxShadow: spinsLeft>0?'0 4px 20px rgba(199,91,57,.4)':'none'
+          }}>
+            {spinning ? '🎰 …' : `Tourner (${spinsLeft} restants)`}
+          </button>
+        )}
+        {/* Combinaisons valides */}
+        <div style={{ width:'100%', maxWidth:340 }}>
+          <div style={{ fontSize:10, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:8 }}>Combinaisons possibles</div>
+          <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
+            {data.validCombinations.map(v => (
+              <div key={v.result} style={{ background:C.card, borderRadius:999, padding:'4px 10px', fontSize:11, fontWeight:700, color:C.muted, border:`1px solid ${C.border}` }}>{v.result}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/18_DialogueTree.jsx">
+import React, { useState } from 'react';
+
+const SAMPLE = {
+  config: { character:{ name:'Marie Tremblay', avatar:'👩' } },
+  startNode: 'n1',
+  nodes: {
+    n1: { npc:'Allô ! Ça fait longtemps ! Comment tu vas ?', choices:[
+      { text:'Ça va bien, pis toé ?',              next:'n2', points:15, feedback:'Parfait ! "Pis toé" est très naturel en québécois.' },
+      { text:'Je vais très bien, merci de demander.',next:'n3', points:5,  feedback:'Correct mais un peu guindé pour une amie !' },
+      { text:'Wô là ! T'es qui toé ?',             next:'n4', points:0,  feedback:'Aïe ! Trop brusque pour quelqu'un qu'on connaît.' },
+    ]},
+    n2: { npc:'Super ! T'as des plans pour le week-end ?', choices:[
+      { text:'J'pensais aller à la cabane à sucre, t'as le goût ?', next:'n5', points:20, feedback:'Excellent ! Invitation naturelle et culturellement parfaite.' },
+      { text:'Non, rien de planifié.',                                next:'n6', points:8,  feedback:'Correct mais un peu froid.' },
+    ]},
+    n3: { npc:'Haha, t'as l'air bien formal aujourd'hui ! Anyway, t'as des plans ?', choices:[
+      { text:'Pantoute, je suis libre !', next:'n5', points:15, feedback:'"Pantoute" = pas du tout. Très québécois !' },
+      { text:'Non, pas de plans.',        next:'n6', points:5,  feedback:'Correct mais peu coloré.' },
+    ]},
+    n4: { npc:'C'est moi Marie ! Tu m'reconnais-tu pas ?!', choices:[
+      { text:'Ah ! Excuse-moé, j't'avais pas vu ! Ça va ?', next:'n2', points:10, feedback:'"Excuse-moé" et "j't'avais" = formes contractées québécoises !' },
+    ]},
+    n5: { npc:'La cabane à sucre ! Bonne idée d'abord ! On y va !', isEnd:true, outcome:'win' },
+    n6: { npc:'OK, ben on se r'verra peut-être. Bonne journée !', isEnd:true, outcome:'neutral' },
+  }
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+
+export default function DialogueTree({ data = SAMPLE, onBack, onComplete }) {
+  const char = data.config?.character || { name:'PNJ', avatar:'🤖' };
+  const [nodeId, setNodeId] = useState(data.startNode);
+  const [score, setScore] = useState(0);
+  const [lastFeedback, setLastFeedback] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [done, setDone] = useState(false);
+  const [outcome, setOutcome] = useState(null);
+
+  const node = data.nodes[nodeId];
+
+  const pick = (choice) => {
+    const newScore = score + (choice.points||0);
+    setScore(newScore);
+    setLastFeedback({ text: choice.feedback, good: (choice.points||0) > 0 });
+    setHistory(h => [...h, { npc: node.npc, player: choice.text }]);
+    setTimeout(() => {
+      setLastFeedback(null);
+      const nextNode = data.nodes[choice.next];
+      if (nextNode?.isEnd) {
+        setOutcome(nextNode.outcome);
+        setHistory(h => [...h, { npc: nextNode.npc }]);
+        setDone(true);
+        onComplete?.(newScore);
+      } else {
+        setNodeId(choice.next);
+      }
+    }, 1600);
+  };
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', padding:20 }}>
+      <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:20 }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:16, color:C.ink }}>Dialogue terminé</span>
+      </div>
+      <div style={{ flex:1, display:'flex', flexDirection:'column', gap:12, marginBottom:20 }}>
+        {history.map((h, i) => (
+          <React.Fragment key={i}>
+            <div style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
+              <span style={{ fontSize:24, flexShrink:0 }}>{char.avatar}</span>
+              <div style={{ background:C.card, borderRadius:14, borderTopLeftRadius:4, padding:'10px 14px', maxWidth:'75%', fontSize:13, color:C.ink, lineHeight:1.5 }}>{h.npc}</div>
+            </div>
+            {h.player && (
+              <div style={{ display:'flex', justifyContent:'flex-end' }}>
+                <div style={{ background:'rgba(199,91,57,.2)', border:'1px solid rgba(199,91,57,.4)', borderRadius:14, borderTopRightRadius:4, padding:'10px 14px', maxWidth:'75%', fontSize:13, color:C.ink, lineHeight:1.5 }}>{h.player}</div>
+              </div>
+            )}
+          </React.Fragment>
+        ))}
+      </div>
+      <div style={{ textAlign:'center', marginBottom:16 }}>
+        <div style={{ fontSize:36, marginBottom:8 }}>{outcome==='win'?'🎉':outcome==='neutral'?'😐':'😕'}</div>
+        <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:18, color:C.ink, marginBottom:4 }}>Score : {score} pts</div>
+      </div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <div style={{ display:'flex', alignItems:'center', gap:8 }}><span style={{ fontSize:20 }}>{char.avatar}</span><span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color:C.ink }}>{char.name}</span></div>
+        <span style={{ fontSize:12, color:C.muted }}>⭐ {score}</span>
+      </div>
+      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
+        {/* Historique compact */}
+        {history.slice(-2).map((h,i) => (
+          <React.Fragment key={i}>
+            <div style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
+              <span style={{ fontSize:20, flexShrink:0 }}>{char.avatar}</span>
+              <div style={{ background:C.card, borderRadius:12, borderTopLeftRadius:4, padding:'8px 12px', fontSize:12, color:C.muted, lineHeight:1.5 }}>{h.npc}</div>
+            </div>
+            {h.player && <div style={{ display:'flex', justifyContent:'flex-end' }}><div style={{ background:'rgba(199,91,57,.15)', borderRadius:12, borderTopRightRadius:4, padding:'8px 12px', fontSize:12, color:C.muted }}>{h.player}</div></div>}
+          </React.Fragment>
+        ))}
+        {/* Message actuel */}
+        <div style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
+          <span style={{ fontSize:24, flexShrink:0 }}>{char.avatar}</span>
+          <div style={{ background:C.surface, borderRadius:14, borderTopLeftRadius:4, padding:'14px 16px', flex:1, fontSize:14, color:C.ink, lineHeight:1.6, border:`1px solid ${C.border}` }}>{node.npc}</div>
+        </div>
+        {lastFeedback && (
+          <div style={{ background: lastFeedback.good?'rgba(45,122,79,.15)':'rgba(192,57,43,.12)', borderRadius:12, padding:'10px 14px', fontSize:12, color:lastFeedback.good?C.success:C.danger, border:`1px solid ${lastFeedback.good?C.success:C.danger}` }}>
+            💬 {lastFeedback.text}
+          </div>
+        )}
+        {/* Choix */}
+        {!lastFeedback && (
+          <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+            {node.choices?.map((c,i) => (
+              <button key={i} onClick={() => pick(c)} style={{ background:C.card, border:`1px solid ${C.border}`, borderRadius:14, padding:'13px 16px', textAlign:'left', fontFamily:'Sora,sans-serif', fontWeight:600, fontSize:13, color:C.ink, cursor:'pointer' }}>
+                {c.text}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/19_RebusPuzzle.jsx">
+import React, { useState, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { hintLevel:1 },
+  puzzles: [
+    { id:'r1', pieces:[{emoji:'🐓',sound:'co'},{emoji:'🦆',sound:'in'}],         answer:'coin',      choices:['coin','soin','loin','point'],   explanation:'🐓(co) + 🦆(in) = COIN' },
+    { id:'r2', pieces:[{emoji:'🌿',sound:'ver'},{emoji:'🍃',sound:'dure'}],       answer:'verdure',   choices:['verdure','lecture','terreur','verdeur'], explanation:'🌿(ver) + 🍃(dure) = VERDURE' },
+    { id:'r3', pieces:[{emoji:'🧊',sound:'fro'},{emoji:'🫁',sound:'mage'}],       answer:'fromage',   choices:['fromage','erage','dommage','nommage'],  explanation:'🧊(fro) + 🫁(mage) = FROMAGE' },
+    { id:'r4', pieces:[{emoji:'🐢',sound:'tor'},{emoji:'🛖',sound:'tue'}],        answer:'tortue',    choices:['tortue','fortune','torture','portée'],  explanation:'🐢(tor) + 🛖(tue) = TORTUE' },
+    { id:'r5', pieces:[{emoji:'📦',sound:'ca'},{emoji:'🦆',sound:'nar'},{emoji:'🚗',sound:'d'}], answer:'canard', choices:['canard','regard','hasard','bavard'], explanation:'📦(ca)+🦆(nar)+🚗(d) = CANARD' },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+
+export default function RebusPuzzle({ data = SAMPLE, onBack, onComplete }) {
+  const [idx, setIdx] = useState(0);
+  const [picked, setPicked] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+
+  const puzzle = data.puzzles[idx];
+  const answered = picked !== null;
+  const correct = picked === puzzle.answer;
+
+  const pick = useCallback((choice) => {
+    if (answered) return;
+    setPicked(choice);
+    if (choice === puzzle.answer) setScore(s => s+40);
+  }, [answered, puzzle.answer]);
+
+  const next = () => {
+    if (idx+1 >= data.puzzles.length) { setDone(true); onComplete?.(score); }
+    else { setIdx(i=>i+1); setPicked(null); }
+  };
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🧩</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Rébus résolus !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Rébus 🧩</span>
+        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{data.puzzles.length}</span>
+      </div>
+      <div style={{ flex:1, padding:'28px 16px', display:'flex', flexDirection:'column', alignItems:'center', gap:24 }}>
+        {/* Rébus */}
+        <div style={{ background:C.card, borderRadius:22, padding:'28px 20px', border:`1px solid ${C.border}`, width:'100%', maxWidth:340, textAlign:'center' }}>
+          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:16 }}>Quel mot se cache ici ?</div>
+          <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, flexWrap:'wrap' }}>
+            {puzzle.pieces.map((p,i) => (
+              <React.Fragment key={i}>
+                <div style={{ textAlign:'center' }}>
+                  <div style={{ fontSize:48 }}>{p.emoji}</div>
+                  {data.config?.hintLevel >= 1 && <div style={{ fontSize:12, color:C.primary, fontWeight:700, marginTop:4 }}>({p.sound})</div>}
+                </div>
+                {i < puzzle.pieces.length-1 && <div style={{ fontSize:24, color:C.muted, fontWeight:800 }}>+</div>}
+              </React.Fragment>
+            ))}
+          </div>
+          <div style={{ marginTop:16, fontSize:18, color:C.muted }}>= ?</div>
+        </div>
+        {/* Choix */}
+        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, width:'100%', maxWidth:340 }}>
+          {puzzle.choices.map(c => {
+            const isCorrect = answered && c===puzzle.answer;
+            const isWrong = answered && c===picked && c!==puzzle.answer;
+            return (
+              <button key={c} onClick={() => pick(c)} style={{
+                background: isCorrect?'rgba(45,122,79,.2)':isWrong?'rgba(192,57,43,.15)':C.surface,
+                border:`2px solid ${isCorrect?C.success:isWrong?C.danger:C.border}`,
+                borderRadius:14, padding:'14px 10px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink, cursor: answered?'default':'pointer', transition:'all .15s'
+              }}>{isCorrect?'✓ ':isWrong?'✗ ':''}{c}</button>
+            );
+          })}
+        </div>
+        {answered && (
+          <>
+            <div style={{ background:'rgba(255,255,255,.05)', borderRadius:14, padding:'12px 16px', width:'100%', maxWidth:340, textAlign:'center', fontSize:13, color:C.muted }}>
+              💡 {puzzle.explanation}
+            </div>
+            <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer', width:'100%', maxWidth:340 }}>
+              {idx+1<data.puzzles.length?'Rébus suivant →':'Voir résultats'}
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/20_AudioTranscription.jsx">
+import React, { useState, useRef, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { tolerance:1, maxReplays:3, hint:'word_count' },
+  items: [
+    { id:'a1', audioUrl:'', expected:'Aweille, on s'en va magasiner', normalize:true, points:25 },
+    { id:'a2', audioUrl:'', expected:'Fais-toé-z-en pas, c'est tiguidou', normalize:true, points:30 },
+    { id:'a3', audioUrl:'', expected:'J'ai eu du trouble à me stationner', normalize:true, points:25 },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+
+function levenshtein(a, b) {
+  const m=a.length, n=b.length, dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i||j));
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++) dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
+  return dp[m][n];
+}
+function normalize(s) { return s.toLowerCase().replace(/[^a-zàâçéèêëîïôùûü ]/g,'').trim(); }
+
+export default function AudioTranscription({ data = SAMPLE, onBack, onComplete }) {
+  const [idx, setIdx] = useState(0);
+  const [input, setInput] = useState('');
+  const [replays, setReplays] = useState(0);
+  const [result, setResult] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const audioRef = useRef(null);
+
+  const item = data.items[idx];
+  const maxReplays = data.config?.maxReplays || 3;
+  const tolerance = data.config?.tolerance || 1;
+  const hint = data.config?.hint;
+
+  const playAudio = () => {
+    if (replays >= maxReplays) return;
+    if (item.audioUrl && audioRef.current) { audioRef.current.play(); }
+    setReplays(r => r+1);
+  };
+
+  const validate = useCallback(() => {
+    const expected = item.normalize ? normalize(item.expected) : item.expected;
+    const given = item.normalize ? normalize(input) : input;
+    const dist = levenshtein(expected, given);
+    const correct = dist <= tolerance;
+    const partial = !correct && dist <= tolerance*3;
+    const pts = correct ? item.points : partial ? Math.round(item.points*0.5) : 0;
+    setScore(s => s+pts);
+    setResult({ correct, partial, dist, pts, expected:item.expected });
+  }, [input, item, tolerance]);
+
+  const next = () => {
+    if (idx+1 >= data.items.length) { setDone(true); onComplete?.(score); }
+    else { setIdx(i=>i+1); setInput(''); setReplays(0); setResult(null); }
+  };
+
+  const wordCount = item.expected.split(' ').length;
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🎙️</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Dictée terminée !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Dictée Audio</span>
+        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{data.items.length}</span>
+      </div>
+      <div style={{ flex:1, padding:'24px 16px', display:'flex', flexDirection:'column', gap:18 }}>
+        {/* Audio player */}
+        <div style={{ background:C.card, borderRadius:18, padding:20, border:`1px solid ${C.border}`, textAlign:'center' }}>
+          {item.audioUrl && <audio ref={audioRef} src={item.audioUrl} />}
+          <button onClick={playAudio} disabled={replays>=maxReplays} style={{
+            background: replays<maxReplays?C.primary:'rgba(255,255,255,.08)', color:'#fff', border:'none', borderRadius:14, padding:'16px 32px',
+            fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor: replays<maxReplays?'pointer':'default'
+          }}>
+            {item.audioUrl ? '▶ Écouter' : '🔇 (audio non dispo — démo)'}
+          </button>
+          <div style={{ marginTop:12, fontSize:11, color:C.muted }}>{maxReplays-replays} écoute{maxReplays-replays!==1?'s':''} restante{maxReplays-replays!==1?'s':''}</div>
+          {hint==='word_count' && <div style={{ marginTop:8, fontSize:12, color:C.primary, fontWeight:700 }}>{wordCount} mots à transcrire</div>}
+        </div>
+        {/* Demo text */}
+        {!item.audioUrl && (
+          <div style={{ background:'rgba(255,255,255,.04)', borderRadius:12, padding:12, fontSize:12, color:C.muted, textAlign:'center' }}>
+            🔈 Audio de démo : <em style={{ color:C.ink }}>"{item.expected}"</em>
+          </div>
+        )}
+        {/* Input */}
+        <div>
+          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:8 }}>Ta transcription</div>
+          <textarea value={input} onChange={e=>setInput(e.target.value)} disabled={!!result}
+            placeholder="Écris ce que tu entends…"
+            style={{ width:'100%', minHeight:80, background:C.surface, border:`1px solid ${result?(result.correct?C.success:C.danger):C.border}`, borderRadius:12, padding:12, color:C.ink, fontFamily:'Space Grotesk,sans-serif', fontSize:14, lineHeight:1.6, resize:'none', outline:'none', boxSizing:'border-box' }} />
+        </div>
+        {/* Résultat */}
+        {result && (
+          <div style={{ background: result.correct?'rgba(45,122,79,.15)':result.partial?'rgba(245,158,11,.1)':'rgba(192,57,43,.12)', borderRadius:14, padding:14, border:`1px solid ${result.correct?C.success:result.partial?'#f59e0b':C.danger}` }}>
+            <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:15, color:result.correct?C.success:result.partial?'#f59e0b':C.danger, marginBottom:6 }}>
+              {result.correct?'✓ Parfait !':result.partial?'~ Presque !':'✗ Pas tout à fait'}
+            </div>
+            <div style={{ fontSize:12, color:C.muted }}>Bonne réponse : <em style={{ color:C.ink }}>"{result.expected}"</em></div>
+            <div style={{ fontSize:12, color:C.muted, marginTop:4 }}>Écart de {result.dist} caractère{result.dist!==1?'s':''} · +{result.pts} pts</div>
+          </div>
+        )}
+        {!result ? (
+          <button onClick={validate} disabled={!input.trim()} style={{ background:input.trim()?C.primary:'rgba(255,255,255,.08)', color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:input.trim()?'pointer':'default' }}>Vérifier</button>
+        ) : (
+          <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>
+            {idx+1<data.items.length?'Item suivant →':'Voir résultats'}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/21_ErrorCorrection.jsx">
+import React, { useState, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { errorType:'mixed', showErrorCount:true, correctionMode:'choice' },
+  exercises: [
+    {
+      id:'ec1',
+      text:'Neil Armstrong a marché sur la Lune en 1969 lors de la mission Apollo 13, devenant ainsi le premier homme dans l'espace.',
+      errors: [
+        { id:'e1', wrong:'Apollo 13', correct:'Apollo 11', start:52, end:62, explanation:'Apollo 13 est la mission qui a failli tourner au drame en 1970. La mission lunaire réussie était Apollo 11.' },
+        { id:'e2', wrong:'dans l'espace', correct:'sur la Lune', start:92, end:106, explanation:'Youri Gagarine fut le premier homme dans l'espace (1961). Armstrong fut le premier sur la Lune.' },
+      ]
+    },
+    {
+      id:'ec2',
+      text:'Le Québec est une province canadienne dont la capitale est Montréal. Le français est sa langue officielle.',
+      errors: [
+        { id:'e3', wrong:'Montréal', correct:'Québec City', start:57, end:65, explanation:'Montréal est la plus grande ville, mais la capitale du Québec est la ville de Québec.' },
+      ]
+    }
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+
+function renderText(text, errors, found, onTap) {
+  const sorted = [...errors].sort((a,b)=>a.start-b.start);
+  const parts = [];
+  let last = 0;
+  sorted.forEach(err => {
+    if (err.start > last) parts.push(<span key={last} style={{ color:'rgba(255,255,255,.8)' }}>{text.slice(last,err.start)}</span>);
+    const isFound = found.includes(err.id);
+    parts.push(
+      <span key={err.id} onClick={() => !isFound && onTap(err)} style={{
+        background: isFound?'rgba(45,122,79,.25)':'rgba(255,220,100,.12)',
+        color: isFound?'#4ade80':'#fde68a',
+        borderRadius:4, padding:'1px 3px', cursor: isFound?'default':'pointer',
+        textDecoration: isFound?'none':'underline dotted', fontWeight:700, fontSize:14
+      }}>{isFound ? err.correct : err.wrong}</span>
+    );
+    last = err.end;
+  });
+  if (last < text.length) parts.push(<span key='end' style={{ color:'rgba(255,255,255,.8)' }}>{text.slice(last)}</span>);
+  return parts;
+}
+
+export default function ErrorCorrection({ data = SAMPLE, onBack, onComplete }) {
+  const [exIdx, setExIdx] = useState(0);
+  const [found, setFound] = useState([]);
+  const [selected, setSelected] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const [showExpl, setShowExpl] = useState(null);
+
+  const ex = data.exercises[exIdx];
+  const allFound = ex.errors.every(e => found.includes(e.id));
+
+  const tapError = useCallback((err) => {
+    setSelected(err);
+  }, []);
+
+  const confirm = (err) => {
+    const newFound = [...found, err.id];
+    setFound(newFound);
+    setScore(s => s+30);
+    setShowExpl(err);
+    setSelected(null);
+  };
+
+  const next = () => {
+    setShowExpl(null);
+    if (exIdx+1 >= data.exercises.length) { setDone(true); onComplete?.(score); }
+    else { setExIdx(i=>i+1); setFound([]); setSelected(null); }
+  };
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🔎</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Corrections terminées !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Correction</span>
+        <span style={{ fontSize:12, color:C.muted }}>{found.length}/{ex.errors.length} erreur{ex.errors.length>1?'s':''}</span>
+      </div>
+      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
+        {data.config?.showErrorCount && (
+          <div style={{ background:'rgba(255,220,100,.08)', borderRadius:12, padding:'8px 14px', fontSize:12, color:'#fde68a', border:'1px solid rgba(255,220,100,.2)' }}>
+            ⚠️ Ce texte contient <strong>{ex.errors.length} erreur{ex.errors.length>1?'s':''}</strong>. Tape sur les mots surlignés pour les corriger.
+          </div>
+        )}
+        <div style={{ background:C.card, borderRadius:16, padding:18, border:`1px solid ${C.border}`, lineHeight:1.9, fontSize:14 }}>
+          {renderText(ex.text, ex.errors, found, tapError)}
+        </div>
+        {selected && (
+          <div style={{ background:'rgba(255,255,255,.06)', borderRadius:14, padding:14, border:`1px solid ${C.primary}` }}>
+            <div style={{ fontSize:12, color:C.muted, marginBottom:8 }}>Corriger <strong style={{ color:C.ink }}>"{selected.wrong}"</strong> par :</div>
+            <button onClick={() => confirm(selected)} style={{ background:C.success, color:'#fff', border:'none', borderRadius:10, padding:'10px 20px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer', marginRight:8 }}>✓ {selected.correct}</button>
+            <button onClick={() => setSelected(null)} style={{ background:'rgba(255,255,255,.08)', color:C.muted, border:'none', borderRadius:10, padding:'10px 16px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>Annuler</button>
+          </div>
+        )}
+        {showExpl && (
+          <div style={{ background:'rgba(45,122,79,.1)', borderRadius:14, padding:14, border:`1px solid ${C.success}` }}>
+            <div style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color:C.success, marginBottom:4 }}>✓ Bonne correction !</div>
+            <div style={{ fontSize:12, color:C.muted, lineHeight:1.6 }}>{showExpl.explanation}</div>
+            <button onClick={() => setShowExpl(null)} style={{ marginTop:10, background:'rgba(255,255,255,.08)', color:C.muted, border:'none', borderRadius:8, padding:'6px 14px', fontSize:11, cursor:'pointer' }}>OK</button>
+          </div>
+        )}
+        {allFound && !showExpl && (
+          <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>
+            {exIdx+1<data.exercises.length?'Exercice suivant →':'Voir résultats'}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/22_DeceptivePairs.jsx">
+import React, { useState, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { contextA:'Français standard', contextB:'Québécois' },
+  pairs: [
+    { id:'dp1', term:'Sensible', meaningA:'Qui ressent facilement les émotions', choices:[
+      { id:'a', text:'Raisonnable, logique', correct:true,  isMeaningA:false },
+      { id:'b', text:'Émotif, très sensible', correct:false, isMeaningA:true  },
+    ], explanation:'En anglais "sensible" = raisonnable. "Sensitive" = sensible en français.', etymology:'Du latin sensibilis — évolution divergente sur 500 ans.' },
+    { id:'dp2', term:'Déceptif', meaningA:'Qui crée une illusion (optique déceptive)', choices:[
+      { id:'a', text:'Décevant, qui déçoit',  correct:true,  isMeaningA:false },
+      { id:'b', text:'Trompeur, illusoire',   correct:false, isMeaningA:true  },
+    ], explanation:'En québécois, "déceptif" a glissé vers "décevant" par calque de l'anglais "deceptive".', etymology:'Faux ami classique franco-anglais.' },
+    { id:'dp3', term:'Achaler', meaningA:'Agacer, importuner (québécois)', choices:[
+      { id:'a', text:'Agacer, déranger quelqu'un', correct:false, isMeaningA:true },
+      { id:'b', text:'N'existe pas en français standard', correct:true, isMeaningA:false },
+    ], explanation:'Achaler n'existe qu'en québécois — calque de l'anglais "to harass". Absent du français hexagonal.', etymology:'De l'anglais to harass / to hale.' },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+
+export default function DeceptivePairs({ data = SAMPLE, onBack, onComplete }) {
+  const [idx, setIdx] = useState(0);
+  const [picked, setPicked] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+
+  const pair = data.pairs[idx];
+  const answered = picked !== null;
+  const pickedChoice = pair.choices.find(c=>c.id===picked);
+
+  const pick = useCallback((choice) => {
+    if (answered) return;
+    setPicked(choice.id);
+    if (choice.correct) setScore(s=>s+35);
+  }, [answered]);
+
+  const next = () => {
+    if (idx+1 >= data.pairs.length) { setDone(true); onComplete?.(score); }
+    else { setIdx(i=>i+1); setPicked(null); }
+  };
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🤥</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Faux amis démasqués !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Faux Amis</span>
+        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{data.pairs.length}</span>
+      </div>
+      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
+        {/* Mot + contexte A */}
+        <div style={{ background:C.card, borderRadius:18, padding:20, border:`1px solid ${C.border}` }}>
+          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:26, color:C.ink, marginBottom:10 }}>{pair.term}</div>
+          <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:6 }}>
+            <div style={{ background:'rgba(43,90,160,.25)', borderRadius:999, padding:'3px 10px', fontSize:10, fontWeight:700, color:'#93c5fd' }}>{data.config?.contextA}</div>
+          </div>
+          <div style={{ fontSize:13, color:C.muted, lineHeight:1.6, fontStyle:'italic' }}>"{pair.meaningA}"</div>
+        </div>
+        {/* Question */}
+        <div style={{ fontSize:13, color:C.primary, fontWeight:700, textAlign:'center' }}>
+          Que signifie <strong>"{pair.term}"</strong> en <span style={{ background:'rgba(199,91,57,.2)', borderRadius:4, padding:'1px 6px' }}>{data.config?.contextB}</span> ?
+        </div>
+        {/* Choix */}
+        <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
+          {pair.choices.map(c => {
+            const isCorrect = answered && c.correct;
+            const isWrong = answered && c.id===picked && !c.correct;
+            return (
+              <button key={c.id} onClick={() => pick(c)} style={{
+                background: isCorrect?'rgba(45,122,79,.2)':isWrong?'rgba(192,57,43,.15)':C.surface,
+                border:`2px solid ${isCorrect?C.success:isWrong?C.danger:C.border}`,
+                borderRadius:14, padding:'14px 16px', textAlign:'left',
+                fontFamily:'Sora,sans-serif', fontWeight:600, fontSize:14, color:C.ink, cursor:answered?'default':'pointer', transition:'all .15s', display:'flex', alignItems:'center', gap:10
+              }}>
+                {c.isMeaningA && <span style={{ fontSize:10, background:'rgba(99,102,241,.2)', color:'#a5b4fc', borderRadius:4, padding:'2px 6px', fontWeight:700, flexShrink:0 }}>⚠️ Piège</span>}
+                <span>{isCorrect?'✓ ':isWrong?'✗ ':''}{c.text}</span>
+              </button>
+            );
+          })}
+        </div>
+        {answered && (
+          <>
+            <div style={{ background:'rgba(255,255,255,.04)', borderRadius:14, padding:14, border:`1px solid rgba(255,255,255,.08)` }}>
+              <div style={{ fontSize:12, color:C.muted, lineHeight:1.6, marginBottom:6 }}>💡 {pair.explanation}</div>
+              {pair.etymology && <div style={{ fontSize:11, color:'rgba(255,255,255,.3)', fontStyle:'italic' }}>📜 {pair.etymology}</div>}
+            </div>
+            <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>
+              {idx+1<data.pairs.length?'Paire suivante →':'Voir résultats'}
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/23_DiagramLabeling.jsx">
+import React, { useState, useRef, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { tolerancePct:6, zoomEnabled:false },
+  image: '',
+  imageWidth:400, imageHeight:320,
+  // Fallback: SVG diagram of a simple map of Quebec landmarks
+  labels: [
+    { id:'l1', text:'Montréal',         zone:{ x:42, y:72, width:12, height:10 } },
+    { id:'l2', text:'Québec City',       zone:{ x:62, y:50, width:14, height:10 } },
+    { id:'l3', text:'Fleuve St-Laurent', zone:{ x:45, y:58, width:20, height:10 } },
+    { id:'l4', text:'Laurentides',       zone:{ x:38, y:28, width:16, height:10 } },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+
+const DEMO_SVG = `<svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="320" fill="#1a2744"/>
+  <ellipse cx="240" cy="155" rx="110" ry="28" fill="#2a4a8a" opacity="0.6"/>
+  <text x="235" y="160" fill="#7db3e8" fontSize="11" textAnchor="middle">Fleuve St-Laurent</text>
+  <ellipse cx="168" cy="230" rx="22" ry="14" fill="#2D7A4F" opacity="0.8"/>
+  <circle cx="168" cy="230" r="5" fill="#C75B39"/>
+  <text x="168" y="252" fill="#aaa" fontSize="10" textAnchor="middle">Montréal</text>
+  <ellipse cx="248" cy="160" rx="18" ry="12" fill="#2D7A4F" opacity="0.7"/>
+  <circle cx="248" cy="160" r="5" fill="#C75B39"/>
+  <text x="248" y="182" fill="#aaa" fontSize="10" textAnchor="middle">Québec City</text>
+  <ellipse cx="152" cy="88" rx="36" ry="22" fill="#1e4a2a" opacity="0.6"/>
+  <text x="152" y="93" fill="#6a9" fontSize="10" textAnchor="middle">Laurentides</text>
+  <text x="200" y="20" fill="rgba(255,255,255,.3)" fontSize="12" textAnchor="middle">Carte du Québec — Démo</text>
+</svg>`;
+
+export default function DiagramLabeling({ data = SAMPLE, onBack, onComplete }) {
+  const labels = data.labels;
+  const [remaining, setRemaining] = useState(() => [...labels].sort(()=>Math.random()-.5));
+  const [placed, setPlaced] = useState({}); // labelId -> {x,y} in %
+  const [correct, setCorrect] = useState([]);
+  const [wrong, setWrong] = useState([]);
+  const [selected, setSelected] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const imgRef = useRef(null);
+
+  const tolerance = data.config?.tolerancePct || 6;
+
+  const pickLabel = (label) => setSelected(s => s?.id===label.id ? null : label);
+
+  const placeOnMap = useCallback((e) => {
+    if (!selected || !imgRef.current) return;
+    const rect = imgRef.current.getBoundingClientRect();
+    const xPct = ((e.clientX - rect.left) / rect.width) * 100;
+    const yPct = ((e.clientY - rect.top) / rect.height) * 100;
+    const zone = selected.zone;
+    const cx = zone.x + zone.width/2;
+    const cy = zone.y + zone.height/2;
+    const isCorrect = Math.abs(xPct-cx) <= tolerance && Math.abs(yPct-cy) <= tolerance;
+    if (isCorrect) {
+      setCorrect(c=>[...c,selected.id]);
+      setScore(s=>s+25);
+      setRemaining(r=>r.filter(l=>l.id!==selected.id));
+    } else {
+      setWrong(w=>[...w,selected.id]);
+      setTimeout(()=>setWrong(w=>w.filter(id=>id!==selected.id)),1000);
+    }
+    setSelected(null);
+    if (correct.length+1 >= labels.length) { setDone(true); onComplete?.(score+25); }
+  }, [selected, correct, labels, score, tolerance, onComplete]);
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🗺️</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{correct.length}/{labels.length} bien placés !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Étiquetage</span>
+        <span style={{ fontSize:12, color:C.muted }}>{correct.length}/{labels.length}</span>
+      </div>
+      <div style={{ flex:1, padding:'16px', display:'flex', flexDirection:'column', gap:14 }}>
+        <div style={{ fontSize:12, color:C.muted, textAlign:'center' }}>
+          {selected ? `📍 Clique sur la carte pour placer "${selected.text}"` : 'Sélectionne une étiquette, puis clique sa position sur la carte'}
+        </div>
+        {/* Carte */}
+        <div ref={imgRef} onClick={placeOnMap} style={{ borderRadius:16, overflow:'hidden', border:`2px solid ${selected?C.primary:C.border}`, cursor:selected?'crosshair':'default', position:'relative', width:'100%', aspectRatio:'4/3' }}>
+          {data.image ? (
+            <img src={data.image} style={{ width:'100%', height:'100%', objectFit:'contain', display:'block' }} alt="diagram" />
+          ) : (
+            <div dangerouslySetInnerHTML={{ __html:DEMO_SVG }} style={{ width:'100%', height:'100%' }} />
+          )}
+          {/* Markers pour étiquettes placées correctement */}
+          {correct.map(id => {
+            const lbl = labels.find(l=>l.id===id);
+            return <div key={id} style={{ position:'absolute', left:`${lbl.zone.x+lbl.zone.width/2}%`, top:`${lbl.zone.y+lbl.zone.height/2}%`, transform:'translate(-50%,-50%)', background:C.success, color:'#fff', borderRadius:999, padding:'3px 8px', fontSize:10, fontWeight:700, whiteSpace:'nowrap', pointerEvents:'none' }}>{lbl.text}</div>;
+          })}
+        </div>
+        {/* Étiquettes */}
+        <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
+          {remaining.map(lbl => {
+            const isSel = selected?.id===lbl.id;
+            const isWrong = wrong.includes(lbl.id);
+            return (
+              <button key={lbl.id} onClick={() => pickLabel(lbl)} style={{
+                background: isWrong?'rgba(192,57,43,.2)':isSel?'rgba(199,91,57,.25)':C.card,
+                border:`2px solid ${isWrong?C.danger:isSel?C.primary:C.border}`,
+                borderRadius:999, padding:'7px 14px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color:C.ink, cursor:'pointer', transition:'all .15s'
+              }}>{lbl.text}</button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/24_VoiceRecording.jsx">
+import React, { useState, useRef, useCallback, useEffect } from 'react';
+
+const SAMPLE = {
+  config: { scoringMode:'self', maxAttempts:3, visualization:'waveform' },
+  items: [
+    { id:'v1', text:'Aweille, on s'en va !',       referenceAudio:'', phonetic:'a.wɛj, ɔ̃.s‿ɑ̃.va', difficulty:1 },
+    { id:'v2', text:'Pantoute, j'veux pas y aller', referenceAudio:'', phonetic:'pɑ̃.tut, ʒvø.pa.i.a.le', difficulty:2 },
+    { id:'v3', text:'C'est tiguidou !',              referenceAudio:'', phonetic:'sɛ.ti.gi.du', difficulty:1 },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+
+function WaveBar({ active, idx }) {
+  const height = active ? (Math.sin(idx*0.8 + Date.now()*0.003)*30+40) : 4;
+  return <div style={{ width:3, borderRadius:999, background:active?C.primary:'rgba(255,255,255,.15)', height, transition:'height .1s', flexShrink:0 }} />;
+}
+
+export default function VoiceRecording({ data = SAMPLE, onBack, onComplete }) {
+  const [idx, setIdx] = useState(0);
+  const [phase, setPhase] = useState('idle'); // idle | playing_ref | recording | reviewing | rated
+  const [attempts, setAttempts] = useState(0);
+  const [selfScore, setSelfScore] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const [tick, setTick] = useState(0);
+  const mediaStream = useRef(null);
+  const mediaRecorder = useRef(null);
+  const recordedBlob = useRef(null);
+  const audioRef = useRef(null);
+  const recAudioRef = useRef(null);
+  const timerRef = useRef(null);
+
+  const item = data.items[idx];
+  const maxAttempts = data.config?.maxAttempts || 3;
+
+  useEffect(() => {
+    if (phase==='recording') {
+      timerRef.current = setInterval(() => setTick(t=>t+1), 100);
+      return () => clearInterval(timerRef.current);
+    }
+    clearInterval(timerRef.current);
+  }, [phase]);
+
+  const playRef = () => {
+    setPhase('playing_ref');
+    if (item.referenceAudio && audioRef.current) {
+      audioRef.current.play();
+      audioRef.current.onended = () => setPhase('idle');
+    } else {
+      setTimeout(() => setPhase('idle'), 2000);
+    }
+  };
+
+  const startRec = useCallback(async () => {
+    if (attempts >= maxAttempts) return;
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio:true });
+      mediaStream.current = stream;
+      const mr = new MediaRecorder(stream);
+      const chunks = [];
+      mr.ondataavailable = e => chunks.push(e.data);
+      mr.onstop = () => {
+        recordedBlob.current = new Blob(chunks, { type:'audio/webm' });
+        if (recAudioRef.current) recAudioRef.current.src = URL.createObjectURL(recordedBlob.current);
+        setPhase('reviewing');
+        stream.getTracks().forEach(t=>t.stop());
+      };
+      mediaRecorder.current = mr;
+      mr.start();
+      setPhase('recording');
+      setAttempts(a=>a+1);
+    } catch {
+      alert('Microphone non autorisé. Cette fonctionnalité requiert l'accès au micro.');
+      setPhase('idle');
+    }
+  }, [attempts, maxAttempts]);
+
+  const stopRec = () => { mediaRecorder.current?.stop(); };
+
+  const playRecording = () => { recAudioRef.current?.play(); };
+
+  const rate = (r) => {
+    setSelfScore(r);
+    const pts = r * 15;
+    setScore(s=>s+pts);
+    setPhase('rated');
+  };
+
+  const next = () => {
+    setSelfScore(null); setAttempts(0); recordedBlob.current=null; setPhase('idle');
+    if (idx+1 >= data.items.length) { setDone(true); onComplete?.(score); }
+    else setIdx(i=>i+1);
+  };
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>🎤</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Session terminée !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Prononciation</span>
+        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{data.items.length}</span>
+      </div>
+      <div style={{ flex:1, padding:'24px 16px', display:'flex', flexDirection:'column', gap:20 }}>
+        {/* Texte à prononcer */}
+        <div style={{ background:C.card, borderRadius:18, padding:20, border:`1px solid ${C.border}`, textAlign:'center' }}>
+          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:12 }}>PRONONCE CETTE PHRASE</div>
+          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:22, color:C.ink, marginBottom:8, lineHeight:1.4 }}>{item.text}</div>
+          {item.phonetic && <div style={{ fontSize:13, color:C.muted, fontFamily:'serif', fontStyle:'italic' }}>/{item.phonetic}/</div>}
+          <div style={{ display:'flex', gap:4, marginTop:4, justifyContent:'center' }}>
+            {Array.from({length:item.difficulty}).map((_,i)=><span key={i} style={{ fontSize:12 }}>⭐</span>)}
+          </div>
+        </div>
+
+        {/* Waveform */}
+        <div style={{ background:C.surface, borderRadius:14, padding:'14px', border:`1px solid ${C.border}`, display:'flex', alignItems:'center', justifyContent:'center', gap:3, height:64, overflow:'hidden' }}>
+          {Array.from({length:40}).map((_,i)=><WaveBar key={i} active={phase==='recording'} idx={i} />)}
+        </div>
+
+        {/* Contrôles */}
+        <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
+          {item.referenceAudio && <audio ref={audioRef} src={item.referenceAudio} />}
+          <audio ref={recAudioRef} />
+
+          <button onClick={playRef} disabled={phase==='recording'} style={{ background:'rgba(43,90,160,.25)', border:'1px solid rgba(43,90,160,.5)', color:'#93c5fd', borderRadius:12, padding:'12px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, cursor:'pointer' }}>
+            {phase==='playing_ref'?'▶ Référence en cours…':'▶ Écouter la référence'}
+          </button>
+
+          {phase==='idle' && (
+            <button onClick={startRec} disabled={attempts>=maxAttempts} style={{ background: attempts<maxAttempts?'rgba(192,57,43,.25)':'rgba(255,255,255,.05)', border:`1px solid ${attempts<maxAttempts?C.danger:'rgba(255,255,255,.1)'}`, color:attempts<maxAttempts?'#fca5a5':C.muted, borderRadius:12, padding:'14px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, cursor:attempts<maxAttempts?'pointer':'default' }}>
+              🎙️ {attempts<maxAttempts?`Enregistrer (essai ${attempts+1}/${maxAttempts})`:'Tentatives épuisées'}
+            </button>
+          )}
+          {phase==='recording' && (
+            <button onClick={stopRec} style={{ background:'rgba(192,57,43,.3)', border:`1px solid ${C.danger}`, color:'#fca5a5', borderRadius:12, padding:'14px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, cursor:'pointer', animation:'pulse 1s infinite' }}>
+              ⏹ Arrêter l'enregistrement
+            </button>
+          )}
+          {(phase==='reviewing'||phase==='rated') && (
+            <button onClick={playRecording} style={{ background:'rgba(45,122,79,.2)', border:`1px solid ${C.success}`, color:'#4ade80', borderRadius:12, padding:'12px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, cursor:'pointer' }}>
+              ▶ Réécouter mon enregistrement
+            </button>
+          )}
+        </div>
+
+        {/* Auto-évaluation */}
+        {phase==='reviewing' && (
+          <div>
+            <div style={{ fontSize:12, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:10, textAlign:'center' }}>Comment était ta prononciation ?</div>
+            <div style={{ display:'flex', gap:8, justifyContent:'center' }}>
+              {[{r:1,label:'😬 Difficile'},{r:2,label:'🙂 Passable'},{r:3,label:'😊 Bon'},{r:4,label:'🤩 Excellent'}].map(({r,label})=>(
+                <button key={r} onClick={()=>rate(r)} style={{ flex:1, background:'rgba(255,255,255,.06)', border:`1px solid ${C.border}`, borderRadius:10, padding:'10px 4px', fontSize:10, fontWeight:700, color:C.ink, cursor:'pointer', textAlign:'center', lineHeight:1.4 }}>{label}</button>
+              ))}
+            </div>
+          </div>
+        )}
+        {phase==='rated' && (
+          <>
+            <div style={{ textAlign:'center', fontSize:14, color:C.success, fontWeight:700 }}>✓ Auto-évaluation enregistrée · +{selfScore*15} pts</div>
+            <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>
+              {idx+1<data.items.length?'Phrase suivante →':'Voir résultats'}
+            </button>
+          </>
+        )}
+        <div style={{ fontSize:11, color:C.muted, textAlign:'center' }}>Note : requiert un navigateur avec accès au microphone (Chrome/Edge)</div>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/25_AudioAB.jsx">
+import React, { useState, useRef, useCallback } from 'react';
+
+const SAMPLE = {
+  config: { criterion:'La prononciation québécoise native', shuffleAB:true, unlimitedReplays:true },
+  pairs: [
+    { id:'p1', label:'Aweille', audioA:'', audioB:'', correct:'A', explanation:'Version A = joual québécois avec diphtongaison et élision.' },
+    { id:'p2', label:'C'est tiguidou', audioA:'', audioB:'', correct:'B', explanation:'Version B = intonation montante typiquement québécoise.' },
+    { id:'p3', label:'Pantoute',  audioA:'', audioB:'', correct:'A', explanation:'Version A = nasalisation et rythme québécois accentués.' },
+  ]
+};
+
+const C = { bg:'#0f1117', card:'#1a1d2e', surface:'#232640', ink:'#fff', muted:'rgba(255,255,255,.45)', border:'rgba(255,255,255,.1)', primary:'#C75B39', success:'#2D7A4F', danger:'#c0392b' };
+
+export default function AudioAB({ data = SAMPLE, onBack, onComplete }) {
+  const [idx, setIdx] = useState(0);
+  const [picked, setPicked] = useState(null);
+  const [playing, setPlaying] = useState(null);
+  const [score, setScore] = useState(0);
+  const [done, setDone] = useState(false);
+  const audioA = useRef(null);
+  const audioB = useRef(null);
+
+  const pair = data.pairs[idx];
+  const answered = picked !== null;
+
+  const playClip = (which) => {
+    setPlaying(which);
+    const ref = which==='A' ? audioA : audioB;
+    if (ref.current && pair[`audio${which}`]) {
+      ref.current.play();
+      ref.current.onended = () => setPlaying(null);
+    } else {
+      setTimeout(() => setPlaying(null), 1500);
+    }
+  };
+
+  const pick = (which) => {
+    if (answered) return;
+    setPicked(which);
+    const correct = which === pair.correct;
+    if (correct) setScore(s=>s+30);
+  };
+
+  const next = () => {
+    if (idx+1 >= data.pairs.length) { setDone(true); onComplete?.(score); }
+    else { setIdx(i=>i+1); setPicked(null); setPlaying(null); }
+  };
+
+  if (done) return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
+      <div style={{ fontSize:56, marginBottom:16 }}>👂</div>
+      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Oreille exercée !</div>
+      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
+      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    </div>
+  );
+
+  const isCorrect = (w) => answered && w===pair.correct;
+  const isWrong   = (w) => answered && picked===w && w!==pair.correct;
+
+  return (
+    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
+      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
+        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
+        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Comparaison A/B</span>
+        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{data.pairs.length}</span>
+      </div>
+      {pair.audioA && <audio ref={audioA} src={pair.audioA} />}
+      {pair.audioB && <audio ref={audioB} src={pair.audioB} />}
+      <div style={{ flex:1, padding:'28px 16px', display:'flex', flexDirection:'column', alignItems:'center', gap:24 }}>
+        {/* Critère */}
+        <div style={{ background:C.card, borderRadius:16, padding:'14px 18px', border:`1px solid ${C.border}`, textAlign:'center', width:'100%', maxWidth:340 }}>
+          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:6 }}>Critère</div>
+          <div style={{ fontSize:13, color:C.ink, fontWeight:600 }}>{data.config?.criterion}</div>
+        </div>
+        {/* Label */}
+        <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink }}>{pair.label}</div>
+        {/* Clips A et B */}
+        <div style={{ display:'flex', gap:16, width:'100%', maxWidth:340 }}>
+          {['A','B'].map(w => (
+            <div key={w} style={{ flex:1, display:'flex', flexDirection:'column', gap:10 }}>
+              <button onClick={() => playClip(w)} style={{
+                background:playing===w?'rgba(199,91,57,.2)':C.surface, border:`2px solid ${playing===w?C.primary:C.border}`,
+                borderRadius:14, padding:'20px 10px', fontSize:24, cursor:'pointer', textAlign:'center'
+              }}>{playing===w?'⏸':'▶'}</button>
+              <button onClick={() => pick(w)} disabled={answered} style={{
+                background: isCorrect(w)?'rgba(45,122,79,.2)':isWrong(w)?'rgba(192,57,43,.15)':C.card,
+                border:`2px solid ${isCorrect(w)?C.success:isWrong(w)?C.danger:C.border}`,
+                borderRadius:12, padding:'10px 0', fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color:C.ink, cursor:answered?'default':'pointer'
+              }}>Version {w}</button>
+            </div>
+          ))}
+        </div>
+        {answered && (
+          <>
+            <div style={{ background:'rgba(255,255,255,.05)', borderRadius:14, padding:14, border:`1px solid rgba(255,255,255,.08)`, width:'100%', maxWidth:340, textAlign:'center' }}>
+              <div style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:picked===pair.correct?C.success:C.danger, marginBottom:6 }}>
+                {picked===pair.correct?'✓ Bonne oreille !':'✗ Version '+pair.correct+' était la bonne'}
+              </div>
+              <div style={{ fontSize:12, color:C.muted, lineHeight:1.6 }}>{pair.explanation}</div>
+            </div>
+            <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer', width:'100%', maxWidth:340 }}>
+              {idx+1<data.pairs.length?'Paire suivante →':'Voir résultats'}
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/mechanics/index.js">
+/**
+ * mechanics/index.js — Registre des 25 mécaniques de jeux pédagogiques
+ *
+ * Chaque mécanique est un composant React autonome.
+ * Props communes : { data, onBack, onComplete(score) }
+ * Données : passer le JSON conforme au schéma du catalogue (Moteur Jeux Pedagogiques.dc.html)
+ *
+ * Usage :
+ *   import FlashcardSRS from './mechanics/01_FlashcardSRS';
+ *   <FlashcardSRS data={myData} onBack={() => nav.goBack()} onComplete={(pts) => addScore(pts)} />
+ */
+
+export { default as FlashcardSRS }        from './01_FlashcardSRS';
+export { default as MultipleChoice }       from './02_MultipleChoice';
+export { default as BinarySwipe }          from './03_BinarySwipe';
+export { default as MemoryMatch }          from './04_MemoryMatch';
+export { default as Hangman }              from './05_Hangman';
+export { default as Anagram }              from './06_Anagram';
+export { default as ClozeTest }            from './07_ClozeTest';
+export { default as Sequencing }           from './08_Sequencing';
+export { default as SortGroup }            from './09_SortGroup';
+export { default as LineMatching }         from './10_LineMatching';
+export { default as Bingo }               from './11_Bingo';
+export { default as SituationalChoice }    from './12_SituationalChoice';
+export { default as CategoryBlaster }      from './13_CategoryBlaster';
+export { default as TileMerge }           from './14_TileMerge';
+export { default as WordSearch }          from './15_WordSearch';
+export { default as ChainReaction }        from './16_ChainReaction';
+export { default as CombinationBuilder }   from './17_CombinationBuilder';
+export { default as DialogueTree }         from './18_DialogueTree';
+export { default as RebusPuzzle }         from './19_RebusPuzzle';
+export { default as AudioTranscription }   from './20_AudioTranscription';
+export { default as ErrorCorrection }      from './21_ErrorCorrection';
+export { default as DeceptivePairs }       from './22_DeceptivePairs';
+export { default as DiagramLabeling }      from './23_DiagramLabeling';
+export { default as VoiceRecording }       from './24_VoiceRecording';
+export { default as AudioAB }             from './25_AudioAB';
+
+/**
+ * REGISTRY — Méta-données pour navigation dynamique
+ *
+ * Utilise MECHANICS_REGISTRY pour construire un sélecteur de jeu,
+ * filtrer par catégorie, ou mapper un type JSON vers son composant.
+ */
+export const MECHANICS_REGISTRY = [
+  { id:'flashcard_srs',      name:'Flashcard SRS',           component:'FlashcardSRS',       cat:'vocab',    icon:'🃏', complexity:1 },
+  { id:'multiple_choice',    name:'Quiz Choix Multiple',      component:'MultipleChoice',      cat:'sort',     icon:'🎯', complexity:1 },
+  { id:'binary_swipe',       name:'Swipe Binaire',            component:'BinarySwipe',         cat:'sort',     icon:'⬅️➡️', complexity:1 },
+  { id:'memory_match',       name:'Memory Match',             component:'MemoryMatch',         cat:'visual',   icon:'🃏', complexity:1 },
+  { id:'hangman',            name:'Devinette par Lettres',    component:'Hangman',             cat:'vocab',    icon:'🪢', complexity:1 },
+  { id:'anagram',            name:'Anagramme',                component:'Anagram',             cat:'vocab',    icon:'🔤', complexity:1 },
+  { id:'cloze',              name:'Texte à Trous',            component:'ClozeTest',           cat:'vocab',    icon:'📝', complexity:2 },
+  { id:'sequencing',         name:'Séquençage',               component:'Sequencing',          cat:'sort',     icon:'📅', complexity:2 },
+  { id:'sort_group',         name:'Tri par Groupes',          component:'SortGroup',           cat:'sort',     icon:'🗂️', complexity:2 },
+  { id:'line_matching',      name:'Association par Lignes',   component:'LineMatching',        cat:'sort',     icon:'🔗', complexity:1 },
+  { id:'bingo',              name:'Bingo Pédagogique',        component:'Bingo',               cat:'social',   icon:'🎱', complexity:2 },
+  { id:'situational_choice', name:'Choix Situationnel',       component:'SituationalChoice',   cat:'social',   icon:'🎭', complexity:2 },
+  { id:'category_blaster',   name:'Catégorisation Rapide',    component:'CategoryBlaster',     cat:'visual',   icon:'🏒', complexity:2 },
+  { id:'tile_merge',         name:'Fusion de Tuiles',         component:'TileMerge',           cat:'visual',   icon:'🔢', complexity:3 },
+  { id:'word_search',        name:'Mots Cachés',              component:'WordSearch',          cat:'vocab',    icon:'🔍', complexity:1 },
+  { id:'chain_reaction',     name:'Chaîne de Mots',           component:'ChainReaction',       cat:'vocab',    icon:'⛓️', complexity:3 },
+  { id:'combination',        name:'Constructeur de Combos',   component:'CombinationBuilder',  cat:'vocab',    icon:'🎰', complexity:2 },
+  { id:'dialogue_tree',      name:'Arbre de Dialogue',        component:'DialogueTree',        cat:'social',   icon:'💬', complexity:3 },
+  { id:'rebus',              name:'Rébus Visuel',             component:'RebusPuzzle',         cat:'visual',   icon:'🧩', complexity:3 },
+  { id:'audio_transcription',name:'Dictée Audio',             component:'AudioTranscription',  cat:'audio',    icon:'🎙️', complexity:2 },
+  { id:'error_correction',   name:'Correction d'Erreurs',    component:'ErrorCorrection',     cat:'vocab',    icon:'🔎', complexity:3 },
+  { id:'deceptive_pairs',    name:'Faux Amis',                component:'DeceptivePairs',      cat:'vocab',    icon:'🤥', complexity:2 },
+  { id:'diagram_labeling',   name:'Étiquetage de Schéma',     component:'DiagramLabeling',     cat:'visual',   icon:'🗺️', complexity:2 },
+  { id:'voice_recording',    name:'Enregistrement Vocal',     component:'VoiceRecording',      cat:'audio',    icon:'🎤', complexity:3 },
+  { id:'audio_ab',           name:'Comparaison Audio A/B',    component:'AudioAB',             cat:'audio',    icon:'👂', complexity:1 },
+];
+</file>
+
+<file path="design_handoff_theme_system/mechanics/README.md">
+# 🎮 Mechanics — 25 mécaniques de jeux pédagogiques
+
+Chaque fichier est un composant React **autonome et jouable**, prêt à être intégré dans l'application Mots & Blocs ou tout autre projet éducatif.
+
+---
+
+## Structure
+
+```
+mechanics/
+  01_FlashcardSRS.jsx        ← Révision espacée (SM-2)
+  02_MultipleChoice.jsx      ← Quiz à choix multiple + timer
+  03_BinarySwipe.jsx         ← Swipe gauche/droite (2 catégories)
+  04_MemoryMatch.jsx         ← Paires de cartes retournables
+  05_Hangman.jsx             ← Devinette lettre par lettre
+  06_Anagram.jsx             ← Lettres à réordonner
+  07_ClozeTest.jsx           ← Texte à trous (drag & click)
+  08_Sequencing.jsx          ← Remise en ordre (drag & drop)
+  09_SortGroup.jsx           ← Tri en 2-5 catégories
+  10_LineMatching.jsx        ← Association colonne gauche/droite
+  11_Bingo.jsx               ← Bingo avec caleur auto ou manuel
+  12_SituationalChoice.jsx   ← Choix selon contexte/registre
+  13_CategoryBlaster.jsx     ← Catégorisation rapide + combo
+  14_TileMerge.jsx           ← Fusion de tuiles (style 2048)
+  15_WordSearch.jsx          ← Mots cachés dans une grille
+  16_ChainReaction.jsx       ← Chaîne de mots (lettre/syllabe)
+  17_CombinationBuilder.jsx  ← Machine à sous syllabique
+  18_DialogueTree.jsx        ← Arbre de dialogue avec PNJ
+  19_RebusPuzzle.jsx         ← Rébus emoji phonétiques
+  20_AudioTranscription.jsx  ← Dictée + comparaison Levenshtein
+  21_ErrorCorrection.jsx     ← Trouver et corriger les erreurs
+  22_DeceptivePairs.jsx      ← Faux amis (contexte A vs B)
+  23_DiagramLabeling.jsx     ← Étiqueter zones d'une image
+  24_VoiceRecording.jsx      ← Enregistrement + auto-évaluation
+  25_AudioAB.jsx             ← Comparaison audio A/B
+  index.js                   ← Exports + MECHANICS_REGISTRY
+```
+
+---
+
+## Interface commune
+
+Toutes les mécaniques partagent la même interface de props :
+
+```jsx
+<MaMecanique
+  data={jsonConfig}           // Données conformes au schéma (voir catalogue)
+  onBack={() => navigate(-1)} // Retour à l'écran précédent
+  onComplete={(score) => {    // Appelé quand le jeu est terminé
+    addPoints(score);
+    navigate('/results');
+  }}
+/>
+```
+
+---
+
+## Intégration avec useTheme
+
+Les composants utilisent des couleurs statiques pour la démo.
+En production, remplacer les constantes `C` par le hook :
+
+```jsx
+// Remplacer en haut de chaque fichier :
+const C = { bg:'#0f1117', ... };  // ← SUPPRIMER
+
+// Par :
+import { useTheme } from '../../store/useTheme';
+const { theme } = useTheme();
+const C = theme.colors;           // ← Thème dynamique
+```
+
+---
+
+## Fournir des données
+
+Chaque composant a un `SAMPLE` intégré qui sert de données par défaut.
+Pour le contenu réel, passer un objet `data` conforme au schéma JSON
+documenté dans **Moteur Jeux Pedagogiques.dc.html**.
+
+### Exemple — Lancer une partie de Quiz
+
+```jsx
+import { MultipleChoice } from './mechanics';
+
+const DATA = {
+  config: { timerSeconds: 20, shuffle: true, showExplanation: true },
+  questions: [
+    {
+      id: 'q1',
+      question: 'Que signifie "achaler" ?',
+      choices: [
+        { id: 'a', text: 'Agacer',  correct: true  },
+        { id: 'b', text: 'Acheter', correct: false },
+      ],
+      explanation: 'Achaler vient de l'anglais "to harass".'
+    }
+  ]
+};
+
+function MonEcranQuiz() {
+  return (
+    <MultipleChoice
+      data={DATA}
+      onBack={() => navigation.goBack()}
+      onComplete={(score) => dispatch(addPiasses(score))}
+    />
+  );
+}
+```
+
+---
+
+## Catégories
+
+| Catégorie | Mécaniques |
+|-----------|------------|
+| 📝 Texte & Vocab | FlashcardSRS, Hangman, Anagram, ClozeTest, WordSearch, ChainReaction, CombinationBuilder, ErrorCorrection, DeceptivePairs |
+| 🎯 Tri & Classement | MultipleChoice, BinarySwipe, SortGroup, Sequencing, LineMatching |
+| 👁️ Visuel & Logique | MemoryMatch, CategoryBlaster, TileMerge, RebusPuzzle, DiagramLabeling |
+| 💬 Conversation & Social | Bingo, SituationalChoice, DialogueTree |
+| 🎧 Audio & Parole | AudioTranscription, VoiceRecording, AudioAB |
+
+---
+
+## Complexité d'implémentation
+
+- ⭐ Simple (1) — État local + logique straightforward
+- ⭐⭐ Moyen (2) — Interactions tactiles, timer, drag & drop basique
+- ⭐⭐⭐ Complexe (3) — Algorithmes, API navigateur (micro, canvas), arbres
+
+---
+
+*Généré dans le cadre du projet Audit UX/UI — Mots & Blocs*
+</file>
+
+<file path="design_handoff_theme_system/ApparenceScreen.jsx">
+/**
+ * ApparenceScreen.jsx — Écran de personnalisation du thème
+ * Mots & Blocs
+ *
+ * INTÉGRATION :
+ *   cp ApparenceScreen.jsx src/features/apparence/ApparenceScreen.jsx
+ *
+ * DÉPENDANCES :
+ *   - useTheme (src/store/useTheme.js) — ce paquet
+ *   - GameHUD  (src/components/GameHUD.jsx) — ce paquet
+ *   - lucide-react (déjà installé)
+ *   - Google Fonts : Sora, Space Grotesk, Fredoka, Outfit (dans index.html)
+ *
+ * USAGE dans App.jsx / App.tsx :
+ *   import ApparenceScreen from './features/apparence/ApparenceScreen';
+ *   {currentScreen === 'apparence' && <ApparenceScreen onBack={() => navigateTo('home')} />}
+ */
+
+import React, { useState, useEffect, useRef } from 'react';
+import { ArrowLeft, Check, Palette, Sliders, Clock } from 'lucide-react';
+import { useTheme, useThemeTokens, PREDEFINED_THEMES } from '../../store/useTheme';
+
+// ─── Constantes ────────────────────────────────────────────────────────────────
+
+const PRIMARY_SWATCHES = ['#C75B39','#2D7A4F','#2B5AA0','#7C3AED','#D946EF','#E8A020','#1A6FA0','#A0522D','#C03060','#00D4FF'];
+const ACCENT_SWATCHES  = ['#3E5C8A','#C75B39','#E05C2A','#EC4899','#06B6D4','#C0392B','#8B0000','#FFD700','#FF9A5C','#22C55E'];
+const FONT_OPTIONS = [
+  { label: 'Sora',         font: "'Sora', sans-serif" },
+  { label: 'Space Grotesk',font: "'Space Grotesk', sans-serif" },
+  { label: 'Outfit',       font: "'Outfit', sans-serif" },
+  { label: 'Fredoka',      font: "'Fredoka', sans-serif" },
+];
+const SIZE_OPTIONS   = [{ id:'s', label:'Petit', v:0.9 }, { id:'m', label:'Moyen', v:1 }, { id:'l', label:'Grand', v:1.12 }];
+const RADIUS_OPTIONS = [{ id:'carre', label:'Carré' }, { id:'doux', label:'Doux' }, { id:'rond', label:'Rond' }];
+const SHADOW_OPTIONS = [{ id:'plat', label:'Plat' }, { id:'doux', label:'Doux' }, { id:'prononce', label:'Prononcé' }];
+const CB_OPTIONS     = [
+  { id:'normal', label:'Normal' }, { id:'protan', label:'Protanopie' },
+  { id:'deutan', label:'Deutéranopie' }, { id:'tritan', label:'Tritanopie' }, { id:'mono', label:'Monochrome' },
+];
+const CB_FILTERS = {
+  normal:'none', protan:'sepia(0.3) hue-rotate(35deg) saturate(0.85)',
+  deutan:'sepia(0.3) saturate(0.5)', tritan:'sepia(0.3) hue-rotate(-60deg) saturate(0.7)', mono:'grayscale(1)',
+};
+
+// ─── Composant principal ───────────────────────────────────────────────────────
+
+export default function ApparenceScreen({ onBack }) {
+  const { theme, setThemeById, patchPersonal } = useTheme();
+  const tokens = useThemeTokens();
+  const c = theme.colors;
+
+  const [customizing, setCustomizing]   = useState(false);
+  const [previewTab,  setPreviewTab]    = useState('accueil');
+  const [cbMode,      setCbMode]        = useState('normal');
+  const [autoMode,    setAutoMode]      = useState(false);
+  const [history,     setHistory]       = useState([]);
+  const [section,     setSection]       = useState('gallery'); // 'gallery' | 'customize'
+
+  // Applique mode auto au montage
+  useEffect(() => {
+    if (autoMode) {
+      const dark = window.matchMedia('(prefers-color-scheme:dark)').matches;
+      setThemeById(dark ? 'minuit' : 'automne');
+    }
+  }, [autoMode]);
+
+  // ── Handlers ────────────────────────────────────────────────────────────────
+
+  function applyTheme(id) {
+    setThemeById(id);
+    pushHistory(id);
+  }
+
+  function pushHistory(id) {
+    setHistory(prev => [id, ...prev.filter(x => x !== id)].slice(0, 5));
+  }
+
+  function openCustomizer() {
+    if (!useTheme.getState().personalTheme) {
+      patchPersonal({}); // Clone le thème actif en thème personnel
+    }
+    setCustomizing(true);
+    setSection('customize');
+  }
+
+  async function openEyedropper(slot) {
+    if (!window.EyeDropper) {
+      alert("La pipette n'est pas supportée par ce navigateur.");
+      return;
+    }
+    try {
+      const e = new EyeDropper();
+      const r = await e.open();
+      patchPersonal({ colors: { ...theme.colors, [slot]: r.sRGBHex } });
+    } catch (err) {}
+  }
+
+  function handleHexInput(slot, value) {
+    if (/^#[0-9a-fA-F]{6}$/.test(value)) {
+      patchPersonal({ colors: { ...theme.colors, [slot]: value } });
+    }
+  }
+
+  // ── Rendu ────────────────────────────────────────────────────────────────────
+
+  return (
+    <div style={{
+      display: 'flex', flexDirection: 'column',
+      minHeight: '100svh', background: c.bg, color: c.ink,
+    }}>
+      {/* HUD */}
+      <div style={{
+        background: c.header, padding: '12px 16px',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        flexShrink: 0,
+      }}>
+        <button onClick={onBack} style={{
+          width: 38, height: 38, borderRadius: '50%', border: 'none', cursor: 'pointer',
+          background: 'rgba(255,255,255,0.16)', display: 'grid', placeItems: 'center',
+        }}>
+          <ArrowLeft size={18} color="#fff" />
+        </button>
+        <span style={{ fontFamily: theme.fonts.display, fontWeight: 700, fontSize: 16, color: '#fff' }}>
+          Apparence
+        </span>
+        <div style={{ width: 38 }} />
+      </div>
+
+      {/* Tabs galerie / perso */}
+      <div style={{
+        display: 'flex', background: c.surface,
+        borderBottom: `1px solid ${tokens.border}`, padding: '0 16px',
+      }}>
+        {[
+          { id: 'gallery',   label: 'Thèmes',        icon: <Palette size={14} /> },
+          { id: 'customize', label: 'Personnaliser',  icon: <Sliders size={14} /> },
+          { id: 'history',   label: 'Récents',        icon: <Clock size={14} /> },
+        ].map(tab => (
+          <button key={tab.id} onClick={() => { setSection(tab.id); if (tab.id === 'customize') openCustomizer(); }}
+            style={{
+              flex: 1, border: 'none', cursor: 'pointer', padding: '12px 0',
+              background: 'none',
+              borderBottom: section === tab.id ? `2px solid ${c.primary}` : '2px solid transparent',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
+              fontFamily: theme.fonts.display, fontWeight: 700, fontSize: 12,
+              color: section === tab.id ? c.primary : c.muted,
+              transition: 'color 0.15s',
+            }}>
+            {tab.icon} {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Contenu scrollable */}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
+
+        {/* ── GALERIE ─────────────────────────────────────────────── */}
+        {section === 'gallery' && (
+          <>
+            {/* Aperçu */}
+            <PreviewCard
+              theme={theme} tokens={tokens} tab={previewTab}
+              setTab={setPreviewTab} cbFilter={CB_FILTERS[cbMode]}
+            />
+
+            {/* Grille de thèmes */}
+            <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', color: c.muted, margin: '20px 0 10px' }}>
+              Thèmes prédéfinis
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10 }}>
+              {PREDEFINED_THEMES.map(t => (
+                <ThemeCard
+                  key={t.id} t={t}
+                  selected={theme.id === t.id}
+                  onPick={() => applyTheme(t.id)}
+                  displayFont={t.fonts.display}
+                />
+              ))}
+            </div>
+          </>
+        )}
+
+        {/* ── PERSONNALISER ─────────────────────────────────────── */}
+        {section === 'customize' && (
+          <CustomizePanel
+            theme={theme} tokens={tokens}
+            onPatch={patchPersonal}
+            onHexInput={handleHexInput}
+            onEyedropper={openEyedropper}
+            cbMode={cbMode} setCbMode={setCbMode}
+            autoMode={autoMode} setAutoMode={setAutoMode}
+            previewTab={previewTab} setPreviewTab={setPreviewTab}
+            cbFilter={CB_FILTERS[cbMode]}
+          />
+        )}
+
+        {/* ── RÉCENTS ───────────────────────────────────────────── */}
+        {section === 'history' && (
+          <HistoryPanel
+            history={history} theme={theme} tokens={tokens}
+            onPick={(id) => applyTheme(id)}
+          />
+        )}
+
+      </div>
+
+      {/* Bouton Appliquer */}
+      <div style={{ padding: '12px 16px', background: c.surface, borderTop: `1px solid ${tokens.border}` }}>
+        <button
+          onClick={() => pushHistory(theme.id)}
+          style={{
+            width: '100%', border: 'none', cursor: 'pointer',
+            background: c.primary, color: '#fff',
+            fontFamily: theme.fonts.display, fontWeight: 700, fontSize: 15,
+            padding: 14, borderRadius: tokens.radBtn,
+            boxShadow: tokens.shadow,
+          }}>
+          Appliquer ce thème
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─── Aperçu en direct ──────────────────────────────────────────────────────────
+
+function PreviewCard({ theme, tokens, tab, setTab, cbFilter }) {
+  const c = theme.colors;
+  const tabs = [
+    { id: 'accueil', label: 'Accueil' },
+    { id: 'jeu',     label: 'Jeu' },
+    { id: 'commerce',label: 'Commerce' },
+  ];
+  return (
+    <div>
+      {/* Tabs aperçu */}
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+        <span style={{ fontSize: 11, fontWeight: 700, color: c.muted, letterSpacing: '.05em', textTransform: 'uppercase' }}>Aperçu</span>
+        <div style={{ display: 'flex', gap: 5 }}>
+          {tabs.map(t => (
+            <button key={t.id} onClick={() => setTab(t.id)} style={{
+              border: `1px solid ${tokens.border}`, cursor: 'pointer',
+              background: tab === t.id ? c.primary : c.surface,
+              color: tab === t.id ? '#fff' : c.muted,
+              borderRadius: 999, padding: '4px 10px',
+              fontFamily: theme.fonts.display, fontWeight: 700, fontSize: 10,
+            }}>{t.label}</button>
+          ))}
+        </div>
+      </div>
+
+      {/* Cadre mobile */}
+      <div style={{
+        borderRadius: 22, overflow: 'hidden', border: `1px solid ${tokens.border}`,
+        boxShadow: '0 8px 24px rgba(0,0,0,.12)', filter: cbFilter,
+      }}>
+        {/* HUD mini */}
+        <div style={{ background: c.header, padding: '10px 14px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'rgba(255,255,255,0.18)', display: 'grid', placeItems: 'center' }}>
+            <span style={{ color: '#fff', fontSize: 12 }}>←</span>
+          </div>
+          <span style={{ fontFamily: theme.fonts.display, fontWeight: 700, fontSize: 13, color: '#fff' }}>Mots & Blocs</span>
+          <div style={{ background: 'rgba(255,255,255,0.18)', borderRadius: 999, padding: '3px 9px', display: 'flex', gap: 4 }}>
+            <span style={{ fontSize: 11 }}>⚜️</span>
+            <span style={{ fontFamily: theme.fonts.display, fontWeight: 700, fontSize: 11, color: c.gold }}>320</span>
+          </div>
+        </div>
+
+        {/* Contenu selon tab */}
+        <div style={{ background: c.bg, padding: 14 }}>
+          {tab === 'accueil' && (
+            <div style={{
+              background: c.surface, border: `1px solid ${tokens.border}`,
+              borderRadius: tokens.radCard, padding: 14, boxShadow: tokens.shadow,
+            }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
+                <span style={{ fontFamily: theme.fonts.display, fontWeight: 700, fontSize: 15, color: c.ink }}>Mots du Québec</span>
+                <span style={{ fontSize: 9, fontWeight: 700, color: '#fff', background: c.accent, padding: '3px 8px', borderRadius: 999 }}>NIV 4</span>
+              </div>
+              <p style={{ fontFamily: theme.fonts.body, fontSize: 12, color: c.muted, margin: '0 0 12px', lineHeight: 1.4 }}>
+                Relie les expressions typiques d'icitte pis gagne des piasses.
+              </p>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button style={{ flex: 1, border: 'none', background: c.primary, color: '#fff', fontFamily: theme.fonts.display, fontWeight: 700, fontSize: 12, padding: 10, borderRadius: tokens.radBtn, cursor: 'pointer' }}>Jouer</button>
+                <button style={{ border: `1px solid ${tokens.border}`, background: c.surface, color: c.ink, fontFamily: theme.fonts.display, fontWeight: 700, fontSize: 12, padding: '10px 14px', borderRadius: tokens.radBtn, cursor: 'pointer' }}>Infos</button>
+              </div>
+            </div>
+          )}
+          {tab === 'jeu' && (
+            <div style={{ background: c.surface, border: `1px solid ${tokens.border}`, borderRadius: tokens.radCard, padding: 14, boxShadow: tokens.shadow }}>
+              <div style={{ fontFamily: theme.fonts.display, fontWeight: 700, fontSize: 14, color: c.ink, marginBottom: 4 }}>Le Pendu</div>
+              <div style={{ display: 'flex', justifyContent: 'center', gap: 6, fontFamily: theme.fonts.display, fontWeight: 800, fontSize: 20, color: c.ink, margin: '10px 0', letterSpacing: '.06em' }}>
+                <span>C</span><span style={{color:c.muted}}>_</span><span>P</span><span style={{color:c.muted}}>_</span><span>T</span><span style={{color:c.muted}}>_</span><span>R</span>
+              </div>
+              <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginBottom: 10 }}>
+                {['C','D','F','G'].map((l,i) => (
+                  <span key={l} style={{
+                    width: 28, height: 28, borderRadius: 7, display: 'grid', placeItems: 'center',
+                    fontWeight: 700, fontSize: 11,
+                    background: i===0 ? c.success : i===2 ? c.danger : c.surface,
+                    border: i===0||i===2 ? 'none' : `1px solid ${tokens.border}`,
+                    color: i===0||i===2 ? '#fff' : c.ink,
+                  }}>{l}</span>
+                ))}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>❤️❤️🤍</div>
+                <span style={{ fontFamily: theme.fonts.display, fontSize: 11, fontWeight: 700, color: c.muted }}>320 XP</span>
+              </div>
+            </div>
+          )}
+          {tab === 'commerce' && (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {[['🥛','Pinte de lait','3,50 $'],['🍞','Miche de pain','4,50 $']].map(([emoji,name,price]) => (
+                <div key={name} style={{
+                  background: c.surface, border: `1px solid ${tokens.border}`,
+                  borderRadius: tokens.radCard, padding: '10px 12px', boxShadow: tokens.shadow,
+                  display: 'flex', alignItems: 'center', gap: 10,
+                }}>
+                  <span style={{ fontSize: 24 }}>{emoji}</span>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontFamily: theme.fonts.display, fontWeight: 700, fontSize: 12, color: c.ink }}>{name}</div>
+                    <div style={{ fontSize: 10, color: c.muted }}>Dépanneur</div>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: 10, color: c.muted, fontWeight: 600 }}>{price}</div>
+                    <button style={{ border: 'none', background: c.primary, color: '#fff', fontWeight: 700, fontSize: 9, padding: '4px 8px', borderRadius: 7, cursor: 'pointer', marginTop: 3 }}>Acheter</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Carte de thème ────────────────────────────────────────────────────────────
+
+function ThemeCard({ t, selected, onPick, displayFont }) {
+  return (
+    <button onClick={onPick} style={{
+      border: selected ? `2px solid ${t.colors.primary}` : '1px solid rgba(0,0,0,0.08)',
+      borderRadius: 16, overflow: 'hidden', cursor: 'pointer',
+      background: '#fff', textAlign: 'left', padding: 0, position: 'relative',
+    }}>
+      {/* Bande de couleurs */}
+      <div style={{ height: 36, display: 'flex' }}>
+        <div style={{ flex: 3, background: t.colors.header }} />
+        <div style={{ flex: 2, background: t.colors.primary }} />
+        <div style={{ flex: 1, background: t.colors.accent }} />
+      </div>
+      <div style={{ padding: '8px 10px', background: t.colors.bg }}>
+        <div style={{ fontFamily: displayFont, fontWeight: 700, fontSize: 12, color: t.colors.ink }}>{t.name}</div>
+        <div style={{ fontSize: 10, color: t.colors.muted, marginTop: 2 }}>{t.dark ? '🌙 Sombre' : '☀️ Clair'}</div>
+      </div>
+      {selected && (
+        <div style={{
+          position: 'absolute', top: 6, right: 6, width: 20, height: 20,
+          borderRadius: '50%', background: t.colors.primary,
+          display: 'grid', placeItems: 'center',
+        }}>
+          <Check size={12} color="#fff" />
+        </div>
+      )}
+    </button>
+  );
+}
+
+// ─── Panneau personnalisation ─────────────────────────────────────────────────
+
+function CustomizePanel({
+  theme, tokens, onPatch, onHexInput, onEyedropper,
+  cbMode, setCbMode, autoMode, setAutoMode,
+  previewTab, setPreviewTab, cbFilter,
+}) {
+  const c = theme.colors;
+
+  function patch(field, value) {
+    if (field === 'colors') onPatch({ colors: { ...c, ...value } });
+    else onPatch({ [field]: value });
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+      {/* Aperçu */}
+      <PreviewCard theme={theme} tokens={tokens} tab={previewTab} setTab={setPreviewTab} cbFilter={cbFilter} />
+
+      <div style={{
+        marginTop: 16, background: c.surface, borderRadius: 18,
+        border: `1px solid ${tokens.border}`, padding: 18,
+        display: 'flex', flexDirection: 'column', gap: 18,
+      }}>
+
+        {/* Info thème de base */}
+        {theme.baseName && (
+          <div style={{ fontSize: 11, color: c.muted, fontWeight: 500, fontStyle: 'italic' }}>
+            Basé sur {theme.baseName} · Mon thème personnel
+          </div>
+        )}
+
+        {/* Couleur principale */}
+        <Section label="Couleur principale">
+          <SwatchRow swatches={PRIMARY_SWATCHES} current={c.primary} onPick={v => patch('colors', { primary: v })} />
+          <HexPicker value={c.primary} slot="primary" onInput={onHexInput} onEyedropper={onEyedropper} theme={theme} tokens={tokens} />
+        </Section>
+
+        {/* Couleur accent */}
+        <Section label="Couleur d'accent">
+          <SwatchRow swatches={ACCENT_SWATCHES} current={c.accent} onPick={v => patch('colors', { accent: v })} />
+          <HexPicker value={c.accent} slot="accent" onInput={onHexInput} onEyedropper={onEyedropper} theme={theme} tokens={tokens} />
+        </Section>
+
+        {/* Police */}
+        <Section label="Police des titres">
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+            {FONT_OPTIONS.map(o => (
+              <button key={o.label} onClick={() => patch('fonts', { ...theme.fonts, display: o.font })} style={{
+                border: `2px solid ${theme.fonts.display === o.font ? c.primary : tokens.border}`,
+                background: theme.fonts.display === o.font ? '#f0f0f4' : c.surface,
+                borderRadius: 10, padding: '7px 12px', cursor: 'pointer',
+                fontFamily: o.font, fontWeight: 700, fontSize: 13, color: c.ink,
+              }}>{o.label}</button>
+            ))}
+          </div>
+        </Section>
+
+        {/* Taille du texte */}
+        <Section label="Taille du texte">
+          <SegmentedButtons
+            options={SIZE_OPTIONS} current={theme.scale}
+            getId={o => o.v} getLabel={o => o.label}
+            onPick={o => patch('scale', o.v)}
+            c={c} tokens={tokens} theme={theme}
+          />
+        </Section>
+
+        {/* Coins */}
+        <Section label="Coins">
+          <SegmentedButtons
+            options={RADIUS_OPTIONS} current={theme.radius}
+            getId={o => o.id} getLabel={o => o.label}
+            onPick={o => patch('radius', o.id)}
+            c={c} tokens={tokens} theme={theme}
+          />
+        </Section>
+
+        {/* Ombrage */}
+        <Section label="Ombrage">
+          <SegmentedButtons
+            options={SHADOW_OPTIONS} current={theme.shadow}
+            getId={o => o.id} getLabel={o => o.label}
+            onPick={o => patch('shadow', o.id)}
+            c={c} tokens={tokens} theme={theme}
+          />
+        </Section>
+
+        {/* Ambiance */}
+        <Section label="Ambiance">
+          <SegmentedButtons
+            options={[{id:false,label:'Clair'},{id:true,label:'Sombre'}]}
+            current={theme.dark}
+            getId={o => o.id} getLabel={o => o.label}
+            onPick={o => patch('dark', o.id)}
+            c={c} tokens={tokens} theme={theme}
+          />
+        </Section>
+
+        {/* Mode contrasté */}
+        <ToggleRow
+          label="Mode contrasté"
+          subtitle="Bordures renforcées (accessibilité)"
+          value={theme.contrast}
+          onToggle={() => patch('contrast', !theme.contrast)}
+          c={c} tokens={tokens} theme={theme}
+        />
+
+        {/* Simulation daltonisme */}
+        <div style={{ paddingTop: 14, borderTop: `1px solid ${tokens.border}` }}>
+          <div style={{ fontSize: 11, fontWeight: 700, color: c.muted, marginBottom: 8 }}>
+            Simulation daltonisme <span style={{ fontWeight: 500, fontStyle: 'italic' }}>(aperçu uniquement)</span>
+          </div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
+            {CB_OPTIONS.map(o => (
+              <button key={o.id} onClick={() => setCbMode(o.id)} style={{
+                cursor: 'pointer',
+                border: `2px solid ${cbMode === o.id ? c.primary : tokens.border}`,
+                borderRadius: 10, padding: '6px 10px',
+                background: cbMode === o.id ? '#f0f0f4' : c.surface,
+                color: c.ink, fontWeight: 700, fontSize: 11,
+              }}>{o.label}</button>
+            ))}
+          </div>
+        </div>
+
+        {/* Mode auto jour/nuit */}
+        <ToggleRow
+          label="Mode auto Jour/Nuit"
+          subtitle="Suit les préférences système (clair/sombre)"
+          value={autoMode}
+          onToggle={() => setAutoMode(v => !v)}
+          c={c} tokens={tokens} theme={theme}
+        />
+      </div>
+    </div>
+  );
+}
+
+// ─── Panneau historique ────────────────────────────────────────────────────────
+
+function HistoryPanel({ history, theme, tokens, onPick }) {
+  const c = theme.colors;
+  if (history.length === 0) {
+    return (
+      <div style={{ textAlign: 'center', padding: 40, color: c.muted }}>
+        <div style={{ fontSize: 32, marginBottom: 12 }}>🕐</div>
+        <div style={{ fontFamily: theme.fonts.display, fontWeight: 700, fontSize: 14 }}>Aucun historique</div>
+        <div style={{ fontSize: 12, marginTop: 4 }}>Applique un thème pour le voir apparaître ici.</div>
+      </div>
+    );
+  }
+  return (
+    <div>
+      <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: '.06em', textTransform: 'uppercase', color: c.muted, marginBottom: 10 }}>
+        Récemment utilisés
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        {history.map(id => {
+          const t = PREDEFINED_THEMES.find(x => x.id === id);
+          if (!t) return null;
+          return (
+            <button key={id} onClick={() => onPick(id)} style={{
+              border: `1px solid ${tokens.border}`, borderRadius: 14, overflow: 'hidden',
+              cursor: 'pointer', background: c.surface, textAlign: 'left', padding: 0,
+              display: 'flex', alignItems: 'stretch',
+            }}>
+              <div style={{ width: 48, background: t.colors.header }} />
+              <div style={{ flex: 1, padding: '10px 14px' }}>
+                <div style={{ fontFamily: t.fonts.display, fontWeight: 700, fontSize: 13, color: c.ink }}>{t.name}</div>
+                <div style={{ display: 'flex', gap: 4, marginTop: 5 }}>
+                  {[t.colors.primary, t.colors.accent, t.colors.success].map((col,i) => (
+                    <div key={i} style={{ width: 14, height: 14, borderRadius: '50%', background: col }} />
+                  ))}
+                </div>
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// ─── Sous-composants utilitaires ───────────────────────────────────────────────
+
+function Section({ label, children }) {
+  return (
+    <div style={{ paddingTop: 14, borderTop: '1px solid rgba(0,0,0,0.06)' }}>
+      <div style={{ fontSize: 11, fontWeight: 700, color: '#888', marginBottom: 8, textTransform: 'uppercase', letterSpacing: '.05em' }}>
+        {label}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+function SwatchRow({ swatches, current, onPick }) {
+  return (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 9, marginBottom: 8 }}>
+      {swatches.map(color => (
+        <button key={color} onClick={() => onPick(color)} style={{
+          width: 32, height: 32, borderRadius: '50%', cursor: 'pointer',
+          background: color,
+          border: `3px solid ${current === color ? '#1d1d24' : 'transparent'}`,
+          boxShadow: '0 1px 3px rgba(0,0,0,.2)',
+        }} />
+      ))}
+    </div>
+  );
+}
+
+function HexPicker({ value, slot, onInput, onEyedropper, theme, tokens }) {
+  const inputRef = useRef(null);
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <input
+        type="color"
+        defaultValue={value}
+        onChange={e => onInput(slot, e.target.value)}
+        style={{ width: 34, height: 34, borderRadius: '50%', border: `2px solid ${tokens.border}`, cursor: 'pointer', padding: 2, background: 'none', flexShrink: 0 }}
+      />
+      <input
+        ref={inputRef}
+        type="text"
+        placeholder={value}
+        defaultValue={value}
+        onKeyDown={e => e.key === 'Enter' && onInput(slot, e.target.value)}
+        onBlur={e => onInput(slot, e.target.value)}
+        style={{
+          flex: 1, border: `1px solid ${tokens.border}`, borderRadius: 9,
+          padding: '7px 10px', fontSize: 12, fontFamily: 'monospace',
+          color: theme.colors.ink, background: theme.colors.surface,
+        }}
+      />
+      <button
+        onClick={() => onEyedropper(slot)}
+        title="Pipette — sélectionne une couleur à l'écran"
+        style={{
+          width: 34, height: 34, border: `1px solid ${tokens.border}`,
+          borderRadius: 9, background: theme.colors.surface,
+          cursor: 'pointer', fontSize: 16, display: 'grid', placeItems: 'center',
+        }}>
+        🔬
+      </button>
+    </div>
+  );
+}
+
+function SegmentedButtons({ options, current, getId, getLabel, onPick, c, tokens, theme }) {
+  return (
+    <div style={{ display: 'flex', gap: 8 }}>
+      {options.map(o => {
+        const active = getId(o) === current;
+        return (
+          <button key={String(getId(o))} onClick={() => onPick(o)} style={{
+            flex: 1, cursor: 'pointer',
+            border: `2px solid ${active ? '#1d1d24' : tokens.border}`,
+            borderRadius: 12, padding: '8px 4px',
+            background: active ? '#f0f0f4' : c.surface,
+            color: c.ink, fontFamily: theme.fonts.display, fontWeight: 700, fontSize: 12,
+          }}>
+            {getLabel(o)}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+function ToggleRow({ label, subtitle, value, onToggle, c, tokens, theme }) {
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', gap: 10,
+      paddingTop: 14, borderTop: `1px solid ${tokens.border}`,
+    }}>
+      <div style={{ flex: 1 }}>
+        <div style={{ fontWeight: 700, fontSize: 13, color: c.ink }}>{label}</div>
+        {subtitle && <div style={{ fontSize: 10.5, color: c.muted, marginTop: 2 }}>{subtitle}</div>}
+      </div>
+      <button onClick={onToggle} style={{
+        cursor: 'pointer',
+        border: `2px solid ${value ? '#1d1d24' : tokens.border}`,
+        background: value ? c.primary : c.surface,
+        color: value ? '#fff' : c.ink,
+        borderRadius: 11, padding: '8px 14px',
+        fontFamily: theme.fonts.display, fontWeight: 700, fontSize: 12,
+      }}>
+        {value ? 'Activé' : 'Désactivé'}
+      </button>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/AppShell.jsx">
+/**
+ * AppShell.jsx — Shell de navigation persistant
+ * Mots & Blocs
+ *
+ * INTÉGRATION dans App.tsx / App.jsx :
+ *
+ *   import AppShell from './components/AppShell';
+ *
+ *   // Remplacer le rendu racine par :
+ *   <AppShell currentScreen={currentScreen} onNavigate={navigateTo}>
+ *     {currentScreen === 'home'      && <HomeScreen />}
+ *     {currentScreen === 'ville'     && <VilleScreen />}
+ *     {currentScreen === 'depanneur' && <DepanneurScreen />}
+ *     {currentScreen === 'profil'    && <ProfilScreen />}
+ *     {currentScreen === 'pendu'     && <PenduScreen onBack={() => navigateTo('home')} />}
+ *     {currentScreen === 'hache'     && <HacheScreen onBack={() => navigateTo('home')} />}
+ *     {// ... autres jeux — ils ont leur propre GameHUD, pas de shell }
+ *   </AppShell>
+ *
+ * COMPORTEMENT :
+ *   - La bottom nav s'affiche UNIQUEMENT sur les écrans "hubs" (home, ville, depanneur, profil)
+ *   - Elle se cache automatiquement dans les jeux et écrans secondaires
+ *   - Le HUD global (piasses + niveau) s'affiche en haut sur les écrans hubs
+ *   - Les jeux ont leur propre GameHUD — AppShell ne l'affiche pas sur ces écrans
+ */
+
+import React from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { useProgression } from '../store/useProgression';
+
+// Écrans qui affichent le shell (bottom nav + HUD global)
+const HUB_SCREENS = ['home', 'ville', 'depanneur', 'profil', 'store', 'leaderboard', 'portefeuille', 'dictionnaire', 'apparence'];
+
+// Items de navigation
+const NAV_ITEMS = [
+  { id: 'home',      label: 'Accueil',  icon: HomeIcon },
+  { id: 'ville',     label: 'Ville',    icon: VilleIcon },
+  { id: 'depanneur', label: 'Jeux',     icon: JeuxIcon },
+  { id: 'profil',    label: 'Profil',   icon: ProfilIcon },
+];
+
+export default function AppShell({ currentScreen, onNavigate, children }) {
+  const { theme }    = useTheme();
+  const tokens       = useThemeTokens();
+  const { piasses, getNiveau } = useProgression();
+  const c            = theme.colors;
+  const isHub        = HUB_SCREENS.includes(currentScreen);
+  const niveau       = getNiveau();
+
+  return (
+    <div style={{
+      display: 'flex', flexDirection: 'column',
+      height: '100svh', background: c.bg, overflow: 'hidden',
+    }}>
+      {/* ── HUD global (hubs seulement) ─────────────────────────── */}
+      {isHub && (
+        <div style={{
+          background: c.header,
+          padding: '10px 16px 10px',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          flexShrink: 0, gap: 12,
+        }}>
+          {/* Niveau */}
+          <div style={{
+            background: 'rgba(255,255,255,0.15)',
+            borderRadius: 999, padding: '5px 12px',
+            display: 'flex', alignItems: 'center', gap: 6,
+          }}>
+            <span style={{ fontSize: 13 }}>⭐</span>
+            <span style={{
+              fontFamily: theme.fonts.display, fontWeight: 700,
+              fontSize: 12, color: '#fff',
+            }}>Niveau {niveau}</span>
+          </div>
+
+          {/* Logo / titre */}
+          <span style={{
+            fontFamily: theme.fonts.display, fontWeight: 800,
+            fontSize: 16, color: '#fff', letterSpacing: '0.01em', flex: 1, textAlign: 'center',
+          }}>
+            Mots & Blocs
+          </span>
+
+          {/* Piasses */}
+          <div style={{
+            background: 'rgba(255,255,255,0.15)',
+            borderRadius: 999, padding: '5px 12px',
+            display: 'flex', alignItems: 'center', gap: 5,
+          }}>
+            <span style={{ fontSize: 14, lineHeight: 1 }}>⚜️</span>
+            <span style={{
+              fontFamily: theme.fonts.display, fontWeight: 700,
+              fontSize: 13, color: c.gold,
+            }}>
+              {Math.floor(piasses)}
+            </span>
+          </div>
+        </div>
+      )}
+
+      {/* ── Contenu principal ───────────────────────────────────── */}
+      <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', position: 'relative' }}>
+        {children}
+      </div>
+
+      {/* ── Bottom nav (hubs seulement) ─────────────────────────── */}
+      {isHub && (
+        <nav style={{
+          background: c.surface,
+          borderTop: `1px solid ${tokens.border}`,
+          display: 'flex',
+          paddingBottom: 'env(safe-area-inset-bottom, 8px)',
+          flexShrink: 0,
+        }}>
+          {NAV_ITEMS.map(item => {
+            const active = currentScreen === item.id
+              || (item.id === 'depanneur' && ['arcade', 'blocs', 'quiz', 'swipe', 'sort', '2048'].includes(currentScreen));
+            const IconComp = item.icon;
+            return (
+              <button
+                key={item.id}
+                onClick={() => onNavigate(item.id)}
+                style={{
+                  flex: 1, border: 'none', cursor: 'pointer',
+                  background: 'none',
+                  padding: '10px 0 6px',
+                  display: 'flex', flexDirection: 'column',
+                  alignItems: 'center', gap: 3,
+                }}
+              >
+                <div style={{
+                  width: 36, height: 26, borderRadius: 13,
+                  background: active ? c.primary + '22' : 'transparent',
+                  display: 'grid', placeItems: 'center',
+                  transition: 'background 0.2s',
+                }}>
+                  <IconComp color={active ? c.primary : c.muted} size={20} />
+                </div>
+                <span style={{
+                  fontFamily: theme.fonts.body,
+                  fontSize: 10, fontWeight: active ? 700 : 500,
+                  color: active ? c.primary : c.muted,
+                  transition: 'color 0.2s',
+                }}>
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
+        </nav>
+      )}
+    </div>
+  );
+}
+
+// ─── Icônes SVG inline ────────────────────────────────────────────────────────
+
+function HomeIcon({ color, size }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+      <polyline points="9 22 9 12 15 12 15 22"/>
+    </svg>
+  );
+}
+
+function VilleIcon({ color, size }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="9" width="13" height="12"/><polygon points="2 9 12 2 22 9"/>
+      <rect x="9" y="14" width="4" height="7"/><line x1="16" y1="9" x2="22" y2="9"/>
+      <line x1="22" y1="9" x2="22" y2="21"/><line x1="16" y1="21" x2="22" y2="21"/>
+    </svg>
+  );
+}
+
+function JeuxIcon({ color, size }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="6" width="20" height="12" rx="4"/>
+      <line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/>
+      <circle cx="15" cy="11" r="1" fill={color}/><circle cx="17" cy="13" r="1" fill={color}/>
+    </svg>
+  );
+}
+
+function ProfilIcon({ color, size }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </svg>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/ColorPicker.jsx">
+/**
+ * ColorPicker.jsx — Sélecteur de couleur avec swatches, hex, color picker natif et pipette
+ *
+ * USAGE dans ApparenceScreen.jsx :
+ *
+ *   import ColorPicker from '../../components/ColorPicker';
+ *
+ *   <ColorPicker
+ *     label="Couleur principale"
+ *     swatches={['#C75B39','#2D7A4F','#2B5AA0','#7C3AED','#D946EF','#E8A020']}
+ *     value={theme.colors.primary}
+ *     onChange={(hex) => patchPersonal({ colors: { ...theme.colors, primary: hex } })}
+ *   />
+ *
+ *   <ColorPicker
+ *     label="Couleur d'accent"
+ *     swatches={['#3E5C8A','#C75B39','#E05C2A','#EC4899','#06B6D4']}
+ *     value={theme.colors.accent}
+ *     onChange={(hex) => patchPersonal({ colors: { ...theme.colors, accent: hex } })}
+ *   />
+ */
+
+import React, { useState, useRef, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+
+export default function ColorPicker({ label, swatches = [], value, onChange }) {
+  const { theme }  = useTheme();
+  const tokens     = useThemeTokens();
+  const c          = theme.colors;
+
+  const [hexInput, setHexInput]         = useState(value || '');
+  const [eyedropperSupported]           = useState(() => typeof window !== 'undefined' && !!window.EyeDropper);
+  const colorInputRef                   = useRef(null);
+
+  // ── Sync hex input quand value change depuis l'extérieur ──────────
+  React.useEffect(() => {
+    setHexInput(value || '');
+  }, [value]);
+
+  // ── Valider et propager une valeur hex ────────────────────────────
+  const commit = useCallback((hex) => {
+    const clean = hex.trim();
+    if (/^#[0-9a-fA-F]{6}$/.test(clean)) {
+      onChange(clean);
+    }
+  }, [onChange]);
+
+  // ── Pipette EyeDropper API ────────────────────────────────────────
+  const openEyedropper = useCallback(async () => {
+    if (!eyedropperSupported) return;
+    try {
+      const eyeDropper = new EyeDropper();
+      const result = await eyeDropper.open();
+      const hex = result.sRGBHex;
+      setHexInput(hex);
+      onChange(hex);
+    } catch (err) {
+      // L'utilisateur a annulé — ne rien faire
+    }
+  }, [eyedropperSupported, onChange]);
+
+  // ── Input color natif (roue chromatique) ─────────────────────────
+  const handleColorInput = (e) => {
+    const hex = e.target.value;
+    setHexInput(hex);
+    onChange(hex);
+  };
+
+  // ── Champ texte hex ───────────────────────────────────────────────
+  const handleHexKeyDown = (e) => {
+    if (e.key === 'Enter') commit(e.target.value);
+  };
+  const handleHexBlur = (e) => {
+    commit(e.target.value);
+  };
+
+  return (
+    <div style={{ marginBottom: 20 }}>
+      {/* Label */}
+      <div style={{
+        fontSize: 11, fontWeight: 700, color: c.muted,
+        letterSpacing: '.06em', textTransform: 'uppercase', marginBottom: 10,
+      }}>
+        {label}
+      </div>
+
+      {/* Swatches */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: 10 }}>
+        {swatches.map(color => (
+          <button
+            key={color}
+            onClick={() => { onChange(color); setHexInput(color); }}
+            style={{
+              width: 36, height: 36, borderRadius: '50%',
+              cursor: 'pointer', background: color,
+              border: value === color
+                ? '3px solid #1d1d24'
+                : '3px solid transparent',
+              boxShadow: '0 1px 4px rgba(0,0,0,.20)',
+              padding: 0, flexShrink: 0,
+              transition: 'border-color 0.15s, transform 0.1s',
+              transform: value === color ? 'scale(1.12)' : 'scale(1)',
+            }}
+            aria-label={color}
+          />
+        ))}
+      </div>
+
+      {/* Ligne : color picker + hex input + pipette */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+
+        {/* Color picker natif (roue chromatique) */}
+        <div style={{ position: 'relative', flexShrink: 0 }}>
+          <div
+            onClick={() => colorInputRef.current?.click()}
+            style={{
+              width: 36, height: 36, borderRadius: 8,
+              background: value || '#888',
+              border: `2px solid ${tokens.border}`,
+              cursor: 'pointer',
+              boxShadow: '0 1px 4px rgba(0,0,0,.15)',
+            }}
+          />
+          <input
+            ref={colorInputRef}
+            type="color"
+            value={value || '#000000'}
+            onChange={handleColorInput}
+            style={{
+              position: 'absolute', opacity: 0,
+              width: 1, height: 1, top: 0, left: 0,
+              pointerEvents: 'none',
+            }}
+          />
+        </div>
+
+        {/* Champ hex */}
+        <input
+          type="text"
+          value={hexInput}
+          onChange={e => setHexInput(e.target.value)}
+          onKeyDown={handleHexKeyDown}
+          onBlur={handleHexBlur}
+          placeholder="#000000"
+          maxLength={7}
+          style={{
+            flex: 1,
+            border: `1px solid ${tokens.border}`,
+            borderRadius: 10, padding: '9px 12px',
+            fontSize: 13, fontFamily: 'monospace',
+            color: c.ink, background: c.surface,
+            outline: 'none',
+          }}
+        />
+
+        {/* Bouton pipette */}
+        <button
+          onClick={openEyedropper}
+          disabled={!eyedropperSupported}
+          title={
+            eyedropperSupported
+              ? 'Pipette — sélectionne une couleur à l\'écran'
+              : 'Pipette non supportée par ce navigateur'
+          }
+          style={{
+            width: 40, height: 40, flexShrink: 0,
+            border: `1px solid ${tokens.border}`,
+            borderRadius: 10,
+            background: c.surface,
+            cursor: eyedropperSupported ? 'pointer' : 'not-allowed',
+            opacity: eyedropperSupported ? 1 : 0.4,
+            fontSize: 18,
+            display: 'grid', placeItems: 'center',
+          }}
+          aria-label="Pipette"
+        >
+          🔬
+        </button>
+      </div>
+
+      {/* Message si pipette non supportée */}
+      {!eyedropperSupported && (
+        <div style={{ fontSize: 10, color: c.muted, marginTop: 5, fontStyle: 'italic' }}>
+          La pipette nécessite Chrome ou Edge.
+        </div>
+      )}
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/GameButton.jsx">
+// GameButton.jsx
+import React from 'react';
+import { useTheme, useThemeTokens } from '../../store/useTheme';
+
+export default function GameButton({
+  variant = 'primary', size = 'md', fullWidth = false,
+  disabled = false, onPress, children, style,
+}) {
+  const { theme } = useTheme();
+  const { radBtn, border } = useThemeTokens();
+  const c = theme.colors;
+
+  const BG = {
+    primary: c.primary, secondary: c.surface, ghost: 'transparent',
+    danger: c.danger, success: c.success,
+  };
+  const FG = {
+    primary: '#fff', secondary: c.ink, ghost: c.primary,
+    danger: '#fff', success: '#fff',
+  };
+  const BORDER = {
+    primary: 'none', secondary: `1px solid ${border}`, ghost: 'none',
+    danger: 'none', success: 'none',
+  };
+  const PAD = { sm: `7px 14px`, md: `11px 18px`, lg: `14px 22px` };
+  const FS = { sm: 12, md: 13, lg: 15 };
+
+  return (
+    <button onClick={onPress} disabled={disabled} style={{
+      width: fullWidth ? '100%' : undefined,
+      background: BG[variant],
+      color: FG[variant],
+      border: BORDER[variant],
+      borderRadius: radBtn,
+      padding: PAD[size],
+      fontFamily: theme.fonts.display,
+      fontWeight: 700,
+      fontSize: `${FS[size] * theme.scale}px`,
+      cursor: disabled ? 'not-allowed' : 'pointer',
+      opacity: disabled ? 0.5 : 1,
+      transition: 'opacity 0.15s, transform 0.1s',
+      ...style,
+    }}>
+      {children}
+    </button>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/GameCard.jsx">
+// GameCard.jsx
+import React from 'react';
+import { useTheme, useThemeTokens } from '../../store/useTheme';
+
+export default function GameCard({
+  children, highlighted = false, accent = 'primary',
+  padding = 16, style, onClick,
+}) {
+  const { theme } = useTheme();
+  const { radCard, shadow, border } = useThemeTokens();
+  const c = theme.colors;
+
+  const ACCENT_COLORS = {
+    primary: c.primary, accent: c.accent, success: c.success, danger: c.danger,
+  };
+
+  return (
+    <div onClick={onClick} style={{
+      background: c.surface,
+      borderRadius: radCard,
+      boxShadow: shadow,
+      border: highlighted
+        ? `2px solid ${ACCENT_COLORS[accent]}`
+        : `1px solid ${border}`,
+      padding,
+      cursor: onClick ? 'pointer' : undefined,
+      transition: 'border-color 0.15s, box-shadow 0.15s',
+      ...style,
+    }}>
+      {children}
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/GameHUD.jsx">
+// GameHUD.jsx — Header universel de tous les jeux
+import React from 'react';
+import { ArrowLeft } from 'lucide-react';
+import { useTheme } from '../../store/useTheme';
+import { useProgression } from '../../store/useProgression';
+
+export default function GameHUD({ title, onBack, extra }) {
+  const { theme } = useTheme();
+  const { piasses } = useProgression();
+  const c = theme.colors;
+
+  return (
+    <div style={{
+      background: c.header,
+      padding: '12px 16px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 8,
+      flexShrink: 0,
+    }}>
+      <button onClick={onBack} style={{
+        width: 38, height: 38, borderRadius: '50%',
+        background: 'rgba(255,255,255,0.16)',
+        border: 'none', cursor: 'pointer',
+        display: 'grid', placeItems: 'center',
+        flexShrink: 0,
+      }} aria-label="Retour">
+        <ArrowLeft size={18} color="#fff" />
+      </button>
+
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flex: 1, justifyContent: 'center' }}>
+        <span style={{
+          fontFamily: theme.fonts.display,
+          fontWeight: 700,
+          fontSize: `${15 * theme.scale}px`,
+          color: '#fff',
+          letterSpacing: '0.02em',
+        }}>{title}</span>
+        {extra && <span style={{ color: 'rgba(255,255,255,0.85)', fontSize: 13 }}>{extra}</span>}
+      </div>
+
+      <div style={{
+        background: 'rgba(255,255,255,0.16)',
+        borderRadius: 999,
+        padding: '5px 11px',
+        display: 'flex', alignItems: 'center', gap: 5,
+        flexShrink: 0,
+      }}>
+        <span style={{ fontSize: 14, lineHeight: 1 }}>⚜️</span>
+        <span style={{
+          fontFamily: theme.fonts.display,
+          fontWeight: 700,
+          fontSize: 13,
+          color: c.gold,
+        }}>{Math.floor(piasses)}</span>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/GameProgress.jsx">
+// GameProgress.jsx
+import React from 'react';
+import { useTheme, useThemeTokens } from '../../store/useTheme';
+
+export default function GameProgress({
+  lives, maxLives = 3, score, current, total, showBar = true,
+}) {
+  const { theme } = useTheme();
+  const { border } = useThemeTokens();
+  const c = theme.colors;
+  const pct = (showBar && current != null && total) ? Math.min(current / total, 1) : null;
+
+  return (
+    <div style={{
+      background: c.surface,
+      borderBottom: `1px solid ${border}`,
+      padding: '8px 16px',
+    }}>
+      {pct !== null && (
+        <div style={{
+          background: border,
+          borderRadius: 99, height: 5, overflow: 'hidden', marginBottom: 5,
+        }}>
+          <div style={{
+            width: `${pct * 100}%`, height: '100%',
+            background: c.primary, borderRadius: 99,
+            transition: 'width 0.4s ease',
+          }} />
+        </div>
+      )}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        {lives != null && (
+          <div style={{ display: 'flex', gap: 3 }}>
+            {Array.from({ length: maxLives }).map((_, i) => (
+              <span key={i} style={{ fontSize: 13, opacity: i < lives ? 1 : 0.25 }}>❤️</span>
+            ))}
+          </div>
+        )}
+        {current != null && total != null && (
+          <span style={{
+            fontFamily: theme.fonts.body,
+            fontSize: `${11 * theme.scale}px`,
+            color: c.muted, fontWeight: 600,
+          }}>{current} / {total}</span>
+        )}
+        {score != null && (
+          <span style={{
+            fontFamily: theme.fonts.display,
+            fontSize: `${12 * theme.scale}px`,
+            color: c.primary, fontWeight: 700,
+          }}>{score} XP</span>
+        )}
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/GameResult.jsx">
+// GameResult.jsx
+import React from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useTheme, useThemeTokens } from '../../store/useTheme';
+import GameButton from './GameButton';
+
+export default function GameResult({
+  state, title, subtitle, points, streak,
+  onReplay, onBack, nextLabel, onNext,
+}) {
+  const { theme } = useTheme();
+  const { radCard, shadow, border } = useThemeTokens();
+  const c = theme.colors;
+
+  const isWin = state === 'win';
+  const defaultTitle = isWin ? 'Bravo !' : 'Pas de chance…';
+  const defaultSubtitle = isWin ? 'Continue comme ça !' : 'Réessaie, tu vas y arriver !';
+  const emoji = isWin ? '🎉' : '😅';
+  const accentColor = isWin ? c.success : c.danger;
+
+  return (
+    <AnimatePresence>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} style={{
+        position: 'fixed', inset: 0, zIndex: 50,
+        background: 'rgba(0,0,0,0.55)',
+        display: 'flex', alignItems: 'flex-end', justifyContent: 'center',
+        padding: '0 16px 24px',
+      }}>
+        <motion.div
+          initial={{ y: 80, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ type: 'spring', damping: 22, stiffness: 260 }}
+          style={{
+            width: '100%', maxWidth: 440,
+            background: c.surface,
+            borderRadius: radCard,
+            boxShadow: shadow,
+            border: `1px solid ${border}`,
+            padding: 24, overflow: 'hidden',
+          }}>
+          <div style={{ height: 5, background: accentColor, margin: '-24px -24px 20px', borderRadius: `${radCard} ${radCard} 0 0` }} />
+
+          <div style={{ textAlign: 'center', marginBottom: 16 }}>
+            <div style={{ fontSize: 48, lineHeight: 1, marginBottom: 8 }}>{emoji}</div>
+            <div style={{ fontFamily: theme.fonts.display, fontWeight: 800, fontSize: `${22 * theme.scale}px`, color: c.ink }}>
+              {title || defaultTitle}
+            </div>
+            <div style={{ fontFamily: theme.fonts.body, fontSize: `${13 * theme.scale}px`, color: c.muted, marginTop: 4 }}>
+              {subtitle || defaultSubtitle}
+            </div>
+          </div>
+
+          {(points != null || streak != null) && (
+            <div style={{
+              display: 'flex', gap: 12, marginBottom: 20,
+              background: c.bg, borderRadius: 12, padding: '12px 16px',
+              border: `1px solid ${border}`,
+            }}>
+              {points != null && (
+                <div style={{ flex: 1, textAlign: 'center' }}>
+                  <div style={{ fontFamily: theme.fonts.display, fontWeight: 800, fontSize: 22, color: c.gold }}>
+                    +{points}
+                  </div>
+                  <div style={{ fontSize: 11, color: c.muted, fontWeight: 600 }}>piasses</div>
+                </div>
+              )}
+              {streak != null && streak > 0 && (
+                <div style={{ flex: 1, textAlign: 'center' }}>
+                  <div style={{ fontFamily: theme.fonts.display, fontWeight: 800, fontSize: 22, color: c.primary }}>
+                    🔥 {streak}
+                  </div>
+                  <div style={{ fontSize: 11, color: c.muted, fontWeight: 600 }}>série</div>
+                </div>
+              )}
+            </div>
+          )}
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {onNext && nextLabel && (
+              <GameButton variant="primary" size="lg" fullWidth onPress={onNext}>
+                {nextLabel}
+              </GameButton>
+            )}
+            <GameButton variant="secondary" size="md" fullWidth onPress={onReplay}>
+              Rejouer
+            </GameButton>
+            <GameButton variant="ghost" size="sm" fullWidth onPress={onBack}>
+              Retour à l'accueil
+            </GameButton>
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+</file>
+
+<file path="design_handoff_theme_system/PROMPT_GOOGLE_AI_STUDIO.md">
+# Prompt Google AI Studio — Mots & Blocs : Intégration du système de thème
+
+---
+
+## Contexte
+
+Tu travailles sur **Mots & Blocs**, une application React/TypeScript/Tailwind d'apprentissage du québécois. Je t'ai déjà soumis le codebase complet lors d'une session précédente.
+
+Ce prompt décrit les **nouveaux ajouts** à intégrer dans le codebase existant. Tous les fichiers nécessaires sont joints à ce message.
+
+---
+
+## Ce qui a changé depuis la dernière version
+
+### 1. Store de thème étendu — `useTheme.js`
+**Remplace** `src/store/useTheme.ts` par le fichier `useTheme.js` fourni.
+
+Nouveautés par rapport à l'original :
+- `fonts: { display, body }` — polices par thème (Sora, Space Grotesk, Fredoka, Outfit)
+- `scale: 0.9 | 1 | 1.12` — taille du texte (Petit / Moyen / Grand)
+- `radius: 'carre' | 'doux' | 'rond'` — arrondi des coins
+- `shadow: 'plat' | 'doux' | 'prononce'` — niveau d'ombrage
+- `contrast: boolean` — mode contrasté (accessibilité)
+- `soundPack: 'foret' | 'arcade' | 'doux'` — pack sonore (futur)
+- **12 thèmes prédéfinis** (voir `PREDEFINED_THEMES` dans le fichier)
+- `personalTheme` — thème personnalisé persisté en localStorage
+- `patchPersonal(patch)` — modifie le thème personnel sans écraser les autres champs
+- `applyThemeTokens(theme)` — applique les tokens CSS sur `:root`
+- `useThemeTokens()` — hook qui retourne `{ radCard, radBtn, shadow, border, scale }`
+
+**Action requise dans `App.tsx` :** appeler `applyThemeTokens(theme)` au montage :
+```tsx
+import { useTheme, applyThemeTokens } from './store/useTheme';
+const { theme } = useTheme();
+useEffect(() => { applyThemeTokens(theme); }, [theme]);
+```
+
+---
+
+### 2. Shell de navigation persistant — `AppShell.jsx`
+**Nouveau fichier** à placer dans `src/components/AppShell.jsx`.
+
+**Remplace** la logique de navigation dans `App.tsx`. Il s'agit d'un shell qui :
+- Affiche un **HUD global** (niveau + titre + piasses) en haut des écrans "hubs"
+- Affiche une **bottom nav** (Accueil / Ville / Jeux / Profil) sur ces mêmes écrans
+- **Cache** automatiquement le HUD et la nav dans les jeux et écrans secondaires (les jeux ont leur propre `GameHUD`)
+
+Les écrans "hubs" (shell visible) sont : `home`, `ville`, `depanneur`, `profil`, `store`, `leaderboard`, `portefeuille`, `dictionnaire`, `apparence`.
+
+**Intégration dans `App.tsx` :**
+```tsx
+import AppShell from './components/AppShell';
+
+// Dans le rendu :
+<AppShell currentScreen={currentScreen} onNavigate={navigateTo}>
+  {currentScreen === 'home'      && <HomeScreen />}
+  {currentScreen === 'ville'     && <VilleScreen />}
+  {currentScreen === 'depanneur' && <DepanneurScreen />}
+  {currentScreen === 'profil'    && <ProfilScreen />}
+  {/* Jeux — ont leur propre GameHUD */}
+  {currentScreen === 'pendu'     && <PenduScreen onBack={() => navigateTo('home')} />}
+  {currentScreen === 'hache'     && <HacheScreen onBack={() => navigateTo('home')} />}
+  {currentScreen === '2048'      && <Game2048Screen onBack={() => navigateTo('home')} />}
+  {/* ... tous les autres écrans ... */}
+</AppShell>
+```
+
+---
+
+### 3. Cinq composants partagés pour les jeux
+
+Ces 5 fichiers vont dans `src/components/`. **Tous les jeux doivent les utiliser** à la place de leurs éléments hardcodés actuels.
+
+#### `GameHUD.jsx`
+Remplace le header custom dans chaque jeu. Usage :
+```tsx
+import GameHUD from '../../components/GameHUD';
+<GameHUD title="Hache" onBack={onBack} />
+<GameHUD title="Pendu" onBack={onBack} extra={<span>🔥 {streak}</span>} />
+```
+
+#### `GameProgress.jsx`
+Barre de progression et vies. Usage :
+```tsx
+import GameProgress from '../../components/GameProgress';
+<GameProgress lives={lives} maxLives={3} score={score} current={step} total={10} />
+```
+
+#### `GameButton.jsx`
+Bouton standard (5 variantes). Usage :
+```tsx
+import GameButton from '../../components/GameButton';
+<GameButton variant="primary" onPress={valider} size="lg" fullWidth>Valider</GameButton>
+<GameButton variant="secondary" onPress={aide}>Aide</GameButton>
+<GameButton variant="danger" onPress={abandon}>Abandonner</GameButton>
+```
+
+#### `GameResult.jsx`
+Modale de fin de jeu universelle. **Remplace tous les écrans de fin custom** dans chaque jeu :
+```tsx
+import GameResult from '../../components/GameResult';
+{gameFinished && (
+  <GameResult
+    state={lives > 0 ? 'win' : 'lose'}
+    points={score}
+    streak={streak}
+    onReplay={restart}
+    onBack={onBack}
+    nextLabel="Prochain défi"
+    onNext={nextChallenge}
+  />
+)}
+```
+
+#### `GameCard.jsx`
+Carte / panneau thémé. Usage :
+```tsx
+import GameCard from '../../components/GameCard';
+<GameCard highlighted accent="primary">
+  <p>Contenu de la carte</p>
+</GameCard>
+```
+
+---
+
+### 4. Écran Apparence — `ApparenceScreen.jsx`
+**Nouveau fichier** à placer dans `src/features/apparence/ApparenceScreen.jsx`.
+
+C'est l'écran de personnalisation du thème, accessible depuis le profil ou les réglages. Il comprend :
+- Galerie des 12 thèmes prédéfinis
+- Customizer complet : couleur principale + accent (swatches, color picker natif, champ hex, pipette EyeDropper), police des titres, taille du texte, coins, ombrage, ambiance clair/sombre, mode contrasté
+- Simulation daltonisme (aperçu uniquement, filtre CSS)
+- Mode auto Jour/Nuit (suit `prefers-color-scheme`)
+- Historique des 5 derniers thèmes
+- Aperçu en direct (3 contextes : Accueil, Jeu, Commerce)
+
+**Intégration dans `App.tsx` :**
+```tsx
+import ApparenceScreen from './features/apparence/ApparenceScreen';
+{currentScreen === 'apparence' && <ApparenceScreen onBack={() => navigateTo('profil')} />}
+```
+Ajouter un lien vers `'apparence'` depuis `ProfilScreen` ou les réglages.
+
+---
+
+### 5. Utilitaire couleurs tuiles 2048 — `tileColors.js`
+**Nouveau fichier** à placer dans `src/utils/tileColors.js`.
+
+Remplace les couleurs hardcodées Tailwind dans `Game2048Screen.tsx` :
+
+**Avant :**
+```tsx
+function getTileColor(val) {
+  const hash = ...;
+  const colors = ["bg-red-500", "bg-orange-500", ...]; // hardcodé
+  return colors[hash % colors.length];
+}
+```
+
+**Après :**
+```tsx
+import { getTileColors, getTileTextColor } from '../../utils/tileColors';
+import { useTheme } from '../../store/useTheme';
+
+const { theme } = useTheme();
+const TILE_COLORS = getTileColors(theme.colors.primary);
+
+function getTileStyle(val) {
+  const hash = Array.from(val).reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const bg = TILE_COLORS[hash % TILE_COLORS.length];
+  const color = getTileTextColor(bg, theme.colors.ink);
+  return { background: bg, color };
+}
+// Remplacer className={getTileColor(val)} par style={getTileStyle(tile.value)}
+```
+
+---
+
+### 6. Modifications spécifiques par jeu
+
+#### `HacheScreen.tsx`
+- Remplacer le header custom par `<GameHUD title="Hache" onBack={onBack} />`
+- Remplacer l'écran de fin par `<GameResult state={...} .../>`
+- Fond de scène : remplacer `bg-slate-900` par `style={{ background: theme.colors.bg }}`
+- ⚠️ **La cible SVG (anneaux) ne change pas** — c'est l'identité visuelle du jeu
+
+#### `PenduScreen.tsx`
+- Remplacer le header custom par `<GameHUD title="Pendu" onBack={onBack} />`
+- Remplacer `stroke-slate-300` par `stroke={theme.colors.ink}` (structure du bonhomme)
+- Remplacer `stroke-red-500` par `stroke={theme.colors.danger}` (erreurs)
+- Clavier : touche correcte → `background: theme.colors.success`, erreur → `background: theme.colors.danger`
+- Remplacer l'écran de fin par `<GameResult .../>`
+
+#### `Game2048Screen.tsx`
+- Remplacer le header par `<GameHUD title="2048" onBack={onBack} />`
+- Remplacer `getTileColor()` par `getTileStyle()` (voir section 5 ci-dessus)
+- Remplacer l'écran de fin par `<GameResult .../>`
+
+#### `SwipeScreen.tsx`, `SortScreen.tsx`, `QuizScreen.tsx`
+- Remplacer header → `<GameHUD />`
+- Remplacer cartes → `<GameCard />`
+- Remplacer boutons → `<GameButton />`
+- Remplacer fin → `<GameResult />`
+
+---
+
+## Fichiers joints
+
+| Fichier | Destination dans le projet |
+|---|---|
+| `useTheme.js` | `src/store/useTheme.ts` (remplace) |
+| `AppShell.jsx` | `src/components/AppShell.jsx` (nouveau) |
+| `GameHUD.jsx` | `src/components/GameHUD.jsx` (nouveau) |
+| `GameProgress.jsx` | `src/components/GameProgress.jsx` (nouveau) |
+| `GameButton.jsx` | `src/components/GameButton.jsx` (nouveau) |
+| `GameResult.jsx` | `src/components/GameResult.jsx` (nouveau) |
+| `GameCard.jsx` | `src/components/GameCard.jsx` (nouveau) |
+| `ApparenceScreen.jsx` | `src/features/apparence/ApparenceScreen.jsx` (nouveau) |
+| `tileColors.js` | `src/utils/tileColors.js` (nouveau) |
+| `Shell Global.dc.html` | Référence visuelle — shell + navigation |
+| `Selecteur de Theme.dc.html` | Référence visuelle — écran Apparence |
+| `Gabarit Jeu.dc.html` | Référence visuelle — anatomie d'un jeu |
+| `README.md` | Documentation complète |
+
+---
+
+## Polices à ajouter dans `index.html`
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@400;600;700&family=Fredoka:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+```
+
+---
+
+## Priorité d'intégration suggérée
+
+1. `useTheme.js` + `applyThemeTokens` dans `App.tsx`
+2. `AppShell.jsx` + refactoring navigation
+3. `GameHUD.jsx` dans tous les jeux
+4. `GameResult.jsx` dans tous les jeux
+5. `GameButton.jsx` + `GameCard.jsx` dans les jeux
+6. `ApparenceScreen.jsx` + lien depuis Profil
+7. `tileColors.js` dans `Game2048Screen`
+8. Corrections spécifiques Pendu (stroke) + Hache (bg)
+</file>
+
+<file path="design_handoff_theme_system/README.md">
+# Handoff : Système de thème unifié — Mots & Blocs
+
+## Vue d'ensemble
+
+Ce paquet contient tout ce qu'il faut pour intégrer un **gestionnaire de thèmes complet** dans l'application React/Tailwind existante *Mots & Blocs*, ainsi que **5 composants partagés** qui s'appliquent à tous les jeux (Hache, Pendu, 2048, Sort, Swipe, Quiz, etc.).
+
+## À propos des fichiers de design
+
+Les fichiers `.dc.html` dans `design_reference/` sont des **maquettes interactives HTML** créées à titre de référence visuelle. Elles montrent l'apparence et les comportements attendus. La tâche est de **recréer ces designs dans le codebase React/TypeScript/Tailwind existant** en utilisant les fichiers `.ts`/`.tsx` fournis dans ce paquet — pas de copier-coller le HTML directement.
+
+## Fidelité
+
+**High-fidelity.** Les maquettes montrent les couleurs exactes, typographies, espacements et interactions cibles. Les composants fournis (`useTheme.extended.ts` + `components/`) sont déjà écrits en TypeScript et correspondent pixel pour pixel aux maquettes.
+
+---
+
+## Fichiers fournis
+
+```
+design_handoff_theme_system/
+├── useTheme.extended.ts          ← Remplace src/store/useTheme.ts
+├── components/
+│   ├── GameHUD.tsx               ← Header universel (tous les jeux)
+│   ├── GameProgress.tsx          ← Barre de progression / vies
+│   ├── GameButton.tsx            ← Bouton standard (5 variantes)
+│   ├── GameResult.tsx            ← Modale fin de jeu
+│   └── GameCard.tsx              ← Carte / panneau générique
+└── design_reference/
+    ├── Shell Global.dc.html      ← Maquette shell + navigation
+    ├── Selecteur de Theme.dc.html← Maquette écran Apparence
+    └── Gabarit Jeu.dc.html       ← Anatomie jeu + tokens + recommandations
+```
+
+---
+
+## Intégration étape par étape
+
+### Étape 1 — Remplacer useTheme.ts
+
+```bash
+cp useTheme.extended.ts src/store/useTheme.ts
+rm src/store/useTheme.backup.ts  # plus nécessaire
+```
+
+### Étape 2 — Copier les composants
+
+```bash
+cp components/GameHUD.tsx      src/components/GameHUD.tsx
+cp components/GameProgress.tsx src/components/GameProgress.tsx
+cp components/GameButton.tsx   src/components/GameButton.tsx
+cp components/GameResult.tsx   src/components/GameResult.tsx
+cp components/GameCard.tsx     src/components/GameCard.tsx
+```
+
+### Étape 3 — Appliquer les tokens CSS au démarrage
+
+Dans `src/App.tsx`, appeler `applyThemeTokens` au montage :
+
+```tsx
+import { useTheme, applyThemeTokens } from './store/useTheme';
+
+function App() {
+  const { theme } = useTheme();
+
+  useEffect(() => {
+    applyThemeTokens(theme);
+  }, [theme]);
+
+  // ...
+}
+```
+
+### Étape 4 — Ajouter les polices Google Fonts
+
+Dans `index.html` (ou `App.tsx`) :
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@400;600;700&family=Fredoka:wght@400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+```
+
+### Étape 5 — Remplacer les headers dans les jeux
+
+**Avant (exemple HacheScreen.tsx) :**
+```tsx
+<div className="flex justify-between items-center p-4 bg-slate-900">
+  <button onClick={onBack}><ArrowLeft /></button>
+  <span>Hache</span>
+  <div>{piasses} ⚜️</div>
+</div>
+```
+
+**Après :**
+```tsx
+import GameHUD from '../../components/GameHUD';
+// ...
+<GameHUD title="Hache" onBack={onBack} />
+```
+
+### Étape 6 — Remplacer les écrans de fin de jeu
+
+**Avant :**
+Chaque jeu a son propre écran de fin (ex: `gameFinished && <div className="...">Bravo !</div>`).
+
+**Après :**
+```tsx
+import GameResult from '../../components/GameResult';
+// ...
+{gameFinished && (
+  <GameResult
+    state={lives > 0 ? 'win' : 'lose'}
+    points={score}
+    streak={streak}
+    onReplay={restart}
+    onBack={onBack}
+    nextLabel="Prochain défi"
+    onNext={nextChallenge}
+  />
+)}
+```
+
+### Étape 7 — Remplacer les boutons hardcodés
+
+**Avant :**
+```tsx
+<button className="bg-blue-600 text-white rounded-xl px-4 py-3 font-bold">
+  Valider
+</button>
+```
+
+**Après :**
+```tsx
+import GameButton from '../../components/GameButton';
+// ...
+<GameButton variant="primary" onPress={valider}>Valider</GameButton>
+<GameButton variant="secondary" onPress={aide}>Aide</GameButton>
+```
+
+### Étape 8 — Ajouter l'écran Apparence
+
+Créer `src/features/apparence/ApparenceScreen.tsx` en s'inspirant de la maquette `design_reference/Selecteur de Theme.dc.html`.
+
+L'écran doit :
+- Afficher la galerie des 12 thèmes prédéfinis (`PREDEFINED_THEMES` depuis `useTheme.ts`)
+- Appeler `setThemeById(id)` au tap sur une carte
+- Afficher le customizer (couleur picker, axes de perso) qui appelle `patchPersonal(patch)`
+- Être accessible depuis les réglages ou le profil
+
+---
+
+## Composants : référence rapide
+
+### GameHUD
+| Prop | Type | Requis | Description |
+|---|---|---|---|
+| `title` | `string` | ✅ | Titre du jeu affiché au centre |
+| `onBack` | `() => void` | ✅ | Retour à l'écran précédent |
+| `extra` | `ReactNode` | — | Élément optionnel (streak, timer…) |
+
+### GameProgress
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `lives` | `number` | — | Vies restantes (cœurs) |
+| `maxLives` | `number` | `3` | Total des vies |
+| `score` | `number` | — | Score affiché à droite |
+| `current` | `number` | — | Progression actuelle |
+| `total` | `number` | — | Total pour la barre |
+| `showBar` | `boolean` | `true` | Afficher la barre |
+
+### GameButton
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `variant` | `primary\|secondary\|ghost\|danger\|success` | `primary` | Style visuel |
+| `size` | `sm\|md\|lg` | `md` | Taille |
+| `fullWidth` | `boolean` | `false` | Pleine largeur |
+| `disabled` | `boolean` | `false` | État désactivé |
+| `onPress` | `() => void` | — | Handler |
+
+### GameResult
+| Prop | Type | Requis | Description |
+|---|---|---|---|
+| `state` | `'win'\|'lose'` | ✅ | Résultat |
+| `title` | `string` | — | Titre (défaut auto) |
+| `subtitle` | `string` | — | Sous-titre (défaut auto) |
+| `points` | `number` | — | Piasses gagnées |
+| `streak` | `number` | — | Série actuelle |
+| `onReplay` | `() => void` | ✅ | Rejouer |
+| `onBack` | `() => void` | ✅ | Retour |
+| `nextLabel` | `string` | — | Label bouton suivant |
+| `onNext` | `() => void` | — | Action suivant |
+
+### GameCard
+| Prop | Type | Default | Description |
+|---|---|---|---|
+| `highlighted` | `boolean` | `false` | Contour coloré |
+| `accent` | `primary\|accent\|success\|danger` | `primary` | Couleur du contour |
+| `padding` | `number\|string` | `16` | Padding interne |
+| `onClick` | `() => void` | — | Rend la carte cliquable |
+
+---
+
+## Tokens CSS disponibles (après applyThemeTokens)
+
+Ces variables CSS sont disponibles globalement après l'appel à `applyThemeTokens()` :
+
+```css
+var(--color-primary)   /* Bouton principal */
+var(--color-accent)    /* 2ème accent */
+var(--color-header)    /* Fond HUD */
+var(--color-bg)        /* Fond écrans */
+var(--color-surface)   /* Cartes, panneaux */
+var(--color-ink)       /* Texte principal */
+var(--color-muted)     /* Texte secondaire */
+var(--color-gold)      /* Piasses */
+var(--color-success)   /* Bonne réponse */
+var(--color-danger)    /* Mauvaise réponse */
+var(--color-border)    /* Bordures (contraste auto) */
+var(--font-display)    /* Police titres */
+var(--font-body)       /* Police corps */
+var(--radius-card)     /* Rayon des cartes */
+var(--radius-btn)      /* Rayon des boutons */
+var(--shadow-card)     /* Ombre des cartes */
+var(--theme-scale)     /* Échelle de texte (0.9–1.12) */
+```
+
+---
+
+## Recommandations spécifiques par jeu
+
+### HacheScreen
+- ✅ `GameHUD` + `GameButton` pour les options de réponse
+- ✅ Fond de scène : utiliser `theme.colors.bg` (sombre recommandé)
+- 🔒 **Cible SVG (anneaux) : ne pas thématiser** — identité visuelle fixe du jeu
+
+### PenduScreen
+- ✅ `GameHUD` + `GameProgress` (vies = erreurs)
+- ✅ SVG bonhomme : `stroke={theme.colors.ink}` (structure) + `stroke={theme.colors.danger}` (parties du corps au fur des erreurs)
+- ✅ Clavier : touche correcte → `colors.success`, erreur → `colors.danger`
+
+### Game2048Screen
+- ✅ `GameHUD` + `GameProgress` (score)
+- ✅ Couleurs des tuiles : dériver de `colors.primary` via HSL (voir `Gabarit Jeu.dc.html` section ②)
+- Formule : `hslToHex(h, s * lightnessFactor, l + offset)` pour 8 niveaux
+
+### SwipeScreen / SortScreen / QuizScreen
+- ✅ `GameHUD` + `GameCard` pour les cartes à swiper/trier
+- ✅ `GameResult` pour la fin
+
+---
+
+## Thèmes prédéfinis (12)
+
+| ID | Nom | Sombre |
+|---|---|---|
+| `automne` | Automne Boréal | Non |
+| `minuit` | Minuit Laurentien | Oui |
+| `erable` | Forêt d'Érable | Non |
+| `neige` | Première Neige | Non |
+| `arcade` | Néon Arcade | Oui |
+| `cabane` | Cabane à Sucre | Non |
+| `saint_jean` | Fête Saint-Jean | Oui |
+| `toundra` | Toundra Boréale | Oui |
+| `poutine` | Fromage en Crottes | Non |
+| `fleuve` | Fleuve Saint-Laurent | Non |
+| `violette` | Violette des Prés | Non |
+| `nuit_polaire` | Nuit Polaire | Oui |
+
+---
+
+## Assets
+
+- Polices : Google Fonts (Sora, Space Grotesk, Fredoka, Outfit) — CDN public
+- Icônes : Lucide React (déjà dans le projet)
+- Animations : motion/react (déjà dans le projet)
+- Aucune image requise pour les composants partagés
+
+---
+
+## Notes importantes
+
+1. **Ne pas utiliser `bg-*` Tailwind hardcodé dans les jeux** — toujours passer par `theme.colors.*`
+2. **`useThemeTokens()`** retourne les valeurs calculées (radius, shadow, border) selon les préférences utilisateur
+3. La persistence est gérée automatiquement par Zustand (`localStorage` clé `mots-blocs-theme-v2`)
+4. L'ancienne clé de persistence (`mots-blocs-theme` ou similaire) sera ignorée — les utilisateurs existants repartiront sur le thème par défaut `automne`
+</file>
+
+<file path="design_handoff_theme_system/tileColors.js">
+/**
+ * tileColors.js — Dérivation de couleurs pour les tuiles 2048
+ * Mots & Blocs
+ *
+ * USAGE dans Game2048Screen.jsx :
+ *
+ *   import { getTileColors } from '../../utils/tileColors';
+ *   import { useTheme } from '../../store/useTheme';
+ *
+ *   const { theme } = useTheme();
+ *   const tileColors = getTileColors(theme.colors.primary);
+ *   // tileColors[0] = plus clair, tileColors[7] = plus saturé/sombre
+ *
+ *   // Remplacer getTileColor() hardcodé par :
+ *   function getTileColor(val) {
+ *     const hash = Array.from(val).reduce((acc, c) => acc + c.charCodeAt(0), 0);
+ *     return tileColors[hash % tileColors.length];
+ *   }
+ *
+ * RÉSULTAT :
+ *   8 couleurs hex dérivées de la couleur primaire du thème,
+ *   du plus clair au plus saturé, avec légère variation de teinte.
+ *   Le texte (clair/sombre) est aussi calculé automatiquement.
+ */
+
+// ─── Helpers HSL ──────────────────────────────────────────────────────────────
+
+function hexToHSL(hex) {
+  const h6 = (hex || '#888888').replace('#', '').slice(0, 6);
+  let r = parseInt(h6.slice(0, 2), 16) / 255;
+  let g = parseInt(h6.slice(2, 4), 16) / 255;
+  let b = parseInt(h6.slice(4, 6), 16) / 255;
+  if (isNaN(r) || isNaN(g) || isNaN(b)) return [0, 0.5, 0.5];
+  const max = Math.max(r, g, b), min = Math.min(r, g, b), l = (max + min) / 2;
+  if (max === min) return [0, 0, l];
+  const d = max - min;
+  const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  let hh = max === r ? (g - b) / d + (g < b ? 6 : 0) : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return [hh * 60, s, l];
+}
+
+function hslToHex(h, s, l) {
+  const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
+  const hh = ((h % 360) + 360) % 360;
+  const ss = clamp(s, 0, 1);
+  const ll = clamp(l, 0, 1);
+  const a = ss * Math.min(ll, 1 - ll);
+  const f = n => {
+    const k = (n + hh / 30) % 12;
+    const c = a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * clamp(ll - c, 0, 1)).toString(16).padStart(2, '0');
+  };
+  return '#' + f(0) + f(8) + f(4);
+}
+
+// ─── API publique ──────────────────────────────────────────────────────────────
+
+/**
+ * Retourne un tableau de 8 couleurs hex dérivées de primaryHex.
+ * @param {string} primaryHex - Ex: '#C75B39'
+ * @returns {string[]} - 8 couleurs hex
+ */
+export function getTileColors(primaryHex) {
+  try {
+    const [h, s, l] = hexToHSL(primaryHex);
+    return [
+      hslToHex(h,  s * 0.35, Math.min(l + 0.32, 0.90)), // très clair
+      hslToHex(h,  s * 0.50, Math.min(l + 0.22, 0.82)), // clair
+      hslToHex(h,  s * 0.70, Math.min(l + 0.12, 0.74)), // moyen clair
+      hslToHex(h,  s,        l),                          // primaire
+      hslToHex(h,  Math.min(s * 1.1, 1), Math.max(l - 0.08, 0.12)), // primaire +
+      hslToHex((h + 18) % 360, s, l),                    // teinte +18°
+      hslToHex((h + 36) % 360, s * 0.85, Math.min(l + 0.08, 0.76)), // teinte +36°
+      hslToHex((h - 20 + 360) % 360, s, Math.max(l - 0.04, 0.16)), // teinte -20°
+    ];
+  } catch (e) {
+    return Array(8).fill('#888888');
+  }
+}
+
+/**
+ * Retourne la couleur de texte adaptée (blanc ou encre) selon la luminosité du fond.
+ * @param {string} bgHex   - Couleur de fond de la tuile
+ * @param {string} inkHex  - Couleur ink du thème (pour texte sombre)
+ * @returns {string}       - '#ffffff' ou inkHex
+ */
+export function getTileTextColor(bgHex, inkHex = '#1a1a24') {
+  try {
+    const [, , l] = hexToHSL(bgHex);
+    return l > 0.55 ? inkHex : '#ffffff';
+  } catch (e) {
+    return '#ffffff';
+  }
+}
+</file>
+
+<file path="design_handoff_theme_system/useTheme.extended.ts">
+/**
+ * useTheme.extended.ts — Mots & Blocs
+ * Extension du store de thème existant.
+ *
+ * INTÉGRATION :
+ *   Remplacer le contenu de src/store/useTheme.ts par ce fichier.
+ *   Supprimer useTheme.backup.ts.
+ *
+ * CHANGEMENTS vs l'original :
+ *   + fonts: { display, body }          → polices par thème
+ *   + scale: 0.9 | 1 | 1.12            → taille du texte
+ *   + radius: 'carre'|'doux'|'rond'     → arrondi des coins
+ *   + shadow: 'plat'|'doux'|'prononce'  → niveau d'ombrage
+ *   + contrast: boolean                 → mode contrasté (accessibilité)
+ *   + soundPack: string                 → pack sonore (futur)
+ *   + 12 thèmes prédéfinis
+ *   + personalTheme: AppTheme | null    → thème personnalisé persisté
+ *   + setPersonalTheme / patchPersonal
+ */
+
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+// ─── Types ────────────────────────────────────────────────────────────────────
+
+export interface AppColors {
+  primary: string;     // Bouton principal, surbrillance active
+  accent: string;      // Badges, 2ème couleur d'accent
+  header: string;      // Fond du HUD / header
+  bg: string;          // Fond général des écrans
+  surface: string;     // Cartes, panneaux, modales
+  ink: string;         // Texte principal
+  muted: string;       // Texte secondaire, indices
+  gold: string;        // Piasses / monnaie virtuelle
+  success: string;     // Bonne réponse, streak
+  danger: string;      // Mauvaise réponse, vie perdue
+}
+
+export interface AppFonts {
+  display: string;     // Police des titres, scores, labels importants
+  body: string;        // Police du texte courant
+}
+
+export type RadiusMode  = 'carre' | 'doux' | 'rond';
+export type ShadowMode  = 'plat'  | 'doux' | 'prononce';
+export type SoundPack   = 'foret' | 'arcade' | 'doux';
+
+export interface AppTheme {
+  id: string;
+  name: string;
+  dark: boolean;
+  colors: AppColors;
+  fonts: AppFonts;
+  scale: number;           // 0.9 | 1 | 1.12
+  radius: RadiusMode;
+  shadow: ShadowMode;
+  contrast: boolean;
+  soundPack: SoundPack;
+  // Champs personnalisation
+  baseName?: string;       // Nom du thème source si dupliqué
+}
+
+// ─── Token CSS helpers ────────────────────────────────────────────────────────
+// Appeler applyThemeTokens(theme) dans App.tsx → componentDidMount / useEffect
+// pour propager les tokens CSS sur :root.
+
+export function applyThemeTokens(theme: AppTheme) {
+  const root = document.documentElement;
+  const c = theme.colors;
+  root.style.setProperty('--color-primary',  c.primary);
+  root.style.setProperty('--color-accent',   c.accent);
+  root.style.setProperty('--color-header',   c.header);
+  root.style.setProperty('--color-bg',       c.bg);
+  root.style.setProperty('--color-surface',  c.surface);
+  root.style.setProperty('--color-ink',      c.ink);
+  root.style.setProperty('--color-muted',    c.muted);
+  root.style.setProperty('--color-gold',     c.gold);
+  root.style.setProperty('--color-success',  c.success);
+  root.style.setProperty('--color-danger',   c.danger);
+  root.style.setProperty('--font-display',   theme.fonts.display);
+  root.style.setProperty('--font-body',      theme.fonts.body);
+  root.style.setProperty('--theme-scale',    String(theme.scale));
+  // Radius map
+  const RADII = { carre:'8px', doux:'16px', rond:'24px' };
+  root.style.setProperty('--radius-card', RADII[theme.radius]);
+  root.style.setProperty('--radius-btn',  theme.radius === 'carre' ? '8px' : theme.radius === 'doux' ? '11px' : '16px');
+  // Shadow map
+  const SHADS = { plat:'none', doux:'0 2px 10px rgba(0,0,0,.06)', prononce:'0 12px 26px rgba(0,0,0,.18)' };
+  root.style.setProperty('--shadow-card', SHADS[theme.shadow]);
+  // Border
+  const border = theme.contrast
+    ? (theme.dark ? 'rgba(255,255,255,0.32)' : 'rgba(0,0,0,0.30)')
+    : (theme.dark ? 'rgba(255,255,255,0.10)' : 'rgba(0,0,0,0.08)');
+  root.style.setProperty('--color-border', border);
+}
+
+// ─── Thèmes prédéfinis ────────────────────────────────────────────────────────
+
+const BASE_FONTS: AppFonts = {
+  display: "'Sora', sans-serif",
+  body:    "'Space Grotesk', sans-serif",
+};
+
+export const PREDEFINED_THEMES: AppTheme[] = [
+  {
+    id: 'automne', name: 'Automne Boréal', dark: false,
+    colors: { primary:'#C75B39', accent:'#3E5C8A', header:'#2D1B0E', bg:'#FBF6EE', surface:'#FFFFFF', ink:'#2D1B0E', muted:'#9A7B5C', gold:'#F5C542', success:'#2F7A52', danger:'#C73C3C' },
+    fonts: { display:"'Sora', sans-serif", body:"'Space Grotesk', sans-serif" },
+    scale:1, radius:'doux', shadow:'doux', contrast:false, soundPack:'foret',
+  },
+  {
+    id: 'minuit', name: 'Minuit Laurentien', dark: true,
+    colors: { primary:'#4A90D9', accent:'#E05C2A', header:'#0D1B2A', bg:'#0D1B2A', surface:'#162233', ink:'#E8F0F8', muted:'#7A9BB5', gold:'#F5C542', success:'#2F9A62', danger:'#D94A4A' },
+    fonts: { display:"'Sora', sans-serif", body:"'Space Grotesk', sans-serif" },
+    scale:1, radius:'doux', shadow:'doux', contrast:false, soundPack:'doux',
+  },
+  {
+    id: 'erable', name: 'Forêt d\'Érable', dark: false,
+    colors: { primary:'#2D7A4F', accent:'#C75B39', header:'#1B3A2D', bg:'#F2F7F4', surface:'#FFFFFF', ink:'#1B3A2D', muted:'#6A9A80', gold:'#F5C542', success:'#2D7A4F', danger:'#C73C3C' },
+    fonts: { display:"'Sora', sans-serif", body:"'Space Grotesk', sans-serif" },
+    scale:1, radius:'doux', shadow:'doux', contrast:false, soundPack:'foret',
+  },
+  {
+    id: 'neige', name: 'Première Neige', dark: false,
+    colors: { primary:'#2B5AA0', accent:'#C75B39', header:'#1A2B4A', bg:'#F4F7FB', surface:'#FFFFFF', ink:'#1A2B4A', muted:'#7A8A9A', gold:'#F5C542', success:'#2F7A52', danger:'#C73C3C' },
+    fonts: { display:"'Sora', sans-serif", body:"'Space Grotesk', sans-serif" },
+    scale:1, radius:'doux', shadow:'doux', contrast:false, soundPack:'doux',
+  },
+  {
+    id: 'arcade', name: 'Néon Arcade', dark: true,
+    colors: { primary:'#D946EF', accent:'#06B6D4', header:'#0A0A1A', bg:'#0A0A1A', surface:'#141428', ink:'#F0F0FF', muted:'#8888BB', gold:'#FFD700', success:'#22C55E', danger:'#EF4444' },
+    fonts: { display:"'Fredoka', sans-serif", body:"'Space Grotesk', sans-serif" },
+    scale:1, radius:'rond', shadow:'prononce', contrast:false, soundPack:'arcade',
+  },
+  {
+    id: 'cabane', name: 'Cabane à Sucre', dark: false,
+    colors: { primary:'#A0522D', accent:'#8B0000', header:'#4A2010', bg:'#FDF5E6', surface:'#FFF8F0', ink:'#3C1810', muted:'#8B6050', gold:'#DAA520', success:'#556B2F', danger:'#8B0000' },
+    fonts: { display:"'Fredoka', sans-serif", body:"'Space Grotesk', sans-serif" },
+    scale:1, radius:'doux', shadow:'doux', contrast:false, soundPack:'foret',
+  },
+  {
+    id: 'saint_jean', name: 'Fête Saint-Jean', dark: true,
+    colors: { primary:'#FFD700', accent:'#1E90FF', header:'#00008B', bg:'#00008B', surface:'#0000A0', ink:'#FFFFFF', muted:'#AAAACC', gold:'#FFD700', success:'#00C851', danger:'#FF4444' },
+    fonts: { display:"'Sora', sans-serif", body:"'Space Grotesk', sans-serif" },
+    scale:1, radius:'rond', shadow:'doux', contrast:false, soundPack:'arcade',
+  },
+  {
+    id: 'toundra', name: 'Toundra Boréale', dark: true,
+    colors: { primary:'#7FBBFF', accent:'#FF9A5C', header:'#0A1628', bg:'#0E1E38', surface:'#162844', ink:'#D8EAFF', muted:'#6A8FAA', gold:'#FFD166', success:'#4ECDC4', danger:'#FF6B6B' },
+    fonts: { display:"'Space Grotesk', sans-serif", body:"'Space Grotesk', sans-serif" },
+    scale:1, radius:'doux', shadow:'doux', contrast:false, soundPack:'doux',
+  },
+  {
+    id: 'poutine', name: 'Fromage en Crottes', dark: false,
+    colors: { primary:'#E8A020', accent:'#C0392B', header:'#5D2E0C', bg:'#FFF8EE', surface:'#FFFFFF', ink:'#3C2010', muted:'#9A7050', gold:'#E8A020', success:'#27AE60', danger:'#E74C3C' },
+    fonts: { display:"'Fredoka', sans-serif", body:"'Space Grotesk', sans-serif" },
+    scale:1, radius:'rond', shadow:'doux', contrast:false, soundPack:'foret',
+  },
+  {
+    id: 'fleuve', name: 'Fleuve Saint-Laurent', dark: false,
+    colors: { primary:'#1A6FA0', accent:'#C07030', header:'#0A3050', bg:'#F0F6FA', surface:'#FFFFFF', ink:'#0A2A40', muted:'#5A8AAA', gold:'#F0C050', success:'#2A8A50', danger:'#C03030' },
+    fonts: { display:"'Sora', sans-serif", body:"'Space Grotesk', sans-serif" },
+    scale:1, radius:'doux', shadow:'doux', contrast:false, soundPack:'doux',
+  },
+  {
+    id: 'violette', name: 'Violette des Prés', dark: false,
+    colors: { primary:'#7C3AED', accent:'#EC4899', header:'#2D1B69', bg:'#FAF8FF', surface:'#FFFFFF', ink:'#1E1040', muted:'#7C6A9A', gold:'#F59E0B', success:'#059669', danger:'#DC2626' },
+    fonts: { display:"'Outfit', sans-serif", body:"'Space Grotesk', sans-serif" },
+    scale:1, radius:'rond', shadow:'doux', contrast:false, soundPack:'doux',
+  },
+  {
+    id: 'nuit_polaire', name: 'Nuit Polaire', dark: true,
+    colors: { primary:'#00D4FF', accent:'#FF6B6B', header:'#030312', bg:'#050520', surface:'#0A0A35', ink:'#E8F4FF', muted:'#5A6A9A', gold:'#FFD700', success:'#00FF88', danger:'#FF4444' },
+    fonts: { display:"'Outfit', sans-serif", body:"'Space Grotesk', sans-serif" },
+    scale:1, radius:'doux', shadow:'prononce', contrast:false, soundPack:'arcade',
+  },
+];
+
+// ─── Store ────────────────────────────────────────────────────────────────────
+
+interface ThemeState {
+  activeThemeId: string;
+  personalTheme: AppTheme | null;
+  // Sélecteurs
+  theme: AppTheme;
+  // Actions
+  setThemeById: (id: string) => void;
+  setPersonalTheme: (t: AppTheme) => void;
+  patchPersonal: (patch: Partial<AppTheme>) => void;
+  resetPersonal: () => void;
+}
+
+function getThemeById(id: string, personal: AppTheme | null): AppTheme {
+  if (id === 'personal' && personal) return personal;
+  return PREDEFINED_THEMES.find(t => t.id === id) || PREDEFINED_THEMES[0];
+}
+
+export const useTheme = create<ThemeState>()(
+  persist(
+    (set, get) => ({
+      activeThemeId: 'automne',
+      personalTheme: null,
+
+      get theme() {
+        const s = get();
+        return getThemeById(s.activeThemeId, s.personalTheme);
+      },
+
+      setThemeById(id: string) {
+        set({ activeThemeId: id });
+        const theme = getThemeById(id, get().personalTheme);
+        applyThemeTokens(theme);
+      },
+
+      setPersonalTheme(t: AppTheme) {
+        set({ personalTheme: { ...t, id: 'personal' }, activeThemeId: 'personal' });
+        applyThemeTokens(t);
+      },
+
+      patchPersonal(patch: Partial<AppTheme>) {
+        const current = get();
+        // Si aucun thème personnel, cloner le thème actif
+        const base = current.personalTheme
+          || { ...getThemeById(current.activeThemeId, null), id:'personal', baseName: getThemeById(current.activeThemeId, null).name };
+        const updated: AppTheme = { ...base, ...patch, id:'personal' };
+        set({ personalTheme: updated, activeThemeId: 'personal' });
+        applyThemeTokens(updated);
+      },
+
+      resetPersonal() {
+        set({ personalTheme: null, activeThemeId: 'automne' });
+        applyThemeTokens(PREDEFINED_THEMES[0]);
+      },
+    }),
+    {
+      name: 'mots-blocs-theme-v2',
+      // Ne persister que les champs nécessaires
+      partialize: (s) => ({
+        activeThemeId: s.activeThemeId,
+        personalTheme: s.personalTheme,
+      }),
+    }
+  )
+);
+
+// ─── Hook helpers (usage dans les composants) ─────────────────────────────────
+
+/** Retourne les couleurs du thème actif — raccourci pratique */
+export const useColors = () => useTheme(s => s.theme.colors);
+
+/** Retourne les tokens CSS calculés (radius, shadow, border) */
+export function useThemeTokens() {
+  const theme = useTheme(s => s.theme);
+  const RADII  = { carre:{ card:'8px',  btn:'8px'  }, doux:{ card:'16px', btn:'11px' }, rond:{ card:'24px', btn:'16px' } };
+  const SHADS  = { plat:'none', doux:'0 2px 10px rgba(0,0,0,.06)', prononce:'0 12px 26px rgba(0,0,0,.18)' };
+  const radii  = RADII[theme.radius];
+  const shadow = SHADS[theme.shadow];
+  const border = theme.contrast
+    ? (theme.dark ? 'rgba(255,255,255,0.32)' : 'rgba(0,0,0,0.30)')
+    : (theme.dark ? 'rgba(255,255,255,0.10)' : 'rgba(0,0,0,0.08)');
+  return { radCard: radii.card, radBtn: radii.btn, shadow, border, scale: theme.scale };
+}
+</file>
+
+<file path="design_handoff_theme_system/useTheme.js">
+/**
+ * useTheme.js — Mots & Blocs (version JavaScript)
+ * Extension du store de thème existant.
+ *
+ * INTÉGRATION :
+ *   Remplacer le contenu de src/store/useTheme.js par ce fichier.
+ *
+ * CHANGEMENTS vs l'original :
+ *   + fonts: { display, body }          → polices par thème
+ *   + scale: 0.9 | 1 | 1.12            → taille du texte
+ *   + radius: 'carre'|'doux'|'rond'     → arrondi des coins
+ *   + shadow: 'plat'|'doux'|'prononce'  → niveau d'ombrage
+ *   + contrast: boolean                 → mode contrasté (accessibilité)
+ *   + soundPack: string                 → pack sonore (futur)
+ *   + 12 thèmes prédéfinis
+ *   + personalTheme: AppTheme | null    → thème personnalisé persisté
+ *   + setPersonalTheme / patchPersonal
+ */
+
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+
+// ─── Helpers couleur ─────────────────────────────────────────────────────
+function hexToHSL(hex) {
+  const h6 = (hex || '#888888').replace('#', '').slice(0, 6);
+  let r = parseInt(h6.slice(0, 2), 16) / 255;
+  let g = parseInt(h6.slice(2, 4), 16) / 255;
+  let b = parseInt(h6.slice(4, 6), 16) / 255;
+  if (isNaN(r) || isNaN(g) || isNaN(b)) return [0, 0.5, 0.5];
+  const max = Math.max(r, g, b), min = Math.min(r, g, b), l = (max + min) / 2;
+  if (max === min) return [0, 0, l];
+  const d = max - min, s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+  let hh = max === r ? (g - b) / d + (g < b ? 6 : 0) : max === g ? (b - r) / d + 2 : (r - g) / d + 4;
+  return [hh * 60, s, l];
+}
+
+function hslToHex(h, s, l) {
+  const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
+  const hh = ((h % 360) + 360) % 360, ss = clamp(s, 0, 1), ll = clamp(l, 0, 1);
+  const a = ss * Math.min(ll, 1 - ll);
+  const f = n => {
+    const k = (n + hh / 30) % 12;
+    const c = a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * clamp(ll - c, 0, 1)).toString(16).padStart(2, '0');
+  };
+  return '#' + f(0) + f(8) + f(4);
+}
+
+// ─── Token CSS helper ────────────────────────────────────────────────────
+export function applyThemeTokens(theme) {
+  const root = document.documentElement;
+  const c = theme.colors;
+  root.style.setProperty('--color-primary', c.primary);
+  root.style.setProperty('--color-accent', c.accent);
+  root.style.setProperty('--color-header', c.header);
+  root.style.setProperty('--color-bg', c.bg);
+  root.style.setProperty('--color-surface', c.surface);
+  root.style.setProperty('--color-ink', c.ink);
+  root.style.setProperty('--color-muted', c.muted);
+  root.style.setProperty('--color-gold', c.gold);
+  root.style.setProperty('--color-success', c.success);
+  root.style.setProperty('--color-danger', c.danger);
+  root.style.setProperty('--font-display', theme.fonts.display);
+  root.style.setProperty('--font-body', theme.fonts.body);
+  root.style.setProperty('--theme-scale', String(theme.scale));
+  // Radius map
+  const RADII = { carre: '8px', doux: '16px', rond: '24px' };
+  root.style.setProperty('--radius-card', RADII[theme.radius]);
+  root.style.setProperty('--radius-btn', theme.radius === 'carre' ? '8px' : theme.radius === 'doux' ? '11px' : '16px');
+  // Shadow map
+  const SHADS = { plat: 'none', doux: '0 2px 10px rgba(0,0,0,.06)', prononce: '0 12px 26px rgba(0,0,0,.18)' };
+  root.style.setProperty('--shadow-card', SHADS[theme.shadow]);
+  // Border
+  const border = theme.contrast
+    ? (theme.dark ? 'rgba(255,255,255,0.32)' : 'rgba(0,0,0,0.30)')
+    : (theme.dark ? 'rgba(255,255,255,0.10)' : 'rgba(0,0,0,0.08)');
+  root.style.setProperty('--color-border', border);
+}
+
+// ─── Thèmes prédéfinis ──────────────────────────────────────────────────
+
+export const PREDEFINED_THEMES = [
+  {
+    id: 'automne', name: 'Automne Boréal', dark: false,
+    colors: { primary: '#C75B39', accent: '#3E5C8A', header: '#2D1B0E', bg: '#FBF6EE', surface: '#FFFFFF', ink: '#2D1B0E', muted: '#9A7B5C', gold: '#F5C542', success: '#2F7A52', danger: '#C73C3C' },
+    fonts: { display: "'Sora', sans-serif", body: "'Space Grotesk', sans-serif" },
+    scale: 1, radius: 'doux', shadow: 'doux', contrast: false, soundPack: 'foret',
+  },
+  {
+    id: 'minuit', name: 'Minuit Laurentien', dark: true,
+    colors: { primary: '#4A90D9', accent: '#E05C2A', header: '#0D1B2A', bg: '#0D1B2A', surface: '#162233', ink: '#E8F0F8', muted: '#7A9BB5', gold: '#F5C542', success: '#2F9A62', danger: '#D94A4A' },
+    fonts: { display: "'Sora', sans-serif", body: "'Space Grotesk', sans-serif" },
+    scale: 1, radius: 'doux', shadow: 'doux', contrast: false, soundPack: 'doux',
+  },
+  {
+    id: 'erable', name: 'Forêt d\'Érable', dark: false,
+    colors: { primary: '#2D7A4F', accent: '#C75B39', header: '#1B3A2D', bg: '#F2F7F4', surface: '#FFFFFF', ink: '#1B3A2D', muted: '#6A9A80', gold: '#F5C542', success: '#2D7A4F', danger: '#C73C3C' },
+    fonts: { display: "'Sora', sans-serif", body: "'Space Grotesk', sans-serif" },
+    scale: 1, radius: 'doux', shadow: 'doux', contrast: false, soundPack: 'foret',
+  },
+  {
+    id: 'neige', name: 'Première Neige', dark: false,
+    colors: { primary: '#2B5AA0', accent: '#C75B39', header: '#1A2B4A', bg: '#F4F7FB', surface: '#FFFFFF', ink: '#1A2B4A', muted: '#7A8A9A', gold: '#F5C542', success: '#2F7A52', danger: '#C73C3C' },
+    fonts: { display: "'Sora', sans-serif", body: "'Space Grotesk', sans-serif" },
+    scale: 1, radius: 'doux', shadow: 'doux', contrast: false, soundPack: 'doux',
+  },
+  {
+    id: 'arcade', name: 'Néon Arcade', dark: true,
+    colors: { primary: '#D946EF', accent: '#06B6D4', header: '#0A0A1A', bg: '#0A0A1A', surface: '#141428', ink: '#F0F0FF', muted: '#8888BB', gold: '#FFD700', success: '#22C55E', danger: '#EF4444' },
+    fonts: { display: "'Fredoka', sans-serif", body: "'Space Grotesk', sans-serif" },
+    scale: 1, radius: 'rond', shadow: 'prononce', contrast: false, soundPack: 'arcade',
+  },
+  {
+    id: 'cabane', name: 'Cabane à Sucre', dark: false,
+    colors: { primary: '#A0522D', accent: '#8B0000', header: '#4A2010', bg: '#FDF5E6', surface: '#FFF8F0', ink: '#3C1810', muted: '#8B6050', gold: '#DAA520', success: '#556B2F', danger: '#8B0000' },
+    fonts: { display: "'Fredoka', sans-serif", body: "'Space Grotesk', sans-serif" },
+    scale: 1, radius: 'doux', shadow: 'doux', contrast: false, soundPack: 'foret',
+  },
+  {
+    id: 'saint_jean', name: 'Fête Saint-Jean', dark: true,
+    colors: { primary: '#FFD700', accent: '#1E90FF', header: '#00008B', bg: '#00008B', surface: '#0000A0', ink: '#FFFFFF', muted: '#AAAACC', gold: '#FFD700', success: '#00C851', danger: '#FF4444' },
+    fonts: { display: "'Sora', sans-serif", body: "'Space Grotesk', sans-serif" },
+    scale: 1, radius: 'rond', shadow: 'doux', contrast: false, soundPack: 'arcade',
+  },
+  {
+    id: 'toundra', name: 'Toundra Boréale', dark: true,
+    colors: { primary: '#7FBBFF', accent: '#FF9A5C', header: '#0A1628', bg: '#0E1E38', surface: '#162844', ink: '#D8EAFF', muted: '#6A8FAA', gold: '#FFD166', success: '#4ECDC4', danger: '#FF6B6B' },
+    fonts: { display: "'Space Grotesk', sans-serif", body: "'Space Grotesk', sans-serif" },
+    scale: 1, radius: 'doux', shadow: 'doux', contrast: false, soundPack: 'doux',
+  },
+  {
+    id: 'poutine', name: 'Fromage en Crottes', dark: false,
+    colors: { primary: '#E8A020', accent: '#C0392B', header: '#5D2E0C', bg: '#FFF8EE', surface: '#FFFFFF', ink: '#3C2010', muted: '#9A7050', gold: '#E8A020', success: '#27AE60', danger: '#E74C3C' },
+    fonts: { display: "'Fredoka', sans-serif", body: "'Space Grotesk', sans-serif" },
+    scale: 1, radius: 'rond', shadow: 'doux', contrast: false, soundPack: 'foret',
+  },
+  {
+    id: 'fleuve', name: 'Fleuve Saint-Laurent', dark: false,
+    colors: { primary: '#1A6FA0', accent: '#C07030', header: '#0A3050', bg: '#F0F6FA', surface: '#FFFFFF', ink: '#0A2A40', muted: '#5A8AAA', gold: '#F0C050', success: '#2A8A50', danger: '#C03030' },
+    fonts: { display: "'Sora', sans-serif", body: "'Space Grotesk', sans-serif" },
+    scale: 1, radius: 'doux', shadow: 'doux', contrast: false, soundPack: 'doux',
+  },
+  {
+    id: 'violette', name: 'Violette des Prés', dark: false,
+    colors: { primary: '#7C3AED', accent: '#EC4899', header: '#2D1B69', bg: '#FAF8FF', surface: '#FFFFFF', ink: '#1E1040', muted: '#7C6A9A', gold: '#F59E0B', success: '#059669', danger: '#DC2626' },
+    fonts: { display: "'Outfit', sans-serif", body: "'Space Grotesk', sans-serif" },
+    scale: 1, radius: 'rond', shadow: 'doux', contrast: false, soundPack: 'doux',
+  },
+  {
+    id: 'nuit_polaire', name: 'Nuit Polaire', dark: true,
+    colors: { primary: '#00D4FF', accent: '#FF6B6B', header: '#030312', bg: '#050520', surface: '#0A0A35', ink: '#E8F4FF', muted: '#5A6A9A', gold: '#FFD700', success: '#00FF88', danger: '#FF4444' },
+    fonts: { display: "'Outfit', sans-serif", body: "'Space Grotesk', sans-serif" },
+    scale: 1, radius: 'doux', shadow: 'prononce', contrast: false, soundPack: 'arcade',
+  },
+];
+
+// ─── Store ──────────────────────────────────────────────────────────────
+
+function getThemeById(id, personal) {
+  if (id === 'personal' && personal) return personal;
+  return PREDEFINED_THEMES.find(t => t.id === id) || PREDEFINED_THEMES[0];
+}
+
+export const useTheme = create(
+  persist(
+    (set, get) => ({
+      activeThemeId: 'automne',
+      personalTheme: null,
+
+      get theme() {
+        const s = get();
+        return getThemeById(s.activeThemeId, s.personalTheme);
+      },
+
+      setThemeById(id) {
+        set({ activeThemeId: id });
+        const theme = getThemeById(id, get().personalTheme);
+        applyThemeTokens(theme);
+      },
+
+      setPersonalTheme(t) {
+        set({ personalTheme: { ...t, id: 'personal' }, activeThemeId: 'personal' });
+        applyThemeTokens(t);
+      },
+
+      patchPersonal(patch) {
+        const current = get();
+        const base = current.personalTheme
+          || { ...getThemeById(current.activeThemeId, null), id: 'personal', baseName: getThemeById(current.activeThemeId, null).name };
+        const updated = { ...base, ...patch, id: 'personal' };
+        set({ personalTheme: updated, activeThemeId: 'personal' });
+        applyThemeTokens(updated);
+      },
+
+      resetPersonal() {
+        set({ personalTheme: null, activeThemeId: 'automne' });
+        applyThemeTokens(PREDEFINED_THEMES[0]);
+      },
+    }),
+    {
+      name: 'mots-blocs-theme-v2',
+      partialize: (s) => ({
+        activeThemeId: s.activeThemeId,
+        personalTheme: s.personalTheme,
+      }),
+    }
+  )
+);
+
+// ─── Hook helpers (usage dans les composants) ───────────────────────────
+
+export const useColors = () => useTheme(s => s.theme.colors);
+
+export function useThemeTokens() {
+  const theme = useTheme(s => s.theme);
+  const RADII = { carre: { card: '8px', btn: '8px' }, doux: { card: '16px', btn: '11px' }, rond: { card: '24px', btn: '16px' } };
+  const SHADS = { plat: 'none', doux: '0 2px 10px rgba(0,0,0,.06)', prononce: '0 12px 26px rgba(0,0,0,.18)' };
+  const radii = RADII[theme.radius];
+  const shadow = SHADS[theme.shadow];
+  const border = theme.contrast
+    ? (theme.dark ? 'rgba(255,255,255,0.32)' : 'rgba(0,0,0,0.30)')
+    : (theme.dark ? 'rgba(255,255,255,0.10)' : 'rgba(0,0,0,0.08)');
+  return { radCard: radii.card, radBtn: radii.btn, shadow, border, scale: theme.scale };
+}
+</file>
+
+<file path="marketing-site/src/components/astro/DeviceFrame.astro">
+---
+// Composant DeviceFrame.astro
+---
+<div class="relative mx-auto border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-2xl">
+  <!-- Boutons de volume / lock simulant un mobile -->
+  <div class="h-[32px] w-[3px] bg-gray-800 absolute -left-[17px] top-[72px] rounded-l-lg"></div>
+  <div class="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
+  <div class="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
+  <div class="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
+  
+  <div class="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white relative">
+    <!-- Contenu injecté (souvent un Island React) -->
+    <slot />
+  </div>
+</div>
+</file>
+
+<file path="marketing-site/src/components/astro/Features.astro">
+---
+// Features.astro
+---
+
+<section id="features" class="py-20 bg-gray-50/50">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl" style="color: var(--theme-text)">
+        Une plateforme conçue pour l'apprentissage
+      </h2>
+      <p class="mt-4 text-lg opacity-80" style="color: var(--theme-text)">
+        Découvrez toutes les fonctionnalités qui feront le succès de votre programme de formation.
+      </p>
+    </div>
+
+    {/* Bento Grid 3 Colonnes */}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      {/* Feature 1 */}
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: color-mix(in srgb, var(--theme-primary) 10%, white); color: var(--theme-primary)">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2" style="color: var(--theme-text)">Cours Interactifs</h3>
+        <p class="opacity-75" style="color: var(--theme-text)">
+          Créez des modules engageants avec du contenu riche, des vidéos et des quiz interactifs.
+        </p>
+      </div>
+
+      {/* Feature 2 */}
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: color-mix(in srgb, var(--theme-primary) 10%, white); color: var(--theme-primary)">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2" style="color: var(--theme-text)">Communauté Engagée</h3>
+        <p class="opacity-75" style="color: var(--theme-text)">
+          Favorisez les échanges avec des forums, des groupes de discussion et du peer-to-peer learning.
+        </p>
+      </div>
+
+      {/* Feature 3 */}
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: color-mix(in srgb, var(--theme-primary) 10%, white); color: var(--theme-primary)">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2" style="color: var(--theme-text)">Analytiques Avancées</h3>
+        <p class="opacity-75" style="color: var(--theme-text)">
+          Suivez la progression de vos apprenants avec des tableaux de bord détaillés.
+        </p>
+      </div>
+
+      {/* Feature 4 (Large / Spans 2 cols for Bento effect) */}
+      <div class="md:col-span-2 bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: color-mix(in srgb, var(--theme-primary) 10%, white); color: var(--theme-primary)">
+             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2" style="color: var(--theme-text)">Performances Rapides</h3>
+        <p class="opacity-75" style="color: var(--theme-text)">
+          Une infrastructure optimisée pour garantir des temps de chargement minimes partout dans le monde.
+        </p>
+      </div>
+
+      {/* Feature 5 */}
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style="background-color: color-mix(in srgb, var(--theme-primary) 10%, white); color: var(--theme-primary)">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+        </div>
+        <h3 class="text-xl font-semibold mb-2" style="color: var(--theme-text)">Sécurité Maximale</h3>
+        <p class="opacity-75" style="color: var(--theme-text)">
+          Vos données et celles de vos apprenants sont chiffrées et protégées 24/7.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+</file>
+
+<file path="marketing-site/src/components/astro/Footer.astro">
+---
+// Footer.astro
+---
+
+<footer class="bg-gray-50 border-t border-gray-200">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-7xl">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+      
+      {/* Brand */}
+      <div class="flex items-center">
+        <a href="/" class="text-xl font-bold" style="color: var(--theme-text)">
+          Plateforme<span style="color: var(--theme-primary)">Edu</span>
+        </a>
+      </div>
+
+      {/* Navigation */}
+      <nav class="flex flex-wrap justify-center gap-x-8 gap-y-4">
+        <a href="#features" class="text-sm transition-colors hover:opacity-100 opacity-70" style="color: var(--theme-text)">
+          Fonctionnalités
+        </a>
+        <a href="#pricing" class="text-sm transition-colors hover:opacity-100 opacity-70" style="color: var(--theme-text)">
+          Tarifs
+        </a>
+        <a href="/contact" class="text-sm transition-colors hover:opacity-100 opacity-70" style="color: var(--theme-text)">
+          Contact
+        </a>
+        <a href="/legal" class="text-sm transition-colors hover:opacity-100 opacity-70" style="color: var(--theme-text)">
+          Mentions légales
+        </a>
+      </nav>
+
+    </div>
+    
+    <div class="mt-8 pt-8 border-t border-gray-200/60 text-center md:text-left flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-sm opacity-60" style="color: var(--theme-text)">
+        &copy; {new Date().getFullYear()} PlateformeEdu Inc. Tous droits réservés.
+      </p>
+      
+      {/* Social Links (Optional) */}
+      <div class="flex gap-4">
+        <a href="#" class="transition-colors hover:opacity-100 opacity-60" style="color: var(--theme-text)">
+          <span class="sr-only">Twitter</span>
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"></path></svg>
+        </a>
+        <a href="#" class="transition-colors hover:opacity-100 opacity-60" style="color: var(--theme-text)">
+          <span class="sr-only">GitHub</span>
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"></path></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+</file>
+
+<file path="marketing-site/src/components/astro/Hero.astro">
+
+</file>
+
+<file path="marketing-site/src/components/astro/Pricing.astro">
+---
+// Pricing.astro
+---
+
+<section id="pricing" class="py-24 bg-white">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <h2 class="text-3xl font-bold tracking-tight sm:text-4xl" style="color: var(--theme-text)">
+        Tarifs simples et transparents
+      </h2>
+      <p class="mt-4 text-lg opacity-80" style="color: var(--theme-text)">
+        Choisissez le plan qui correspond le mieux à vos besoins de formation.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+      
+      {/* Plan Basique */}
+      <div class="bg-gray-50/50 rounded-2xl border border-gray-200 p-8 shadow-sm flex flex-col h-full">
+        <div class="mb-4">
+          <h3 class="text-xl font-bold" style="color: var(--theme-text)">Basique</h3>
+          <p class="text-sm opacity-70" style="color: var(--theme-text)">Pour les créateurs qui se lancent</p>
+        </div>
+        <div class="my-4">
+          <span class="text-4xl font-bold" style="color: var(--theme-text)">29€</span>
+          <span class="opacity-60" style="color: var(--theme-text)">/mois</span>
+        </div>
+        <ul class="space-y-3 mt-6 mb-8 flex-1">
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Jusqu'à 100 apprenants
+          </li>
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            3 cours actifs
+          </li>
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Support par email
+          </li>
+        </ul>
+        <button class="w-full py-2.5 px-4 rounded-lg font-medium border transition-colors hover:bg-gray-100 mt-auto" style="color: var(--theme-text); border-color: var(--theme-text)">
+          Commencer
+        </button>
+      </div>
+
+      {/* Plan Pro (Mise en avant) */}
+      <div class="relative bg-white rounded-2xl border-2 shadow-xl p-8 flex flex-col h-[105%] md:-translate-y-4 z-10" style="border-color: var(--theme-primary)">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase text-white shadow-sm" style="background-color: var(--theme-primary)">
+          Populaire
+        </div>
+        <div class="mb-4">
+          <h3 class="text-xl font-bold" style="color: var(--theme-text)">Pro</h3>
+          <p class="text-sm opacity-70" style="color: var(--theme-text)">Pour les entreprises en croissance</p>
+        </div>
+        <div class="my-4">
+          <span class="text-4xl font-bold" style="color: var(--theme-text)">79€</span>
+          <span class="opacity-60" style="color: var(--theme-text)">/mois</span>
+        </div>
+        <ul class="space-y-3 mt-6 mb-8 flex-1">
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Apprenants illimités
+          </li>
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Cours illimités
+          </li>
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Analytiques avancées
+          </li>
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Support prioritaire
+          </li>
+        </ul>
+        <button class="w-full py-2.5 px-4 rounded-lg font-medium text-white transition-opacity hover:opacity-90 shadow-sm mt-auto" style="background-color: var(--theme-primary)">
+          Essai gratuit de 14 jours
+        </button>
+      </div>
+
+      {/* Plan Entreprise */}
+      <div class="bg-gray-50/50 rounded-2xl border border-gray-200 p-8 shadow-sm flex flex-col h-full">
+        <div class="mb-4">
+          <h3 class="text-xl font-bold" style="color: var(--theme-text)">Entreprise</h3>
+          <p class="text-sm opacity-70" style="color: var(--theme-text)">Pour les grandes organisations</p>
+        </div>
+        <div class="my-4">
+          <span class="text-4xl font-bold" style="color: var(--theme-text)">Sur mesure</span>
+        </div>
+        <ul class="space-y-3 mt-6 mb-8 flex-1">
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Tout le plan Pro
+          </li>
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Marque blanche (SSO)
+          </li>
+          <li class="flex items-center text-sm" style="color: var(--theme-text)">
+            <svg class="w-5 h-5 mr-2" style="color: var(--theme-primary)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            Account Manager dédié
+          </li>
+        </ul>
+        <button class="w-full py-2.5 px-4 rounded-lg font-medium border transition-colors hover:bg-gray-100 mt-auto" style="color: var(--theme-text); border-color: var(--theme-text)">
+          Nous contacter
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+</file>
+
+<file path="marketing-site/src/components/Schema.astro">
+---
+// src/components/Schema.astro
+interface Props {
+  item: Record<string, any>;
+}
+
+const { item } = Astro.props;
+
+// Ensure the schema context is included
+const schema = {
+  "@context": "https://schema.org",
+  ...item,
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</file>
+
+<file path="marketing-site/src/layouts/TenantLayout.astro">
+---
+import { SEO } from 'astro-seo';
+import type { TenantConfig } from '../lib/tenantApi';
+import { generateSEOMetaTags } from '../utils/seo';
+import Schema from '../components/Schema.astro';
+
+interface Props {
+  config: TenantConfig;
+  title?: string;
+  description?: string;
+  image?: string;
+  schemaItem?: Record<string, any>;
+}
+
+const { config, title, description, image, schemaItem } = Astro.props;
+
+// Génération dynamique des méta-données SEO via notre utilitaire
+const seoProps = generateSEOMetaTags(config, { title, description, image });
+---
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <SEO
+      title={seoProps.title}
+      description={seoProps.description}
+      openGraph={seoProps.openGraph}
+      extend={seoProps.extend}
+    />
+
+    {schemaItem && <Schema item={schemaItem} />}
+    
+    <!-- Fonts optionnelles selon le CMS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Injection des variables CSS générées depuis la config du CMS (SSR) -->
+    <style define:vars={{
+      primaryColor: config.theme.primary,
+      secondaryColor: config.theme.secondary,
+      backgroundColor: config.theme.background,
+      textColor: config.theme.text,
+      fontFamily: config.theme.fontFamily
+    }}>
+      :root {
+        --theme-primary: var(--primaryColor);
+        --theme-secondary: var(--secondaryColor);
+        --theme-bg: var(--backgroundColor);
+        --theme-text: var(--textColor);
+        --theme-font: var(--fontFamily);
+      }
+      body {
+        background-color: var(--theme-bg);
+        color: var(--theme-text);
+        font-family: var(--theme-font), sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Le header et le reste du contenu viendront s'injecter ici -->
+    <slot />
+  </body>
+</html>
+</file>
+
+<file path="marketing-site/src/lib/tenantApi.ts">
+import { initializeApp, getApps, getApp } from 'firebase/app';
+import { getFirestore, collection, query, where, getDocs, limit, initializeFirestore } from 'firebase/firestore';
+import type { TenantConfig } from './tenantApi';
+
+// Initialisation conditionnelle pour le SSR
+const firebaseConfig = {
+  "projectId": "gen-lang-client-0808256771",
+  "appId": "1:906490759700:web:abba0155b3d3f6e5c33501",
+  "apiKey": "AIzaSyCp9VBssCMQFQv2kzN7ZX6dT3SsMh4C0jQ",
+  "authDomain": "gen-lang-client-0808256771.firebaseapp.com",
+  "firestoreDatabaseId": "ai-studio-f07a6670-0671-4de0-9caf-b551ab6f37a7",
+  "storageBucket": "gen-lang-client-0808256771.firebasestorage.app",
+  "messagingSenderId": "906490759700",
+  "measurementId": ""
+};
+
+const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+let db;
+try {
+  db = initializeFirestore(app, {}, firebaseConfig.firestoreDatabaseId);
+} catch (e) {
+  db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
+}
+
+export interface TenantConfig {
+  id: string;
+  theme: {
+    primary: string;
+    secondary: string;
+    background: string;
+    text: string;
+    fontFamily: string;
+  };
+  marketing: {
+    siteTitle: string;
+    heroTitle: string;
+    heroSubtitle: string;
+  };
+  seo?: {
+    description: string;
+    keywords: string[];
+    ogImage?: string;
+  };
+  domain?: string;
+}
+
+export async function getTenantConfig(domainOrId: string | undefined): Promise<TenantConfig | null> {
+  if (!domainOrId) return null;
+
+  try {
+    const tenantsRef = collection(db, 'tenants');
+    
+    // On peut chercher par ID ou par domaine configuré
+    const q = query(
+      tenantsRef, 
+      where('domain', '==', domainOrId), 
+      limit(1)
+    );
+    
+    const snapshot = await getDocs(q);
+    
+    if (!snapshot.empty) {
+      const data = snapshot.docs[0].data();
+      return {
+        id: snapshot.docs[0].id,
+        theme: data.theme || {
+          primary: '#10b981',
+          secondary: '#6ee7b7',
+          background: '#ffffff',
+          text: '#111827',
+          fontFamily: 'Inter',
+        },
+        marketing: data.marketing || {
+          siteTitle: data.name || 'Plateforme',
+          heroTitle: 'Bienvenue',
+          heroSubtitle: 'Découvrez notre méthodologie interactive.',
+        },
+        seo: data.seo || {},
+        domain: data.domain
+      };
+    }
+    
+    // Fallback: chercher par ID
+    const qById = query(
+      tenantsRef, 
+      where('id', '==', domainOrId), 
+      limit(1)
+    );
+    const snapshotById = await getDocs(qById);
+    if (!snapshotById.empty) {
+      const data = snapshotById.docs[0].data();
+      return {
+        id: snapshotById.docs[0].id,
+        theme: data.theme || {
+          primary: '#10b981',
+          secondary: '#6ee7b7',
+          background: '#ffffff',
+          text: '#111827',
+          fontFamily: 'Inter',
+        },
+        marketing: data.marketing || {
+          siteTitle: data.name || 'Plateforme',
+          heroTitle: 'Bienvenue',
+          heroSubtitle: 'Découvrez notre méthodologie interactive.',
+        },
+        seo: data.seo || {},
+        domain: data.domain
+      };
+    }
+
+  } catch (error) {
+    console.error("Erreur lors de la récupération du tenant:", error);
+  }
+
+  // Fallback de démonstration si le tenant n'est pas trouvé
+  return {
+    id: domainOrId,
+    theme: {
+      primary: '#10b981',
+      secondary: '#6ee7b7',
+      background: '#ffffff',
+      text: '#111827',
+      fontFamily: 'Inter',
+    },
+    marketing: {
+      siteTitle: `Plateforme Interactive`,
+      heroTitle: `Bienvenue sur notre plateforme`,
+      heroSubtitle: 'Découvrez notre méthodologie interactive.',
+    },
+    seo: {
+      description: `Découvrez notre plateforme interactive.`,
+      keywords: ["plateforme", "interactive"],
+    }
+  };
+}
+
+export async function getProduct(productId: string) {
+  try {
+    const { doc, getDoc } = await import('firebase/firestore');
+    const docRef = doc(db, 'products', productId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() };
+    }
+  } catch (e) {
+    console.error("Error fetching product", e);
+  }
+  return null;
+}
+
+export async function getCourse(courseId: string) {
+  try {
+    const { doc, getDoc } = await import('firebase/firestore');
+    const docRef = doc(db, 'courses', courseId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() };
+    }
+  } catch (e) {
+    console.error("Error fetching course", e);
+  }
+  return null;
+}
+
+export async function getBundle(bundleId: string) {
+  try {
+    const { doc, getDoc } = await import('firebase/firestore');
+    const docRef = doc(db, 'bundles', bundleId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return { id: docSnap.id, ...docSnap.data() };
+    }
+  } catch (e) {
+    console.error("Error fetching bundle", e);
+  }
+  return null;
+}
+</file>
+
+<file path="marketing-site/src/pages/[tenant]/[location]/[niche].astro">
+---
+// Mode SSR : Exécuté à chaque requête
+import TenantLayout from '../../../layouts/TenantLayout.astro';
+import { getTenantConfig } from '../../../lib/tenantApi';
+import { GoogleGenAI } from '@google/genai';
+
+const { tenant, location, niche } = Astro.params;
+const tenantConfig = await getTenantConfig(tenant);
+
+if (!tenantConfig) {
+  return Astro.redirect('/404');
+}
+
+// Initialisation de la clé d'API s'il y a lieu
+const apiKey = import.meta.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
+
+// Contenu par défaut (fallback si pas d'API Key ou erreur)
+let generatedContent = {
+  heroTitle: `${niche} à ${location} avec ${tenantConfig.marketing.siteTitle}`,
+  heroSubtitle: `Découvrez la meilleure méthode interactive pour ${niche} dans la région de ${location}.`,
+  features: [
+    { title: `Adapté à ${location}`, description: `Une approche pédagogique qui prend en compte les spécificités de ${location} pour un apprentissage optimal.` },
+    { title: `Expertise en ${niche}`, description: `Nos outils interactifs sont conçus sur mesure pour faciliter la maîtrise de ${niche}.` }
+  ]
+};
+
+if (apiKey) {
+  try {
+    const ai = new GoogleGenAI({ apiKey });
+    
+    const prompt = `Agis comme un expert SEO et Copywriter.
+    Génère du contenu marketing ciblé pour une landing page.
+    
+    Paramètres:
+    - Niche (sujet d'apprentissage) : ${niche}
+    - Localisation : ${location}
+    - Nom de la plateforme : ${tenantConfig.marketing.siteTitle}
+    
+    Réponds UNIQUEMENT avec un objet JSON valide suivant exactement ce format:
+    {
+      "heroTitle": "Un titre H1 ultra accrocheur SEO",
+      "heroSubtitle": "Un sous-titre détaillé, orienté bénéfice utilisateur",
+      "features": [
+        { "title": "Avantage 1 (lié à la localisation ou niche)", "description": "Détail convaincant" },
+        { "title": "Avantage 2", "description": "Détail convaincant" }
+      ]
+    }`;
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: prompt,
+      config: {
+        responseMimeType: "application/json"
+      }
+    });
+    
+    const text = response.text();
+    if (text) {
+      generatedContent = JSON.parse(text);
+    }
+  } catch (error) {
+    console.error("Erreur lors de la génération IA SEO:", error);
+  }
+}
+
+// On overide les meta données SEO pour correspondre à cette page générée
+tenantConfig.seo = {
+  ...(tenantConfig.seo || {}),
+  description: generatedContent.heroSubtitle,
+  keywords: [niche || '', location || '', tenantConfig.marketing.siteTitle, 'apprentissage'],
+};
+
+// Titre de l'onglet du navigateur
+const pageTitle = `${niche} à ${location} | ${tenantConfig.marketing.siteTitle}`;
+---
+
+<TenantLayout config={tenantConfig}>
+  <!-- En-tête minimalist de la landing page -->
+  <header class="w-full p-6 border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="font-bold text-xl" style="color: var(--theme-primary)">
+        {tenantConfig.marketing.siteTitle}
+      </div>
+      <button class="px-4 py-2 rounded-lg font-medium text-white transition-opacity hover:opacity-90" style="background-color: var(--theme-primary)">
+        S'inscrire
+      </button>
+    </div>
+  </header>
+
+  <main class="min-h-screen bg-white">
+    <!-- Hero Section avec génération SEO -->
+    <section class="py-24 px-4 sm:px-6 lg:px-8 text-center relative overflow-hidden" style="background-color: color-mix(in srgb, var(--theme-primary) 5%, transparent);">
+      <!-- Élément décoratif en background -->
+      <div class="absolute -top-24 -right-24 w-96 h-96 rounded-full blur-3xl opacity-20" style="background-color: var(--theme-primary)"></div>
+      <div class="absolute -bottom-24 -left-24 w-72 h-72 rounded-full blur-3xl opacity-20" style="background-color: var(--theme-secondary)"></div>
+      
+      <div class="max-w-4xl mx-auto relative z-10">
+        <!-- Badges SEO/GEO -->
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white shadow-sm border border-gray-200 text-sm font-medium text-gray-600 mb-8">
+          <span class="flex h-2 w-2 rounded-full" style="background-color: var(--theme-primary)"></span>
+          Disponible à <span class="capitalize">{location?.replace(/-/g, ' ')}</span>
+        </div>
+        
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold tracking-tight mb-6 leading-tight text-gray-900">
+          {generatedContent.heroTitle}
+        </h1>
+        
+        <p class="text-xl sm:text-2xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+          {generatedContent.heroSubtitle}
+        </p>
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <button class="px-8 py-4 rounded-xl font-bold text-white text-lg transition-all hover:-translate-y-1 shadow-lg shadow-black/10" style="background-color: var(--theme-primary)">
+            Découvrir le programme
+          </button>
+          <button class="px-8 py-4 rounded-xl font-bold text-gray-900 text-lg transition-all hover:bg-gray-100 bg-white border border-gray-200">
+            Voir la démo
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section Générées -->
+    <section class="py-24 px-4 bg-white">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl font-bold text-gray-900 mb-4">Pourquoi choisir notre approche pour <span class="capitalize" style="color: var(--theme-primary)">{niche?.replace(/-/g, ' ')}</span> ?</h2>
+          <div class="h-1 w-20 mx-auto rounded-full" style="background-color: var(--theme-primary)"></div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+          {generatedContent.features.map(feature => (
+            <div class="p-8 rounded-2xl bg-gray-50 border border-gray-100 hover:shadow-md hover:border-gray-200 transition-all group">
+              <div class="w-12 h-12 rounded-xl mb-6 flex items-center justify-center text-white" style="background-color: var(--theme-primary)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+              </div>
+              <h3 class="text-2xl font-bold mb-4 text-gray-900 group-hover:text-primary transition-colors">{feature.title}</h3>
+              <p class="text-gray-600 leading-relaxed text-lg">{feature.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="py-24 px-4 text-center text-white relative overflow-hidden" style="background-color: var(--theme-primary)">
+      <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+      <div class="max-w-3xl mx-auto relative z-10">
+        <h2 class="text-3xl md:text-5xl font-bold mb-6">Prêt à maîtriser {niche?.replace(/-/g, ' ')} à {location?.replace(/-/g, ' ')} ?</h2>
+        <p class="text-xl mb-10 text-white/80">Rejoignez des centaines d'apprenants dans votre région.</p>
+        <button class="px-8 py-4 rounded-xl font-bold text-gray-900 bg-white text-lg transition-all hover:scale-105 shadow-xl">
+          Commencer l'apprentissage
+        </button>
+      </div>
+    </section>
+  </main>
+</TenantLayout>
+</file>
+
+<file path="marketing-site/src/pages/[tenant]/bundle/[bundleId].astro">
+---
+import TenantLayout from '../../../layouts/TenantLayout.astro';
+import { getTenantConfig, getBundle, getProduct } from '../../../lib/tenantApi';
+
+const { tenant, bundleId } = Astro.params;
+
+const tenantConfig = await getTenantConfig(tenant);
+
+if (!tenantConfig) {
+  return Astro.redirect('/404');
+}
+
+// Fetch the bundle from DB
+let bundle = await getBundle(bundleId as string);
+
+// Demo fallback
+if (!bundle) {
+  bundle = {
+    id: bundleId,
+    title: "Le Pack Intégral",
+    description: "Obtenez un accès illimité à tous nos cours dans ce pack complet. Une progression suivie et des jeux exclusifs vous attendent.",
+    imageUrl: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=2000&auto=format&fit=crop",
+    courseIds: ["course-1", "course-2", "course-3"]
+  };
+}
+
+// Optionally fetch the associated product for pricing, but for now we'll mock it
+const productInfo = {
+  price: 249,
+  currency: 'EUR',
+  billingType: 'one-time'
+};
+
+const schemaItem = {
+  "@type": "Product",
+  "name": bundle.title,
+  "description": bundle.description,
+  "offers": {
+    "@type": "Offer",
+    "price": productInfo.price,
+    "priceCurrency": productInfo.currency
+  }
+};
+---
+
+<TenantLayout 
+  config={tenantConfig} 
+  title={`${bundle.title} | ${tenantConfig.marketing.siteTitle}`} 
+  description={bundle.description}
+  schemaItem={schemaItem}
+>
+  <header class="w-full p-6 border-b border-white/10 sticky top-0 z-50 text-white" style="background-color: var(--theme-secondary);">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <a href={`/${tenant}`} class="font-bold text-xl hover:opacity-80 transition-opacity">
+        {tenantConfig.marketing.siteTitle}
+      </a>
+      <a href="#enroll" class="px-6 py-2 rounded-lg font-medium transition-transform hover:scale-105 shadow-md" style="background-color: var(--theme-primary); color: white;">
+        Obtenir le bundle
+      </a>
+    </div>
+  </header>
+
+  <main class="min-h-screen pb-20" style="background-color: var(--theme-bg);">
+    <!-- Hero Section Dark for Bundles to make them look premium -->
+    <section class="relative text-white pt-20 pb-32 overflow-hidden" style="background-color: var(--theme-secondary);">
+      <!-- Decorative background -->
+      <div class="absolute inset-0 opacity-40 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white/20 via-transparent to-transparent"></div>
+      
+      <div class="max-w-5xl mx-auto px-6 relative z-10 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold mb-8 backdrop-blur-md border border-white/10" style="background-color: rgba(255,255,255,0.1); color: white;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 16 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 12 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 8 12a2.7 2.7 0 0 1-1.59-.63.7.7 0 0 0-.82 0A2.7 2.7 0 0 1 4 12v0a2 2 0 0 1-2-2V7"/></svg>
+          Bundle Premium
+        </div>
+        <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight mb-8 text-white">
+          {bundle.title}
+        </h1>
+        <p class="text-xl mb-10 leading-relaxed max-w-3xl mx-auto text-white/80">
+          {bundle.description}
+        </p>
+        <div class="flex justify-center">
+          <a href="#enroll" class="px-10 py-4 rounded-xl font-bold transition-transform hover:scale-105 shadow-xl flex items-center justify-center gap-2 text-lg" style="background-color: var(--theme-primary); color: white;">
+            S'inscrire maintenant
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Included Content Section -->
+    <section class="max-w-5xl mx-auto px-6 -mt-16 relative z-20">
+      <div class="rounded-2xl shadow-2xl border border-gray-100 p-8 md:p-12" style="background-color: white;">
+        <h2 class="text-2xl font-bold mb-8 flex items-center gap-3" style="color: var(--theme-text);">
+          Ce qui est inclus
+          <span class="text-sm px-3 py-1 rounded-full" style="background-color: var(--theme-primary); color: white; opacity: 0.9;">{bundle.courseIds?.length || 3} cours</span>
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {Array.from({ length: bundle.courseIds?.length || 3 }).map((_, i) => (
+            <div class="flex gap-4 p-4 rounded-xl border border-gray-100 transition-colors" style="background-color: var(--theme-bg);">
+              <div class="w-16 h-16 rounded-lg flex items-center justify-center flex-shrink-0" style="background-color: var(--theme-primary); color: white; opacity: 0.9;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 6 4 14"/><path d="M12 6v14"/><path d="M8 8v12"/><path d="M4 4v16"/></svg>
+              </div>
+              <div>
+                <h3 class="font-semibold mb-1" style="color: var(--theme-text);">Module {i + 1}</h3>
+                <p class="text-sm line-clamp-2" style="color: var(--theme-text); opacity: 0.6;">Accès complet aux leçons interactives, jeux et quiz de cette section avec suivi de progression.</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="enroll" class="max-w-4xl mx-auto px-6 mt-24">
+      <div class="rounded-3xl shadow-xl p-8 md:p-12 flex flex-col md:flex-row gap-12 justify-between items-center text-white relative overflow-hidden" style="background-color: var(--theme-primary);">
+        <div class="absolute inset-0 bg-black/10"></div>
+        <div class="relative z-10">
+          <h2 class="text-3xl font-bold mb-4">Offre Spéciale Bundle</h2>
+          <p class="mb-6 opacity-90">Économisez en achetant le parcours complet plutôt que les cours à l'unité.</p>
+          
+          <ul class="space-y-3">
+            <li class="flex items-center gap-3">
+              <svg class="opacity-80" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+              Accès à vie
+            </li>
+            <li class="flex items-center gap-3">
+              <svg class="opacity-80" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+              Mises à jour futures incluses
+            </li>
+          </ul>
+        </div>
+        
+        <div class="text-center p-8 rounded-2xl min-w-[280px] relative z-10" style="background-color: var(--theme-bg);">
+          <div class="line-through text-lg mb-1" style="color: var(--theme-text); opacity: 0.5;">
+            {productInfo.price * 1.5} {productInfo.currency === 'EUR' ? '€' : productInfo.currency}
+          </div>
+          <div class="text-5xl font-extrabold mb-2" style="color: var(--theme-primary);">
+            {productInfo.price} {productInfo.currency === 'EUR' ? '€' : productInfo.currency}
+          </div>
+          <div class="text-sm mb-6" style="color: var(--theme-text); opacity: 0.6;">
+            Paiement unique
+          </div>
+          <button class="w-full py-4 rounded-xl font-bold text-white transition-transform hover:scale-105 shadow-lg" style="background-color: var(--theme-primary);">
+            Obtenir le pack
+          </button>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer class="py-12 border-t border-gray-200 mt-20 text-center" style="background-color: var(--theme-bg); color: var(--theme-text); opacity: 0.8;">
+    <p>&copy; {new Date().getFullYear()} {tenantConfig.marketing.siteTitle}. Tous droits réservés.</p>
+  </footer>
+</TenantLayout>
+</file>
+
+<file path="marketing-site/src/pages/[tenant]/course/[courseId].astro">
+---
+import TenantLayout from '../../../layouts/TenantLayout.astro';
+import { getTenantConfig, getCourse, getProduct } from '../../../lib/tenantApi';
+
+const { tenant, courseId } = Astro.params;
+
+const tenantConfig = await getTenantConfig(tenant);
+
+if (!tenantConfig) {
+  return Astro.redirect('/404');
+}
+
+// Fetch the course from DB
+let course = await getCourse(courseId as string);
+
+// Demo fallback
+if (!course) {
+  course = {
+    id: courseId,
+    title: "Formation d'Excellence",
+    description: "Un parcours immersif pour maîtriser les concepts clés avec des exercices interactifs, des jeux et des quiz.",
+    imageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2000&auto=format&fit=crop",
+    authorId: "demo-author",
+    status: "published",
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  };
+}
+
+// Optionally fetch the associated product for pricing, but for now we'll mock it
+const productInfo = {
+  price: 99,
+  currency: 'EUR',
+  billingType: 'one-time'
+};
+
+const schemaItem = {
+  "@type": "Course",
+  "name": course.title,
+  "description": course.description,
+  "provider": {
+    "@type": "Organization",
+    "name": tenantConfig.marketing.siteTitle
+  }
+};
+---
+
+<TenantLayout 
+  config={tenantConfig} 
+  title={`${course.title} | ${tenantConfig.marketing.siteTitle}`} 
+  description={course.description}
+  schemaItem={schemaItem}
+>
+  <header class="w-full p-6 border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <a href={`/${tenant}`} class="font-bold text-xl hover:opacity-80 transition-opacity" style="color: var(--theme-primary)">
+        {tenantConfig.marketing.siteTitle}
+      </a>
+      <a href="#enroll" class="px-6 py-2 rounded-lg font-medium text-white transition-opacity hover:opacity-90 shadow-md" style="background-color: var(--theme-primary)">
+        S'inscrire
+      </a>
+    </div>
+  </header>
+
+  <main class="min-h-screen pb-20" style="background-color: var(--theme-bg);">
+    <!-- Hero Section -->
+    <section class="relative border-b border-gray-200 pt-16 pb-24 overflow-hidden" style="background-color: var(--theme-bg);">
+      <div class="max-w-5xl mx-auto px-6 relative z-10 flex flex-col md:flex-row gap-12 items-center">
+        <div class="flex-1">
+          <div class="inline-block px-3 py-1 rounded-full text-sm font-semibold mb-6" style="background-color: var(--theme-primary); color: white; opacity: 0.9;">
+            Cours en ligne
+          </div>
+          <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-6" style="color: var(--theme-text);">
+            {course.title}
+          </h1>
+          <p class="text-lg mb-8 leading-relaxed max-w-2xl" style="color: var(--theme-text); opacity: 0.8;">
+            {course.description}
+          </p>
+          <div class="flex flex-col sm:flex-row items-center gap-4">
+            <a href="#enroll" class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-white transition-transform hover:scale-105 shadow-lg flex items-center justify-center gap-2" style="background-color: var(--theme-primary)">
+              Obtenir l'accès
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <div class="text-sm font-medium" style="color: var(--theme-text); opacity: 0.6;">
+              Accès immédiat
+            </div>
+          </div>
+        </div>
+        
+        {course.imageUrl && (
+          <div class="flex-1 w-full relative">
+            <div class="absolute inset-0 rounded-2xl transform rotate-3 scale-105 -z-10" style="background-color: var(--theme-secondary); opacity: 0.2;"></div>
+            <img 
+              src={course.imageUrl} 
+              alt={course.title} 
+              class="w-full h-auto rounded-2xl shadow-xl border border-gray-100 object-cover aspect-[4/3]"
+            />
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="enroll" class="max-w-4xl mx-auto px-6 mt-20">
+      <div class="rounded-3xl shadow-xl border border-gray-100 p-8 md:p-12 flex flex-col md:flex-row gap-12 justify-between items-center relative overflow-hidden" style="background-color: white;">
+        <div class="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl -z-10 transform translate-x-1/2 -translate-y-1/2" style="background-color: var(--theme-primary); opacity: 0.1;"></div>
+        
+        <div>
+          <h2 class="text-3xl font-bold mb-2" style="color: var(--theme-text);">Prêt à commencer ?</h2>
+          <p style="color: var(--theme-text); opacity: 0.7;">Rejoignez le parcours d'apprentissage dès aujourd'hui.</p>
+          
+          <ul class="mt-6 space-y-3">
+            <li class="flex items-center gap-3" style="color: var(--theme-text);">
+              <svg style="color: var(--theme-primary);" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+              Accès complet à tous les modules
+            </li>
+            <li class="flex items-center gap-3" style="color: var(--theme-text);">
+              <svg style="color: var(--theme-primary);" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+              Jeux interactifs et quiz
+            </li>
+            <li class="flex items-center gap-3" style="color: var(--theme-text);">
+              <svg style="color: var(--theme-primary);" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+              Suivi de progression
+            </li>
+          </ul>
+        </div>
+        
+        <div class="text-center p-8 rounded-2xl border border-gray-100 min-w-[280px]" style="background-color: var(--theme-bg);">
+          <div class="text-5xl font-extrabold mb-2" style="color: var(--theme-text);">
+            {productInfo.price} {productInfo.currency === 'EUR' ? '€' : productInfo.currency}
+          </div>
+          <div class="text-sm mb-6" style="color: var(--theme-text); opacity: 0.6;">
+            {productInfo.billingType === 'one-time' ? 'Paiement unique' : 'Abonnement'}
+          </div>
+          <button class="w-full py-4 rounded-xl font-bold text-white transition-transform hover:scale-105 shadow-lg" style="background-color: var(--theme-primary)">
+            Acheter maintenant
+          </button>
+          <div class="mt-4 text-xs flex items-center justify-center gap-1" style="color: var(--theme-text); opacity: 0.5;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Paiement sécurisé
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <footer class="py-12 border-t border-gray-200 mt-20 text-center" style="background-color: var(--theme-bg); color: var(--theme-text); opacity: 0.8;">
+    <p>&copy; {new Date().getFullYear()} {tenantConfig.marketing.siteTitle}. Tous droits réservés.</p>
+  </footer>
+</TenantLayout>
+</file>
+
+<file path="marketing-site/src/pages/[tenant]/index.astro">
+---
+// Mode SSR : Exécuté à chaque requête
+import TenantLayout from '../../layouts/TenantLayout.astro';
+import DeviceFrame from '../../components/astro/DeviceFrame.astro';
+import Hero from '../../components/astro/Hero.astro';
+import Features from '../../components/astro/Features.astro';
+import Pricing from '../../components/astro/Pricing.astro';
+import Footer from '../../components/astro/Footer.astro';
+import { getTenantConfig } from '../../lib/tenantApi';
+
+// On récupère le composant React depuis le path alias (@shared -> ../../src/)
+import { InteractiveTeaser } from '@shared/components/InteractiveTeaser';
+import MemoryMatch from '@shared/mechanics/04_MemoryMatch';
+
+// Paramètre de route /[tenant]/
+const { tenant } = Astro.params;
+
+// 1. Récupération de la configuration (CMS Headless)
+const tenantConfig = await getTenantConfig(tenant);
+
+if (!tenantConfig) {
+  return Astro.redirect('/404');
+}
+
+// Données de démo pour le jeu
+const demoGameData = {
+  id: "demo",
+  pairs: [
+    { id: "1", cardA: { text: "Bonjour" }, cardB: { text: "Hello" } },
+    { id: "2", cardA: { text: "Merci" }, cardB: { text: "Thank you" } }
+  ]
+};
+---
+
+<TenantLayout config={tenantConfig}>
+  <!-- Header Marketing (Minimalist) -->
+  <header class="w-full p-6 border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="font-bold text-xl" style="color: var(--theme-primary)">
+        {tenantConfig.marketing.siteTitle}
+      </div>
+      <nav class="space-x-4 hidden md:block">
+        <a href="#features" class="opacity-70 hover:opacity-100 transition-opacity" style="color: var(--theme-text)">Fonctionnalités</a>
+        <a href="#pricing" class="opacity-70 hover:opacity-100 transition-opacity" style="color: var(--theme-text)">Tarifs</a>
+      </nav>
+      <button class="px-4 py-2 rounded-lg font-medium text-white transition-opacity hover:opacity-90" style="background-color: var(--theme-primary)">
+        Commencer
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <Hero>
+      <DeviceFrame>
+        <!-- client:idle permet de charger le JS de React uniquement quand le fil principal du navigateur est libre. -->
+        <InteractiveTeaser client:idle maxInteractions={2} ctaTitle={`Rejoignez ${tenantConfig.marketing.siteTitle}`}>
+          <MemoryMatch data={demoGameData} onComplete={() => {}} />
+        </InteractiveTeaser>
+      </DeviceFrame>
+    </Hero>
+
+    <Features />
+    <Pricing />
+  </main>
+  
+  <Footer />
+</TenantLayout>
+</file>
+
+<file path="marketing-site/src/pages/[tenant]/sitemap.xml.ts">
+import type { APIRoute } from 'astro';
+import { getTenantConfig } from '../../lib/tenantApi';
+
+export const GET: APIRoute = async ({ params, request }) => {
+  const { tenant } = params;
+  
+  if (!tenant) {
+    return new Response(null, { status: 404, statusText: 'Not found' });
+  }
+
+  // Vérifier que le tenant (client whitelabel) existe
+  const tenantConfig = await getTenantConfig(tenant);
+  
+  if (!tenantConfig) {
+    return new Response(null, {
+      status: 404,
+      statusText: 'Not found'
+    });
+  }
+
+  // Dans un cas d'usage réel, ces données (villes et niches ciblées)
+  // seraient récupérées depuis Firestore (ex: campagnes SEO actives du tenant).
+  // Pour la démonstration du moteur SEO/GEO, on utilise des listes prédéfinies.
+  const locations = ['quebec', 'montreal', 'paris', 'lyon'];
+  const niches = ['mathematiques', 'francais', 'anglais', 'sciences'];
+
+  // Base URL (déduite de la requête entrante)
+  const siteUrl = new URL(request.url).origin;
+
+  let sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+  sitemap += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+
+  // 1. Ajouter la page d'accueil du tenant
+  sitemap += `  <url>\n`;
+  sitemap += `    <loc>${siteUrl}/${tenant}</loc>\n`;
+  sitemap += `    <lastmod>${new Date().toISOString()}</lastmod>\n`;
+  sitemap += `    <changefreq>daily</changefreq>\n`;
+  sitemap += `    <priority>1.0</priority>\n`;
+  sitemap += `  </url>\n`;
+
+  // 2. Générer les URLs dynamiques du Moteur SEO / GEO
+  for (const location of locations) {
+    for (const niche of niches) {
+      sitemap += `  <url>\n`;
+      sitemap += `    <loc>${siteUrl}/${tenant}/${location}/${niche}</loc>\n`;
+      // Date arbitraire ou date de mise à jour de la campagne
+      sitemap += `    <lastmod>${new Date().toISOString()}</lastmod>\n`;
+      sitemap += `    <changefreq>weekly</changefreq>\n`;
+      sitemap += `    <priority>0.8</priority>\n`;
+      sitemap += `  </url>\n`;
+    }
+  }
+
+  sitemap += `</urlset>`;
+
+  return new Response(sitemap, {
+    headers: {
+      'Content-Type': 'application/xml',
+      'Cache-Control': 'public, max-age=3600' // Cache d'une heure
+    }
+  });
+};
+</file>
+
+<file path="marketing-site/src/pages/index.astro">
+---
+import TenantLayout from '../layouts/TenantLayout.astro';
+import DeviceFrame from '../components/astro/DeviceFrame.astro';
+import Hero from '../components/astro/Hero.astro';
+import Features from '../components/astro/Features.astro';
+import Pricing from '../components/astro/Pricing.astro';
+import Footer from '../components/astro/Footer.astro';
+import { getTenantConfig } from '../lib/tenantApi';
+
+// On récupère le composant React depuis le path alias (@shared -> ../src/)
+import { InteractiveTeaser } from '@shared/components/InteractiveTeaser';
+import MemoryMatch from '@shared/mechanics/04_MemoryMatch';
+
+// Configuration de la plateforme "mère" B2B (Eduforge)
+const tenantConfig = await getTenantConfig('eduforge');
+
+if (!tenantConfig) {
+  return Astro.redirect('/404');
+}
+
+// Données de démo pour le jeu
+const demoGameData = {
+  id: "demo",
+  pairs: [
+    { id: "1", cardA: { text: "Edu" }, cardB: { text: "Forge" } },
+    { id: "2", cardA: { text: "SaaS" }, cardB: { text: "B2B" } }
+  ]
+};
+---
+
+<TenantLayout config={tenantConfig}>
+  <!-- Header Marketing (Minimalist) -->
+  <header class="w-full p-6 border-b border-gray-200 bg-white/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto flex justify-between items-center">
+      <div class="font-bold text-xl" style="color: var(--theme-primary)">
+        {tenantConfig.marketing.siteTitle}
+      </div>
+      <nav class="space-x-4 hidden md:block">
+        <a href="#features" class="opacity-70 hover:opacity-100 transition-opacity" style="color: var(--theme-text)">Fonctionnalités</a>
+        <a href="#pricing" class="opacity-70 hover:opacity-100 transition-opacity" style="color: var(--theme-text)">Tarifs</a>
+      </nav>
+      <button class="px-4 py-2 rounded-lg font-medium text-white transition-opacity hover:opacity-90" style="background-color: var(--theme-primary)">
+        Commencer
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <Hero>
+      <DeviceFrame>
+        <!-- client:idle permet de charger le JS de React uniquement quand le fil principal du navigateur est libre. -->
+        <InteractiveTeaser client:idle maxInteractions={2} ctaTitle={`Rejoignez ${tenantConfig.marketing.siteTitle}`}>
+          <MemoryMatch data={demoGameData} onComplete={() => {}} />
+        </InteractiveTeaser>
+      </DeviceFrame>
+    </Hero>
+
+    <Features />
+    <Pricing />
+  </main>
+  
+  <Footer />
+</TenantLayout>
+</file>
+
+<file path="marketing-site/src/pages/sitemap.xml.ts">
+import type { APIRoute } from 'astro';
+import { getTenantConfig } from '../lib/tenantApi';
+
+export const GET: APIRoute = async ({ request }) => {
+  // Le domaine racine est configuré pour "eduforge" (la plateforme SaaS principale)
+  const tenant = 'eduforge';
+  const tenantConfig = await getTenantConfig(tenant);
+  
+  if (!tenantConfig) {
+    return new Response(null, { status: 404 });
+  }
+
+  const siteUrl = new URL(request.url).origin;
+
+  let sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n`;
+  sitemap += `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n`;
+
+  // Page d'accueil racine
+  sitemap += `  <url>\n`;
+  sitemap += `    <loc>${siteUrl}/</loc>\n`;
+  sitemap += `    <lastmod>${new Date().toISOString()}</lastmod>\n`;
+  sitemap += `    <changefreq>daily</changefreq>\n`;
+  sitemap += `    <priority>1.0</priority>\n`;
+  sitemap += `  </url>\n`;
+
+  // On peut ajouter d'autres pages publiques pour eduforge ici (ex: Tarifs, Fonctionnalités)
+  
+  sitemap += `</urlset>`;
+
+  return new Response(sitemap, {
+    headers: {
+      'Content-Type': 'application/xml',
+      'Cache-Control': 'public, max-age=3600'
+    }
+  });
+};
+</file>
+
+<file path="marketing-site/src/utils/seo.ts">
+import type { TenantConfig } from '../lib/tenantApi';
+
+interface SEOMetaTags {
+  title: string;
+  description: string;
+  openGraph?: {
+    basic: {
+      title: string;
+      type: string;
+      image: string;
+    };
+  };
+  extend?: {
+    meta: Array<{ name?: string; content: string; property?: string }>;
+  };
+}
+
+/**
+ * Génère dynamiquement les balises méta SEO (titre, description, open-graph)
+ * en combinant la configuration du tenant (Firestore) et les surcharges spécifiques à la page.
+ */
+export function generateSEOMetaTags(
+  tenantConfig: TenantConfig,
+  pageOverrides?: {
+    title?: string;
+    description?: string;
+    image?: string;
+  }
+): SEOMetaTags {
+  const siteTitle = tenantConfig.marketing.siteTitle;
+  const baseTitle = pageOverrides?.title 
+    ? `${pageOverrides.title} | ${siteTitle}` 
+    : siteTitle;
+    
+  const baseDescription = pageOverrides?.description || tenantConfig.marketing.seoDescription || '';
+  
+  // Image par défaut (si aucune image n'est spécifiée par la page ou le tenant)
+  const ogImage = pageOverrides?.image || 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&w=1200&q=80';
+
+  const keywords = tenantConfig.seo?.keywords?.join(', ') || '';
+  const themeColor = tenantConfig.theme.primary;
+
+  return {
+    title: baseTitle,
+    description: baseDescription,
+    openGraph: {
+      basic: {
+        title: baseTitle,
+        type: 'website',
+        image: ogImage,
+      }
+    },
+    extend: {
+      meta: [
+        { name: "keywords", content: keywords },
+        { name: "theme-color", content: themeColor },
+        { property: "og:description", content: baseDescription }
+      ]
+    }
+  };
+}
+</file>
+
+<file path="marketing-site/src/middleware.ts">
+import { defineMiddleware } from "astro:middleware";
+
+export const onRequest = defineMiddleware(async (context, next) => {
+  const url = new URL(context.request.url);
+  const hostname = url.hostname;
+  
+  // Domaines principaux de la plateforme (où le routage se fait par le path : /tenant-id)
+  const mainDomains = [
+    'localhost',
+    '127.0.0.1',
+    'run.app' // Pour Cloud Run (ex: ais-dev-xyz.run.app)
+  ];
+  
+  const isMainDomain = mainDomains.some(d => hostname.includes(d));
+
+  // Si c'est le domaine principal, on laisse le routage normal faire son travail (par path)
+  if (isMainDomain) {
+    return next();
+  }
+
+  // Exclure les requêtes vers les assets statiques et fichiers internes
+  if (url.pathname.startsWith('/_astro') || url.pathname.match(/\.[a-zA-Z0-9]+$/)) {
+    return next();
+  }
+
+  // Si c'est un domaine personnalisé (ex: www.mon-ecole.com),
+  // on réécrit la requête en interne vers /[domaine]
+  // Ainsi, le routeur d'Astro utilisera [tenant]/index.astro pour répondre à cette requête,
+  // et le paramètre 'tenant' aura pour valeur le hostname.
+  const targetPath = `/${hostname}${url.pathname === '/' ? '' : url.pathname}`;
+  
+  try {
+    // Astro 4+ permet d'utiliser context.rewrite() pour le routage interne
+    return context.rewrite(targetPath);
+  } catch (e) {
+    // Fallback si rewrite n'est pas disponible (anciennes versions)
+    // On modifie l'URL de la requête et on rappelle next
+    return next(new Request(new URL(targetPath, url.origin), context.request));
+  }
+});
+</file>
+
+<file path="marketing-site/astro.config.mjs">
+import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
+import tailwind from '@astrojs/tailwind';
+import node from '@astrojs/node';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// https://astro.build/config
+export default defineConfig({
+  // Active l'intégration React et Tailwind
+  integrations: [react(), tailwind()],
+  // Active le mode SSR (Server-Side Rendering) pour router dynamiquement selon le tenant
+  output: 'server',
+  adapter: node({
+    mode: 'standalone'
+  }),
+  vite: {
+    resolve: {
+      alias: {
+        // Permet d'importer les composants de l'app React principale
+        '@shared': path.resolve(__dirname, '../src')
+      }
+    }
+  }
+});
+</file>
+
+<file path="marketing-site/package.json">
+{
+  "name": "marketing-site",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev --port 4000",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.0.0",
+    "@astrojs/react": "^4.0.0",
+    "@astrojs/tailwind": "^6.0.0",
+    "astro": "^5.0.0",
+    "astro-seo": "^0.8.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^3.4.0"
+  }
+}
+</file>
+
+<file path="marketing-site/SEO_ARCHITECTURE_PLAN.md">
+# Plan d'Architecture SEO & Référencement Automatisé (Projet Astro)
+
+L'optimisation du référencement (SEO) de l'application marque blanche doit bénéficier des capacités natives d'Astro tout en intégrant une dimension automatisée par l'IA, idéale pour générer du contenu sémantique, cibler des mots clés géographiques, ou créer des pages dynamiques sans effort manuel de la part de vos locataires (tenants).
+
+## 1. Intégration Native Astro SEO
+
+Nous utiliserons `astro-seo` pour gérer les métadonnées de base (OpenGraph, Title, Description, Keywords). 
+
+### Layout de base (`TenantLayout.astro`)
+Nous avons déjà ajouté `astro-seo` qui permet d'injecter facilement les balises pour chaque client à partir de la configuration récupérée dans Firebase/Directus :
+
+```astro
+<SEO
+  title={siteTitle}
+  description={seoDescription}
+  openGraph={{
+    basic: { title: siteTitle, type: "website", image: ogImage }
+  }}
+/>
+```
+
+## 2. Intégration d'un Moteur "SEO / GEO" Automatisé (IA)
+
+Des solutions comme `open-seo` ou `seomachine` visent à générer programmatiquement des pages ciblées sur des niches et des localisations (ex: "Apprendre l'anglais à Paris", "Apprendre l'espagnol pour les affaires à Lyon").
+
+### Architecture Hybride (Astro SSR + Edge Generation)
+
+Pour implémenter ce genre de moteur dans Astro, sans saturer la base de données :
+
+**A. Génération Programmatique des URL (SSR Route)**
+Créez une route "Attrape-tout" (Catch-all) pour le contenu généré par l'IA :
+`/marketing-site/src/pages/[tenant]/[...slug].astro`
+
+**B. Logique "On-Demand" (Just-in-Time Generation)**
+Lorsqu'un visiteur (ou Googlebot) demande `/tenant1/cours-anglais-paris` :
+1. Astro vérifie si le contenu existe en cache ou dans Firebase.
+2. S'il n'existe pas, Astro (via une Serverless Function Vercel/Node) appelle le Moteur IA (via l'API Gemini ou OpenAI) pour générer l'article basé sur la requête (Langue = Anglais, Ville = Paris, Style = Éducatif).
+3. Le résultat est retourné à l'utilisateur, mis en forme avec `TenantLayout`, et mis en cache (Redis ou Firestore) pour les prochaines requêtes.
+
+### C. Sitemaps Dynamiques
+Pour forcer l'indexation de ces URL générées, il faut utiliser `@astrojs/sitemap`.
+Cependant, Astro génère le sitemap au *build time*. Pour un environnement SSR multi-tenant, vous devrez créer une route dynamique d'API `sitemap.xml.ts` :
+
+```typescript
+// /marketing-site/src/pages/[tenant]/sitemap.xml.ts
+export async function GET({ params, request }) {
+  const { tenant } = params;
+  const urls = await getGeneratedSEOUrlsForTenant(tenant); // Récupère les villes/niches depuis la DB
+  
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    ${urls.map(url => `
+      <url>
+        <loc>${new URL(url, request.url).href}</loc>
+        <lastmod>${new Date().toISOString()}</lastmod>
+      </url>
+    `).join('')}
+  </urlset>`;
+
+  return new Response(sitemap, {
+    headers: { 'Content-Type': 'application/xml' }
+  });
+}
+```
+
+## 3. Options et Alternatives
+
+- **Open-SEO / SEO Machine** : Ce sont d'excellents exemples pour générer des pages structurées par ville ou secteur, mais vous pouvez très bien reproduire cette logique en interne avec des prompts Gemini via les Google AI Studio API.
+- **Astro DB / Astro Studio** : Pour mettre en cache les pages générées par l'IA sans setup lourd.
+- **Micro-Services** : Séparer l'application de rendu (Astro) de l'application de génération (un script Cron qui peuple Firebase avec des articles générés par l'IA la nuit). C'est souvent plus sûr pour éviter les temps de chargement infinis (Timeouts) lorsque Googlebot crawle une page qui n'existe pas encore.
+
+### Recommandation 
+
+1. Commencez par le **SEO classique** via le Headless CMS (champs Title/Description gérés par le superadmin).
+2. Créez un **générateur asynchrone** (Cron Job) qui utilise Gemini pour rédiger des Landing Pages par mot-clé et les stocker dans Firebase (collection `seo_pages`).
+3. Astro se contentera de **lire** Firebase (SSR) plutôt que de générer le contenu en temps réel. C'est plus sûr et beaucoup plus rapide pour le SEO.
+</file>
+
+<file path="marketing-site/tailwind.config.mjs">
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: [
+    './src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}',
+    '../src/components/**/*.{js,jsx,ts,tsx}',
+    '../src/features/**/*.{js,jsx,ts,tsx}'
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: 'var(--theme-primary)',
+        background: 'var(--theme-bg)'
+      },
+      fontFamily: {
+        sans: ['var(--theme-font)', 'sans-serif']
+      }
+    },
+  },
+  plugins: [],
+}
+</file>
+
+<file path="marketing-site/tsconfig.json">
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["../src/*"]
+    }
+  }
+}
+</file>
+
+<file path="scripts/add_auth_headers.cjs">
+const fs = require('fs');
+const path = require('path');
+
+function walk(dir) {
+  let results = [];
+  const list = fs.readdirSync(dir);
+  list.forEach(file => {
+    file = path.join(dir, file);
+    const stat = fs.statSync(file);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(walk(file));
+    } else {
+      results.push(file);
+    }
+  });
+  return results;
+}
+
+const files = walk('src').filter(f => f.endsWith('.ts') || f.endsWith('.tsx'));
+
+for (const file of files) {
+  let content = fs.readFileSync(file, 'utf-8');
+  let changed = false;
+
+  if (content.includes("fetch('/api/gemini/") || content.includes("fetch('/api/parse-document'")) {
+    if (!content.includes('import { auth } from')) {
+      const depth = file.split(path.sep).length - 2;
+      let relativePath = '';
+      for(let i=0; i<depth; i++) relativePath += '../';
+      relativePath += 'services/firebase';
+                           
+      content = `import { auth } from '${relativePath}';\n` + content;
+      changed = true;
+    }
+
+    if (!content.includes('Authorization')) {
+      // Replaces headers: { ... } for gemini requests which have 'Content-Type': 'application/json'
+      content = content.replace(/headers:\s*\{([^}]*?)'Content-Type':\s*'application\/json'([^}]*?)\}/g, (match, p1, p2) => {
+        return `headers: {${p1}'Content-Type': 'application/json', 'Authorization': \`Bearer \${await auth.currentUser?.getIdToken()}\`${p2}}`;
+      });
+
+      // Replace for parse-document (FormData)
+      content = content.replace(/body:\s*formData\s*\}/g, (match) => {
+          return `body: formData,\n      headers: { 'Authorization': \`Bearer \${await auth.currentUser?.getIdToken()}\` }\n    }`;
+      });
+      changed = true;
+    }
+
+    if (changed) {
+      fs.writeFileSync(file, content, 'utf-8');
+      console.log('Updated ' + file);
+    }
+  }
+}
+</file>
+
+<file path="scripts/directus-setup.cjs">
+
+</file>
+
+<file path="scripts/fix_syntax.cjs">
+const fs = require('fs');
+
+const filesToFix = {
+  'src/mechanics/21_ErrorCorrection.tsx': [
+    { search: /dans l'espace/g, replace: "dans l\\'espace" }
+  ],
+  'src/mechanics/22_DeceptivePairs.tsx': [
+    { search: /c'est/g, replace: "c\\'est" },
+    { search: /d'école/g, replace: "d\\'école" },
+    { search: /l'événement/g, replace: "l\\'événement" }
+  ],
+  'src/mechanics/24_VoiceRecording.tsx': [
+    { search: /C'est/g, replace: "C\\'est" },
+    { search: /s'il/g, replace: "s\\'il" }
+  ],
+  'src/mechanics/25_AudioAB.tsx': [
+    { search: /C'est/g, replace: "C\\'est" },
+    { search: /qu'on/g, replace: "qu\\'on" }
+  ]
+};
+
+const dirs = fs.readdirSync('src/mechanics').filter(f => f.endsWith('.tsx'));
+dirs.forEach(file => {
+  let content = fs.readFileSync('src/mechanics/' + file, 'utf8');
+  // General fix: finding text enclosed in single quotes that contain a single quote
+  // E.g. 'foo l'bar'
+  // Let's just fix the files manually since there aren't that many errors.
+  content = content.replace(/'([^']*)'([^']*)'/g, (match, p1, p2) => {
+    // If the string itself contains apostrophes, let's wrap it in double quotes instead
+    // Actually, safer is to just replace the known bad phrases
+    return match;
+  });
+});
+
+for (const [file, fixes] of Object.entries(filesToFix)) {
+  if (!fs.existsSync(file)) continue;
+  let content = fs.readFileSync(file, 'utf8');
+  fixes.forEach(fix => {
+    content = content.replace(fix.search, fix.replace);
+  });
+  fs.writeFileSync(file, content);
+}
+</file>
+
+<file path="scripts/fix_useProgression.cjs">
+const fs = require('fs');
+
+const path = 'src/store/useProgression.ts';
+let code = fs.readFileSync(path, 'utf8');
+
+// Replace addPiasses
+code = code.replace(/addPiasses:\s*\((.*?)\)\s*=>\s*\{([\s\S]*?)get\(\)\.sauvegarderVersFirebase\(\);\s*\}/, (match, p1, p2) => {
+  return `addPiasses: async (${p1}) => {${p2}
+    const { auth } = await import('../../services/firebase');
+    if (auth.currentUser) {
+      try {
+        await fetch('/api/economy/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': \`Bearer \${await auth.currentUser.getIdToken()}\` },
+          body: JSON.stringify({ piasses: montant, xp: montant > 0 ? montant : 0 })
+        });
+      } catch (e) {}
+    }
+  }`;
+});
+
+// Replace addXp
+code = code.replace(/addXp:\s*\((.*?)\)\s*=>\s*\{([\s\S]*?)get\(\)\.sauvegarderVersFirebase\(\);([\s\S]*?)\}/, (match, p1, p2, p3) => {
+  return `addXp: async (${p1}) => {${p2}${p3}
+    const { auth } = await import('../../services/firebase');
+    if (auth.currentUser) {
+      try {
+        await fetch('/api/economy/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': \`Bearer \${await auth.currentUser.getIdToken()}\` },
+          body: JSON.stringify({ xp: montant })
+        });
+      } catch (e) {}
+    }
+  }`;
+});
+
+// Replace depenserPiasses
+code = code.replace(/depenserPiasses:\s*\((.*?)\)\s*=>\s*\{([\s\S]*?)get\(\)\.sauvegarderVersFirebase\(\);\s*(\}\s*return success;\s*\})/, (match, p1, p2, p3) => {
+  return `depenserPiasses: async (${p1}) => {${p2}
+      const { auth } = await import('../../services/firebase');
+      if (auth.currentUser) {
+        try {
+          await fetch('/api/economy/update', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': \`Bearer \${await auth.currentUser.getIdToken()}\` },
+            body: JSON.stringify({ piasses: -cout })
+          });
+        } catch (e) {}
+      }
+    ${p3}`;
+});
+
+// For acheterObjet and echangerObjetContreMot, since depenserPiasses is now async, we need to await it.
+code = code.replace(/acheterObjet:\s*\((.*?)\)\s*=>\s*\{(\s*)const success = get\(\)\.depenserPiasses\((.*?)\);/, (match, p1, p2, p3) => {
+  return `acheterObjet: async (${p1}) => {${p2}const success = await get().depenserPiasses(${p3});`;
+});
+
+code = code.replace(/echangerObjetContreMot:\s*\((.*?)\)\s*=>\s*\{(\s*)const success = get\(\)\.depenserPiasses\((.*?)\);/, (match, p1, p2, p3) => {
+  return `echangerObjetContreMot: async (${p1}) => {${p2}const success = await get().depenserPiasses(${p3});`;
+});
+
+// Exclude piasses and xp from setDoc
+code = code.replace(/piasses:\s*state\.piasses,\s*/, '');
+code = code.replace(/xp:\s*state\.xp,\s*/, '');
+code = code.replace(/isPremium:\s*state\.isPremium,\s*/, '');
+code = code.replace(/subscriptionPlan:\s*state\.subscriptionPlan,\s*/, '');
+code = code.replace(/entitlements:\s*state\.entitlements,\s*/, '');
+code = code.replace(/scoreTotal:\s*state\.xp,\s*/, '');
+
+// Add promise to types
+code = code.replace(/depenserPiasses: \(cout: number\) => boolean;/, 'depenserPiasses: (cout: number) => Promise<boolean>;');
+code = code.replace(/acheterObjet: \(objetId: string, cout: number\) => boolean;/, 'acheterObjet: (objetId: string, cout: number) => Promise<boolean>;');
+code = code.replace(/echangerObjetContreMot: \(objetId: string, motId: string\) => boolean;/, 'echangerObjetContreMot: (objetId: string, motId: string) => Promise<boolean>;');
+
+fs.writeFileSync(path, code, 'utf8');
+</file>
+
+<file path="scripts/listTenants.js">
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, getDocs } from "firebase/firestore";
+const firebaseConfig = {
+  "projectId": "gen-lang-client-0808256771",
+  "appId": "1:906490759700:web:abba0155b3d3f6e5c33501",
+  "apiKey": "AIzaSyCp9VBssCMQFQv2kzN7ZX6dT3SsMh4C0jQ",
+  "authDomain": "gen-lang-client-0808256771.firebaseapp.com",
+  "firestoreDatabaseId": "ai-studio-f07a6670-0671-4de0-9caf-b551ab6f37a7",
+  "storageBucket": "gen-lang-client-0808256771.firebasestorage.app",
+  "messagingSenderId": "906490759700"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app, "ai-studio-f07a6670-0671-4de0-9caf-b551ab6f37a7");
+async function run() {
+  const snap = await getDocs(collection(db, "tenants"));
+  snap.forEach(doc => console.log(doc.id, doc.data()));
+}
+run();
+</file>
+
+<file path="scripts/migrate_mechanics.cjs">
+const fs = require('fs');
+const path = require('path');
+
+const srcDir = path.join(__dirname, '../design_handoff_theme_system/mechanics');
+const destDir = path.join(__dirname, '../src/mechanics');
+
+if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
+
+const files = fs.readdirSync(srcDir).filter(f => f.endsWith('.jsx') && !f.startsWith('01_'));
+
+let indexExports = [`export { default as FlashcardSRS } from './01_FlashcardSRS';`];
+
+files.forEach(file => {
+  let content = fs.readFileSync(path.join(srcDir, file), 'utf8');
+  
+  // Add useTheme import if not there
+  if (!content.includes('useTheme')) {
+    content = `import { useTheme } from '../store/useTheme';\n` + content;
+  }
+  
+  // Remove static const C = { ... };
+  content = content.replace(/const C\s*=\s*\{[^}]+\};\s*/g, '');
+  
+  // Replace the component signature to inject const { theme } = useTheme(); const C = theme.colors;
+  // Also add basic TS typing
+  content = content.replace(/export default function ([A-Za-z0-9_]+)\s*\(\{\s*(.*?)\s*\}\)\s*\{/, (match, compName, args) => {
+    return `export default function ${compName}({ data, onBack, onComplete }: any) {\n  const { theme } = useTheme();\n  const C = theme.colors;\n`;
+  });
+
+  // Handle a specific edge case for sample data assignment
+  content = content.replace(/data\s*=\s*SAMPLE/g, 'data'); // we default in signature now, so just remove it if it was inline
+  
+  // Save as .tsx
+  const newFilename = file.replace('.jsx', '.tsx');
+  fs.writeFileSync(path.join(destDir, newFilename), content);
+  
+  // Extract component name for index
+  const match = content.match(/export default function ([A-Za-z0-9_]+)/);
+  if (match) {
+    indexExports.push(`export { default as ${match[1]} } from './${newFilename.replace('.tsx', '')}';`);
+  }
+});
+
+fs.writeFileSync(path.join(destDir, 'index.ts'), indexExports.join('\n') + '\n');
+console.log('Migration complete. Files moved to src/mechanics');
+</file>
+
+<file path="scripts/out.txt">
+[2026-06-27T20:44:21.705Z]  @firebase/firestore: Firestore (12.15.0): GrpcConnection RPC 'Listen' stream 0x7b9f4a4b error. Code: 5 Message: 5 NOT_FOUND: 
+[2026-06-27T20:44:21.707Z]  @firebase/firestore: Firestore (12.15.0): Could not reach Cloud Firestore backend. Connection failed 1 times. Most recent error: FirebaseError: [code=not-found]: 5 NOT_FOUND: 
+This typically indicates that your device does not have a healthy Internet connection at the moment. The client will operate in offline mode until it is able to successfully connect to the backend.
+Read Error: Failed to get document because the client is offline.
+</file>
+
+<file path="scripts/remove_sample.cjs">
+const fs = require('fs');
+
+const dirs = fs.readdirSync('src/mechanics').filter(f => f.endsWith('.tsx'));
+dirs.forEach(file => {
+  const filePath = 'src/mechanics/' + file;
+  let content = fs.readFileSync(filePath, 'utf8');
+  
+  // Remove const SAMPLE = { ... }; completely
+  // Since it might span multiple lines and contain nested braces, a regex is tricky.
+  // We can just find "const SAMPLE =" and then parse to remove the block, or since we know it's usually at the top level and ends with "};", we can do a greedy or balanced brace approach.
+  
+  let sampleStart = content.indexOf('const SAMPLE = {');
+  if (sampleStart !== -1) {
+    let braceCount = 0;
+    let i = sampleStart + 'const SAMPLE = '.length;
+    let sampleEnd = -1;
+    for (; i < content.length; i++) {
+      if (content[i] === '{') braceCount++;
+      if (content[i] === '}') {
+        braceCount--;
+        if (braceCount === 0) {
+          sampleEnd = i;
+          break;
+        }
+      }
+    }
+    if (sampleEnd !== -1) {
+      // also remove the trailing semicolon
+      if (content[sampleEnd+1] === ';') sampleEnd++;
+      content = content.substring(0, sampleStart) + content.substring(sampleEnd + 1);
+    }
+  }
+
+  fs.writeFileSync(filePath, content);
+});
+</file>
+
+<file path="scripts/testDb.js">
+import { initializeApp } from "firebase/app";
+import { getFirestore, doc, getDoc, initializeFirestore } from "firebase/firestore";
+const firebaseConfig = {
+  "projectId": "gen-lang-client-0808256771",
+  "appId": "1:906490759700:web:abba0155b3d3f6e5c33501",
+  "apiKey": "AIzaSyCp9VBssCMQFQv2kzN7ZX6dT3SsMh4C0jQ",
+  "authDomain": "gen-lang-client-0808256771.firebaseapp.com",
+};
+const app = initializeApp(firebaseConfig);
+const db = initializeFirestore(app, {
+  experimentalForceLongPolling: true
+});
+async function run() {
+  try {
+    const docSnap = await getDoc(doc(db, "configuration", "theme"));
+    console.log("Success:", docSnap.exists() ? "exists" : "not found");
+  } catch(e) {
+    console.error("Read Error:", e.message);
+  }
+  process.exit(0);
+}
+run();
 </file>
 
 <file path="src/components/AITutorChat.tsx">
 import { auth } from '../services/firebase';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import { Send, X, Bot, User, Sparkles } from 'lucide-react';
 import { useTheme } from '../store/useTheme';
 import { useSettings } from '../store/useSettings';
+import { useSrs } from '../store/useSrs';
+import { contentProvider } from '../services/contentProvider';
+import { useProgression } from '../store/useProgression';
 
 interface Message {
   role: 'user' | 'model';
@@ -414,9 +8505,26 @@ export default function AITutorChat({ onClose, gameContext }: AITutorChatProps) 
   const { theme } = useTheme();
   const c = theme.colors;
   const { apiKey, persona, context } = useSettings();
+  const { recentFailures } = useSrs();
+  const niveau = useProgression(state => state.getNiveau());
+  
+  // Récupérer le contenu réel des items échoués récemment
+  const recentFailedItemsContext = useMemo(() => {
+    if (recentFailures.length === 0) return '';
+    const allItems = contentProvider.getItemsByNiveau(niveau);
+    const failedContent = recentFailures
+      .map(id => allItems.find(i => i.id === id))
+      .filter(Boolean)
+      .map(i => `- ${i!.payload?.answer || i!.id} (Module: ${i!.module})`)
+      .join('\n');
+    return `Note au tuteur : L'apprenant a récemment eu des difficultés avec les concepts suivants :\n${failedContent}\nUtilise ce contexte pour mieux cibler tes explications si la question est vague.`;
+  }, [recentFailures, niveau]);
   
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'model', text: 'Allô ! Je suis ton tuteur IA. As-tu une question sur le jeu ou sur une expression ?' }
+    { 
+      role: 'model', 
+      text: "Allô ! Je suis ton tuteur IA. Je peux t'aider à comprendre un concept ponctuel ou t'expliquer une règle que tu viens de voir. Garde en tête que je n'ai pas une vision globale de tout ton parcours. Qu'est-ce qui te pose problème ?" 
+    }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -441,8 +8549,8 @@ export default function AITutorChat({ onClose, gameContext }: AITutorChatProps) 
         parts: [{ text: m.text }]
       }));
 
-      // Combine global context with game specific context
-      const fullContext = [context, gameContext].filter(Boolean).join('\n\nContexte actuel: ');
+      // Combine global context with game specific context and recent failures
+      const fullContext = [context, gameContext, recentFailedItemsContext].filter(Boolean).join('\n\nContexte actuel: ');
 
       const res = await fetch('/api/gemini/chat', {
         method: 'POST',
@@ -3842,6 +11950,267 @@ export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) 
 }
 </file>
 
+<file path="src/components/PrivateNotesWidget.tsx">
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { FileText, ChevronDown, ChevronUp, Save, Loader2, CheckCircle, Edit3, AlertCircle, X } from 'lucide-react';
+import { useNotes } from '../store/useNotes';
+import { useColors, useThemeTokens } from '../store/useTheme';
+
+export default function PrivateNotesWidget() {
+  const [isOpen, setIsOpen] = useState(false);
+  const colors = useColors();
+  const tokens = useThemeTokens();
+
+  const {
+    noteText,
+    chargerNotes,
+    setNoteTextLocally,
+    sauvegarderNotes,
+    isSaving,
+    lastUpdated,
+    isLoading,
+    error,
+    clearError
+  } = useNotes();
+
+  const [localText, setLocalText] = useState(noteText);
+  const lastSavedText = useRef(noteText);
+
+  // Charger les notes au montage du composant
+  useEffect(() => {
+    chargerNotes();
+  }, []);
+
+  // Synchroniser la valeur locale quand le store est chargé (si mis à jour de l'extérieur)
+  useEffect(() => {
+    if (noteText !== lastSavedText.current) {
+      setLocalText(noteText);
+      lastSavedText.current = noteText;
+    }
+  }, [noteText]);
+
+  // Sauvegarde debouncée de 1000ms
+  useEffect(() => {
+    if (localText === noteText) return;
+
+    const timer = setTimeout(() => {
+      lastSavedText.current = localText;
+      setNoteTextLocally(localText);
+      sauvegarderNotes(localText);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [localText, noteText, sauvegarderNotes, setNoteTextLocally]);
+
+  // Formatter la date de dernière mise à jour
+  const formatTime = (isoString: string | null) => {
+    if (!isoString) return '';
+    try {
+      const date = new Date(isoString);
+      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    } catch {
+      return '';
+    }
+  };
+
+  return (
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end pointer-events-none font-sans">
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            id="notes-panel-container"
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 30, scale: 0.95 }}
+            transition={{ type: 'spring', damping: 25, stiffness: 350 }}
+            className="w-80 md:w-96 shadow-2xl border flex flex-col mb-4 overflow-hidden pointer-events-auto"
+            style={{
+              backgroundColor: colors.surface,
+              borderColor: tokens.border,
+              borderRadius: tokens.radCard,
+              boxShadow: tokens.shadow,
+            }}
+          >
+            {/* Header du widget */}
+            <div
+              id="notes-panel-header"
+              className="px-4 py-3 flex items-center justify-between border-b"
+              style={{
+                backgroundColor: colors.header,
+                borderColor: tokens.border,
+                color: colors.surface,
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <FileText className="w-5 h-5 opacity-90" style={{ color: colors.primary }} />
+                <span className="font-bold tracking-tight text-[15px]" style={{ fontFamily: 'var(--font-display)' }}>
+                  Notes de cours
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3">
+                {/* Indicateur de sauvegarde */}
+                <div className="text-xs flex items-center gap-1.5 opacity-90">
+                  {isLoading ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      <span>Chargement...</span>
+                    </>
+                  ) : isSaving ? (
+                    <>
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-amber-400" />
+                      <span>Sauvegarde...</span>
+                    </>
+                  ) : lastUpdated ? (
+                    <>
+                      <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="text-[10px] opacity-80">Enregistré à {formatTime(lastUpdated)}</span>
+                    </>
+                  ) : (
+                    <span className="text-[10px] opacity-70">Prêt</span>
+                  )}
+                </div>
+
+                <button
+                  id="btn-collapse-notes"
+                  onClick={() => setIsOpen(false)}
+                  className="p-1.5 hover:bg-white/10 rounded-lg transition-colors"
+                  aria-label="Réduire"
+                >
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Corps du widget / Textarea */}
+            <div id="notes-panel-body" className="p-3 flex flex-col gap-2 relative">
+              <AnimatePresence>
+                {error && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+                    className="flex items-start gap-2 bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 p-2 rounded-md text-xs mb-1"
+                  >
+                    <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                    <span className="flex-1 leading-snug">{error}</span>
+                    <button onClick={clearError} className="p-0.5 hover:bg-red-500/20 rounded-md transition-colors">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <textarea
+                id="textarea-student-notes"
+                value={localText}
+                onChange={(e) => setLocalText(e.target.value)}
+                placeholder="Prends des annotations sur tes cours ici... (sauvegarde automatique active)"
+                className="w-full h-44 resize-none p-3 text-sm focus:outline-none transition-all leading-relaxed"
+                style={{
+                  backgroundColor: colors.bg,
+                  color: colors.ink,
+                  borderRadius: tokens.radBtn,
+                  border: `1px solid ${tokens.border}`,
+                  fontFamily: 'var(--font-body)',
+                }}
+                disabled={isLoading}
+              />
+              <div className="flex items-center justify-between text-[10px] px-1" style={{ color: colors.muted }}>
+                <span>{localText.length} caractères</span>
+                <span className="flex items-center gap-1">
+                  <Edit3 className="w-3 h-3" /> Espace Privé
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Bouton flotteur de déclenchement */}
+      <motion.button
+        id="btn-toggle-notes-trigger"
+        onClick={() => setIsOpen(!isOpen)}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="pointer-events-auto p-4 rounded-full shadow-lg flex items-center justify-center relative cursor-pointer group transition-all"
+        style={{
+          backgroundColor: colors.primary,
+          color: colors.surface,
+          boxShadow: tokens.shadow,
+        }}
+      >
+        <AnimatePresence mode="wait">
+          {isOpen ? (
+            <motion.div
+              key="open-icon"
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChevronDown className="w-6 h-6" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="closed-icon"
+              initial={{ rotate: 90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: -90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center justify-center"
+            >
+              <FileText className="w-6 h-6" />
+              {/* Badge si notes existantes */}
+              {noteText.trim() && (
+                <span
+                  className="absolute -top-1 -right-1 w-3.5 h-3.5 rounded-full border-2 border-white"
+                  style={{ backgroundColor: colors.success }}
+                />
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Tooltip on hover (uncollapsed only) */}
+        {!isOpen && (
+          <span
+            className="absolute right-16 px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-md border pointer-events-none"
+            style={{
+              backgroundColor: colors.surface,
+              color: colors.ink,
+              borderColor: tokens.border,
+            }}
+          >
+            Prendre des notes
+          </span>
+        )}
+      </motion.button>
+    </div>
+  );
+}
+</file>
+
+<file path="src/data/badges.ts">
+import badgesData from './badges.json';
+
+export type BadgeCondition = {
+  statId: string;
+  threshold: number;
+};
+
+export type Badge = {
+  id: string;
+  titre: string;
+  description: string;
+  icon: string;
+  conditions: BadgeCondition[];
+  categorie: 'arcade' | 'apprentissage' | 'social' | 'special';
+};
+
+export const BADGES: Badge[] = badgesData as Badge[];
+</file>
+
 <file path="src/features/2048/Game2048Screen.tsx">
 import React, { useState, useEffect, useCallback } from 'react';
 import { useProgression } from '../../store/useProgression';
@@ -4448,6 +12817,266 @@ export default function Game2048Screen({ onBack }: { onBack: () => void }) {
 }
 </file>
 
+<file path="src/features/admin/AccessibleDataViewer.tsx">
+import React from 'react';
+
+interface AccessibleDataViewerProps {
+  data: Record<string, any>;
+}
+
+export default function AccessibleDataViewer({ data }: AccessibleDataViewerProps) {
+  const renderValue = (val: any): React.ReactNode => {
+    if (Array.isArray(val)) {
+      return (
+        <ul className="list-disc list-inside space-y-1 ml-2">
+          {val.map((item, idx) => (
+            <li key={idx} className="text-slate-700">{renderValue(item)}</li>
+          ))}
+        </ul>
+      );
+    }
+    
+    if (val !== null && typeof val === 'object') {
+      return (
+        <div className="space-y-2 ml-2 border-l-2 border-slate-200 pl-3">
+          {Object.entries(val).map(([k, v]) => (
+            <div key={k}>
+              <span className="font-semibold text-slate-800 mr-2">{k}:</span>
+              {renderValue(v)}
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    if (typeof val === 'boolean') {
+      return <span className={`font-mono px-1.5 py-0.5 rounded text-xs ${val ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>{val ? 'Vrai' : 'Faux'}</span>;
+    }
+
+    return <span className="text-slate-600 break-words">{String(val)}</span>;
+  };
+
+  const cleanData = Object.fromEntries(
+    Object.entries(data).filter(([k]) => k !== "_originalIndex" && k !== "niveau" && k !== "tags" && k !== "audioUrl")
+  );
+
+  return (
+    <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 text-sm space-y-3">
+      {Object.entries(cleanData).map(([key, value]) => {
+        // Formatter le nom de la clé pour être plus lisible (ex: bonne_reponse -> Bonne Réponse)
+        const displayKey = key
+          .replace(/_/g, ' ')
+          .replace(/([A-Z])/g, ' $1')
+          .replace(/^./, str => str.toUpperCase());
+
+        return (
+          <div key={key} className="flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-3">
+            <span className="font-bold text-slate-700 min-w-[120px] shrink-0">{displayKey}</span>
+            <div className="flex-1">{renderValue(value)}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+</file>
+
+<file path="src/features/admin/AdminBundleEditor.tsx">
+import React, { useState } from 'react';
+import { useAdminTheme } from '../../store/useAdminTheme';
+import { Bundle, Course } from '../../types';
+import { ArrowLeft, Save, Plus, X, Search, BookOpen } from 'lucide-react';
+import AdminMarketingGenerator from './AdminMarketingGenerator';
+
+interface AdminBundleEditorProps {
+  bundle: Bundle | null;
+  availableCourses: Course[];
+  onSave: (data: Partial<Bundle>) => Promise<void>;
+  onClose: () => void;
+}
+
+export default function AdminBundleEditor({ bundle, availableCourses, onSave, onClose }: AdminBundleEditorProps) {
+  const { theme } = useAdminTheme();
+  const [title, setTitle] = useState(bundle?.title || '');
+  const [description, setDescription] = useState(bundle?.description || '');
+  const [selectedCourseIds, setSelectedCourseIds] = useState<string[]>(bundle?.courseIds || []);
+  const [isSaving, setIsSaving] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      await onSave({ title, description, courseIds: selectedCourseIds });
+      onClose();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const toggleCourse = (courseId: string) => {
+    if (selectedCourseIds.includes(courseId)) {
+      setSelectedCourseIds(prev => prev.filter(id => id !== courseId));
+    } else {
+      setSelectedCourseIds(prev => [...prev, courseId]);
+    }
+  };
+
+  const inputClass = "w-full p-3 rounded-xl border focus:outline-none focus:ring-2";
+  const inputStyle = {
+    backgroundColor: theme.colors.surface,
+    borderColor: `${theme.colors.muted}30`,
+    color: theme.colors.ink,
+  };
+
+  const unselectedCourses = availableCourses.filter(c => !selectedCourseIds.includes(c.id) && c.title.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <button 
+          onClick={onClose}
+          className="flex items-center gap-2 text-sm font-medium hover:opacity-80 transition-opacity"
+          style={{ color: theme.colors.muted }}
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Retour au Hub
+        </button>
+        <button
+          onClick={handleSave}
+          disabled={isSaving || !title || selectedCourseIds.length === 0}
+          className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold transition-all hover:opacity-90 text-white disabled:opacity-50"
+          style={{ backgroundColor: theme.colors.primary }}
+        >
+          <Save className="w-5 h-5" />
+          {isSaving ? 'Enregistrement...' : 'Enregistrer'}
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="space-y-6">
+          <div className="p-6 rounded-3xl border" style={{ backgroundColor: theme.colors.surface, borderColor: `${theme.colors.muted}20` }}>
+            <h3 className="text-lg font-bold mb-4" style={{ color: theme.colors.ink }}>
+              Informations du Bundle
+            </h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1.5" style={{ color: theme.colors.ink }}>Titre</label>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Ex: Pack Bootcamp Fullstack"
+                  className={inputClass}
+                  style={inputStyle}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1.5" style={{ color: theme.colors.ink }}>Description</label>
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Décrivez ce que ce pack contient..."
+                  rows={4}
+                  className={inputClass}
+                  style={inputStyle}
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="p-6 rounded-3xl border" style={{ backgroundColor: theme.colors.surface, borderColor: `${theme.colors.muted}20` }}>
+            <h3 className="text-lg font-bold mb-4" style={{ color: theme.colors.ink }}>
+              Cours inclus ({selectedCourseIds.length})
+            </h3>
+            <div className="space-y-3">
+              {selectedCourseIds.length === 0 ? (
+                <p className="text-sm text-center py-4" style={{ color: theme.colors.muted }}>
+                  Aucun cours sélectionné.
+                </p>
+              ) : (
+                selectedCourseIds.map(id => {
+                  const c = availableCourses.find(course => course.id === id);
+                  if (!c) return null;
+                  return (
+                    <div key={id} className="flex items-center justify-between p-3 rounded-xl border bg-white" style={{ borderColor: `${theme.colors.muted}30` }}>
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg" style={{ backgroundColor: `${theme.colors.primary}15`, color: theme.colors.primary }}>
+                          <BookOpen className="w-4 h-4" />
+                        </div>
+                        <span className="font-medium text-sm" style={{ color: theme.colors.ink }}>{c.title}</span>
+                      </div>
+                      <button 
+                        onClick={() => toggleCourse(id)}
+                        className="p-1.5 hover:bg-red-50 rounded-lg transition-colors text-red-500"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+
+          <AdminMarketingGenerator 
+            productName={title || 'Nouveau bundle'}
+            productType="bundle"
+            description={description}
+          />
+        </div>
+
+        <div className="space-y-6">
+          <div className="p-6 rounded-3xl border" style={{ backgroundColor: theme.colors.surface, borderColor: `${theme.colors.muted}20` }}>
+            <h3 className="text-lg font-bold mb-4" style={{ color: theme.colors.ink }}>
+              Catalogue disponible
+            </h3>
+            
+            <div className="relative mb-4">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: theme.colors.muted }} />
+              <input
+                type="text"
+                placeholder="Rechercher un cours..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 pr-4 py-2 w-full rounded-xl border focus:outline-none focus:ring-2 text-sm"
+                style={inputStyle}
+              />
+            </div>
+
+            <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2">
+              {unselectedCourses.length === 0 ? (
+                <p className="text-sm text-center py-4" style={{ color: theme.colors.muted }}>
+                  Tous les cours sont déjà inclus ou aucun ne correspond à la recherche.
+                </p>
+              ) : (
+                unselectedCourses.map(course => (
+                  <div key={course.id} className="flex items-center justify-between p-3 rounded-xl border bg-white hover:border-blue-300 transition-colors cursor-pointer" style={{ borderColor: `${theme.colors.muted}30` }} onClick={() => toggleCourse(course.id)}>
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-gray-50 text-gray-500">
+                        <BookOpen className="w-4 h-4" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-sm" style={{ color: theme.colors.ink }}>{course.title}</p>
+                        <p className="text-xs line-clamp-1" style={{ color: theme.colors.muted }}>{course.description}</p>
+                      </div>
+                    </div>
+                    <button className="p-1.5 hover:bg-blue-50 rounded-lg transition-colors text-blue-600">
+                      <Plus className="w-4 h-4" />
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+</file>
+
 <file path="src/features/admin/AdminConfiguration.tsx">
 import React, { useState } from 'react';
 import { useAdminTheme } from '../../store/useAdminTheme';
@@ -4720,53 +13349,262 @@ export default function AdminConfiguration() {
 }
 </file>
 
-<file path="src/features/admin/AdminCreatorHub.tsx">
+<file path="src/features/admin/AdminCourseEditor.tsx">
 import React, { useState } from 'react';
 import { useAdminTheme } from '../../store/useAdminTheme';
+import { Course } from '../../types';
+import { ArrowLeft, Save, Plus, Wand2, GripVertical, Trash2, BookOpen, Gamepad2, Settings } from 'lucide-react';
+import AdminMarketingGenerator from './AdminMarketingGenerator';
+import AdminRichTextEditor from './AdminRichTextEditor';
+
+interface AdminCourseEditorProps {
+  course: Course | null;
+  onSave: (data: Partial<Course>) => Promise<void>;
+  onClose: () => void;
+}
+
+interface CourseModule {
+  id: string;
+  title: string;
+  type: 'theorie' | 'jeu';
+  content?: string;
+}
+
+export default function AdminCourseEditor({ course, onSave, onClose }: AdminCourseEditorProps) {
+  const { theme } = useAdminTheme();
+  const [title, setTitle] = useState(course?.title || '');
+  const [description, setDescription] = useState(course?.description || '');
+  const [status, setStatus] = useState<'draft' | 'published' | 'archived'>(course?.status || 'draft');
+  const [isSaving, setIsSaving] = useState(false);
+  const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
+
+  // Mock modules structure for flexibility demonstration
+  const [modules, setModules] = useState<CourseModule[]>([
+    { id: 'm1', title: 'Introduction', type: 'theorie', content: '<h2>Bienvenue</h2><p>Voici le contenu théorique initial.</p>' }
+  ]);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      await onSave({ title, description, status });
+      onClose();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const inputClass = "w-full p-3 rounded-xl border focus:outline-none focus:ring-2";
+  const inputStyle = {
+    backgroundColor: theme.colors.surface,
+    borderColor: `${theme.colors.muted}30`,
+    color: theme.colors.ink,
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <button 
+          onClick={onClose}
+          className="flex items-center gap-2 text-sm font-medium hover:opacity-80 transition-opacity"
+          style={{ color: theme.colors.muted }}
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Retour au Hub
+        </button>
+        <button
+          onClick={handleSave}
+          disabled={isSaving || !title}
+          className="flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold transition-all hover:opacity-90 text-white disabled:opacity-50"
+          style={{ backgroundColor: theme.colors.primary }}
+        >
+          <Save className="w-5 h-5" />
+          {isSaving ? 'Enregistrement...' : 'Enregistrer'}
+        </button>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-8">
+          {/* Informations générales */}
+          <div className="p-6 rounded-3xl border" style={{ backgroundColor: theme.colors.surface, borderColor: `${theme.colors.muted}20` }}>
+            <h3 className="text-lg font-bold mb-4" style={{ color: theme.colors.ink }}>
+              Informations du cours
+            </h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1.5" style={{ color: theme.colors.ink }}>Titre</label>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  placeholder="Ex: Maîtriser React"
+                  className={inputClass}
+                  style={inputStyle}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-1.5" style={{ color: theme.colors.ink }}>Description</label>
+                <textarea
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  placeholder="Décrivez ce que l'apprenant va accomplir..."
+                  rows={4}
+                  className={inputClass}
+                  style={inputStyle}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Assemblage et Flexibilité */}
+          <div className="p-6 rounded-3xl border" style={{ backgroundColor: theme.colors.surface, borderColor: `${theme.colors.muted}20` }}>
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <h3 className="text-lg font-bold" style={{ color: theme.colors.ink }}>
+                  Programme & Contenu
+                </h3>
+                <p className="text-sm mt-1" style={{ color: theme.colors.muted }}>
+                  Assemblez vos modules manuellement ou générez-les via l'IA.
+                </p>
+              </div>
+              <button 
+                className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-bold border transition-colors hover:bg-purple-50"
+                style={{ borderColor: '#8b5cf6', color: '#8b5cf6' }}
+              >
+                <Wand2 className="w-4 h-4" />
+                Générer avec l'IA
+              </button>
+            </div>
+
+            <div className="space-y-4 mb-6">
+              {modules.map((mod, index) => {
+                const isExpanded = expandedModuleId === mod.id;
+                
+                return (
+                  <div key={mod.id} className="rounded-xl border bg-white overflow-hidden transition-all" style={{ borderColor: `${theme.colors.muted}30` }}>
+                    <div className="flex items-center gap-3 p-3">
+                      <GripVertical className="w-5 h-5 cursor-grab" style={{ color: theme.colors.muted }} />
+                      <div className="p-2 rounded-lg" style={{ backgroundColor: `${theme.colors.primary}15`, color: theme.colors.primary }}>
+                        {mod.type === 'theorie' ? <BookOpen className="w-4 h-4" /> : <Gamepad2 className="w-4 h-4" />}
+                      </div>
+                      <div className="flex-1 font-medium" style={{ color: theme.colors.ink }}>
+                        {index + 1}. {mod.title}
+                      </div>
+                      <button 
+                        onClick={() => {
+                          if (mod.type === 'theorie') {
+                            setExpandedModuleId(isExpanded ? null : mod.id);
+                          }
+                        }}
+                        className={`p-2 rounded-lg transition-colors ${mod.type === 'theorie' && isExpanded ? 'bg-blue-100 text-blue-700' : 'hover:bg-gray-100 text-gray-500'}`}
+                      >
+                        <Settings className="w-4 h-4" />
+                      </button>
+                      <button className="p-2 hover:bg-red-50 rounded-lg transition-colors text-red-500">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                    
+                    {isExpanded && mod.type === 'theorie' && (
+                      <div className="p-4 border-t bg-slate-50" style={{ borderColor: `${theme.colors.muted}20` }}>
+                        <div className="mb-2 font-bold text-sm" style={{ color: theme.colors.ink }}>Contenu théorique</div>
+                        <AdminRichTextEditor 
+                          content={mod.content || ''}
+                          onChange={(newContent) => {
+                            setModules(modules.map(m => m.id === mod.id ? { ...m, content: newContent } : m));
+                          }}
+                        />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="flex gap-3">
+              <button className="flex-1 flex items-center justify-center gap-2 p-4 rounded-xl border-2 border-dashed transition-colors hover:bg-gray-50" style={{ borderColor: `${theme.colors.muted}30`, color: theme.colors.ink }}>
+                <BookOpen className="w-4 h-4" />
+                <span className="font-medium text-sm">Ajouter une théorie</span>
+              </button>
+              <button className="flex-1 flex items-center justify-center gap-2 p-4 rounded-xl border-2 border-dashed transition-colors hover:bg-gray-50" style={{ borderColor: `${theme.colors.muted}30`, color: theme.colors.ink }}>
+                <Gamepad2 className="w-4 h-4" />
+                <span className="font-medium text-sm">Ajouter un jeu</span>
+              </button>
+            </div>
+          </div>
+
+          <AdminMarketingGenerator 
+            productName={title || 'Nouveau cours'}
+            productType="course"
+            description={description}
+          />
+        </div>
+
+        {/* Barre latérale (Paramètres) */}
+        <div className="space-y-6">
+          <div className="p-6 rounded-3xl border" style={{ backgroundColor: theme.colors.surface, borderColor: `${theme.colors.muted}20` }}>
+            <h3 className="text-lg font-bold mb-4" style={{ color: theme.colors.ink }}>Paramètres</h3>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1.5" style={{ color: theme.colors.ink }}>Statut de publication</label>
+                <select
+                  value={status}
+                  onChange={(e) => setStatus(e.target.value as any)}
+                  className={inputClass}
+                  style={inputStyle}
+                >
+                  <option value="draft">Brouillon</option>
+                  <option value="published">Publié</option>
+                  <option value="archived">Archivé</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+</file>
+
+<file path="src/features/admin/AdminCreatorHub.tsx">
+import React, { useState, useEffect } from 'react';
+import { useAdminTheme } from '../../store/useAdminTheme';
 import { useTenant } from '../../store/useTenant';
+import { useCreatorHub } from '../../store/useCreatorHub';
 import { Course, Bundle } from '../../types';
 import { BookOpen, Package, Plus, Edit2, Trash2, Tag, Layers, Search } from 'lucide-react';
+import AdminCourseEditor from './AdminCourseEditor';
+import AdminBundleEditor from './AdminBundleEditor';
 
 export default function AdminCreatorHub() {
   const { theme } = useAdminTheme();
   const { currentTenant } = useTenant();
   
+  const courses = useCreatorHub(s => s.courses);
+  const bundles = useCreatorHub(s => s.bundles);
+  const isLoading = useCreatorHub(s => s.isLoading);
+  const fetchData = useCreatorHub(s => s.fetchData);
+  const createCourse = useCreatorHub(s => s.createCourse);
+  const updateCourse = useCreatorHub(s => s.updateCourse);
+  const deleteCourse = useCreatorHub(s => s.deleteCourse);
+  const createBundle = useCreatorHub(s => s.createBundle);
+  const updateBundle = useCreatorHub(s => s.updateBundle);
+  const deleteBundle = useCreatorHub(s => s.deleteBundle);
+  
   const [activeTab, setActiveTab] = useState<'courses' | 'bundles'>('courses');
   const [searchQuery, setSearchQuery] = useState('');
+  
+  const [editingCourse, setEditingCourse] = useState<Course | 'new' | null>(null);
+  const [editingBundle, setEditingBundle] = useState<Bundle | 'new' | null>(null);
 
-  // Mock data pour l'UI
-  const [courses, setCourses] = useState<Course[]>([
-    {
-      id: 'c1',
-      tenantId: currentTenant?.id || 't1',
-      title: 'Maîtriser React en 30 jours',
-      description: 'Un cours complet pour devenir expert React.',
-      authorId: 'u1',
-      status: 'published',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    },
-    {
-      id: 'c2',
-      tenantId: currentTenant?.id || 't1',
-      title: 'Tailwind CSS Avancé',
-      description: 'Techniques avancées de styling avec Tailwind.',
-      authorId: 'u1',
-      status: 'draft',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+  useEffect(() => {
+    if (currentTenant?.id) {
+      fetchData(currentTenant.id);
     }
-  ]);
-
-  const [bundles, setBundles] = useState<Bundle[]>([
-    {
-      id: 'b1',
-      tenantId: currentTenant?.id || 't1',
-      title: 'Pack Fullstack Developer',
-      description: 'Tous les cours nécessaires pour devenir fullstack.',
-      courseIds: ['c1', 'c2'],
-    }
-  ]);
+  }, [currentTenant?.id, fetchData]);
 
   const cardStyle = {
     backgroundColor: theme.colors.surface,
@@ -4775,6 +13613,41 @@ export default function AdminCreatorHub() {
 
   const filteredCourses = courses.filter(c => c.title.toLowerCase().includes(searchQuery.toLowerCase()));
   const filteredBundles = bundles.filter(b => b.title.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  if (editingCourse) {
+    return (
+      <AdminCourseEditor 
+        course={editingCourse === 'new' ? null : editingCourse} 
+        onSave={async (data) => {
+          if (editingCourse === 'new') {
+            if (!currentTenant?.id) return;
+            await createCourse({ ...data, tenantId: currentTenant.id } as any);
+          } else {
+            await updateCourse(editingCourse.id, data);
+          }
+        }}
+        onClose={() => setEditingCourse(null)} 
+      />
+    );
+  }
+
+  if (editingBundle) {
+    return (
+      <AdminBundleEditor 
+        bundle={editingBundle === 'new' ? null : editingBundle} 
+        availableCourses={courses}
+        onSave={async (data) => {
+          if (editingBundle === 'new') {
+            if (!currentTenant?.id) return;
+            await createBundle({ ...data, tenantId: currentTenant.id } as any);
+          } else {
+            await updateBundle(editingBundle.id, data);
+          }
+        }}
+        onClose={() => setEditingBundle(null)} 
+      />
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -4790,6 +13663,7 @@ export default function AdminCreatorHub() {
         
         <div className="flex gap-2">
           <button
+            onClick={() => activeTab === 'courses' ? setEditingCourse('new') : setEditingBundle('new')}
             className="flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition-all hover:opacity-90 text-white"
             style={{ backgroundColor: theme.colors.primary }}
           >
@@ -4846,111 +13720,140 @@ export default function AdminCreatorHub() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {activeTab === 'courses' && filteredCourses.map((course) => (
-          <div key={course.id} className="rounded-3xl p-6 border flex flex-col group relative overflow-hidden" style={cardStyle}>
-            <div className="flex justify-between items-start mb-4">
-              <div 
-                className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm"
-                style={{ backgroundColor: `${theme.colors.primary}15`, color: theme.colors.primary }}
-              >
-                <BookOpen className="w-6 h-6" />
-              </div>
-              <span className={`px-2.5 py-1 text-xs font-bold rounded-lg border ${
-                course.status === 'published' 
-                  ? 'bg-green-50 text-green-700 border-green-200' 
-                  : 'bg-yellow-50 text-yellow-700 border-yellow-200'
-              }`}>
-                {course.status === 'published' ? 'Publié' : 'Brouillon'}
-              </span>
-            </div>
-            
-            <h3 className="text-lg font-bold mb-2 line-clamp-1" style={{ color: theme.colors.ink }}>
-              {course.title}
-            </h3>
-            <p className="text-sm mb-6 flex-1 line-clamp-2" style={{ color: theme.colors.muted }}>
-              {course.description}
-            </p>
-
-            <div className="pt-4 border-t flex justify-between items-center" style={{ borderColor: theme.colors.surface }}>
-              <div className="flex items-center gap-1.5 text-xs font-medium" style={{ color: theme.colors.muted }}>
-                <Layers className="w-4 h-4" />
-                Dernière modif: {new Date(course.updatedAt).toLocaleDateString()}
+      {isLoading ? (
+        <div className="flex justify-center p-12">
+          <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {activeTab === 'courses' && filteredCourses.map((course) => (
+            <div key={course.id} className="rounded-3xl p-6 border flex flex-col group relative overflow-hidden" style={cardStyle}>
+              <div className="flex justify-between items-start mb-4">
+                <div 
+                  className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm"
+                  style={{ backgroundColor: `${theme.colors.primary}15`, color: theme.colors.primary }}
+                >
+                  <BookOpen className="w-6 h-6" />
+                </div>
+                <span className={`px-2.5 py-1 text-xs font-bold rounded-lg border ${
+                  course.status === 'published' 
+                    ? 'bg-green-50 text-green-700 border-green-200' 
+                    : 'bg-yellow-50 text-yellow-700 border-yellow-200'
+                }`}>
+                  {course.status === 'published' ? 'Publié' : 'Brouillon'}
+                </span>
               </div>
               
-              <div className="flex gap-2">
-                <button className="p-2 rounded-lg hover:bg-black/5 transition-colors" style={{ color: theme.colors.primary }}>
-                  <Edit2 className="w-4 h-4" />
-                </button>
-                <button className="p-2 rounded-lg hover:bg-red-50 transition-colors text-red-500">
-                  <Trash2 className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
+              <h3 className="text-lg font-bold mb-2 line-clamp-1" style={{ color: theme.colors.ink }}>
+                {course.title}
+              </h3>
+              <p className="text-sm mb-6 flex-1 line-clamp-2" style={{ color: theme.colors.muted }}>
+                {course.description}
+              </p>
 
-        {activeTab === 'bundles' && filteredBundles.map((bundle) => (
-          <div key={bundle.id} className="rounded-3xl p-6 border flex flex-col group relative overflow-hidden" style={cardStyle}>
-            <div className="flex justify-between items-start mb-4">
-              <div 
-                className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm"
-                style={{ backgroundColor: `${theme.colors.secondary || '#8b5cf6'}15`, color: theme.colors.secondary || '#8b5cf6' }}
-              >
-                <Package className="w-6 h-6" />
+              <div className="pt-4 border-t flex justify-between items-center" style={{ borderColor: theme.colors.surface }}>
+                <div className="flex items-center gap-1.5 text-xs font-medium" style={{ color: theme.colors.muted }}>
+                  <Layers className="w-4 h-4" />
+                  Dernière modif: {new Date(course.updatedAt).toLocaleDateString()}
+                </div>
+                
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => setEditingCourse(course)}
+                    className="p-2 rounded-lg hover:bg-black/5 transition-colors" 
+                    style={{ color: theme.colors.primary }}
+                  >
+                    <Edit2 className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={() => {
+                      if (window.confirm('Confirmer la suppression ?')) {
+                        deleteCourse(course.id);
+                      }
+                    }}
+                    className="p-2 rounded-lg hover:bg-red-50 transition-colors text-red-500"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
-              <span className="px-2.5 py-1 text-xs font-bold rounded-lg border bg-blue-50 text-blue-700 border-blue-200 flex items-center gap-1">
-                <BookOpen className="w-3 h-3" />
-                {bundle.courseIds.length} Cours
-              </span>
             </div>
-            
-            <h3 className="text-lg font-bold mb-2 line-clamp-1" style={{ color: theme.colors.ink }}>
-              {bundle.title}
-            </h3>
-            <p className="text-sm mb-6 flex-1 line-clamp-2" style={{ color: theme.colors.muted }}>
-              {bundle.description}
-            </p>
+          ))}
 
-            <div className="pt-4 border-t flex justify-between items-center" style={{ borderColor: theme.colors.surface }}>
-              <div className="flex gap-2">
-                <button className="p-2 rounded-lg hover:bg-black/5 transition-colors" style={{ color: theme.colors.primary }}>
-                  <Edit2 className="w-4 h-4" />
-                </button>
-                <button className="p-2 rounded-lg hover:bg-red-50 transition-colors text-red-500">
-                  <Trash2 className="w-4 h-4" />
-                </button>
+          {activeTab === 'bundles' && filteredBundles.map((bundle) => (
+            <div key={bundle.id} className="rounded-3xl p-6 border flex flex-col group relative overflow-hidden" style={cardStyle}>
+              <div className="flex justify-between items-start mb-4">
+                <div 
+                  className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm"
+                  style={{ backgroundColor: `${theme.colors.secondary || '#8b5cf6'}15`, color: theme.colors.secondary || '#8b5cf6' }}
+                >
+                  <Package className="w-6 h-6" />
+                </div>
+                <span className="px-2.5 py-1 text-xs font-bold rounded-lg border bg-blue-50 text-blue-700 border-blue-200 flex items-center gap-1">
+                  <BookOpen className="w-3 h-3" />
+                  {bundle.courseIds.length} Cours
+                </span>
+              </div>
+              
+              <h3 className="text-lg font-bold mb-2 line-clamp-1" style={{ color: theme.colors.ink }}>
+                {bundle.title}
+              </h3>
+              <p className="text-sm mb-6 flex-1 line-clamp-2" style={{ color: theme.colors.muted }}>
+                {bundle.description}
+              </p>
+
+              <div className="pt-4 border-t flex justify-between items-center" style={{ borderColor: theme.colors.surface }}>
+                <div className="flex gap-2">
+                  <button 
+                    onClick={() => setEditingBundle(bundle)}
+                    className="p-2 rounded-lg hover:bg-black/5 transition-colors" 
+                    style={{ color: theme.colors.primary }}
+                  >
+                    <Edit2 className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={() => {
+                      if (window.confirm('Confirmer la suppression ?')) {
+                        deleteBundle(bundle.id);
+                      }
+                    }}
+                    className="p-2 rounded-lg hover:bg-red-50 transition-colors text-red-500"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
-        
-        {/* Card for creation */}
-        <button
-          className="rounded-3xl p-6 border-2 border-dashed flex flex-col items-center justify-center text-center gap-4 transition-all hover:border-solid hover:shadow-md"
-          style={{ 
-            borderColor: theme.colors.surface,
-            backgroundColor: `${theme.colors.surface}30`,
-          }}
-        >
-          <div 
-            className="w-16 h-16 rounded-full flex items-center justify-center"
-            style={{ backgroundColor: `${theme.colors.primary}15`, color: theme.colors.primary }}
+          ))}
+          
+          {/* Card for creation */}
+          <button
+            onClick={() => activeTab === 'courses' ? setEditingCourse('new') : setEditingBundle('new')}
+            className="rounded-3xl p-6 border-2 border-dashed flex flex-col items-center justify-center text-center gap-4 transition-all hover:border-solid hover:shadow-md"
+            style={{ 
+              borderColor: theme.colors.surface,
+              backgroundColor: `${theme.colors.surface}30`,
+            }}
           >
-            <Plus className="w-8 h-8" />
-          </div>
-          <div>
-            <h3 className="font-bold mb-1" style={{ color: theme.colors.ink }}>
-              Créer un {activeTab === 'courses' ? 'nouveau cours' : 'nouveau bundle'}
-            </h3>
-            <p className="text-xs" style={{ color: theme.colors.muted }}>
-              {activeTab === 'courses' 
-                ? 'Assemblez des modules et leçons.'
-                : 'Regroupez plusieurs cours en un seul produit.'}
-            </p>
-          </div>
-        </button>
-      </div>
+            <div 
+              className="w-16 h-16 rounded-full flex items-center justify-center"
+              style={{ backgroundColor: `${theme.colors.primary}15`, color: theme.colors.primary }}
+            >
+              <Plus className="w-8 h-8" />
+            </div>
+            <div>
+              <h3 className="font-bold mb-1" style={{ color: theme.colors.ink }}>
+                Créer un {activeTab === 'courses' ? 'nouveau cours' : 'nouveau bundle'}
+              </h3>
+              <p className="text-xs" style={{ color: theme.colors.muted }}>
+                {activeTab === 'courses' 
+                  ? 'Assemblez des modules et leçons.'
+                  : 'Regroupez plusieurs cours en un seul produit.'}
+              </p>
+            </div>
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -4963,6 +13866,7 @@ import { useAdminTheme } from "../../store/useAdminTheme";
 import { useAppConfig } from "../../store/useAppConfig";
 import AudioRecorderModal from "./AudioRecorderModal";
 import DataGeneratorModal from "./DataGeneratorModal";
+import AccessibleDataViewer from "./AccessibleDataViewer";
 
 interface AdminDataTabProps {
   activeTab: string;
@@ -5164,9 +14068,9 @@ export default function AdminDataTab({ activeTab, dataList, setDataList, isDark 
       </div>
 
       <div className="flex-1 overflow-y-auto">
-        <div className="p-4 sm:p-6 space-y-4">
+        <div className="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 items-start">
           {filtered.map((item) => (
-            <div key={item.id || item._originalIndex} className="relative bg-white p-4 pl-4 pt-12 rounded-xl border border-slate-200 shadow-sm">
+            <div key={item.id || item._originalIndex} className="relative bg-white p-4 pl-4 pt-12 rounded-xl border border-slate-200 shadow-sm h-full flex flex-col">
               <div className="absolute left-3 top-3 flex gap-2">
                 <span className="text-xs font-bold text-slate-500 bg-slate-100 rounded-lg px-2 py-1 flex items-center justify-center">
                   #{item._originalIndex}
@@ -5254,17 +14158,7 @@ export default function AdminDataTab({ activeTab, dataList, setDataList, isDark 
                       );
                     })}
                   </div>
-                  <pre className="font-mono text-[11px] sm:text-xs text-slate-600 overflow-x-auto bg-slate-50 p-3 rounded-lg border border-slate-100">
-                    {JSON.stringify(
-                      Object.fromEntries(
-                        Object.entries(item).filter(
-                          ([k]) => k !== "_originalIndex" && k !== "niveau" && k !== "tags"
-                        )
-                      ),
-                      null,
-                      2
-                    )}
-                  </pre>
+                  <AccessibleDataViewer data={item} />
                 </div>
               )}
             </div>
@@ -5629,10 +14523,11 @@ export default function AdminIA() {
   const { theme } = useAdminTheme();
   const c = theme.colors;
   const { apiKey, setApiKey, clearApiKey, persona, setPersona, context, setContext, appGenerationPrompt, setAppGenerationPrompt, documents, addDocument, removeDocument } = useSettings();
-  const { features, setAppName } = useAppConfig();
+  const { features, setAppName, setAppDescription, setMarketingSlogan } = useAppConfig();
   const { patchPersonal } = useTheme();
   const updateProgressionConfig = useProgression(s => s.updateProgressionConfig);
   const getPointsConfig = useProgression(s => s.getPointsConfig);
+  const addCustomContentItems = useProgression(s => s.addCustomContentItems);
   const [inputKey, setInputKey] = useState(apiKey);
   const [inputPersona, setInputPersona] = useState(persona);
   const [inputContext, setInputContext] = useState(context);
@@ -5649,12 +14544,16 @@ export default function AdminIA() {
   const [gameIdea, setGameIdea] = useState('');
   const [isGeneratingGame, setIsGeneratingGame] = useState(false);
   const [isGeneratingScaffold, setIsGeneratingScaffold] = useState(false);
+  const [lessonSubject, setLessonSubject] = useState('');
+  const [isGeneratingLesson, setIsGeneratingLesson] = useState(false);
+  const [generatedLesson, setGeneratedLesson] = useState<string | null>(null);
+  const [lessonSources, setLessonSources] = useState<number>(0);
 
   const genererScaffold = async () => {
     if (!inputAppPrompt) return;
     setIsGeneratingScaffold(true);
     try {
-      const response = await fetch('/api/gemini/generate-json', {
+      const response = await fetch('/api/gemini/generate-scaffold-rag', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
@@ -5662,49 +14561,9 @@ export default function AdminIA() {
         },
         body: JSON.stringify({
           prompt: inputAppPrompt,
-          schema: {
-            type: "OBJECT",
-            properties: {
-              appName: { type: "STRING" },
-              colors: {
-                type: "OBJECT",
-                properties: {
-                  primary: { type: "STRING" },
-                  accent: { type: "STRING" },
-                  bg: { type: "STRING" },
-                  surface: { type: "STRING" },
-                  ink: { type: "STRING" },
-                  muted: { type: "STRING" }
-                },
-                required: ["primary", "accent", "bg", "surface", "ink", "muted"]
-              },
-              parcours: {
-                type: "ARRAY",
-                items: {
-                  type: "OBJECT",
-                  properties: {
-                    nom: { type: "STRING" },
-                    description: { type: "STRING" },
-                    lecons: {
-                      type: "ARRAY",
-                      items: {
-                        type: "OBJECT",
-                        properties: {
-                          nom: { type: "STRING" },
-                          description: { type: "STRING" }
-                        },
-                        required: ["nom", "description"]
-                      }
-                    }
-                  },
-                  required: ["nom", "description", "lecons"]
-                }
-              }
-            },
-            required: ["appName", "colors", "parcours"]
-          },
           persona,
-          context: context + (documents && documents.length > 0 ? "\n\nDocuments Additionnels:\n" + documents.map(d => `--- ${d.name} ---\n${d.content}`).join("\n\n") : "")
+          courseId: "global",
+          context
         })
       });
       if (!response.ok) throw new Error("Erreur lors de la génération de l'architecture");
@@ -5714,6 +14573,9 @@ export default function AdminIA() {
         // Appliquer le nom
         setAppName(data.appName);
         
+        if (data.appDescription) setAppDescription(data.appDescription);
+        if (data.marketingSlogan) setMarketingSlogan(data.marketingSlogan);
+
         // Appliquer les couleurs
         if (data.colors) {
           patchPersonal({
@@ -5760,6 +14622,23 @@ export default function AdminIA() {
           updateProgressionConfig({ niveaux });
         }
         
+        // Build and inject vocabulary as ContentItems
+        if (data.vocabulary && Array.isArray(data.vocabulary)) {
+          const contentItems = data.vocabulary.map((v: any) => ({
+            id: v.id || `voc_${Date.now()}_${Math.random()}`,
+            module: 'mots',
+            niveau: 1,
+            tags: ['vocabulaire'],
+            payload: {
+              question: undefined,
+              answer: v.mot,
+              translation: v.definition,
+              exemple: v.exemple || "Exemple généré automatiquement."
+            }
+          }));
+          addCustomContentItems(contentItems);
+        }
+        
         alert("Architecture générée et appliquée avec succès !");
       }
     } catch (error) {
@@ -5774,16 +14653,19 @@ export default function AdminIA() {
     if (!gameIdea) return;
     setIsGeneratingGame(true);
     try {
-      const response = await fetch('/api/gemini/generate-json', {
+      const response = await fetch('/api/gemini/generate-json-rag', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
           ...(apiKey ? { 'x-api-key': apiKey } : {})
         },
         body: JSON.stringify({ 
+          courseId: 'global',
           prompt: `Génère une configuration de jeu éducatif. Idée: ${gameIdea}. 
 La mécanique doit être l'une de: 'quiz', 'flashcard', 'pendu', 'swipe', 'typing'.
 Donne un identifiant unique (id), un nom (name), un emoji (icon), une description courte, la mécanique, et des tags.`, 
+          persona,
+          context: context || "",
           schema: {
             type: "OBJECT",
             properties: {
@@ -5795,9 +14677,7 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
               tags: { type: "ARRAY", items: { type: "STRING" } }
             },
             required: ["id", "name", "icon", "description", "mechanic", "tags"]
-          },
-          persona,
-          context: context + (documents && documents.length > 0 ? "\n\nDocuments Additionnels:\n" + documents.map(d => `--- ${d.name} ---\n${d.content}`).join("\n\n") : "")
+          }
         })
       });
       if (!response.ok) throw new Error("Erreur génération jeu");
@@ -5815,6 +14695,36 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
       alert("Erreur lors de la génération du jeu");
     } finally {
       setIsGeneratingGame(false);
+    }
+  };
+
+  const genererLeconRAG = async () => {
+    if (!lessonSubject) return;
+    setIsGeneratingLesson(true);
+    try {
+      const response = await fetch('/api/gemini/generate-lesson-rag', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
+          ...(apiKey ? { 'x-api-key': apiKey } : {})
+        },
+        body: JSON.stringify({
+          courseId: "global",
+          subject: lessonSubject,
+          prompt: inputAppPrompt,
+          persona
+        })
+      });
+      if (!response.ok) throw new Error("Erreur génération de leçon");
+      const data = await response.json();
+      
+      setGeneratedLesson(data.lesson);
+      setLessonSources(data.sources);
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de la génération de la leçon RAG");
+    } finally {
+      setIsGeneratingLesson(false);
     }
   };
 
@@ -5853,10 +14763,27 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
 
       const data = await response.json();
       
+      const ingestResponse = await fetch('/api/gemini/rag-ingest', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
+          ...(apiKey ? { 'x-api-key': apiKey } : {})
+        },
+        body: JSON.stringify({
+          courseId: "global",
+          text: data.text
+        })
+      });
+
+      if (!ingestResponse.ok) {
+        const errorData = await ingestResponse.json();
+        throw new Error(errorData.error || "Erreur lors de l'ingestion RAG");
+      }
+
       addDocument({
         id: Math.random().toString(36).substring(7),
         name: file.name,
-        content: data.text,
+        size: file.size,
       });
       
     } catch (err) {
@@ -5994,7 +14921,7 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
                     {documents.map(doc => (
                       <li key={doc.id} className="flex items-center justify-between p-2 rounded-lg text-sm border" style={{ backgroundColor: c.bg, borderColor: `color-mix(in srgb, ${c.ink} 10%, transparent)` }}>
                         <span className="truncate font-medium flex-1">{doc.name}</span>
-                        <span className="text-xs mr-3 opacity-60">({Math.round(doc.content.length / 1024)} kb)</span>
+                        {doc.size ? <span className="text-xs mr-3 opacity-60">({Math.round(doc.size / 1024)} kb)</span> : (doc.content ? <span className="text-xs mr-3 opacity-60">({Math.round(doc.content.length / 1024)} kb)</span> : null)}
                         <button 
                           onClick={() => removeDocument(doc.id)}
                           className="p-1.5 rounded-md hover:bg-red-50 text-red-500 transition-colors"
@@ -6143,6 +15070,59 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
           </div>
         </div>
       )}
+
+      {features.enableAiGenerator && (
+        <div className="rounded-2xl shadow-sm border overflow-hidden" style={{ backgroundColor: c.surface, borderColor: `color-mix(in srgb, ${c.ink} 10%, transparent)` }}>
+          <div className="p-6 space-y-4">
+            <h3 className="font-bold text-lg flex items-center gap-2" style={{ color: c.ink }}>
+              <FileText size={20} style={{ color: c.muted }} />
+              Leçon RAG : Générateur de contenu
+            </h3>
+            <p className="text-sm" style={{ color: c.muted }}>
+              Générez le contenu complet d'une leçon à partir des documents RAG indexés.
+            </p>
+
+            <div className="space-y-4">
+              <textarea 
+                value={lessonSubject}
+                onChange={e => setLessonSubject(e.target.value)}
+                placeholder="Ex: Le verbe être au présent"
+                className="w-full h-20 p-3 border rounded-xl resize-none text-sm outline-none"
+                style={{ backgroundColor: c.bg, borderColor: `color-mix(in srgb, ${c.ink} 15%, transparent)`, color: c.ink }}
+              />
+              <div className="flex justify-end">
+                <button 
+                  onClick={genererLeconRAG}
+                  disabled={isGeneratingLesson || !lessonSubject || !apiKey}
+                  className="flex items-center gap-2 text-white px-6 py-2 rounded-xl font-bold transition-all disabled:opacity-50"
+                  style={{ background: c.primary }}
+                >
+                  {isGeneratingLesson ? <Loader2 size={18} className="animate-spin" /> : <Wand2 size={18} />}
+                  Générer
+                </button>
+              </div>
+              
+              {!apiKey && (
+                <p className="text-xs" style={{ color: c.danger }}>Veuillez configurer une clé API pour utiliser cette fonctionnalité.</p>
+              )}
+
+              {generatedLesson && (
+                <div className="mt-4 p-4 border rounded-xl" style={{ backgroundColor: c.bg, borderColor: `color-mix(in srgb, ${c.ink} 10%, transparent)` }}>
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-xs font-bold px-2 py-1 rounded-md" style={{ backgroundColor: `color-mix(in srgb, ${c.primary} 15%, transparent)`, color: c.primary }}>
+                      {lessonSources} source{lessonSources > 1 ? 's' : ''} utilisée{lessonSources > 1 ? 's' : ''}
+                    </span>
+                  </div>
+                  <div className="text-sm whitespace-pre-wrap" style={{ color: c.ink }}>
+                    {generatedLesson}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+      
       {features.enableAiGenerator && (
         <div className="rounded-2xl shadow-sm border overflow-hidden" style={{ backgroundColor: c.surface, borderColor: `color-mix(in srgb, ${c.ink} 10%, transparent)` }}>
           <div className="p-6 space-y-4">
@@ -6173,6 +15153,325 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
         </div>
       )}
 
+    </div>
+  );
+}
+</file>
+
+<file path="src/features/admin/AdminMarketingGenerator.tsx">
+import React, { useState, useEffect } from 'react';
+import { useAdminTheme } from '../../store/useAdminTheme';
+import { Wand2, Loader2, CheckCircle2, ChevronDown, ChevronUp, Search, Activity, AlertCircle } from 'lucide-react';
+
+interface MarketingData {
+  headline: string;
+  subheadline: string;
+  benefits: { title: string; description: string }[];
+  targetAudience: string;
+  salesPitch: string;
+  callToAction: string;
+}
+
+interface AdminMarketingGeneratorProps {
+  productName: string;
+  productType: 'course' | 'bundle';
+  description: string;
+}
+
+export default function AdminMarketingGenerator({ productName, productType, description }: AdminMarketingGeneratorProps) {
+  const { theme } = useAdminTheme();
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [marketingData, setMarketingData] = useState<MarketingData | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [targetAudience, setTargetAudience] = useState('');
+  const [tone, setTone] = useState('');
+  const [showPreview, setShowPreview] = useState(true);
+
+  // Nouveaux états pour le SEO
+  const [seoKeyword, setSeoKeyword] = useState('');
+  const [keywordDensity, setKeywordDensity] = useState(0);
+  const [suggestedKeywords, setSuggestedKeywords] = useState<string[]>([]);
+  const [wordCount, setWordCount] = useState(0);
+
+  // Effet pour calculer l'analyse SEO en temps réel
+  useEffect(() => {
+    if (!marketingData) return;
+
+    // Combiner tout le texte généré
+    const fullText = `
+      ${marketingData.headline} 
+      ${marketingData.subheadline} 
+      ${marketingData.benefits.map(b => b.title + ' ' + b.description).join(' ')} 
+      ${marketingData.salesPitch}
+    `.toLowerCase();
+
+    // Extraire les mots
+    const words: string[] = fullText.match(/[a-zà-ÿ0-9]+/g) || [];
+    const totalWords = words.length;
+    setWordCount(totalWords);
+
+    if (totalWords === 0) return;
+
+    // Calcul de la densité si un mot clé est défini
+    if (seoKeyword.trim()) {
+      const targetWord = seoKeyword.toLowerCase().trim();
+      const regex = new RegExp(`\\b${targetWord}\\b`, 'gi');
+      const matches = fullText.match(regex) || [];
+      const density = (matches.length / totalWords) * 100;
+      setKeywordDensity(density);
+    } else {
+      setKeywordDensity(0);
+    }
+
+    // Extraire des mots-clés suggérés (mots de plus de 5 lettres, les plus fréquents)
+    const wordCounts = words.reduce((acc: Record<string, number>, word: string) => {
+      // Ignorer les mots de liaison basiques
+      if (word.length > 5 && !['comment', 'pourquoi', 'toujours', 'parce'].includes(word)) {
+        acc[word] = (acc[word] || 0) + 1;
+      }
+      return acc;
+    }, {} as Record<string, number>);
+
+    const topKeywords = Object.entries(wordCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(entry => entry[0]);
+      
+    setSuggestedKeywords(topKeywords);
+
+  }, [marketingData, seoKeyword]);
+
+  const handleGenerate = async () => {
+    setIsGenerating(true);
+    setError(null);
+    try {
+      const response = await fetch('/api/gemini/generate-marketing', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${(window as any).firebaseToken || ''}`, // In a real scenario, use actual auth token retrieval
+        },
+        body: JSON.stringify({
+          productName,
+          productType,
+          description,
+          targetAudience,
+          tone
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la génération');
+      }
+
+      const data = await response.json();
+      setMarketingData(data);
+      setShowPreview(true);
+    } catch (err: any) {
+      setError(err.message || 'Une erreur est survenue');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const inputClass = "w-full p-2.5 rounded-lg border focus:outline-none focus:ring-2 text-sm";
+  const inputStyle = {
+    backgroundColor: theme.colors.surface,
+    borderColor: `${theme.colors.muted}30`,
+    color: theme.colors.ink,
+  };
+
+  // Helper pour l'indicateur SEO
+  const getSeoStatus = () => {
+    if (!seoKeyword) return { color: 'text-gray-500', bg: 'bg-gray-100', text: 'En attente' };
+    if (keywordDensity === 0) return { color: 'text-red-600', bg: 'bg-red-100', text: 'Mot-clé absent' };
+    if (keywordDensity < 1) return { color: 'text-yellow-600', bg: 'bg-yellow-100', text: 'Densité faible' };
+    if (keywordDensity <= 3) return { color: 'text-green-600', bg: 'bg-green-100', text: 'Optimisé (Parfait)' };
+    return { color: 'text-red-600', bg: 'bg-red-100', text: 'Suroptimisé (Risque de spam)' };
+  };
+
+  const seoStatus = getSeoStatus();
+
+  return (
+    <div className="space-y-6">
+      <div className="p-6 rounded-3xl border" style={{ backgroundColor: theme.colors.surface, borderColor: `${theme.colors.muted}20` }}>
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-lg font-bold" style={{ color: theme.colors.ink }}>
+              Générateur de Page de Vente (IA)
+            </h3>
+            <p className="text-sm mt-1" style={{ color: theme.colors.muted }}>
+              Générez et optimisez automatiquement votre argumentaire marketing.
+            </p>
+          </div>
+          <Wand2 className="w-6 h-6 text-purple-500" />
+        </div>
+
+        <div className="space-y-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium mb-1.5" style={{ color: theme.colors.ink }}>Cible (Optionnel)</label>
+              <input
+                type="text"
+                value={targetAudience}
+                onChange={(e) => setTargetAudience(e.target.value)}
+                placeholder="Ex: Débutants, Professionnels..."
+                className={inputClass}
+                style={inputStyle}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-1.5" style={{ color: theme.colors.ink }}>Ton (Optionnel)</label>
+              <input
+                type="text"
+                value={tone}
+                onChange={(e) => setTone(e.target.value)}
+                placeholder="Ex: Enthousiaste, Formel..."
+                className={inputClass}
+                style={inputStyle}
+              />
+            </div>
+          </div>
+
+          <button
+            onClick={handleGenerate}
+            disabled={isGenerating || !productName}
+            className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl font-bold transition-all hover:opacity-90 disabled:opacity-50 text-white"
+            style={{ backgroundColor: '#8b5cf6' }} // Purple for AI
+          >
+            {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Wand2 className="w-5 h-5" />}
+            {isGenerating ? 'Génération en cours...' : 'Générer la page de vente'}
+          </button>
+          
+          {error && (
+            <p className="text-red-500 text-sm text-center mt-2">{error}</p>
+          )}
+        </div>
+
+        {marketingData && (
+          <div className="space-y-6 mt-6">
+            {/* Panneau SEO */}
+            <div className="p-4 rounded-xl border bg-slate-50 border-slate-200">
+              <div className="flex items-center gap-2 mb-4">
+                <Activity className="w-5 h-5 text-blue-600" />
+                <h4 className="font-bold text-slate-800">Analyse SEO en temps réel</h4>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1.5">Mot-clé principal cible</label>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                    <input
+                      type="text"
+                      value={seoKeyword}
+                      onChange={(e) => setSeoKeyword(e.target.value)}
+                      placeholder="Ex: formation react"
+                      className="pl-9 pr-4 py-2 w-full rounded-lg border border-slate-300 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-sm text-slate-900"
+                    />
+                  </div>
+                  
+                  <div className="mt-4 flex items-center gap-4">
+                    <div className="flex-1">
+                      <div className="flex justify-between text-xs mb-1">
+                        <span className="text-slate-600 font-medium">Densité</span>
+                        <span className={seoStatus.color}>{keywordDensity.toFixed(1)}%</span>
+                      </div>
+                      <div className="w-full bg-slate-200 rounded-full h-2">
+                        <div 
+                          className={`h-2 rounded-full transition-all ${seoStatus.bg.replace('100', '500')}`}
+                          style={{ width: `${Math.min(keywordDensity * 10, 100)}%` }}
+                        ></div>
+                      </div>
+                    </div>
+                    <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${seoStatus.bg} ${seoStatus.color}`}>
+                      {seoStatus.text}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="border-l border-slate-200 pl-6">
+                  <span className="block text-sm font-medium text-slate-700 mb-2">Mots-clés suggérés</span>
+                  <div className="flex flex-wrap gap-2">
+                    {suggestedKeywords.map((kw, idx) => (
+                      <button 
+                        key={idx}
+                        onClick={() => setSeoKeyword(kw)}
+                        className="px-2.5 py-1 text-xs rounded-lg bg-white border border-slate-200 text-slate-600 hover:border-blue-300 hover:text-blue-600 transition-colors"
+                      >
+                        {kw}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-xs text-slate-500 mt-3 flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    Texte long de {wordCount} mots
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="border rounded-2xl overflow-hidden" style={{ borderColor: `${theme.colors.muted}30` }}>
+              <div 
+                className="flex items-center justify-between p-4 cursor-pointer hover:bg-black/5"
+                onClick={() => setShowPreview(!showPreview)}
+              >
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-500" />
+                  <span className="font-bold" style={{ color: theme.colors.ink }}>Aperçu de la page de vente</span>
+                </div>
+                {showPreview ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+              </div>
+              
+              {showPreview && (
+                <div className="p-6 bg-white border-t" style={{ borderColor: `${theme.colors.muted}20` }}>
+                  {/* Landing Page Preview */}
+                  <div className="max-w-2xl mx-auto space-y-8 text-center">
+                    <div className="space-y-4">
+                      <span className="inline-block px-3 py-1 bg-purple-100 text-purple-700 text-xs font-bold rounded-full uppercase tracking-wider">
+                        {marketingData.targetAudience}
+                      </span>
+                      <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight">
+                        {marketingData.headline}
+                      </h1>
+                      <p className="text-lg text-gray-600">
+                        {marketingData.subheadline}
+                      </p>
+                      <button className="mt-4 px-8 py-4 bg-blue-600 text-white font-bold rounded-xl shadow-lg hover:bg-blue-700 transition-colors">
+                        {marketingData.callToAction}
+                      </button>
+                    </div>
+
+                    <div className="pt-8 pb-4 text-left">
+                      <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Ce que vous allez accomplir</h2>
+                      <div className="grid gap-6">
+                        {marketingData.benefits.map((benefit, idx) => (
+                          <div key={idx} className="flex gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100">
+                            <div className="flex-shrink-0 w-8 h-8 bg-green-100 text-green-600 rounded-full flex items-center justify-center font-bold">
+                              ✓
+                            </div>
+                            <div>
+                              <h4 className="font-bold text-gray-900">{benefit.title}</h4>
+                              <p className="text-gray-600 text-sm mt-1">{benefit.description}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="bg-gray-50 p-6 rounded-2xl text-left border border-gray-100">
+                      <h3 className="font-bold text-gray-900 mb-2">Argumentaire</h3>
+                      <div className="prose prose-sm text-gray-600 whitespace-pre-line">
+                        {marketingData.salesPitch}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -7464,6 +16763,8 @@ import { useProgression, NiveauConfig, ChapitreConfig, LeconConfig, ProgressionC
 import { useAdminTheme } from '../../store/useAdminTheme';
 import { useAppConfig } from '../../store/useAppConfig';
 import { useTheme } from '../../store/useTheme';
+import { useSettings } from '../../store/useSettings';
+import { useSuggestMechanic } from '../../hooks/useSuggestMechanic';
 import { 
   Plus, Trash2, Save, ArrowUp, ArrowDown, Sparkles, 
   ChevronDown, ChevronUp, Check, Loader, BookOpen, Gamepad2, Layers, Wand2
@@ -7476,18 +16777,58 @@ export default function AdminParcours() {
   const addCustomContentItems = useProgression(s => s.addCustomContentItems);
   const { appName, setAppName } = useAppConfig();
   const themeStore = useTheme();
+  const { persona, context } = useSettings();
 
   const [config, setConfig] = useState<ProgressionConfig>(JSON.parse(JSON.stringify(progressionConfig)));
   const [expandedNiveau, setExpandedNiveau] = useState<number | null>(null);
   const [expandedLesson, setExpandedLesson] = useState<string | null>(null);
+  const [generatingLessonId, setGeneratingLessonId] = useState<string | null>(null);
 
   // AI Generation states
   const [promptTopic, setPromptTopic] = useState('');
-  const [promptSuperApp, setPromptSuperApp] = useState('');
   const [generatingPath, setGeneratingPath] = useState(false);
-  const [generatingSuperApp, setGeneratingSuperApp] = useState(false);
   const [aiError, setAiError] = useState<string | null>(null);
   const [aiSuccessMessage, setAiSuccessMessage] = useState<string | null>(null);
+
+  const { suggestMechanic, isLoading: isSuggesting } = useSuggestMechanic();
+  const [mechanicReasons, setMechanicReasons] = useState<Record<string, string>>({});
+  const [suggestingLessonId, setSuggestingLessonId] = useState<string | null>(null);
+
+  const handleSuggestMechanic = async (leconId: string, subject: string, description: string, nIndex: number, cIndex: number, lIndex: number) => {
+    setSuggestingLessonId(leconId);
+    const result = await suggestMechanic(subject, description || subject);
+    if (result) {
+      updateLeconField(nIndex, cIndex, lIndex, 'mechanic', result.mechanic);
+      setMechanicReasons(prev => ({ ...prev, [leconId]: result.reason }));
+    }
+    setSuggestingLessonId(null);
+  };
+
+  const genererContenuLeconRAG = async (leconId: string, subject: string, nIndex: number, cIndex: number, lIndex: number) => {
+    setGeneratingLessonId(leconId);
+    try {
+      const response = await fetch('/api/gemini/generate-lesson-rag', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`
+        },
+        body: JSON.stringify({
+          courseId: "global",
+          subject,
+          persona
+        })
+      });
+      if (!response.ok) throw new Error("Erreur génération de leçon");
+      const data = await response.json();
+      updateLeconField(nIndex, cIndex, lIndex, 'theorieContent', data.lesson);
+    } catch (err) {
+      console.error(err);
+      alert("Erreur lors de la génération de la leçon via RAG");
+    } finally {
+      setGeneratingLessonId(null);
+    }
+  };
 
   // Save full configuration
   const handleSave = () => {
@@ -7586,10 +16927,13 @@ Tu dois répondre EXCLUSIVEMENT avec un JSON ayant cette structure:
   }
 }`;
 
-      const res = await fetch('/api/gemini/generate-json', {
+      const res = await fetch('/api/gemini/generate-json-rag', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}` },
         body: JSON.stringify({
+          courseId: "global",
+          persona,
+          context: context || "",
           prompt,
           schema: {
             type: "OBJECT",
@@ -7696,10 +17040,13 @@ Le résultat doit être un objet JSON respectant exactement cette structure:
 Assure-toi de générer 2 chapitres, avec chacun 2 leçons (une théorie, un jeu).
 N'écris aucune introduction, n'inclus pas de balises markdown, réponds EXCLUSIVEMENT avec le JSON brut.`;
 
-      const res = await fetch('/api/gemini/generate-json', {
+      const res = await fetch('/api/gemini/generate-json-rag', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}` },
         body: JSON.stringify({
+          courseId: "global",
+          persona,
+          context: context || "",
           prompt,
           schema: {
             type: "OBJECT",
@@ -7774,195 +17121,6 @@ N'écris aucune introduction, n'inclus pas de balises markdown, réponds EXCLUSI
     }
   };
 
-  // ─── AI feature 2: Super Ready-to-Learn App Creator ─────────────────
-  const handleGenerateSuperApp = async () => {
-    if (!promptSuperApp.trim()) return;
-    setGeneratingSuperApp(true);
-    setAiError(null);
-    setAiSuccessMessage(null);
-
-    try {
-      const prompt = `Génère une application québécoise marque blanche complète et clé-en-main sur le thème: "${promptSuperApp}".
-L'identité doit être complètement immersive et professionnelle.
-Génère un fichier JSON structuré contenant:
-1. Le nom de l'application ("appName")
-2. Une description ou slogan ("appDescription")
-3. Une palette de couleurs thématiques ("colors") contenant des codes hexadécimaux pour: primary, accent, header, bg
-4. Un parcours d'apprentissage ("niveaux") composé d'au moins 2 niveaux. Chaque niveau doit contenir 2 chapitres, et chaque chapitre 2 leçons (une théorie de type "theorie" avec explication claire, une ludique de type "jeu" avec mécanique).
-5. Un vocabulaire éducatif complet ("vocabulary") de 8 mots ou expressions québécoises réelles reliés aux tags des leçons générées.
-
-Structure requise:
-{
-  "appName": "Nom Chic",
-  "appDescription": "Slogan captivant",
-  "colors": {
-    "primary": "#HEX",
-    "accent": "#HEX",
-    "header": "#HEX",
-    "bg": "#HEX"
-  },
-  "niveaux": [
-    {
-      "id": 1,
-      "nom": "Nom du niveau",
-      "seuilScore": 0,
-      "chapitres": [
-        {
-          "id": "chap_1",
-          "nom": "Nom chapitre",
-          "description": "Description",
-          "lecons": [
-            {
-              "id": "lecon_1",
-              "nom": "Nom de la leçon",
-              "type": "theorie" | "jeu",
-              "mechanic": "flashcard" | "quiz" | "swipe" | "pendu",
-              "tags": ["tag_thematique"],
-              "contentSource": "lesson",
-              "theorieContent": "Règle québécoise thématique bien rédigée."
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  "vocabulary": [
-    {
-      "id": "voc_1",
-      "mot": "Expression québécoise",
-      "definition": "Signification en français standard",
-      "exemple": "Mise en situation ou exemple d'utilisation",
-      "niveau": 1,
-      "tags": ["tag_thematique"]
-    }
-  ]
-}
-Réponds UNIQUEMENT avec le JSON brut sans balisage markdown.`;
-
-      const res = await fetch('/api/gemini/generate-json', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}` },
-        body: JSON.stringify({
-          prompt,
-          schema: {
-            type: "OBJECT",
-            properties: {
-              appName: { type: "STRING" },
-              appDescription: { type: "STRING" },
-              colors: {
-                type: "OBJECT",
-                properties: {
-                  primary: { type: "STRING" },
-                  accent: { type: "STRING" },
-                  header: { type: "STRING" },
-                  bg: { type: "STRING" }
-                },
-                required: ["primary", "accent", "bg"]
-              },
-              niveaux: {
-                type: "ARRAY",
-                items: { type: "OBJECT" }
-              },
-              vocabulary: {
-                type: "ARRAY",
-                items: {
-                  type: "OBJECT",
-                  properties: {
-                    id: { type: "STRING" },
-                    mot: { type: "STRING" },
-                    definition: { type: "STRING" },
-                    exemple: { type: "STRING" },
-                    niveau: { type: "INTEGER" },
-                    tags: { type: "ARRAY", items: { type: "STRING" } }
-                  },
-                  required: ["id", "mot", "definition", "niveau", "tags"]
-                }
-              }
-            },
-            required: ["appName", "colors", "niveaux", "vocabulary"]
-          }
-        })
-      });
-
-      if (!res.ok) throw new Error("Erreur serveur lors de la création complète");
-      
-      const data = await res.json();
-      
-      // 1. Set App Name
-      setAppName(data.appName);
-
-      // 2. Set App Theme colors
-      themeStore.setPersonalTheme({
-        id: 'personal',
-        name: data.appName,
-        dark: false,
-        colors: {
-          primary: data.colors.primary,
-          accent: data.colors.accent,
-          header: data.colors.header || data.colors.primary,
-          bg: data.colors.bg || '#FBF6EE',
-          surface: '#FFFFFF',
-          ink: '#1E293B',
-          muted: '#64748B',
-          gold: '#F5C542',
-          success: '#10B981',
-          danger: '#EF4444'
-        },
-        fonts: { display: "'Sora', sans-serif", body: "'Space Grotesk', sans-serif" },
-        scale: 1,
-        radius: 'doux',
-        shadow: 'doux',
-        contrast: false,
-        soundPack: 'doux'
-      });
-
-      // 3. Format Niveaux
-      const formattedNiveaux = data.niveaux.map((n: any, nIdx: number) => ({
-        ...n,
-        id: nIdx + 1,
-        chapitres: (n.chapitres || []).map((c: any, cIdx: number) => ({
-          ...c,
-          id: `chap_ai_${Date.now()}_${nIdx}_${cIdx}`,
-          lecons: (c.lecons || []).map((l: any, lIdx: number) => ({
-            ...l,
-            id: `lecon_ai_${Date.now()}_${nIdx}_${cIdx}_${lIdx}`
-          }))
-        }))
-      }));
-
-      // 4. Update config local state
-      const newConfig: ProgressionConfig = {
-        ...config,
-        niveaux: formattedNiveaux
-      };
-      setConfig(newConfig);
-      updateProgressionConfig(newConfig);
-
-      // 5. Build and inject vocabulary as ContentItems
-      const contentItems = data.vocabulary.map((v: any) => ({
-        id: v.id || `voc_${Date.now()}_${Math.random()}`,
-        module: 'mots',
-        niveau: v.niveau || 1,
-        tags: v.tags || ['vocabulaire'],
-        payload: {
-          question: undefined,
-          answer: v.mot,
-          translation: v.definition,
-          exemple: v.exemple || "Exemple généré automatiquement."
-        }
-      }));
-
-      addCustomContentItems(contentItems);
-
-      setPromptSuperApp('');
-      setAiSuccessMessage(`✨ Incroyable ! L'application a été rebaptisée "${data.appName}". Son thème visuel a été harmonisé, un parcours sur mesure de ${formattedNiveaux.length} niveaux a été configuré, et ${contentItems.length} termes de vocabulaire professionnels ont été ajoutés à la base !`);
-    } catch (err: any) {
-      setAiError(err.message || "Erreur de création complète");
-    } finally {
-      setGeneratingSuperApp(false);
-    }
-  };
-
   return (
     <div className="p-4 sm:p-6 space-y-6 max-w-4xl mx-auto pb-24" style={{ color: theme.colors.ink }}>
       
@@ -8012,34 +17170,6 @@ Réponds UNIQUEMENT avec le JSON brut sans balisage markdown.`;
             >
               {generatingPath ? <Loader className="w-4 h-4 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
               {generatingPath ? 'Génération en cours...' : 'Générer et fusionner'}
-            </button>
-          </div>
-        </div>
-
-        {/* WIZARD 2: SUPER BRANDED APP CREATOR */}
-        <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 p-5 rounded-2xl border border-amber-100 dark:border-amber-900 shadow-sm space-y-4">
-          <div className="flex items-center gap-2">
-            <Sparkles className="text-amber-500 w-5 h-5 animate-bounce" />
-            <h3 className="font-black text-sm text-amber-900 dark:text-amber-100">Créateur d'App Clé-en-main (Super IA)</h3>
-          </div>
-          <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
-            Rebrandez l'application en 1 clic ! Génère l'identité, les couleurs, le parcours complet et un vocabulaire professionnel connecté !
-          </p>
-          <div className="space-y-2">
-            <input 
-              type="text"
-              value={promptSuperApp}
-              onChange={e => setPromptSuperApp(e.target.value)}
-              placeholder="Ex: Une app pour les chauffeurs d'autobus de Montréal..."
-              className="w-full border border-amber-200 dark:border-amber-800 rounded-xl px-3 py-2 text-xs bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 focus:ring-2 focus:ring-amber-400 outline-none"
-            />
-            <button
-              onClick={handleGenerateSuperApp}
-              disabled={generatingSuperApp || !promptSuperApp.trim()}
-              className="w-full py-2 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-black shadow transition-all flex items-center justify-center gap-2 disabled:opacity-50"
-            >
-              {generatingSuperApp ? <Loader className="w-4 h-4 animate-spin" /> : <Sparkles className="w-3.5 h-3.5" />}
-              {generatingSuperApp ? 'Refondation complète...' : 'Lancer la métamorphose'}
             </button>
           </div>
         </div>
@@ -8254,7 +17384,18 @@ Réponds UNIQUEMENT avec le JSON brut sans balisage markdown.`;
                                       </div>
 
                                       <div>
-                                        <label className="block text-[10px] font-black uppercase text-slate-400 mb-1">Mécanique de Jeu (si applicable)</label>
+                                        <div className="flex items-center justify-between mb-1">
+                                          <label className="block text-[10px] font-black uppercase text-slate-400">Mécanique de Jeu</label>
+                                          <button
+                                            onClick={() => handleSuggestMechanic(lecon.id, lecon.nom, lecon.tags?.join(', ') || chap.nom, nIndex, cIndex, lIndex)}
+                                            disabled={suggestingLessonId === lecon.id}
+                                            className="flex items-center gap-1 text-[10px] bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded font-bold transition-colors disabled:opacity-50"
+                                            title="Suggérer une mécanique via IA"
+                                          >
+                                            <Wand2 className="w-3 h-3" />
+                                            {suggestingLessonId === lecon.id ? '⏳' : 'IA'}
+                                          </button>
+                                        </div>
                                         <select
                                           value={lecon.mechanic || 'flashcard'}
                                           onChange={e => updateLeconField(nIndex, cIndex, lIndex, 'mechanic', e.target.value)}
@@ -8264,7 +17405,15 @@ Réponds UNIQUEMENT avec le JSON brut sans balisage markdown.`;
                                           <option value="quiz">📋 Choix Multiples</option>
                                           <option value="swipe">⚡ Swipe Vrai/Faux</option>
                                           <option value="pendu">🧩 Le Pendu</option>
+                                          <option value="drag_drop">🧩 Drag & Drop</option>
+                                          <option value="fill_in_the_blank">✍️ Texte à trous</option>
+                                          <option value="memory">🧠 Jeu des Paires</option>
                                         </select>
+                                        {mechanicReasons[lecon.id] && (
+                                          <div className="mt-1 text-[10px] text-indigo-600 bg-indigo-50/50 p-1.5 rounded border border-indigo-100/50">
+                                            💡 {mechanicReasons[lecon.id]}
+                                          </div>
+                                        )}
                                       </div>
 
                                       <div>
@@ -8283,7 +17432,16 @@ Réponds UNIQUEMENT avec le JSON brut sans balisage markdown.`;
 
                                     {lecon.type === 'theorie' && (
                                       <div className="space-y-1">
-                                        <label className="block text-[10px] font-black uppercase text-slate-400">Contenu de la Leçon Théorique (Markdown / Texte)</label>
+                                        <div className="flex items-center justify-between">
+                                          <label className="block text-[10px] font-black uppercase text-slate-400">Contenu de la Leçon Théorique (Markdown / Texte)</label>
+                                          <button
+                                            onClick={() => genererContenuLeconRAG(lecon.id, lecon.nom, nIndex, cIndex, lIndex)}
+                                            disabled={generatingLessonId === lecon.id}
+                                            className="flex items-center gap-1 text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-600 px-2 py-1 rounded disabled:opacity-50 font-bold transition-colors"
+                                          >
+                                            {generatingLessonId === lecon.id ? '⏳ Génération...' : '✨ Générer via RAG'}
+                                          </button>
+                                        </div>
                                         <textarea 
                                           rows={4}
                                           value={lecon.theorieContent || ''}
@@ -10994,6 +20152,133 @@ export default function AdminProgression() {
         )}
       </div>
 
+    </div>
+  );
+}
+</file>
+
+<file path="src/features/admin/AdminRichTextEditor.tsx">
+import React from 'react';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import { Bold, Italic, Heading1, Heading2, List, ListOrdered, Quote, Undo, Redo } from 'lucide-react';
+import { useAdminTheme } from '../../store/useAdminTheme';
+
+interface AdminRichTextEditorProps {
+  content: string;
+  onChange: (content: string) => void;
+  placeholder?: string;
+}
+
+export default function AdminRichTextEditor({ content, onChange, placeholder }: AdminRichTextEditorProps) {
+  const { theme } = useAdminTheme();
+
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+    ],
+    content,
+    onUpdate: ({ editor }) => {
+      onChange(editor.getHTML());
+    },
+    editorProps: {
+      attributes: {
+        class: 'prose prose-sm sm:prose-base max-w-none focus:outline-none min-h-[200px] p-4',
+      },
+    },
+  });
+
+  if (!editor) {
+    return null;
+  }
+
+  const ToolbarButton = ({ onClick, isActive, disabled, children }: any) => (
+    <button
+      onClick={(e) => { e.preventDefault(); onClick(); }}
+      disabled={disabled}
+      className={`p-1.5 rounded-lg transition-colors ${
+        isActive
+          ? 'bg-blue-100 text-blue-700'
+          : 'text-slate-600 hover:bg-slate-100'
+      } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+    >
+      {children}
+    </button>
+  );
+
+  return (
+    <div className="border rounded-xl overflow-hidden bg-white" style={{ borderColor: `${theme.colors.muted}30` }}>
+      {/* Toolbar */}
+      <div className="border-b bg-slate-50 p-2 flex flex-wrap gap-1 items-center" style={{ borderColor: `${theme.colors.muted}20` }}>
+        <ToolbarButton
+          onClick={() => editor.chain().focus().toggleBold().run()}
+          disabled={!editor.can().chain().focus().toggleBold().run()}
+          isActive={editor.isActive('bold')}
+        >
+          <Bold className="w-4 h-4" />
+        </ToolbarButton>
+        <ToolbarButton
+          onClick={() => editor.chain().focus().toggleItalic().run()}
+          disabled={!editor.can().chain().focus().toggleItalic().run()}
+          isActive={editor.isActive('italic')}
+        >
+          <Italic className="w-4 h-4" />
+        </ToolbarButton>
+
+        <div className="w-px h-4 bg-slate-300 mx-1" />
+
+        <ToolbarButton
+          onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+          isActive={editor.isActive('heading', { level: 1 })}
+        >
+          <Heading1 className="w-4 h-4" />
+        </ToolbarButton>
+        <ToolbarButton
+          onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+          isActive={editor.isActive('heading', { level: 2 })}
+        >
+          <Heading2 className="w-4 h-4" />
+        </ToolbarButton>
+
+        <div className="w-px h-4 bg-slate-300 mx-1" />
+
+        <ToolbarButton
+          onClick={() => editor.chain().focus().toggleBulletList().run()}
+          isActive={editor.isActive('bulletList')}
+        >
+          <List className="w-4 h-4" />
+        </ToolbarButton>
+        <ToolbarButton
+          onClick={() => editor.chain().focus().toggleOrderedList().run()}
+          isActive={editor.isActive('orderedList')}
+        >
+          <ListOrdered className="w-4 h-4" />
+        </ToolbarButton>
+        <ToolbarButton
+          onClick={() => editor.chain().focus().toggleBlockquote().run()}
+          isActive={editor.isActive('blockquote')}
+        >
+          <Quote className="w-4 h-4" />
+        </ToolbarButton>
+
+        <div className="w-px h-4 bg-slate-300 mx-1" />
+
+        <ToolbarButton
+          onClick={() => editor.chain().focus().undo().run()}
+          disabled={!editor.can().chain().focus().undo().run()}
+        >
+          <Undo className="w-4 h-4" />
+        </ToolbarButton>
+        <ToolbarButton
+          onClick={() => editor.chain().focus().redo().run()}
+          disabled={!editor.can().chain().focus().redo().run()}
+        >
+          <Redo className="w-4 h-4" />
+        </ToolbarButton>
+      </div>
+
+      {/* Editor Content */}
+      <EditorContent editor={editor} />
     </div>
   );
 }
@@ -15473,7 +24758,7 @@ export default function AudioRecorderModal({ item, tabId, onClose, onSave }: Aud
 <file path="src/features/admin/DataGeneratorModal.tsx">
 import { auth } from '../../services/firebase';
 import React, { useState } from 'react';
-import { X, Sparkles, Loader } from 'lucide-react';
+import { X, Sparkles, Loader, Brain, AlertTriangle, Info, Check, HelpCircle, Target } from 'lucide-react';
 import { useAdminTheme } from '../../store/useAdminTheme';
 
 interface DataGeneratorModalProps {
@@ -15483,12 +24768,22 @@ interface DataGeneratorModalProps {
   onSave: (newData: any[]) => void;
 }
 
+interface GenerationAnalysis {
+  naiveLearner: string[];
+  cognitiveDepth: string;
+  redundancies: string[];
+}
+
 export default function DataGeneratorModal({ tabId, sampleItem, onClose, onSave }: DataGeneratorModalProps) {
   const { theme } = useAdminTheme();
+  const [step, setStep] = useState<'setup' | 'review'>('setup');
   const [prompt, setPrompt] = useState('');
   const [count, setCount] = useState(3);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  const [generatedItems, setGeneratedItems] = useState<any[]>([]);
+  const [analysis, setAnalysis] = useState<GenerationAnalysis | null>(null);
 
   const handleGenerate = async () => {
     if (!prompt) return;
@@ -15496,20 +24791,32 @@ export default function DataGeneratorModal({ tabId, sampleItem, onClose, onSave 
     setError(null);
 
     try {
-      // Build a simple schema based on the sample item, or pass the sample item as an example in the prompt
       const schemaString = sampleItem ? JSON.stringify(sampleItem, null, 2) : "{}";
       
-      const res = await fetch('/api/gemini/generate-json', {
+      const res = await fetch('/api/gemini/generate-items-rag', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}` },
         body: JSON.stringify({
+          courseId: "global",
           prompt: `Génère ${count} éléments pour la catégorie '${tabId}'. ${prompt}. 
-Le résultat doit être un tableau JSON d'objets, où chaque objet suit exactement la même structure et les mêmes clés que cet exemple: 
+Chaque objet généré dans 'items' doit suivre exactement la même structure et les mêmes clés que cet exemple: 
 ${schemaString}
-Ne génère que le JSON, aucune autre explication.`,
+
+Ensuite, analyse pédagogiquement ces éléments (R11) et remplis l'objet 'analysis' :
+- naiveLearner : Liste des questions, sauts logiques ou termes non définis qu'un apprenant débutant pourrait avoir sur ces concepts.
+- cognitiveDepth : Estime la profondeur cognitive requise (ex: Rappel, Compréhension, Application) avec une courte justification.
+- redundancies : Liste des concepts trop similaires ou redondants parmi les éléments générés.`,
+          count,
           schema: {
-             type: "ARRAY",
-             items: { type: "OBJECT" } // Let the LLM infer the exact keys from the prompt example for simplicity since it's flexible
+             type: "OBJECT"
+          },
+          analysisSchema: {
+            type: "OBJECT",
+            properties: {
+              naiveLearner: { type: "ARRAY", items: { type: "STRING" } },
+              cognitiveDepth: { type: "STRING" },
+              redundancies: { type: "ARRAY", items: { type: "STRING" } }
+            }
           }
         }),
       });
@@ -15519,11 +24826,13 @@ Ne génère que le JSON, aucune autre explication.`,
       }
 
       const data = await res.json();
-      if (!Array.isArray(data)) {
-        throw new Error("Le résultat n'est pas un tableau JSON valide.");
+      if (!data.items || !Array.isArray(data.items)) {
+        throw new Error("Le résultat ne contient pas de tableau d'items valide.");
       }
 
-      onSave(data);
+      setGeneratedItems(data.items);
+      setAnalysis(data.analysis || null);
+      setStep('review');
     } catch (err: any) {
       setError(err.message || "Erreur de génération");
     } finally {
@@ -15531,13 +24840,17 @@ Ne génère que le JSON, aucune autre explication.`,
     }
   };
 
+  const handleValidate = () => {
+    onSave(generatedItems);
+  };
+
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+      <div className="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
         <div className="p-4 border-b flex justify-between items-center bg-slate-50">
           <h3 className="font-bold flex items-center gap-2">
             <Sparkles size={20} className="text-purple-500" />
-            Générer avec l'IA ({tabId})
+            {step === 'setup' ? `Générer avec l'IA (${tabId})` : "Validation & Analyse Pédagogique (R3 & R11)"}
           </h3>
           <button onClick={onClose} className="p-2 hover:bg-slate-200 rounded-lg text-slate-500">
             <X size={20} />
@@ -15545,26 +24858,85 @@ Ne génère que le JSON, aucune autre explication.`,
         </div>
         
         <div className="p-6 space-y-4 overflow-y-auto">
-          <div>
-            <label className="block text-sm font-bold text-slate-700 mb-1">Nombre d'éléments</label>
-            <input 
-              type="number" 
-              min={1} 
-              max={20}
-              value={count} 
-              onChange={e => setCount(parseInt(e.target.value) || 3)}
-              className="w-full border rounded-xl px-4 py-2"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-bold text-slate-700 mb-1">Prompt / Instructions</label>
-            <textarea 
-              value={prompt}
-              onChange={e => setPrompt(e.target.value)}
-              placeholder="Ex: Génère des expressions sur le thème de l'hiver, de la neige, et du froid..."
-              className="w-full border rounded-xl px-4 py-3 min-h-[120px]"
-            />
-          </div>
+          {step === 'setup' && (
+            <>
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-1">Nombre d'éléments</label>
+                <input 
+                  type="number" 
+                  min={1} 
+                  max={20}
+                  value={count} 
+                  onChange={e => setCount(parseInt(e.target.value) || 3)}
+                  className="w-full border rounded-xl px-4 py-2"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-slate-700 mb-1">Prompt / Instructions</label>
+                <textarea 
+                  value={prompt}
+                  onChange={e => setPrompt(e.target.value)}
+                  placeholder="Ex: Génère des expressions sur le thème de l'hiver, de la neige, et du froid..."
+                  className="w-full border rounded-xl px-4 py-3 min-h-[120px]"
+                />
+              </div>
+            </>
+          )}
+
+          {step === 'review' && analysis && (
+            <div className="space-y-6">
+              {/* IA Partenaire Pédagogique (R11) */}
+              <div className="bg-purple-50 rounded-xl p-4 border border-purple-100">
+                <h4 className="font-bold text-purple-800 flex items-center gap-2 mb-4">
+                  <Brain size={18} />
+                  Analyse du Partenaire Pédagogique
+                </h4>
+                
+                <div className="space-y-4">
+                  <div>
+                    <h5 className="text-sm font-bold text-purple-900 flex items-center gap-1 mb-1">
+                      <HelpCircle size={16} /> Simulation "Apprenant Naïf"
+                    </h5>
+                    <ul className="list-disc pl-5 text-sm text-purple-800 space-y-1">
+                      {analysis.naiveLearner?.length > 0 ? (
+                        analysis.naiveLearner.map((q, i) => <li key={i}>{q}</li>)
+                      ) : (
+                        <li className="italic text-purple-600">Aucune difficulté particulière détectée.</li>
+                      )}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h5 className="text-sm font-bold text-purple-900 flex items-center gap-1 mb-1">
+                      <Target size={16} /> Profondeur Cognitive
+                    </h5>
+                    <p className="text-sm text-purple-800 pl-1">{analysis.cognitiveDepth || "Non spécifié"}</p>
+                  </div>
+
+                  <div>
+                    <h5 className="text-sm font-bold text-purple-900 flex items-center gap-1 mb-1">
+                      <AlertTriangle size={16} /> Détection de Redondances
+                    </h5>
+                    <ul className="list-disc pl-5 text-sm text-purple-800 space-y-1">
+                      {analysis.redundancies?.length > 0 ? (
+                        analysis.redundancies.map((r, i) => <li key={i}>{r}</li>)
+                      ) : (
+                        <li className="italic text-purple-600">Aucune redondance détectée.</li>
+                      )}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Aperçu des items */}
+              <div>
+                <h4 className="font-bold text-slate-800 mb-2">Aperçu des {generatedItems.length} éléments générés</h4>
+                <div className="bg-slate-50 border rounded-xl p-4 max-h-60 overflow-y-auto text-sm font-mono text-slate-700">
+                  <pre>{JSON.stringify(generatedItems, null, 2)}</pre>
+                </div>
+              </div>
+            </div>
+          )}
           
           {error && (
             <div className="p-3 bg-red-50 text-red-700 text-sm rounded-lg border border-red-200">
@@ -15574,21 +24946,42 @@ Ne génère que le JSON, aucune autre explication.`,
         </div>
         
         <div className="p-4 border-t bg-slate-50 flex justify-end gap-2">
-          <button 
-            onClick={onClose}
-            className="px-4 py-2 font-bold text-slate-600 hover:bg-slate-200 rounded-xl"
-            disabled={loading}
-          >
-            Annuler
-          </button>
-          <button 
-            onClick={handleGenerate}
-            disabled={loading || !prompt}
-            className="px-4 py-2 font-bold text-white bg-purple-600 hover:bg-purple-700 rounded-xl flex items-center gap-2 disabled:opacity-50"
-          >
-            {loading ? <Loader size={18} className="animate-spin" /> : <Sparkles size={18} />}
-            Générer
-          </button>
+          {step === 'setup' ? (
+            <>
+              <button 
+                onClick={onClose}
+                className="px-4 py-2 font-bold text-slate-600 hover:bg-slate-200 rounded-xl"
+                disabled={loading}
+              >
+                Annuler
+              </button>
+              <button 
+                onClick={handleGenerate}
+                disabled={loading || !prompt}
+                className="px-4 py-2 font-bold text-white bg-purple-600 hover:bg-purple-700 rounded-xl flex items-center gap-2 disabled:opacity-50"
+              >
+                {loading ? <Loader size={18} className="animate-spin" /> : <Sparkles size={18} />}
+                Analyser et Générer
+              </button>
+            </>
+          ) : (
+            <>
+              <button 
+                onClick={() => setStep('setup')}
+                className="px-4 py-2 font-bold text-slate-600 hover:bg-slate-200 rounded-xl"
+                disabled={loading}
+              >
+                Modifier le prompt
+              </button>
+              <button 
+                onClick={handleValidate}
+                className="px-4 py-2 font-bold text-white bg-green-600 hover:bg-green-700 rounded-xl flex items-center gap-2"
+              >
+                <Check size={18} />
+                Valider et Publier
+              </button>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -15968,14 +25361,45 @@ export default function ArcadeScreen({ onBack }: { onBack: () => void }) {
 <file path="src/features/arcade/DynamicGameScreen.tsx">
 import React, { useMemo, useEffect, useState } from 'react';
 import { useGames, GameConfig } from '../../store/useGames';
-import { FlashcardSRS, Hangman, MultipleChoice, BinarySwipe } from '../../mechanics';
+import { FlashcardSRS, Hangman, MultipleChoice, BinarySwipe, MemoryMatch, ClozeTest, SortGroup, Anagram, Sequencing, LineMatching, Bingo, SituationalChoice, CategoryBlaster, TileMerge, WordSearch, ChainReaction, CombinationBuilder, DialogueTree, RebusPuzzle, AudioTranscription, ErrorCorrection, DeceptivePairs, DiagramLabeling, VoiceRecording, AudioAB } from '../../mechanics';
 import { useProgression } from '../../store/useProgression';
 import { useSrs } from '../../store/useSrs';
 import { contentProvider } from '../../services/contentProvider';
 import { ContentItem } from '../../types';
 import motsData from '../../data/mots.json';
 
-import { COMPATIBILITY_MATRIX, MechanicId } from '../../types';
+import { mapMechanicData } from '../../services/mechanicDataMapper';
+
+import { COMPATIBILITY_MATRIX, MechanicId, BaseGameProps } from '../../types';
+
+const MECHANIC_COMPONENTS: Record<string, React.ElementType<BaseGameProps>> = {
+  flashcard: FlashcardSRS,
+  quiz: MultipleChoice,
+  pendu: Hangman,
+  hangman: Hangman,
+  swipe: BinarySwipe,
+  memory: MemoryMatch,
+  fill_in_the_blank: ClozeTest,
+  drag_drop: SortGroup,
+  anagram: Anagram,
+  sequencing: Sequencing,
+  line_matching: LineMatching,
+  bingo: Bingo,
+  situational_choice: SituationalChoice,
+  category_blaster: CategoryBlaster,
+  tile_merge: TileMerge,
+  word_search: WordSearch,
+  chain_reaction: ChainReaction,
+  combination_builder: CombinationBuilder,
+  dialogue_tree: DialogueTree,
+  rebus_puzzle: RebusPuzzle,
+  audio_transcription: AudioTranscription,
+  error_correction: ErrorCorrection,
+  deceptive_pairs: DeceptivePairs,
+  diagram_labeling: DiagramLabeling,
+  voice_recording: VoiceRecording,
+  audio_ab: AudioAB,
+};
 
 // We map a dynamic game to the right mechanic
 interface DynamicGameScreenProps {
@@ -16056,24 +25480,29 @@ export function DynamicGameScreen({ gameId, onBack, onResponse, demoMode }: Dyna
     if (onResponse) onResponse(itemId, rating);
   };
 
-  switch (game.mechanic) {
-    case 'flashcard':
-      return <FlashcardSRS items={gameData} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} isEmbedded={demoMode} />;
-    case 'quiz':
-      return <MultipleChoice items={gameData} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} isEmbedded={demoMode} />;
-    case 'pendu':
-      return <Hangman items={gameData} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} isEmbedded={demoMode} />;
-    case 'swipe':
-      return <BinarySwipe items={gameData} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} isEmbedded={demoMode} />;
-    case 'typing':
-    default:
-      return (
-        <div className="p-8 text-center text-slate-500">
-          <p>La mécanique "{game.mechanic}" est en cours de construction.</p>
-          <button onClick={onBack} className="mt-4 px-4 py-2 bg-slate-200 rounded">Retour</button>
-        </div>
-      );
+  const GameComponent = MECHANIC_COMPONENTS[game.mechanic];
+
+  if (GameComponent) {
+    const specificData = mapMechanicData(game.mechanic, gameData);
+
+    return (
+      <GameComponent
+        items={gameData}
+        data={specificData}
+        onBack={onBack}
+        onComplete={handleComplete}
+        onResponse={handleResponse}
+        isEmbedded={demoMode}
+      />
+    );
   }
+
+  return (
+    <div className="p-8 text-center text-slate-500">
+      <p>La mécanique "{game.mechanic}" est en cours de construction.</p>
+      <button onClick={onBack} className="mt-4 px-4 py-2 bg-slate-200 rounded">Retour</button>
+    </div>
+  );
 }
 </file>
 
@@ -17239,6 +26668,7 @@ import { contentProvider } from '../../services/contentProvider';
 import { COMPATIBILITY_MATRIX, MechanicId, ContentItem } from '../../types';
 import { FlashcardSRS, Hangman, MultipleChoice, BinarySwipe } from '../../mechanics';
 import { ArrowLeft, Trophy, Star, Zap } from 'lucide-react';
+import PrivateNotesWidget from '../../components/PrivateNotesWidget';
 
 interface LessonGameScreenProps {
   lessonId: string;
@@ -17330,18 +26760,27 @@ export default function LessonGameScreen({ lessonId, onBack }: LessonGameScreenP
 
   const mechanic = lesson.mechanic || 'flashcard';
 
-  switch (mechanic) {
-    case 'flashcard':
-      return <FlashcardSRS items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
-    case 'quiz':
-      return <MultipleChoice items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
-    case 'pendu':
-      return <Hangman items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
-    case 'swipe':
-      return <BinarySwipe items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
-    default:
-      return <FlashcardSRS items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
-  }
+  const renderGame = () => {
+    switch (mechanic) {
+      case 'flashcard':
+        return <FlashcardSRS items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
+      case 'quiz':
+        return <MultipleChoice items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
+      case 'pendu':
+        return <Hangman items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
+      case 'swipe':
+        return <BinarySwipe items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
+      default:
+        return <FlashcardSRS items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
+    }
+  };
+
+  return (
+    <>
+      {renderGame()}
+      <PrivateNotesWidget />
+    </>
+  );
 }
 </file>
 
@@ -18076,6 +27515,174 @@ export default function LeaderboardScreen({ onBack }: { onBack: () => void }) {
 }
 </file>
 
+<file path="src/features/memoire/DashboardMemorielScreen.tsx">
+import React, { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ArrowLeft, Brain, ShieldCheck, AlertCircle, HelpCircle } from 'lucide-react';
+import { useSrs } from '../../store/useSrs';
+import { useProgression } from '../../store/useProgression';
+import { contentProvider } from '../../services/contentProvider';
+import { useTheme } from '../../store/useTheme';
+
+interface DashboardMemorielScreenProps {
+  onBack: () => void;
+}
+
+export default function DashboardMemorielScreen({ onBack }: DashboardMemorielScreenProps) {
+  const navigate = useNavigate();
+  const { theme } = useTheme();
+  const { cards } = useSrs();
+  const niveau = useProgression((state) => state.getNiveau());
+
+  const { solides, fragiles, nonTestes } = useMemo(() => {
+    const allItems = contentProvider.getItemsByNiveau(niveau);
+    const now = new Date();
+
+    const solides: any[] = [];
+    const fragiles: any[] = [];
+    const nonTestes: any[] = [];
+
+    allItems.forEach((item) => {
+      const card = cards[item.id];
+      if (!card || card.state === 0) {
+        nonTestes.push(item);
+        return;
+      }
+
+      const due = new Date(card.due);
+      // FSRS States: 0=New, 1=Learning, 2=Review, 3=Relearning
+      // Si la carte est due ou en apprentissage/réapprentissage -> Fragile
+      if (due <= now || card.state === 1 || card.state === 3 || card.stability < 3) {
+        fragiles.push({ item, card });
+      } else {
+        solides.push({ item, card });
+      }
+    });
+
+    // Tri par stabilité décroissante pour solides, et croissante pour fragiles
+    solides.sort((a, b) => b.card.stability - a.card.stability);
+    fragiles.sort((a, b) => a.card.stability - b.card.stability);
+
+    return { solides, fragiles, nonTestes };
+  }, [cards, niveau]);
+
+  return (
+    <div className="min-h-screen flex flex-col items-center" style={{ backgroundColor: theme.colors.bg }}>
+      <div className="w-full max-w-2xl min-h-screen shadow-xl border-x flex flex-col" style={{ backgroundColor: theme.colors.surface, borderColor: 'var(--color-border)' }}>
+        
+        {/* Header */}
+        <div className="sticky top-0 backdrop-blur-md border-b z-50 p-4 flex items-center justify-between" style={{ backgroundColor: `${theme.colors.surface}E6`, borderColor: 'var(--color-border)' }}>
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 transition-colors font-medium"
+            style={{ color: theme.colors.muted }}
+          >
+            <ArrowLeft className="w-5 h-5" />
+            Retour
+          </button>
+          
+          <div className="flex items-center gap-2 font-bold px-4 py-2 rounded-full" style={{ backgroundColor: `${theme.colors.primary}20`, color: theme.colors.primary }}>
+            <Brain className="w-5 h-5" />
+            État Mémoriel
+          </div>
+        </div>
+
+        <div className="p-6 flex-1 overflow-y-auto">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-extrabold mb-2" style={{ color: theme.colors.ink }}>Votre Mémoire</h1>
+            <p style={{ color: theme.colors.muted }}>
+              Transparence totale sur la rétention de vos apprentissages. Identifiez ce qui est solide et ce qui nécessite de l'attention.
+            </p>
+          </div>
+
+          <div className="space-y-8">
+            {/* Section Fragiles */}
+            <section>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${theme.colors.danger}20`, color: theme.colors.danger }}>
+                  <AlertCircle className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold font-display" style={{ color: theme.colors.ink }}>Concepts Fragiles</h2>
+                  <p className="text-sm" style={{ color: theme.colors.muted }}>Risque d'oubli élevé. Répétition recommandée.</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 gap-2">
+                {fragiles.length > 0 ? fragiles.map(({ item, card }) => (
+                  <div key={item.id} className="p-4 rounded-xl border flex justify-between items-center" style={{ backgroundColor: theme.colors.bg, borderColor: 'var(--color-border)' }}>
+                    <div className="flex flex-col gap-1">
+                      <span className="font-medium" style={{ color: theme.colors.ink }}>{item.payload?.answer || item.id}</span>
+                      {card.is_blocked && (
+                        <span className="text-xs font-bold px-2 py-0.5 rounded-full inline-block w-max" style={{ backgroundColor: theme.colors.danger, color: '#fff' }}>
+                          Incompris (Bloqué)
+                        </span>
+                      )}
+                    </div>
+                    <span className="text-xs font-mono px-2 py-1 rounded" style={{ backgroundColor: `${theme.colors.danger}10`, color: theme.colors.danger }}>
+                      Stabilité: {card.stability.toFixed(1)}j
+                    </span>
+                  </div>
+                )) : (
+                  <p className="text-sm italic" style={{ color: theme.colors.muted }}>Aucun concept fragile pour le moment.</p>
+                )}
+              </div>
+            </section>
+
+            {/* Section Solides */}
+            <section>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${theme.colors.success}20`, color: theme.colors.success }}>
+                  <ShieldCheck className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold font-display" style={{ color: theme.colors.ink }}>Concepts Solides</h2>
+                  <p className="text-sm" style={{ color: theme.colors.muted }}>Rétention prolongée et ancrée dans la mémoire.</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 gap-2">
+                {solides.length > 0 ? solides.map(({ item, card }) => (
+                  <div key={item.id} className="p-4 rounded-xl border flex justify-between items-center" style={{ backgroundColor: theme.colors.bg, borderColor: 'var(--color-border)' }}>
+                    <span className="font-medium" style={{ color: theme.colors.ink }}>{item.payload?.answer || item.payload?.question || item.id}</span>
+                    <span className="text-xs font-mono px-2 py-1 rounded" style={{ backgroundColor: `${theme.colors.success}10`, color: theme.colors.success }}>
+                      Stabilité: {card.stability.toFixed(1)}j
+                    </span>
+                  </div>
+                )) : (
+                  <p className="text-sm italic" style={{ color: theme.colors.muted }}>Continuez à réviser pour consolider vos concepts.</p>
+                )}
+              </div>
+            </section>
+
+            {/* Section Non Testés */}
+            <section>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${theme.colors.muted}20`, color: theme.colors.muted }}>
+                  <HelpCircle className="w-5 h-5" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold font-display" style={{ color: theme.colors.ink }}>Concepts Non Testés</h2>
+                  <p className="text-sm" style={{ color: theme.colors.muted }}>À découvrir lors de vos prochaines sessions.</p>
+                </div>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {nonTestes.length > 0 ? nonTestes.map((item) => (
+                  <div key={item.id} className="px-3 py-1.5 text-sm rounded-full border" style={{ backgroundColor: theme.colors.bg, borderColor: 'var(--color-border)', color: theme.colors.muted }}>
+                    {item.payload?.answer || item.id}
+                  </div>
+                )) : (
+                  <p className="text-sm italic" style={{ color: theme.colors.muted }}>Vous avez vu tous les concepts de ce niveau !</p>
+                )}
+              </div>
+            </section>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
+</file>
+
 <file path="src/features/paywall/PaywallModal.tsx">
 /**
  * PAYWALL MODAL — Mots & Blocs
@@ -18651,7 +28258,7 @@ export default function PenduScreen({ onBack }: { onBack: () => void }) {
 </file>
 
 <file path="src/features/portefeuille/PortefeuilleScreen.tsx">
-import { ArrowLeft, Wallet, Palette } from 'lucide-react';
+import { ArrowLeft, Wallet, Palette, Brain } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useProgression } from '../../store/useProgression';
 import { useTheme } from '../../store/useTheme';
@@ -18699,7 +28306,20 @@ export default function PortefeuilleScreen({ onBack }: PortefeuilleScreenProps) 
            </div>
            
            {/* Navigation settings */}
-           <div className="mb-8 grid grid-cols-1 gap-4">
+           <div className="mb-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+             <button 
+                onClick={() => navigate('/memoire')}
+                className="flex items-center gap-4 p-4 rounded-2xl border transition-all hover:opacity-80 shadow-sm"
+                style={{ backgroundColor: theme.colors.surface, borderColor: 'var(--color-border)' }}
+             >
+                <div className="w-10 h-10 rounded-full flex items-center justify-center" style={{ backgroundColor: `${theme.colors.primary}20`, color: theme.colors.primary }}>
+                  <Brain className="w-5 h-5" />
+                </div>
+                <div className="text-left flex-1">
+                  <h3 className="font-bold text-lg font-display" style={{ color: theme.colors.ink }}>État Mémoriel</h3>
+                  <p className="text-sm font-medium" style={{ color: theme.colors.muted }}>Consulter votre rétention et vos concepts fragiles</p>
+                </div>
+             </button>
              <button 
                 onClick={() => navigate('/apparence')}
                 className="flex items-center gap-4 p-4 rounded-2xl border transition-all hover:opacity-80 shadow-sm"
@@ -21760,27 +31380,85 @@ export const useScenarioTrigger = (rueId: string) => {
 };
 </file>
 
+<file path="src/hooks/useSuggestMechanic.ts">
+import { useState } from 'react';
+import { auth } from '../services/firebase';
+
+interface SuggestionResult {
+  mechanic: string;
+  reason: string;
+}
+
+export function useSuggestMechanic() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const suggestMechanic = async (subject: string, description: string): Promise<SuggestionResult | null> => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch('/api/gemini/suggest-mechanic', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`
+        },
+        body: JSON.stringify({ subject, description })
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur lors de la suggestion de la mécanique.');
+      }
+
+      const data = await response.json();
+      return data as SuggestionResult;
+    } catch (err: any) {
+      console.error(err);
+      setError(err.message || 'Une erreur inconnue est survenue.');
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { suggestMechanic, isLoading, error };
+}
+</file>
+
 <file path="src/mechanics/01_FlashcardSRS.tsx">
 import React, { useState } from 'react';
-import { useTheme } from '../store/useTheme';
-import GameHUD from '../components/GameHUD';
-import GameButton from '../components/GameButton';
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import GameResult from '../components/GameResult';
+import { BaseGameProps } from '../types';
 
-import { ContentItem, GameMechanicProps } from '../types';
+export interface FlashcardItem {
+  id: string;
+  question?: string;
+  answer: string;
+  translation?: string;
+}
 
-export function FlashcardSRS({ items, onBack, onComplete, onResponse, isEmbedded }: GameMechanicProps) {
+export function FlashcardSRS({ items, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps) {
   const { theme } = useTheme();
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showBack, setShowBack] = useState(false);
   const [score, setScore] = useState(0);
   const [isGameOver, setIsGameOver] = useState(false);
 
   if (!items || items.length === 0) {
-    return <div className="p-4" style={{color: theme.colors.ink}}>Aucune donnée pour ce jeu.</div>;
+    return <div className="p-4" style={{ color: theme.colors.ink }}>Aucune donnée pour ce jeu.</div>;
   }
 
-  const currentItem = items[currentIndex];
+  const flashcards: FlashcardItem[] = items.map(item => ({
+    id: item.id,
+    question: item.payload.question,
+    answer: item.payload.answer,
+    translation: item.payload.translation
+  }));
+
+  const currentItem = flashcards[currentIndex];
 
   const handleResponse = (quality: number) => {
     // quality: 0 (oubli), 1 (difficile), 2 (facile)
@@ -21827,33 +31505,94 @@ export function FlashcardSRS({ items, onBack, onComplete, onResponse, isEmbedded
 
   return (
     <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
-      <GameHUD title={`Flashcards (${currentIndex + 1}/${items.length})`} onBack={onBack} />
-      
-      <div className="flex-1 flex flex-col items-center justify-center p-6">
-        <div 
-          onClick={() => setShowBack(!showBack)}
-          className="w-full max-w-sm aspect-[3/4] rounded-2xl flex flex-col items-center justify-center p-8 text-center cursor-pointer shadow-lg transition-transform active:scale-95"
-          style={{ backgroundColor: theme.colors.surface, border: `2px solid ${theme.colors.muted}40` }}
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
         >
-          <span className="text-sm font-bold uppercase tracking-widest mb-4" style={{ color: theme.colors.muted }}>
-            {showBack ? 'Réponse' : 'Question'}
-          </span>
-          <h2 className="text-3xl font-display font-bold" style={{ color: theme.colors.ink }}>
-            {showBack ? currentItem.payload.answer : (currentItem.payload.question || currentItem.payload.translation || "Question")}
-          </h2>
-          
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Flashcards
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {currentIndex + 1}/{items.length}
+        </span>
+      </div>
+
+      {/* Progress */}
+      <div className="h-1 w-full" style={{ backgroundColor: border }}>
+        <div 
+          className="h-1 transition-all duration-300 ease-out" 
+          style={{ backgroundColor: theme.colors.primary, width: `${(currentIndex / items.length) * 100}%` }} 
+        />
+      </div>
+      
+      {/* Card Area */}
+      <div className="flex-1 flex flex-col items-center justify-center p-6 gap-6 w-full">
+        <div 
+          onClick={() => setShowBack(!showBack)} 
+          className="w-full max-w-sm min-h-[200px] flex flex-col items-center justify-center p-7 cursor-pointer select-none transition-transform active:scale-95"
+          style={{
+            backgroundColor: theme.colors.surface,
+            borderRadius: radCard,
+            border: `1px solid ${border}`,
+            boxShadow: shadow
+          }}
+        >
+          <div className="text-[11px] font-bold uppercase tracking-[0.06em] mb-4" style={{ color: theme.colors.muted }}>
+            {showBack ? 'RÉPONSE' : 'QUESTION'}
+          </div>
+          <div className="font-extrabold text-[22px] text-center" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink, marginBottom: showBack ? 12 : 0 }}>
+            {showBack ? currentItem.answer : (currentItem.question || currentItem.translation || "Question")}
+          </div>
+          {showBack && currentItem.translation && (
+            <div className="text-[13px] text-center leading-relaxed mt-2" style={{ color: theme.colors.muted }}>
+              {currentItem.translation}
+            </div>
+          )}
           {!showBack && (
-            <p className="mt-8 text-sm opacity-50" style={{ color: theme.colors.ink }}>
-              Touchez pour révéler
-            </p>
+            <div className="text-[11px] mt-4" style={{ color: theme.colors.muted }}>
+              Tapez pour révéler
+            </div>
           )}
         </div>
 
         {showBack && (
-          <div className="mt-8 flex gap-4 w-full max-w-sm">
-            <div className="flex-1"><GameButton variant="danger" onPress={() => handleResponse(0)} fullWidth>Oublié</GameButton></div>
-            <div className="flex-1"><GameButton variant="primary" onPress={() => handleResponse(1)} fullWidth>Difficile</GameButton></div>
-            <div className="flex-1"><GameButton variant="success" onPress={() => handleResponse(2)} fullWidth>Facile</GameButton></div>
+          <div className="w-full max-w-sm mt-2">
+            <div className="text-[11px] font-bold uppercase tracking-[0.06em] mb-2.5 text-center" style={{ color: theme.colors.muted }}>
+              Comment l'avez-vous su ?
+            </div>
+            <div className="flex gap-2">
+              {[
+                { val: 0, label: 'Oublié', color: theme.colors.danger, num: 1 },
+                { val: 1, label: 'Difficile', color: theme.colors.primary, num: 2 },
+                { val: 2, label: 'Facile', color: theme.colors.success, num: 3 },
+              ].map(r => (
+                <button 
+                  key={r.val} 
+                  onClick={() => handleResponse(r.val)} 
+                  className="flex-1 py-2.5 border-none cursor-pointer flex flex-col items-center gap-1 transition-transform active:scale-95 hover:opacity-90"
+                  style={{
+                    backgroundColor: r.color,
+                    borderRadius: radBtn,
+                    color: '#fff',
+                    fontFamily: theme.fonts.display
+                  }}
+                >
+                  <span className="text-sm font-bold">{r.num}</span>
+                  <span className="text-[9px] font-bold">{r.label}</span>
+                </button>
+              ))}
+            </div>
           </div>
         )}
       </div>
@@ -21863,16 +31602,17 @@ export function FlashcardSRS({ items, onBack, onComplete, onResponse, isEmbedded
 </file>
 
 <file path="src/mechanics/02_MultipleChoice.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useEffect } from 'react';
-import { GameMechanicProps } from '../types';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { MultipleChoiceData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
-
-export default function MultipleChoice({ items, onBack, onComplete, onResponse, isEmbedded }: GameMechanicProps) {
+export default function MultipleChoice({ items, onBack, onComplete, onResponse, isEmbedded, data }: BaseGameProps & { data?: MultipleChoiceData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
 
-  const timer = 20; // Default timer
+  const timer = data?.config?.timer || 15;
   const [idx, setIdx] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [answered, setAnswered] = useState(false);
@@ -21880,7 +31620,7 @@ export default function MultipleChoice({ items, onBack, onComplete, onResponse, 
   const [timeLeft, setTimeLeft] = useState(timer);
   const [done, setDone] = useState(false);
 
-  const currentItem = items[idx];
+  const currentItem = items?.[idx];
   const totalXP = score * 30;
 
   useEffect(() => {
@@ -21888,15 +31628,20 @@ export default function MultipleChoice({ items, onBack, onComplete, onResponse, 
     setTimeLeft(timer);
     const iv = setInterval(() => {
       setTimeLeft(t => {
-        if (t <= 1) { clearInterval(iv); setAnswered(true); return 0; }
+        if (t <= 1) { 
+          clearInterval(iv); 
+          setAnswered(true);
+          onResponse?.(currentItem.id, 1); // Timeout = wrong
+          return 0; 
+        }
         return t - 1;
       });
     }, 1000);
     return () => clearInterval(iv);
-  }, [idx, answered, done, timer, items]);
+  }, [idx, answered, done, timer, items, currentItem]);
 
   if (!items || items.length === 0) {
-    return <div className="p-4" style={{color: C.ink}}>Aucune donnée pour ce jeu.</div>;
+    return <div className="p-4" style={{ color: theme.colors.ink }}>Aucune donnée pour ce jeu.</div>;
   }
 
   const select = (choice: string) => {
@@ -21914,196 +31659,381 @@ export default function MultipleChoice({ items, onBack, onComplete, onResponse, 
   };
 
   const next = () => {
-    if (idx + 1 >= items.length) { setDone(true); onComplete?.(totalXP); }
-    else { setIdx(i => i+1); setSelected(null); setAnswered(false); }
+    if (idx + 1 >= items.length) { 
+      setDone(true); 
+      onComplete?.(totalXP); 
+    } else { 
+      setIdx(i => i + 1); 
+      setSelected(null); 
+      setAnswered(false); 
+    }
   };
 
   const choiceColor = (choice: string) => {
-    if (!answered) return C.surface;
-    if (choice === currentItem.payload.answer) return C.success;
-    if (choice === selected && choice !== currentItem.payload.answer) return C.danger;
-    return C.surface;
+    if (!answered) return theme.colors.surface;
+    if (choice === currentItem.payload.answer) return theme.colors.success;
+    if (choice === selected && choice !== currentItem.payload.answer) return theme.colors.danger;
+    return theme.colors.surface;
   };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:60, marginBottom:16 }}>🏆</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{score}/{items.length} bonnes réponses</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{totalXP} pts</div>
-      <button onClick={onBack} style={btnS(C.primary)}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state={score === items.length ? 'win' : 'lose'}
+        title={`${score}/${items.length} bonnes réponses`}
+        points={totalXP}
+        onBack={onBack}
+      />
+    );
+  }
 
-  const options = currentItem.payload.options || [currentItem.payload.answer]; // Fallback if no options
+  const options = currentItem.payload.options || [currentItem.payload.answer];
 
   return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column' }}>
-      <div style={hud}>
-        <button onClick={onBack} style={back}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Quiz</span>
-        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{items.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Quiz
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {idx + 1}/{items.length}
+        </span>
       </div>
-      {/* Timer */}
-      <div style={{ height:4, background:C.border }}>
-        <div style={{ height:4, background: timeLeft > timer*0.4 ? C.success : C.danger, width:`${(timeLeft/timer)*100}%`, transition:'width 1s linear' }} />
+
+      {/* Timer Progress */}
+      <div className="h-1 w-full" style={{ backgroundColor: border }}>
+        <div 
+          className="h-1 transition-all duration-1000 ease-linear" 
+          style={{ 
+            backgroundColor: timeLeft > timer * 0.4 ? theme.colors.success : theme.colors.danger, 
+            width: `${(timeLeft / timer) * 100}%` 
+          }} 
+        />
       </div>
-      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
-        {/* Question */}
-        <div style={{ background:C.surface, borderRadius:18, padding:20, border:`1px solid ${C.border}` }}>
-          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:10 }}>Question {idx+1}</div>
-          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:17, color:C.ink, lineHeight:1.5 }}>{currentItem.payload.question || currentItem.payload.translation || "Quelle est la bonne réponse ?"}</div>
-          <div style={{ marginTop:10, fontSize:13, color: timeLeft <= 5 ? C.danger : C.muted, fontWeight:700 }}>⏱ {timeLeft}s</div>
+
+      <div className="flex-1 flex flex-col p-4 gap-4 w-full max-w-md mx-auto">
+        {/* Question Card */}
+        <div 
+          className="p-5 flex flex-col gap-2"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `1px solid ${border}`,
+            boxShadow: shadow
+          }}
+        >
+          <div className="text-[11px] font-bold uppercase tracking-[0.06em]" style={{ color: theme.colors.muted }}>
+            Question {idx + 1}
+          </div>
+          <div className="font-bold text-[17px] leading-relaxed" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+            {currentItem.payload.question || currentItem.payload.translation || "Quelle est la bonne réponse ?"}
+          </div>
+          <div className="mt-2 text-[13px] font-bold" style={{ color: timeLeft <= 5 ? theme.colors.danger : theme.colors.muted }}>
+            ⏱ {timeLeft}s
+          </div>
         </div>
+
         {/* Choices */}
-        <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
-          {options.map((choice: string, i: number) => (
-            <button key={i} onClick={() => select(choice)} style={{
-              background:choiceColor(choice), border:`1px solid ${answered && choice === currentItem.payload.answer ? C.success : C.border}`,
-              borderRadius:14, padding:'14px 16px', cursor: answered ? 'default' : 'pointer',
-              textAlign:'left', fontFamily:'Sora,sans-serif', fontWeight:600, fontSize:14, color:C.ink, transition:'background .2s'
-            }}>
-              {answered && choice === currentItem.payload.answer && '✓ '}{answered && choice === selected && choice !== currentItem.payload.answer && '✗ '}{choice}
-            </button>
-          ))}
+        <div className="flex flex-col gap-2.5">
+          {options.map((choice: string, i: number) => {
+            const isSelected = selected === choice;
+            const isCorrect = choice === currentItem.payload.answer;
+            const showAsCorrect = answered && isCorrect;
+            const showAsWrong = answered && isSelected && !isCorrect;
+
+            return (
+              <button 
+                key={i} 
+                onClick={() => select(choice)} 
+                className={`text-left p-4 cursor-pointer transition-colors flex items-center gap-3 active:scale-[0.98] ${answered ? '' : 'hover:opacity-90'}`}
+                style={{
+                  backgroundColor: choiceColor(choice), 
+                  border: `1px solid ${showAsCorrect ? theme.colors.success : border}`,
+                  borderRadius: radBtn,
+                  fontFamily: theme.fonts.display,
+                  color: answered && (showAsCorrect || showAsWrong) ? '#fff' : theme.colors.ink,
+                }}
+                disabled={answered}
+              >
+                {showAsCorrect && <span className="font-bold">✓</span>}
+                {showAsWrong && <span className="font-bold">✗</span>}
+                <span className="font-semibold text-sm">{choice}</span>
+              </button>
+            );
+          })}
         </div>
+
         {/* Explanation */}
         {answered && currentItem.payload.exemple && (
-          <div style={{ background:'rgba(255,255,255,.05)', borderRadius:14, padding:14, fontSize:13, color:C.muted, lineHeight:1.6 }}>
-            💡 {currentItem.payload.exemple}
+          <div 
+            className="p-3.5 text-[13px] leading-relaxed"
+            style={{ 
+              backgroundColor: `${theme.colors.muted}15`, 
+              borderRadius: radCard, 
+              color: theme.colors.ink 
+            }}
+          >
+            <span className="mr-2">💡</span>
+            {currentItem.payload.exemple}
           </div>
         )}
+
+        {/* Next Button */}
         {answered && (
-          <button onClick={next} style={btnS(C.primary)}>{idx+1<items.length ? 'Question suivante →' : 'Voir résultats'}</button>
+          <button 
+            onClick={next} 
+            className="w-full py-3.5 mt-2 cursor-pointer font-bold text-[15px] active:scale-95 transition-transform"
+            style={{ 
+              backgroundColor: theme.colors.primary, 
+              color: '#fff', 
+              borderRadius: radBtn,
+              fontFamily: theme.fonts.display
+            }}
+          >
+            {idx + 1 < items.length ? 'Question suivante →' : 'Voir les résultats'}
+          </button>
         )}
       </div>
     </div>
   );
 }
-const hud: React.CSSProperties = { background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' };
-const back: React.CSSProperties = { background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 };
-const btnS = (bg: string): React.CSSProperties => ({ background:bg, color:'#fff', border:'none', borderRadius:14, padding:'14px 20px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer', width:'100%', marginTop:4 });
 </file>
 
 <file path="src/mechanics/03_BinarySwipe.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useRef, useCallback } from 'react';
-import { GameMechanicProps } from '../types';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { BinarySwipeData, BinarySwipeItem } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
-
-export default function BinarySwipe({ items, onBack, onComplete, onResponse, isEmbedded }: GameMechanicProps) {
+export default function BinarySwipe({ items, onBack, onComplete, onResponse, isEmbedded, data }: BaseGameProps & { data?: BinarySwipeData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
 
-  // We map the "left/right" binary choices based on the first item if possible, or use a default
-  const left = { label: 'Faux', emoji: '❌', color: '#c0392b' };
-  const right = { label: 'Vrai', emoji: '✅', color: '#2D7A4F' };
+  const leftConfig = data?.config?.left || { label: 'Faux', emoji: '❌', color: theme.colors.danger };
+  const rightConfig = data?.config?.right || { label: 'Vrai', emoji: '✅', color: theme.colors.success };
 
   const [idx, setIdx] = useState(0);
   const [score, setScore] = useState(0);
   const [dx, setDx] = useState(0);
-  const [result, setResult] = useState<'correct'|'wrong'|null>(null);
+  const [result, setResult] = useState<'correct' | 'wrong' | null>(null);
   const [done, setDone] = useState(false);
-  const [lastAnswer, setLastAnswer] = useState<{side: string, correct: boolean, explanation?: string} | null>(null);
+  const [lastAnswer, setLastAnswer] = useState<{ side: 'left' | 'right', correct: boolean, explanation?: string } | null>(null);
   const touchStart = useRef<number | null>(null);
 
   if (!items || items.length === 0) {
-    return <div className="p-4" style={{color: C.ink}}>Aucune donnée pour ce jeu.</div>;
+    return <div className="p-4" style={{ color: theme.colors.ink }}>Aucune donnée pour ce jeu.</div>;
   }
 
-  const currentItem = items[idx];
-  const swipeSide = dx > 60 ? 'right' : dx < -60 ? 'left' : null;
+  const swipes: BinarySwipeItem[] = items.map(item => ({
+    id: item.id,
+    question: item.payload.question || item.payload.translation || "Question",
+    answer: item.payload.answer,
+    explanation: item.payload.exemple
+  }));
 
-  const commit = (side: 'left' | 'right') => {
-    // For now we assume if they swipe right (Vrai), they are saying the item is correct.
-    // If it's a QCM, "Vrai" means the first option is the answer. For generic, let's just make it a mock or something.
-    // Actually, if we look at Anglicismes, answer is "quebecois". If we show a word, they can say if it's quebecois or standard?
-    // Let's assume all BinarySwipes provided have answer as 'left' or 'right' in their payload, OR
-    // we use a simple heuristic: True/False. Since we don't have True/False currently in our data, 
-    // we'll assume it's just a demo mechanic for now and accept 'right' as always correct for demonstration if not specified.
-    const isCorrect = side === 'right'; // Placeholder heuristic
+  const currentItem = swipes[idx];
+  // Simple heuristic: if 'right' is 'Vrai', assume answer matches right for True, left for False.
+  // In a real generic system, data should explicitly map to left/right ids. We'll fallback to right if missing.
+  const correctAnswerSide = currentItem.answer === 'left' ? 'left' : 'right';
 
-    setLastAnswer({ side, correct: isCorrect, explanation: currentItem.payload.exemple });
+  const totalXP = score * 25;
+
+  const commit = useCallback((side: 'left' | 'right') => {
+    const isCorrect = side === correctAnswerSide;
+
+    setLastAnswer({ side, correct: isCorrect, explanation: currentItem.explanation });
     setResult(isCorrect ? 'correct' : 'wrong');
-    if (isCorrect) setScore(s => s+1);
+    if (isCorrect) setScore(s => s + 1);
     
     onResponse?.(currentItem.id, isCorrect ? 3 : 1);
 
     setTimeout(() => {
-      setResult(null); setLastAnswer(null); setDx(0);
-      if (idx+1 >= items.length) { setDone(true); onComplete?.(score*25); }
-      else setIdx(i => i+1);
+      setResult(null); 
+      setLastAnswer(null); 
+      setDx(0);
+      if (idx + 1 >= swipes.length) { 
+        setDone(true); 
+        onComplete?.(totalXP); 
+      } else {
+        setIdx(i => i + 1);
+      }
     }, 1100);
-  };
+  }, [currentItem, idx, swipes.length, score, onComplete, onResponse, totalXP, correctAnswerSide]);
 
-  const onTouchStart = (e: React.TouchEvent) => { touchStart.current = e.touches[0].clientX; };
-  const onTouchMove = (e: React.TouchEvent) => {
-    if (!touchStart.current || result) return;
-    setDx(e.touches[0].clientX - touchStart.current);
+  const onTouchStart = (e: React.TouchEvent | React.MouseEvent) => { 
+    touchStart.current = 'touches' in e ? e.touches[0].clientX : e.clientX; 
+  };
+  const onTouchMove = (e: React.TouchEvent | React.MouseEvent) => {
+    if (touchStart.current === null || result) return;
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    setDx(clientX - touchStart.current);
   };
   const onTouchEnd = () => {
-    if (result) return;
+    if (result || touchStart.current === null) return;
     if (dx > 80) commit('right');
     else if (dx < -80) commit('left');
     else setDx(0);
     touchStart.current = null;
   };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🎯</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{score}/{items.length} correct</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score*25} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title={`${score}/${swipes.length} corrects`}
+        points={totalXP}
+        onBack={onBack}
+      />
+    );
+  }
 
   const rotation = dx * 0.08;
-  const opacity = result ? (result==='correct' ? 1 : 0.4) : 1;
+  const opacity = result ? (result === 'correct' ? 1 : 0.4) : 1;
 
   return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Swipe</span>
-        <span style={{ fontSize:12, color:C.muted }}>⭐ {score}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Swipe
+        </span>
+        <span className="text-xs font-bold" style={{ color: theme.colors.primary }}>
+          ⭐ {score}
+        </span>
       </div>
-      <div style={{ flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24, gap:20 }}>
-        {/* Indicateurs */}
-        <div style={{ display:'flex', width:'100%', maxWidth:340, justifyContent:'space-between' }}>
-          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color: dx<-30 ? left.color : C.muted, transition:'color .15s' }}>{left.emoji} {left.label}</div>
-          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color: dx>30 ? right.color : C.muted, transition:'color .15s' }}>{right.label} {right.emoji}</div>
+
+      <div className="flex-1 flex flex-col items-center justify-center p-6 gap-5 overflow-hidden">
+        {/* Indicators */}
+        <div className="flex w-full max-w-sm justify-between px-4">
+          <div 
+            className="font-bold text-[13px] transition-colors"
+            style={{ 
+              fontFamily: theme.fonts.display, 
+              color: dx < -30 ? leftConfig.color : theme.colors.muted 
+            }}
+          >
+            {leftConfig.emoji} {leftConfig.label}
+          </div>
+          <div 
+            className="font-bold text-[13px] transition-colors"
+            style={{ 
+              fontFamily: theme.fonts.display, 
+              color: dx > 30 ? rightConfig.color : theme.colors.muted 
+            }}
+          >
+            {rightConfig.label} {rightConfig.emoji}
+          </div>
         </div>
+
         {/* Card */}
         <div
-          onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
+          onTouchStart={onTouchStart} 
+          onTouchMove={onTouchMove} 
+          onTouchEnd={onTouchEnd}
+          onMouseDown={onTouchStart as any}
+          onMouseMove={onTouchMove as any}
+          onMouseUp={onTouchEnd}
+          onMouseLeave={onTouchEnd}
+          className="w-full max-w-sm min-h-[220px] flex flex-col items-center justify-center p-7 cursor-grab active:cursor-grabbing select-none"
           style={{
-            width:'100%', maxWidth:340, minHeight:180,
-            background: result==='correct' ? C.surface : result==='wrong' ? '#2a1010' : C.surface,
-            borderRadius:22, border:`2px solid ${result==='correct' ? '#2D7A4F' : result==='wrong' ? '#c0392b' : 'rgba(255,255,255,.1)'}`,
-            display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:28,
-            transform:`translateX(${dx}px) rotate(${rotation}deg)`,
-            transition: dx===0 ? 'transform .3s, border-color .2s' : 'border-color .2s',
-            boxShadow:'0 8px 32px rgba(0,0,0,.3)', userSelect:'none', cursor:'grab', opacity
-          }}>
+            backgroundColor: result === 'correct' ? theme.colors.surface : result === 'wrong' ? `${theme.colors.danger}20` : theme.colors.surface,
+            borderRadius: radCard, 
+            border: `2px solid ${result === 'correct' ? theme.colors.success : result === 'wrong' ? theme.colors.danger : border}`,
+            transform: `translateX(${dx}px) rotate(${rotation}deg)`,
+            transition: dx === 0 ? 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.2s' : 'border-color 0.2s',
+            boxShadow: shadow,
+            opacity
+          }}
+        >
           {result ? (
-            <>
-              <div style={{ fontSize:36, marginBottom:8 }}>{result==='correct' ? '✓' : '✗'}</div>
-              <div style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, color:C.ink, marginBottom:8 }}>{result==='correct' ? 'Correct !' : 'Mauvais'}</div>
-              {lastAnswer?.explanation && <div style={{ fontSize:12, color:C.muted, textAlign:'center' }}>{lastAnswer.explanation}</div>}
-            </>
+            <div className="flex flex-col items-center animate-in fade-in zoom-in duration-300">
+              <div className="text-4xl mb-3">{result === 'correct' ? '✅' : '❌'}</div>
+              <div className="font-bold text-[17px] mb-2" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+                {result === 'correct' ? 'Correct !' : 'Incorrect'}
+              </div>
+              {lastAnswer?.explanation && (
+                <div className="text-[13px] text-center leading-relaxed mt-2" style={{ color: theme.colors.muted }}>
+                  {lastAnswer.explanation}
+                </div>
+              )}
+            </div>
           ) : (
             <>
-              <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:26, color:C.ink, textAlign:'center' }}>{currentItem.payload.question || currentItem.payload.answer}</div>
-              <div style={{ fontSize:11, color:C.muted, marginTop:16 }}>← glisse pour classer →</div>
+              <div className="font-extrabold text-[24px] text-center leading-tight" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+                {currentItem.question}
+              </div>
+              <div className="text-[11px] font-bold uppercase tracking-widest mt-6 opacity-50" style={{ color: theme.colors.muted }}>
+                ← glisse pour classer →
+              </div>
             </>
           )}
         </div>
-        {/* Boutons fallback */}
-        <div style={{ display:'flex', gap:12, width:'100%', maxWidth:340 }}>
-          <button onClick={() => !result && commit('left')} style={{ flex:1, background:left.color, color:'#fff', border:'none', borderRadius:12, padding:'12px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>{left.emoji} {left.label}</button>
-          <button onClick={() => !result && commit('right')} style={{ flex:1, background:right.color, color:'#fff', border:'none', borderRadius:12, padding:'12px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>{right.emoji} {right.label}</button>
+
+        {/* Fallback Buttons */}
+        <div className="flex gap-3 w-full max-w-sm mt-2">
+          <button 
+            onClick={() => !result && commit('left')} 
+            className="flex-1 py-3.5 border-none cursor-pointer flex justify-center items-center gap-2 transition-transform active:scale-95 disabled:opacity-50"
+            style={{ 
+              backgroundColor: leftConfig.color, 
+              color: '#fff', 
+              borderRadius: radBtn, 
+              fontFamily: theme.fonts.display, 
+              fontWeight: 700, 
+              fontSize: 14 
+            }}
+            disabled={!!result}
+          >
+            <span>{leftConfig.emoji}</span> {leftConfig.label}
+          </button>
+          <button 
+            onClick={() => !result && commit('right')} 
+            className="flex-1 py-3.5 border-none cursor-pointer flex justify-center items-center gap-2 transition-transform active:scale-95 disabled:opacity-50"
+            style={{ 
+              backgroundColor: rightConfig.color, 
+              color: '#fff', 
+              borderRadius: radBtn, 
+              fontFamily: theme.fonts.display, 
+              fontWeight: 700, 
+              fontSize: 14 
+            }}
+            disabled={!!result}
+          >
+            <span>{rightConfig.emoji}</span> {rightConfig.label}
+          </button>
         </div>
-        <div style={{ fontSize:11, color:C.muted }}>{idx+1}/{items.length} cartes</div>
+
+        <div className="text-[11px] font-semibold tracking-wider uppercase mt-4" style={{ color: theme.colors.muted }}>
+          {idx + 1} / {swipes.length} cartes
+        </div>
       </div>
     </div>
   );
@@ -22111,83 +32041,158 @@ export default function BinarySwipe({ items, onBack, onComplete, onResponse, isE
 </file>
 
 <file path="src/mechanics/04_MemoryMatch.tsx">
-import { useTheme } from '../store/useTheme';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { MemoryMatchData } from '../types/mechanics';
+import { shuffle } from '../utils/array';
+import GameResult from '../components/GameResult';
 
+interface MemoryCard {
+  uid: string;
+  pairId: string;
+  text: string;
+  image?: string;
+}
 
-
-function shuffle(arr) { return [...arr].sort(() => Math.random()-.5); }
-function buildCards(pairs) {
+function buildCards(pairs: MemoryMatchData['pairs']): MemoryCard[] {
   return shuffle(pairs.flatMap(p => [
-    { uid: p.id+'A', pairId: p.id, text: p.cardA.text, image: p.cardA.image },
-    { uid: p.id+'B', pairId: p.id, text: p.cardB.text, image: p.cardB.image },
+    { uid: p.id + 'A', pairId: p.id, text: p.cardA.text, image: p.cardA.image },
+    { uid: p.id + 'B', pairId: p.id, text: p.cardB.text, image: p.cardB.image },
   ]));
 }
 
-export default function MemoryMatch({ data, onBack, onComplete }: any) {
+export default function MemoryMatch({ data, items, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: MemoryMatchData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
 
-  const [cards] = useState(() => buildCards(data.pairs));
-  const [flipped, setFlipped] = useState([]);
-  const [matched, setMatched] = useState([]);
+  // Prefer passing via `data` config if available, fallback to some defaults.
+  // Note: the backend may pass pairs inside `data.pairs` or just within `items`
+  // We'll trust data.pairs for now based on the original logic.
+  const { pairs = [], config } = data || {};
+
+  const [cards] = useState<MemoryCard[]>(() => buildCards(pairs));
+  const [flipped, setFlipped] = useState<string[]>([]);
+  const [matched, setMatched] = useState<string[]>([]);
   const [moves, setMoves] = useState(0);
   const [locked, setLocked] = useState(false);
   const [done, setDone] = useState(false);
-  const cols = data.config?.gridCols || 4;
+  const cols = config?.gridCols || 4;
 
-  const flip = useCallback((uid) => {
+  const totalXP = Math.max(100 - moves * 5, 20);
+
+  const flip = useCallback((uid: string) => {
     if (locked || flipped.includes(uid) || matched.includes(uid)) return;
     const next = [...flipped, uid];
     setFlipped(next);
+
     if (next.length === 2) {
-      setMoves(m => m+1);
+      setMoves(m => m + 1);
       setLocked(true);
-      const [a, b] = next.map(id => cards.find(c => c.uid===id));
-      if (a.pairId === b.pairId) {
+      const [a, b] = next.map(id => cards.find(c => c.uid === id));
+      
+      if (a && b && a.pairId === b.pairId) {
         const newMatched = [...matched, a.uid, b.uid];
         setMatched(newMatched);
         setFlipped([]);
         setLocked(false);
-        if (newMatched.length === cards.length) { setDone(true); onComplete?.(Math.max(100-moves*5,20)); }
+        onResponse?.(a.pairId, 3); // success
+
+        if (newMatched.length === cards.length) { 
+          setDone(true); 
+          onComplete?.(totalXP); 
+        }
       } else {
-        setTimeout(() => { setFlipped([]); setLocked(false); }, data.config?.flipBackDelay || 1100);
+        if (a) onResponse?.(a.pairId, 1); // fail
+        setTimeout(() => { 
+          setFlipped([]); 
+          setLocked(false); 
+        }, config?.flipBackDelay || 1100);
       }
     }
-  }, [locked, flipped, matched, cards, moves, data.config, onComplete]);
+  }, [locked, flipped, matched, cards, config?.flipBackDelay, onComplete, onResponse, totalXP]);
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🃏</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Toutes les paires !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>{moves} coups · +{Math.max(100-moves*5,20)} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (cards.length === 0) {
+    return <div className="p-4" style={{ color: theme.colors.ink }}>Aucune donnée pour ce jeu.</div>;
+  }
+
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Toutes les paires !"
+        subtitle={`${moves} coups`}
+        points={totalXP}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Memory</span>
-        <span style={{ fontSize:12, color:C.muted }}>{matched.length/2}/{data.pairs.length} paires · {moves} coups</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Memory
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {matched.length / 2}/{pairs.length} · {moves} coups
+        </span>
       </div>
-      <div style={{ flex:1, padding:16, display:'grid', gridTemplateColumns:`repeat(${cols}, 1fr)`, gap:10, alignContent:'start', paddingTop:20 }}>
+
+      <div 
+        className="flex-1 p-4 grid gap-2.5 mx-auto w-full max-w-md content-start pt-6"
+        style={{ 
+          gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` 
+        }}
+      >
         {cards.map(card => {
           const isFlipped = flipped.includes(card.uid);
           const isMatched = matched.includes(card.uid);
+          
           return (
-            <div key={card.uid} onClick={() => flip(card.uid)} style={{
-              aspectRatio:'1', borderRadius:14, cursor: isMatched ? 'default' : 'pointer',
-              background: isMatched ? C.success : isFlipped ? C.surface : C.surface,
-              border:`1px solid ${isMatched ? C.success : 'rgba(255,255,255,.1)'}`,
-              display:'flex', alignItems:'center', justifyContent:'center',
-              fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color:C.ink,
-              transition:'background .2s, transform .15s', textAlign:'center', padding:6,
-              transform: isFlipped || isMatched ? 'scale(1)' : 'scale(0.97)',
-              opacity: isMatched ? 0.6 : 1,
-            }}>
-              {isFlipped || isMatched ? card.text : '?'}
+            <div 
+              key={card.uid} 
+              onClick={() => flip(card.uid)} 
+              className="aspect-square flex flex-col items-center justify-center p-2 text-center select-none transition-all duration-200"
+              style={{
+                borderRadius: radCard,
+                cursor: isMatched ? 'default' : 'pointer',
+                backgroundColor: isMatched ? theme.colors.success : isFlipped ? theme.colors.surface : `${theme.colors.surface}80`,
+                border: `1px solid ${isMatched ? theme.colors.success : border}`,
+                fontFamily: theme.fonts.display,
+                fontWeight: 700,
+                fontSize: 13,
+                color: isMatched ? '#fff' : theme.colors.ink,
+                transform: isFlipped || isMatched ? 'scale(1)' : 'scale(0.97)',
+                opacity: isMatched ? 0.6 : 1,
+                boxShadow: isFlipped && !isMatched ? shadow : 'none'
+              }}
+            >
+              <div 
+                className={`transition-opacity duration-200 ${isFlipped || isMatched ? 'opacity-100' : 'opacity-0'}`}
+                style={{ wordBreak: 'break-word', hyphens: 'auto' }}
+              >
+                {card.text}
+              </div>
+              {!(isFlipped || isMatched) && (
+                <div className="absolute font-bold text-2xl" style={{ color: theme.colors.muted }}>
+                  ?
+                </div>
+              )}
             </div>
           );
         })}
@@ -22198,44 +32203,63 @@ export default function MemoryMatch({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/05_Hangman.tsx">
-import { useTheme } from '../store/useTheme';
-import React, { useState, useCallback } from 'react';
-import { GameMechanicProps } from '../types';
-
+import React, { useState } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { HangmanData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 const EMOJIS = ['😎','😬','😰','😓','😨','😱','💀'];
 
-export default function Hangman({ items, onBack, onComplete, onResponse, isEmbedded }: GameMechanicProps) {
-  const { theme } = useTheme();
-  const C = theme.colors;
+interface HangmanWord {
+  id: string;
+  word: string;
+  hint: string;
+}
 
-  const maxErr = 6;
+export default function Hangman({ items, onBack, onComplete, onResponse, isEmbedded, data }: BaseGameProps & { data?: HangmanData }) {
+  const { theme } = useTheme();
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
+
+  const { config } = data || {};
+  const maxErr = config?.maxErr ?? 6;
   const [wordIdx, setWordIdx] = useState(0);
   const [guessed, setGuessed] = useState<string[]>([]);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
 
-  const currentItem = items[wordIdx];
+  if (!items || items.length === 0) {
+    return <div className="p-4" style={{ color: theme.colors.ink }}>Aucune donnée pour ce jeu.</div>;
+  }
+
+  const words: HangmanWord[] = items.map(item => ({
+    id: item.id,
+    word: (item.payload.answer || "").toUpperCase(),
+    hint: item.payload.question || item.payload.translation || "Devinez le mot"
+  }));
+
+  const currentItem = words[wordIdx];
+
+  const word = currentItem.word;
+  const hint = currentItem.hint;
+  const errors = guessed.filter(l => !word.includes(l)).length;
+  const won = word.split('').every(l => guessed.includes(l) || l===' ' || l==='-');
+  const lost = errors >= maxErr;
+  const roundDone = won || lost;
 
   const nextWord = () => {
     const pts = won ? Math.max(50 - errors*8, 10) : 0;
     const newScore = score + pts;
     setScore(newScore);
-    if (wordIdx+1 >= items.length) { setDone(true); onComplete?.(newScore); }
-    else { setWordIdx(i=>i+1); setGuessed([]); }
+    if (wordIdx+1 >= words.length) { 
+      setDone(true); 
+      onComplete?.(newScore); 
+    } else { 
+      setWordIdx(i => i + 1); 
+      setGuessed([]); 
+    }
   };
-
-  if (!items || items.length === 0) {
-    return <div className="p-4" style={{color: C.ink}}>Aucune donnée pour ce jeu.</div>;
-  }
-
-  const word = (currentItem.payload.answer || "").toUpperCase();
-  const hint = currentItem.payload.question || currentItem.payload.translation || "Devinez le mot";
-  const errors = guessed.filter(l => !word.includes(l)).length;
-  const won = word.split('').every(l => guessed.includes(l) || l===' ' || l==='-');
-  const lost = errors >= maxErr;
-  const roundDone = won || lost;
 
   const guess = (letter: string) => {
     if (guessed.includes(letter) || roundDone) return;
@@ -22252,73 +32276,153 @@ export default function Hangman({ items, onBack, onComplete, onResponse, isEmbed
     }
   };
 
-
-  if (done) return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🎉</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Fini !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Partie terminée !"
+        subtitle={`${score} points`}
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Pendu</span>
-        <span style={{ fontSize:12, color:C.muted }}>{wordIdx+1}/{items.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Pendu
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {wordIdx + 1}/{words.length}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:20 }}>
-        {/* Erreur visual */}
-        <div style={{ textAlign:'center' }}>
-          <div style={{ fontSize:48 }}>{EMOJIS[Math.min(errors, 6)]}</div>
-          <div style={{ display:'flex', justifyContent:'center', gap:6, marginTop:8 }}>
-            {Array.from({length:maxErr}).map((_,i) => (
-              <div key={i} style={{ width:14, height:14, borderRadius:'50%', background: i<errors ? C.danger : 'rgba(255,255,255,.12)' }} />
+
+      <div className="flex-1 p-5 flex flex-col gap-6 max-w-md mx-auto w-full">
+        {/* Error visual */}
+        <div className="text-center mt-2">
+          <div className="text-6xl mb-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
+            {EMOJIS[Math.min(errors, 6)]}
+          </div>
+          <div className="flex justify-center gap-1.5 mt-2">
+            {Array.from({ length: maxErr }).map((_, i) => (
+              <div 
+                key={i} 
+                className="w-3.5 h-3.5 rounded-full transition-colors duration-300"
+                style={{ backgroundColor: i < errors ? theme.colors.danger : `${theme.colors.ink}20` }} 
+              />
             ))}
           </div>
         </div>
-        {/* Indice */}
-        <div style={{ background:C.surface, borderRadius:14, padding:'10px 14px', border:`1px solid ${C.border}`, fontSize:12, color:C.muted, textAlign:'center' }}>
-          💡 {hint}
+
+        {/* Hint */}
+        <div 
+          className="px-4 py-3 text-center text-xs leading-relaxed"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `1px solid ${border}`,
+            color: theme.colors.muted,
+            boxShadow: shadow
+          }}
+        >
+          <span className="mr-2">💡</span> {hint}
         </div>
-        {/* Mot */}
-        <div style={{ display:'flex', flexWrap:'wrap', gap:8, justifyContent:'center' }}>
-          {word.split('').map((l, i) => (
-            <div key={i} style={{
-              width:l===' '?20:36, height:44, borderBottom:l===' '||l==='-'?'none':`2px solid ${guessed.includes(l)?C.success:C.muted}`,
-              display:'flex', alignItems:'center', justifyContent:'center',
-              fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:20,
-              color: guessed.includes(l) || l === '-' ? C.ink : (lost ? C.danger : 'transparent')
-            }}>{l}</div>
-          ))}
+
+        {/* Word Display */}
+        <div className="flex flex-wrap gap-2 justify-center my-2">
+          {word.split('').map((l, i) => {
+            const isRevealed = guessed.includes(l) || l === '-';
+            const isSpace = l === ' ';
+            const isSpecial = isSpace || l === '-';
+
+            return (
+              <div 
+                key={i} 
+                className="flex items-center justify-center font-extrabold text-2xl transition-all duration-300"
+                style={{
+                  width: isSpace ? 20 : 36, 
+                  height: 44, 
+                  borderBottom: isSpecial ? 'none' : `3px solid ${isRevealed ? theme.colors.success : theme.colors.muted}`,
+                  fontFamily: theme.fonts.display,
+                  color: isRevealed ? theme.colors.ink : (lost ? theme.colors.danger : 'transparent')
+                }}
+              >
+                {l}
+              </div>
+            );
+          })}
         </div>
-        {/* Résultat intermédiaire */}
+
+        {/* Round Result */}
         {roundDone && (
-          <div style={{ background: won?'rgba(45,122,79,.2)':'rgba(192,57,43,.15)', borderRadius:14, padding:14, textAlign:'center', border:`1px solid ${won?C.success:C.danger}` }}>
-            <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color:C.ink, marginBottom:6 }}>
+          <div 
+            className="p-4 text-center mt-2 animate-in fade-in zoom-in-95 duration-300"
+            style={{ 
+              backgroundColor: won ? `${theme.colors.success}20` : `${theme.colors.danger}20`, 
+              borderRadius: radCard, 
+              border: `1px solid ${won ? theme.colors.success : theme.colors.danger}` 
+            }}
+          >
+            <div className="font-bold text-lg mb-3" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
               {won ? '✓ Correct !' : `✗ C'était : ${word}`}
             </div>
-            <button onClick={nextWord} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:10, padding:'10px 24px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>
-              {wordIdx+1<items.length ? 'Mot suivant' : 'Résultats'}
+            <button 
+              onClick={nextWord} 
+              className="px-6 py-3 border-none cursor-pointer font-bold text-sm active:scale-95 transition-transform"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              {wordIdx + 1 < words.length ? 'Mot suivant' : 'Voir les résultats'}
             </button>
           </div>
         )}
-        {/* Clavier */}
+
+        {/* Keyboard */}
         {!roundDone && (
-          <div style={{ display:'flex', flexWrap:'wrap', gap:6, justifyContent:'center' }}>
+          <div className="flex flex-wrap gap-2 justify-center mt-auto mb-4">
             {ALPHABET.map(l => {
               const used = guessed.includes(l);
               const correct = used && word.includes(l);
               const wrong = used && !word.includes(l);
+
               return (
-                <button key={l} onClick={() => guess(l)} disabled={used} style={{
-                  width:36, height:36, borderRadius:8, border:'none', cursor: used?'default':'pointer',
-                  background: correct?C.success : wrong?'rgba(192,57,43,.3)' : C.surface,
-                  color: used?C.muted:C.ink, fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13,
-                  opacity: used?0.5:1
-                }}>{l}</button>
+                <button 
+                  key={l} 
+                  onClick={() => guess(l)} 
+                  disabled={used} 
+                  className="w-10 h-11 flex items-center justify-center border-none font-bold text-sm transition-all active:scale-90"
+                  style={{
+                    borderRadius: radBtn, 
+                    cursor: used ? 'default' : 'pointer',
+                    backgroundColor: correct ? theme.colors.success : wrong ? `${theme.colors.danger}50` : theme.colors.surface,
+                    color: used && !correct && !wrong ? theme.colors.muted : (correct || wrong ? '#fff' : theme.colors.ink), 
+                    fontFamily: theme.fonts.display,
+                    opacity: used && !correct && !wrong ? 0.5 : 1,
+                    boxShadow: !used ? shadow : 'none'
+                  }}
+                >
+                  {l}
+                </button>
               );
             })}
           </div>
@@ -22330,32 +32434,48 @@ export default function Hangman({ items, onBack, onComplete, onResponse, isEmbed
 </file>
 
 <file path="src/mechanics/06_Anagram.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { AnagramData } from '../types/mechanics';
+import { shuffle } from '../utils/array';
+import GameResult from '../components/GameResult';
 
-
-
-function shuffleStr(str) {
+function shuffleStr(str: string): string[] {
   const arr = str.split('');
-  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
-  return arr.join('')===str ? shuffleStr(str) : arr;
+  const shuffled = shuffle(arr);
+  return shuffled.join('') === str ? shuffleStr(str) : shuffled;
 }
 
-export default function Anagram({ data, onBack, onComplete }: any) {
-  const { theme } = useTheme();
-  const C = theme.colors;
+interface Tile {
+  id: number;
+  letter: string;
+  used: boolean;
+}
 
-  const words = data.words;
+export default function Anagram({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: AnagramData }) {
+  const { theme } = useTheme();
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
+
+  const { words = [] } = data || {};
+  
   const [idx, setIdx] = useState(0);
-  const [tiles, setTiles] = useState(() => shuffleStr(words[0].word).map((l,i) => ({ id:i, letter:l, used:false })));
-  const [answer, setAnswer] = useState([]);
-  const [result, setResult] = useState(null);
+  const [tiles, setTiles] = useState<Tile[]>(() => {
+    if (!words || words.length === 0) return [];
+    return shuffleStr(words[0].word).map((l,i) => ({ id:i, letter:l, used:false }));
+  });
+  const [answer, setAnswer] = useState<Tile[]>([]);
+  const [result, setResult] = useState<'correct'|'wrong'|null>(null);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
 
+  if (!words || words.length === 0) {
+    return <div className="p-4" style={{ color: theme.colors.ink }}>Aucune donnée pour ce jeu.</div>;
+  }
+
   const word = words[idx];
 
-  const pickTile = useCallback((tile) => {
+  const pickTile = useCallback((tile: Tile) => {
     if (tile.used || result) return;
     setTiles(ts => ts.map(t => t.id===tile.id ? {...t, used:true} : t));
     setAnswer(a => [...a, tile]);
@@ -22373,74 +32493,171 @@ export default function Anagram({ data, onBack, onComplete }: any) {
     const correct = ans === word.word;
     setResult(correct ? 'correct' : 'wrong');
     if (correct) setScore(s => s+40);
+    
+    // Notify response if available
+    const currentItem = items?.[idx];
+    if (currentItem && onResponse) {
+      onResponse(currentItem.id, correct ? 3 : 1);
+    }
+
     setTimeout(() => {
       setResult(null);
-      if (idx+1 >= words.length) { setDone(true); onComplete?.(score + (correct?40:0)); }
-      else {
+      if (idx+1 >= words.length) { 
+        setDone(true); 
+        onComplete?.(score + (correct?40:0)); 
+      } else {
         const ni = idx+1;
         setIdx(ni);
         setTiles(shuffleStr(words[ni].word).map((l,i)=>({id:i,letter:l,used:false})));
         setAnswer([]);
       }
     }, 1200);
-  }, [answer, word, idx, words, score, onComplete]);
+  }, [answer, word, idx, words, score, onComplete, items, onResponse]);
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🔤</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Bravo !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Bravo !"
+        subtitle={`${idx + 1} mots trouvés`}
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Anagramme</span>
-        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{words.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Anagramme
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {idx + 1}/{words.length}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'24px 16px', display:'flex', flexDirection:'column', gap:20, alignItems:'center' }}>
-        {/* Indice */}
-        <div style={{ background:C.surface, borderRadius:14, padding:'10px 16px', border:`1px solid ${C.border}`, fontSize:12, color:C.muted, textAlign:'center', width:'100%', maxWidth:340 }}>
-          💡 {word.hint}
+
+      <div className="flex-1 p-6 flex flex-col gap-6 items-center w-full max-w-md mx-auto">
+        {/* Hint */}
+        <div 
+          className="w-full text-center py-3 px-4 text-xs leading-relaxed"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `1px solid ${border}`,
+            color: theme.colors.muted,
+            boxShadow: shadow
+          }}
+        >
+          <span className="mr-2">💡</span> {word.hint}
         </div>
-        {/* Réponse slots */}
-        <div style={{ display:'flex', flexWrap:'wrap', gap:8, justifyContent:'center', minHeight:52 }}>
-          {answer.map((t,i) => (
-            <div key={i} style={{ width:40, height:48, borderRadius:10, background:C.surface, border:`2px solid ${result==='correct'?C.success:result==='wrong'?C.danger:C.primary}`, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:18, color:C.ink }}>
+
+        {/* Answer Slots */}
+        <div className="flex flex-wrap gap-2 justify-center min-h-[52px] w-full">
+          {answer.map((t, i) => (
+            <div 
+              key={i} 
+              className="w-10 h-12 flex items-center justify-center font-extrabold text-lg animate-in zoom-in-90 duration-200"
+              style={{ 
+                borderRadius: radBtn, 
+                backgroundColor: theme.colors.surface, 
+                border: `2px solid ${result === 'correct' ? theme.colors.success : result === 'wrong' ? theme.colors.danger : theme.colors.primary}`,
+                fontFamily: theme.fonts.display, 
+                color: theme.colors.ink 
+              }}
+            >
               {t.letter}
             </div>
           ))}
-          {Array.from({length: word.word.length - answer.length}).map((_,i) => (
-            <div key={'empty'+i} style={{ width:40, height:48, borderRadius:10, border:`2px dashed rgba(255,255,255,.15)`, display:'flex', alignItems:'center', justifyContent:'center' }} />
+          {Array.from({ length: word.word.length - answer.length }).map((_, i) => (
+            <div 
+              key={'empty'+i} 
+              className="w-10 h-12 flex items-center justify-center"
+              style={{ 
+                borderRadius: radBtn, 
+                border: `2px dashed ${border}` 
+              }} 
+            />
           ))}
         </div>
-        {/* Tuiles source */}
-        <div style={{ display:'flex', flexWrap:'wrap', gap:10, justifyContent:'center', maxWidth:340 }}>
+
+        {/* Source Tiles */}
+        <div className="flex flex-wrap gap-2.5 justify-center w-full max-w-[340px]">
           {tiles.map(t => (
-            <button key={t.id} onClick={() => pickTile(t)} disabled={t.used} style={{
-              width:44, height:48, borderRadius:10, cursor:t.used?'default':'pointer',
-              background:t.used?'rgba(255,255,255,.05)':C.surface,
-              border:`2px solid ${t.used?'transparent':C.border}`,
-              fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:18, color:t.used?'transparent':C.ink,
-              transition:'all .15s'
-            }}>{t.used?'':t.letter}</button>
+            <button 
+              key={t.id} 
+              onClick={() => pickTile(t)} 
+              disabled={t.used} 
+              className="w-11 h-12 flex items-center justify-center border-none font-extrabold text-lg transition-all active:scale-90"
+              style={{
+                borderRadius: radBtn, 
+                cursor: t.used ? 'default' : 'pointer',
+                backgroundColor: t.used ? `${theme.colors.surface}40` : theme.colors.surface,
+                border: `2px solid ${t.used ? 'transparent' : border}`,
+                fontFamily: theme.fonts.display, 
+                color: t.used ? 'transparent' : theme.colors.ink,
+                boxShadow: !t.used ? shadow : 'none'
+              }}
+            >
+              {t.used ? '' : t.letter}
+            </button>
           ))}
         </div>
+
         {/* Actions */}
-        <div style={{ display:'flex', gap:10, width:'100%', maxWidth:340 }}>
-          <button onClick={removeLast} disabled={!answer.length} style={{ flex:1, background:C.surface, color:C.ink, border:`1px solid ${C.border}`, borderRadius:12, padding:'12px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>⌫ Effacer</button>
-          <button onClick={validate} disabled={answer.length!==word.word.length || !!result} style={{
-            flex:2, background: answer.length===word.word.length ? C.primary : 'rgba(255,255,255,.08)',
-            color:'#fff', border:'none', borderRadius:12, padding:'12px 0',
-            fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer'
-          }}>Valider ✓</button>
+        <div className="flex gap-3 w-full max-w-[340px] mt-auto">
+          <button 
+            onClick={removeLast} 
+            disabled={!answer.length} 
+            className="flex-1 py-3 border-none cursor-pointer font-bold text-[13px] active:scale-95 transition-transform disabled:opacity-50"
+            style={{ 
+              backgroundColor: theme.colors.surface, 
+              color: theme.colors.ink, 
+              border: `1px solid ${border}`, 
+              borderRadius: radBtn, 
+              fontFamily: theme.fonts.display 
+            }}
+          >
+            ⌫ Effacer
+          </button>
+          <button 
+            onClick={validate} 
+            disabled={answer.length !== word.word.length || !!result} 
+            className="flex-[2] py-3 border-none cursor-pointer font-bold text-[13px] active:scale-95 transition-transform disabled:opacity-50"
+            style={{
+              backgroundColor: answer.length === word.word.length ? theme.colors.primary : `${theme.colors.ink}10`,
+              color: '#fff', 
+              borderRadius: radBtn,
+              fontFamily: theme.fonts.display 
+            }}
+          >
+            Valider ✓
+          </button>
         </div>
+
         {result && (
-          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color: result==='correct'?C.success:C.danger }}>
-            {result==='correct' ? '✓ Correct !' : `✗ C'était : ${word.word}`}
+          <div 
+            className="font-extrabold text-lg animate-in slide-in-from-bottom-2 duration-300"
+            style={{ 
+              fontFamily: theme.fonts.display, 
+              color: result === 'correct' ? theme.colors.success : theme.colors.danger 
+            }}
+          >
+            {result === 'correct' ? '✓ Correct !' : `✗ C'était : ${word.word}`}
           </div>
         )}
       </div>
@@ -22450,132 +32667,254 @@ export default function Anagram({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/07_ClozeTest.tsx">
-import { useTheme } from '../store/useTheme';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, ReactNode } from 'react';
+import { useTheme, useThemeTokens, AppColors } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { ClozeTestData } from '../types/mechanics';
+import { shuffle } from '../utils/array';
+import GameResult from '../components/GameResult';
 
+type Exercise = ClozeTestData['exercises'][number];
+type Blank = Exercise['blanks'][number];
 
-
-function buildWordBank(exercises: any[]): string[] {
-  const all = exercises.flatMap(ex => ex.blanks.map((b: any) => b.answer));
-  return [...new Set(all)].sort(() => Math.random() - .5);
+function buildWordBank(exercises: ClozeTestData['exercises']): string[] {
+  const all = exercises.flatMap(ex => ex.blanks.map((b: Blank) => b.answer));
+  return shuffle([...new Set(all)]);
 }
 
-function parseText(text: string, blanks: any[], fills: Record<string, string>, onPick: any, answered: boolean, C: any) {
-  const parts = [];
+function parseText(
+  text: string,
+  blanks: Blank[],
+  fills: Record<string, string>,
+  onPick: (bid: string, val: string | null) => void,
+  answered: boolean,
+  C: AppColors,
+  radBtn: number | string
+): ReactNode[] {
+  const parts: ReactNode[] = [];
   let last = 0;
-  const regex = /[(d+)]/g;
-  let m;
+  const regex = /\[(\d+)\]/g;
+  let m: RegExpExecArray | null;
+  
   while ((m = regex.exec(text)) !== null) {
-    if (m.index > last) parts.push(<span key={last} style={{ color:'rgba(255,255,255,.75)', lineHeight:1.8 }}>{text.slice(last, m.index)}</span>);
+    if (m.index > last) {
+      parts.push(
+        <span key={last} className="leading-relaxed" style={{ color: C.ink, opacity: 0.85 }}>
+          {text.slice(last, m.index)}
+        </span>
+      );
+    }
+    
     const bid = m[1];
     const blank = blanks.find(b => b.id === bid);
     const filled = fills[bid];
-    const correct = answered && blank && (filled === blank.answer || (blank.alternatives||[]).includes(filled));
+    const correct = answered && blank && (filled === blank.answer || (blank.alternatives || []).includes(filled));
     const wrong = answered && filled && !correct;
+    
     parts.push(
-      <span key={bid} style={{
-        display:'inline-block', minWidth:90, borderBottom: filled ? 'none' : '2px solid rgba(255,255,255,.3)',
-        background: filled ? (answered ? (correct?'rgba(45,122,79,.25)':'rgba(192,57,43,.2)') : 'rgba(199,91,57,.15)') : 'transparent',
-        borderRadius: filled ? 6 : 0, padding: filled ? '1px 8px' : '1px 4px',
-        color: answered ? (correct?'#4ade80':wrong?'#f87171':C.ink) : C.primary,
-        fontWeight:700, fontSize:14, cursor: filled&&!answered ? 'pointer' : 'default',
-        margin:'0 2px'
-      }} onClick={() => !answered && filled && onPick(bid, null)}>{filled || '___'}</span>
+      <span
+        key={bid}
+        className="inline-block min-w-[90px] font-bold text-sm mx-1 px-2 py-0.5 text-center transition-all duration-200"
+        style={{
+          borderBottom: filled ? 'none' : `2px solid ${C.muted}`,
+          backgroundColor: filled ? (answered ? (correct ? `${C.success}30` : `${C.danger}30`) : `${C.primary}20`) : 'transparent',
+          borderRadius: filled ? radBtn : 0,
+          color: answered ? (correct ? C.success : wrong ? C.danger : C.ink) : C.primary,
+          cursor: filled && !answered ? 'pointer' : 'default',
+        }}
+        onClick={() => !answered && filled && onPick(bid, null)}
+      >
+        {filled || '___'}
+      </span>
     );
     last = m.index + m[0].length;
   }
-  if (last < text.length) parts.push(<span key='end' style={{ color:'rgba(255,255,255,.75)', lineHeight:1.8 }}>{text.slice(last)}</span>);
+  
+  if (last < text.length) {
+    parts.push(
+      <span key="end" className="leading-relaxed" style={{ color: C.ink, opacity: 0.85 }}>
+        {text.slice(last)}
+      </span>
+    );
+  }
+  
   return parts;
 }
 
-export default function ClozeTest({ data, onBack, onComplete }: any) {
+export default function ClozeTest({ data, items, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: ClozeTestData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
+  const C: AppColors = theme.colors;
 
-  const [exIdx, setExIdx] = useState(0);
+  const { exercises = [] } = data || {};
+
+  const [exIdx, setExIdx] = useState<number>(0);
   const [fills, setFills] = useState<Record<string, string>>({});
-  const [answered, setAnswered] = useState(false);
-  const [score, setScore] = useState(0);
-  const [done, setDone] = useState(false);
-  const [wordBank] = useState<string[]>(() => buildWordBank(data.exercises));
+  const [answered, setAnswered] = useState<boolean>(false);
+  const [score, setScore] = useState<number>(0);
+  const [done, setDone] = useState<boolean>(false);
+  const [wordBank] = useState<string[]>(() => buildWordBank(exercises));
 
-  const ex = data.exercises[exIdx];
-  const allFilled = ex.blanks.every(b => fills[b.id]);
+  const ex: Exercise | undefined = exercises[exIdx];
+  const allFilled = ex?.blanks.every(b => fills[b.id]) ?? false;
 
-  const pick = useCallback((word) => {
-    if (answered) return;
+  const pick = useCallback((word: string) => {
+    if (answered || !ex) return;
     const firstEmpty = ex.blanks.find(b => !fills[b.id]);
     if (!firstEmpty) return;
     setFills(f => ({ ...f, [firstEmpty.id]: word }));
   }, [answered, ex, fills]);
 
-  const clearBlank = useCallback((bid) => {
+  const clearBlank = useCallback((bid: string, val: string | null = null) => {
     if (answered) return;
-    setFills(f => { const n = {...f}; delete n[bid]; return n; });
+    setFills(f => {
+      const n = { ...f };
+      delete n[bid];
+      return n;
+    });
   }, [answered]);
 
   const validate = () => {
+    if (!ex) return;
     let pts = 0;
     ex.blanks.forEach(b => {
       const f = fills[b.id];
-      if (f === b.answer || (b.alternatives||[]).includes(f)) pts += 20;
+      if (f === b.answer || (b.alternatives || []).includes(f)) pts += 20;
     });
     setScore(s => s + pts);
     setAnswered(true);
   };
 
   const next = () => {
-    if (exIdx+1 >= data.exercises.length) { setDone(true); onComplete?.(score); }
-    else { setExIdx(i=>i+1); setFills({}); setAnswered(false); }
+    if (exIdx + 1 >= exercises.length) {
+      setDone(true);
+      onComplete?.(score);
+    } else {
+      setExIdx(i => i + 1);
+      setFills({});
+      setAnswered(false);
+    }
   };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>📝</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Exercices terminés !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Exercices terminés !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
+
+  if (!ex) return null;
 
   const usedWords = Object.values(fills);
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Texte à trous</span>
-        <span style={{ fontSize:12, color:C.muted }}>{exIdx+1}/{data.exercises.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Texte à trous
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {exIdx + 1}/{exercises.length}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
-        {/* Texte */}
-        <div style={{ background:C.surface, borderRadius:16, padding:18, border:`1px solid ${C.border}`, lineHeight:2, fontSize:15 }}>
-          {parseText(ex.text, ex.blanks, fills, clearBlank, answered, C)}
+
+      <div className="flex-1 p-5 flex flex-col gap-6 max-w-lg mx-auto w-full">
+        {/* Text Area */}
+        <div 
+          className="p-5 text-[15px]"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `1px solid ${border}`,
+            boxShadow: shadow
+          }}
+        >
+          {parseText(ex.text, ex.blanks, fills, clearBlank, answered, C, radBtn)}
         </div>
-        {/* Banque de mots */}
+
+        {/* Word Bank */}
         <div>
-          <div style={{ fontSize:10, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:8 }}>Banque de mots</div>
-          <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
+          <div className="text-[10px] font-bold uppercase tracking-wider mb-3" style={{ color: theme.colors.muted }}>
+            Banque de mots
+          </div>
+          <div className="flex flex-wrap gap-2.5">
             {wordBank.map((w: string) => {
               const used = usedWords.includes(w);
               return (
-                <button key={w} onClick={() => !used && !answered && pick(w)} style={{
-                  background: used ? 'rgba(255,255,255,.04)' : C.surface,
-                  color: used ? C.muted : C.ink, border: `1px solid ${used ? C.border : C.primary}`,
-                  borderRadius:999, padding:'6px 14px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:12,
-                  cursor: used||answered ? 'default' : 'pointer', opacity: used ? 0.5 : 1, textDecoration: used?'line-through':'none'
-                }}>{w}</button>
+                <button
+                  key={w}
+                  onClick={() => !used && !answered && pick(w)}
+                  className="px-3.5 py-1.5 font-bold text-xs transition-all active:scale-95 disabled:pointer-events-none"
+                  style={{
+                    backgroundColor: used ? `${theme.colors.surface}40` : theme.colors.surface,
+                    color: used ? theme.colors.muted : theme.colors.ink,
+                    border: `1px solid ${used ? 'transparent' : border}`,
+                    borderRadius: 999,
+                    fontFamily: theme.fonts.display,
+                    cursor: used || answered ? 'default' : 'pointer',
+                    opacity: used ? 0.5 : 1,
+                    textDecoration: used ? 'line-through' : 'none',
+                    boxShadow: !used ? shadow : 'none'
+                  }}
+                >
+                  {w}
+                </button>
               );
             })}
           </div>
         </div>
-        {!answered ? (
-          <button onClick={validate} disabled={!allFilled} style={{ background: allFilled?C.primary:'rgba(255,255,255,.08)', color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor: allFilled?'pointer':'default' }}>Valider</button>
-        ) : (
-          <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>
-            {exIdx+1 < data.exercises.length ? 'Exercice suivant →' : 'Voir résultats'}
-          </button>
-        )}
+
+        {/* Actions */}
+        <div className="mt-auto pt-4">
+          {!answered ? (
+            <button 
+              onClick={validate} 
+              disabled={!allFilled} 
+              className="w-full py-3.5 border-none font-bold text-[15px] transition-transform disabled:opacity-50"
+              style={{ 
+                backgroundColor: allFilled ? theme.colors.primary : `${theme.colors.ink}10`, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display, 
+                cursor: allFilled ? 'pointer' : 'default',
+                transform: allFilled ? 'scale(1)' : 'scale(0.98)'
+              }}
+            >
+              Valider
+            </button>
+          ) : (
+            <button 
+              onClick={next} 
+              className="w-full py-3.5 border-none cursor-pointer font-bold text-[15px] active:scale-95 transition-transform animate-in slide-in-from-bottom-2"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              {exIdx + 1 < exercises.length ? 'Exercice suivant →' : 'Voir résultats'}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -22583,47 +32922,68 @@ export default function ClozeTest({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/08_Sequencing.tsx">
-import { useTheme } from '../store/useTheme';
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { SequencingData, SequencingItem } from '../types/mechanics';
+import { shuffle } from '../utils/array';
+import GameResult from '../components/GameResult';
 
-
-
-function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
-function score(items) {
+function score(items: SequencingItem[]) {
   let correct = 0;
   items.forEach((it,i) => { if(it.order === i+1) correct++; });
   return correct;
 }
 
-export default function Sequencing({ data, onBack, onComplete }: any) {
+export default function Sequencing({ items: propItems, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: SequencingData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
+  const { config = {} } = data || {};
+  
+  const mappedItems: SequencingItem[] = propItems && propItems.length > 0 ? propItems.map((item, index) => ({
+    id: item.id,
+    text: item.payload.answer || item.payload.question || "",
+    label: item.payload.hint || "",
+    order: index + 1
+  })) : (data?.items && data.items.length > 0 ? data.items : [
+    { id: '1', text: 'Étape 1', order: 1 },
+    { id: '2', text: 'Étape 2', order: 2 },
+    { id: '3', text: 'Étape 3', order: 3 }
+  ]);
 
-  const [items, setItems] = useState(() => shuffle(data.items));
+  const [items, setItems] = useState<SequencingItem[]>(() => shuffle([...mappedItems]));
   const [submitted, setSubmitted] = useState(false);
-  const [dragging, setDragging] = useState(null);
+  const [dragging, setDragging] = useState<number|null>(null);
   const [done, setDone] = useState(false);
-  const dragOver = useRef(null);
-
+  const dragOver = useRef<number|null>(null);
+  
   const correct = submitted ? score(items) : 0;
   const total = items.length;
 
-  const onDragStart = (i) => setDragging(i);
-  const onDragEnter = (i) => { dragOver.current = i; };
+  const onDragStart = (i: number) => setDragging(i);
+  const onDragEnter = (i: number) => { dragOver.current = i; };
   const onDragEnd = () => {
-    if (dragging === null || dragOver.current === null || dragging === dragOver.current) { setDragging(null); dragOver.current=null; return; }
+    if (dragging === null || dragOver.current === null || dragging === dragOver.current) { 
+      setDragging(null); 
+      dragOver.current = null; 
+      return; 
+    }
     const arr = [...items];
     const [moved] = arr.splice(dragging, 1);
     arr.splice(dragOver.current, 0, moved);
     setItems(arr);
-    setDragging(null); dragOver.current=null;
+    setDragging(null); 
+    dragOver.current = null;
   };
 
-  // Touch drag
-  const touchStart = useRef(null);
-  const touchIdx = useRef(null);
-  const onTouchStart = (e, i) => { touchStart.current = e.touches[0].clientY; touchIdx.current = i; };
-  const onTouchEnd = (e, i) => {
+  const touchStart = useRef<number|null>(null);
+  const touchIdx = useRef<number|null>(null);
+  const onTouchStart = (e: React.TouchEvent, i: number) => { 
+    touchStart.current = e.touches[0].clientY; 
+    touchIdx.current = i; 
+  };
+  const onTouchEnd = (e: React.TouchEvent, i: number) => {
+    if (touchStart.current === null) return;
     const dy = e.changedTouches[0].clientY - touchStart.current;
     if (Math.abs(dy) < 20) return;
     const target = dy > 0 ? Math.min(i+1, items.length-1) : Math.max(i-1, 0);
@@ -22633,32 +32993,67 @@ export default function Sequencing({ data, onBack, onComplete }: any) {
     setItems(arr);
   };
 
-  const validate = () => setSubmitted(true);
-  const finish = () => { setDone(true); onComplete?.(correct*20); };
+  const validate = () => {
+    setSubmitted(true);
+    if (onResponse) {
+      items.forEach((it, i) => {
+        onResponse(it.id, it.order === i + 1 ? 3 : 1);
+      });
+    }
+  };
 
-  const isCorrect = (item, i) => submitted && item.order === i+1;
-  const isWrong = (item, i) => submitted && item.order !== i+1;
+  const finish = () => { 
+    setDone(true); 
+    onComplete?.(correct*20); 
+  };
+  
+  const isCorrect = (item: SequencingItem, i: number) => submitted && item.order === i+1;
+  const isWrong = (item: SequencingItem, i: number) => submitted && item.order !== i+1;
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>📅</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{correct}/{total} dans le bon ordre</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{correct*20} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state={correct === total ? "win" : "lose"}
+        title={`${correct}/${total} dans le bon ordre`}
+        points={correct * 20}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Séquençage</span>
-        <span style={{ fontSize:12, color:C.muted }}>{total} éléments</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Séquençage
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {total} éléments
+        </span>
       </div>
-      <div style={{ flex:1, padding:'16px', display:'flex', flexDirection:'column', gap:10 }}>
-        <div style={{ fontSize:12, color:C.muted, textAlign:'center', marginBottom:4 }}>Glisse pour réordonner du plus ancien au plus récent</div>
+
+      <div className="flex-1 p-5 flex flex-col gap-3 max-w-md mx-auto w-full">
+        <div className="text-xs text-center mb-2" style={{ color: theme.colors.muted }}>
+          Glisse pour réordonner du plus ancien au plus récent
+        </div>
+        
         {items.map((item, i) => (
-          <div key={item.id}
+          <div 
+            key={item.id}
             draggable={!submitted}
             onDragStart={() => onDragStart(i)}
             onDragEnter={() => onDragEnter(i)}
@@ -22666,39 +33061,94 @@ export default function Sequencing({ data, onBack, onComplete }: any) {
             onDragOver={e => e.preventDefault()}
             onTouchStart={e => onTouchStart(e,i)}
             onTouchEnd={e => onTouchEnd(e,i)}
+            className="flex items-center gap-3 p-3 select-none transition-all duration-200"
             style={{
-              background: isCorrect(item,i) ? 'rgba(45,122,79,.2)' : isWrong(item,i) ? 'rgba(192,57,43,.12)' : C.surface,
-              border: `1px solid ${isCorrect(item,i)?C.success:isWrong(item,i)?C.danger:C.border}`,
-              borderRadius:14, padding:'12px 14px', display:'flex', alignItems:'center', gap:12,
-              cursor: submitted ? 'default' : 'grab', userSelect:'none',
-              transition:'background .2s, border-color .2s',
-              opacity: dragging===i ? 0.5 : 1
-            }}>
-            <div style={{ width:28, height:28, borderRadius:8, background:'rgba(255,255,255,.08)', display:'grid', placeItems:'center', fontSize:13, fontWeight:800, color:C.muted, flexShrink:0 }}>{i+1}</div>
-            <div style={{ flex:1, fontSize:13, color:C.ink, lineHeight:1.4 }}>{item.text}</div>
+              backgroundColor: isCorrect(item, i) ? `${theme.colors.success}20` : isWrong(item, i) ? `${theme.colors.danger}15` : theme.colors.surface,
+              border: `1px solid ${isCorrect(item, i) ? theme.colors.success : isWrong(item, i) ? theme.colors.danger : border}`,
+              borderRadius: radCard,
+              cursor: submitted ? 'default' : 'grab',
+              opacity: dragging === i ? 0.5 : 1,
+              boxShadow: !submitted && dragging !== i ? shadow : 'none'
+            }}
+          >
+            <div 
+              className="w-8 h-8 rounded-lg grid place-items-center text-sm font-extrabold shrink-0"
+              style={{ backgroundColor: `${theme.colors.ink}10`, color: theme.colors.muted }}
+            >
+              {i + 1}
+            </div>
+            
+            <div className="flex-1 text-[13px] leading-snug" style={{ color: theme.colors.ink }}>
+              {item.text}
+            </div>
+
             {submitted && (
-              <div style={{ fontSize:11, color: isCorrect(item,i)?C.success:C.danger, fontWeight:700, flexShrink:0 }}>
-                {isCorrect(item,i) ? '✓' : `→ pos.${item.order}`}
+              <div 
+                className="text-xs font-bold shrink-0 animate-in fade-in"
+                style={{ color: isCorrect(item, i) ? theme.colors.success : theme.colors.danger }}
+              >
+                {isCorrect(item, i) ? '✓' : `→ pos. ${item.order}`}
               </div>
             )}
-            {data.config?.showLabels && <div style={{ fontSize:10, color:C.muted, fontWeight:700, flexShrink:0 }}>{item.label}</div>}
-            {!submitted && <div style={{ fontSize:18, color:'rgba(255,255,255,.2)', flexShrink:0 }}>⠿</div>}
+            
+            {config?.showLabels && (
+              <div className="text-[10px] font-bold shrink-0" style={{ color: theme.colors.muted }}>
+                {item.label}
+              </div>
+            )}
+            
+            {!submitted && (
+              <div className="text-lg shrink-0 cursor-grab" style={{ color: `${theme.colors.ink}20` }}>
+                ⠿
+              </div>
+            )}
           </div>
         ))}
-        {!submitted ? (
-          <button onClick={validate} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer', marginTop:8 }}>Valider l'ordre</button>
-        ) : (
-          <>
-            {submitted && data.config?.showLabels===false && (
-              <div style={{ background:'rgba(255,255,255,.05)', borderRadius:12, padding:12 }}>
-                {[...data.items].sort((a,b)=>a.order-b.order).map(it => (
-                  <div key={it.id} style={{ fontSize:11, color:C.muted, padding:'3px 0' }}>• {it.label} — {it.text}</div>
-                ))}
-              </div>
-            )}
-            <button onClick={finish} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Terminer</button>
-          </>
-        )}
+
+        <div className="mt-auto pt-4 flex flex-col gap-3">
+          {!submitted ? (
+            <button 
+              onClick={validate} 
+              className="w-full py-3.5 border-none cursor-pointer font-bold text-[15px] active:scale-95 transition-transform"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              Valider l'ordre
+            </button>
+          ) : (
+            <>
+              {submitted && config?.showLabels === false && (
+                <div 
+                  className="p-4 rounded-xl text-xs leading-relaxed animate-in slide-in-from-bottom-2"
+                  style={{ backgroundColor: `${theme.colors.ink}05` }}
+                >
+                  {[...mappedItems].sort((a, b) => a.order - b.order).map(it => (
+                    <div key={it.id} className="py-1" style={{ color: theme.colors.muted }}>
+                      <span className="font-bold mr-2 text-current opacity-80">• {it.label}</span>
+                      {it.text}
+                    </div>
+                  ))}
+                </div>
+              )}
+              <button 
+                onClick={finish} 
+                className="w-full py-3.5 border-none cursor-pointer font-bold text-[15px] active:scale-95 transition-transform animate-in slide-in-from-bottom-2"
+                style={{ 
+                  backgroundColor: theme.colors.primary, 
+                  color: '#fff', 
+                  borderRadius: radBtn, 
+                  fontFamily: theme.fonts.display 
+                }}
+              >
+                Terminer
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -22706,78 +33156,152 @@ export default function Sequencing({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/09_SortGroup.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { SortGroupData, SortGroupItem, SortGroupGroup } from '../types/mechanics';
+import { shuffle } from '../utils/array';
+import GameResult from '../components/GameResult';
 
-
-
-function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
-
-export default function SortGroup({ data, onBack, onComplete }: any) {
+export default function SortGroup({ data, items: propItems, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: SortGroupData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
+  const { config = {} } = data || {};
+  
+  const groups: SortGroupGroup[] = data?.groups && data.groups.length > 0 ? data.groups : [
+    { id: 'g1', label: 'Groupe A', emoji: '🔴', color: '#e74c3c' },
+    { id: 'g2', label: 'Groupe B', emoji: '🔵', color: '#3498db' }
+  ];
 
-  const [queue] = useState(() => shuffle(data.items));
+  const mappedItems: SortGroupItem[] = propItems && propItems.length > 0 ? propItems.map((i, index) => ({
+    id: i.id,
+    text: i.payload.question || i.payload.answer || "",
+    groupId: groups[index % groups.length].id
+  })) : (data?.items && data.items.length > 0 ? data.items : [
+    { id: '1', text: 'Item 1', groupId: 'g1' },
+    { id: '2', text: 'Item 2', groupId: 'g2' }
+  ]);
+
+  const [queue] = useState<SortGroupItem[]>(() => shuffle([...mappedItems]));
   const [qIdx, setQIdx] = useState(0);
-  const [placed, setPlaced] = useState({}); // itemId -> groupId
-  const [feedback, setFeedback] = useState(null); // { correct, groupLabel }
+  const [placed, setPlaced] = useState<Record<string, string>>({});
+  const [feedback, setFeedback] = useState<{correct: boolean, groupLabel: string} | null>(null);
   const [done, setDone] = useState(false);
 
   const current = queue[qIdx];
   const total = queue.length;
-  const correctCount = Object.entries(placed).filter(([id, gid]) => queue.find(i=>i.id===id)?.groupId===gid).length;
+  const correctCount = Object.entries(placed).filter(([id, gid]) => queue.find((i: SortGroupItem)=>i.id===id)?.groupId===gid).length;
 
-  const placeItem = useCallback((groupId) => {
+  const placeItem = useCallback((groupId: string) => {
     if (feedback || !current) return;
     const correct = current.groupId === groupId;
     setPlaced(p => ({...p, [current.id]: groupId}));
-    if (data.config?.validateMode === 'immediate') {
-      const group = data.groups.find(g=>g.id===groupId);
-      setFeedback({ correct, groupLabel: group.label });
+    
+    onResponse?.(current.id, correct ? 3 : 1);
+
+    if (config?.validateMode === 'immediate') {
+      const group = groups.find((g: SortGroupGroup)=>g.id===groupId);
+      setFeedback({ correct, groupLabel: group?.label || '' });
       setTimeout(() => {
         setFeedback(null);
         if (qIdx+1 >= total) { setDone(true); onComplete?.((correctCount+(correct?1:0))*15); }
         else setQIdx(i=>i+1);
       }, 900);
     } else {
-      if (qIdx+1 >= total) { setDone(true); onComplete?.(correctCount*15); }
+      if (qIdx+1 >= total) { setDone(true); onComplete?.((correctCount+(correct?1:0))*15); }
       else setQIdx(i=>i+1);
     }
-  }, [feedback, current, data, qIdx, total, correctCount, onComplete]);
+  }, [feedback, current, config, groups, qIdx, total, correctCount, onComplete, onResponse]);
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🗂️</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{correctCount}/{total} bien classés</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{correctCount*15} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    const finalPoints = correctCount * 15;
+    return (
+      <GameResult 
+        state={correctCount === total ? "win" : "lose"}
+        title={`${correctCount}/${total} bien classés`}
+        points={finalPoints}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Tri par groupes</span>
-        <span style={{ fontSize:12, color:C.muted }}>{qIdx+1}/{total}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Tri par groupes
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {qIdx + 1}/{total}
+        </span>
       </div>
-      <div style={{ height:4, background:C.border }}><div style={{ height:4, background:C.primary, width:`${(qIdx/total)*100}%`, transition:'width .3s' }} /></div>
-      <div style={{ flex:1, padding:'24px 16px', display:'flex', flexDirection:'column', alignItems:'center', gap:24 }}>
-        {/* Carte en cours */}
-        <div style={{ width:'100%', maxWidth:340, background:C.surface, borderRadius:20, padding:'28px 20px', border:`2px solid ${feedback ? (feedback.correct?C.success:C.danger) : C.border}`, textAlign:'center', minHeight:120, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:8, transition:'border-color .2s' }}>
-          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:26, color:C.ink }}>{current?.text}</div>
-          {feedback && <div style={{ fontSize:14, fontWeight:700, color: feedback.correct?C.success:C.danger }}>{feedback.correct ? '✓ Correct !' : '✗ Mauvais'}</div>}
+
+      {/* Progress Bar */}
+      <div className="h-1 w-full" style={{ backgroundColor: border }}>
+        <div 
+          className="h-full transition-all duration-300" 
+          style={{ backgroundColor: theme.colors.primary, width: `${(qIdx / total) * 100}%` }} 
+        />
+      </div>
+
+      <div className="flex-1 p-6 flex flex-col items-center gap-6 max-w-md mx-auto w-full">
+        {/* Current Card */}
+        <div 
+          className="w-full text-center p-7 min-h-[120px] flex flex-col items-center justify-center gap-2 transition-colors duration-200"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `2px solid ${feedback ? (feedback.correct ? theme.colors.success : theme.colors.danger) : border}`,
+            boxShadow: shadow
+          }}
+        >
+          <div className="font-extrabold text-2xl" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+            {current?.text}
+          </div>
+          {feedback && (
+            <div 
+              className="text-sm font-bold animate-in fade-in" 
+              style={{ color: feedback.correct ? theme.colors.success : theme.colors.danger }}
+            >
+              {feedback.correct ? '✓ Correct !' : '✗ Mauvais'}
+            </div>
+          )}
         </div>
-        <div style={{ fontSize:12, color:C.muted }}>Dans quelle catégorie va ce mot ?</div>
-        {/* Groupes */}
-        <div style={{ display:'flex', flexDirection:'column', gap:10, width:'100%', maxWidth:340 }}>
-          {data.groups.map(g => (
-            <button key={g.id} onClick={() => placeItem(g.id)} style={{
-              background:`${g.color}22`, border:`2px solid ${g.color}88`, borderRadius:14,
-              padding:'14px 20px', display:'flex', alignItems:'center', gap:12,
-              fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, color:C.ink, cursor:'pointer'
-            }}>
-              <span style={{ fontSize:22 }}>{g.emoji}</span>
+
+        <div className="text-xs text-center" style={{ color: theme.colors.muted }}>
+          Dans quelle catégorie va cet élément ?
+        </div>
+
+        {/* Groups */}
+        <div className="flex flex-col gap-3 w-full">
+          {groups.map((g: SortGroupGroup) => (
+            <button 
+              key={g.id} 
+              onClick={() => placeItem(g.id)} 
+              className="w-full flex items-center gap-3 p-4 border-2 font-bold text-[15px] cursor-pointer active:scale-95 transition-all"
+              style={{
+                backgroundColor: `${g.color}22`, 
+                borderColor: `${g.color}88`, 
+                borderRadius: radCard,
+                fontFamily: theme.fonts.display, 
+                color: theme.colors.ink
+              }}
+            >
+              <span className="text-2xl">{g.emoji}</span>
               <span>{g.label}</span>
             </button>
           ))}
@@ -22789,36 +33313,55 @@ export default function SortGroup({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/10_LineMatching.tsx">
-import { useTheme } from '../store/useTheme';
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { LineMatchingData } from '../types/mechanics';
+import { shuffle } from '../utils/array';
+import GameResult from '../components/GameResult';
 
+interface LineMatchingRight {
+  text: string;
+  pairId: string;
+}
 
-
-function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
-
-export default function LineMatching({ data, onBack, onComplete }: any) {
+export default function LineMatching({ items: propItems, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: LineMatchingData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
-
-  const [rights] = useState(() => data.config?.shuffleRight ? shuffle(data.pairs.map(p=>({...p.right, pairId:p.id}))) : data.pairs.map(p=>({...p.right, pairId:p.id})));
-  const [selected, setSelected] = useState(null); // pairId of selected left
-  const [connections, setConnections] = useState({}); // leftPairId -> rightPairId
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
+  const { config = {} } = data || {};
+  
+  const pairs = data?.pairs && data.pairs.length > 0 ? data.pairs : (propItems && propItems.length > 0 ? propItems.map((i, index) => ({
+    id: i.id,
+    left: { text: i.payload.question || `Q${index+1}` },
+    right: { text: i.payload.answer || `A${index+1}` }
+  })) : [
+    { id: 'p1', left: { text: 'Pomme' }, right: { text: 'Fruit rouge' } },
+    { id: 'p2', left: { text: 'Banane' }, right: { text: 'Fruit jaune' } }
+  ]);
+  
+  const [rights] = useState<LineMatchingRight[]>(() => 
+    config?.shuffleRight !== false 
+      ? shuffle(pairs.map((p)=>({ ...p.right, pairId: p.id }))) 
+      : pairs.map((p)=>({ ...p.right, pairId: p.id }))
+  );
+  
+  const [selected, setSelected] = useState<string|null>(null);
+  const [connections, setConnections] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [done, setDone] = useState(false);
 
   const correct = Object.entries(connections).filter(([l,r]) => l===r).length;
-  const total = data.pairs.length;
+  const total = pairs.length;
 
-  const pickLeft = (pairId) => {
+  const pickLeft = (pairId: string) => {
     if (submitted) return;
     setSelected(s => s===pairId ? null : pairId);
   };
 
-  const pickRight = (pairId) => {
+  const pickRight = (pairId: string) => {
     if (submitted || !selected) return;
     setConnections(c => {
       const next = {...c};
-      // Remove any existing connection to this right
       Object.keys(next).forEach(k => { if(next[k]===pairId) delete next[k]; });
       next[selected] = pairId;
       return next;
@@ -22826,66 +33369,151 @@ export default function LineMatching({ data, onBack, onComplete }: any) {
     setSelected(null);
   };
 
-  const validate = () => { setSubmitted(true); };
+  const validate = () => {
+    setSubmitted(true);
+    if (onResponse) {
+      pairs.forEach((p) => {
+        onResponse(p.id, connections[p.id] === p.id ? 3 : 1);
+      });
+    }
+  };
+
   const finish = () => { setDone(true); onComplete?.(correct*20); };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🔗</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{correct}/{total} bonnes associations</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{correct*20} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    const finalPoints = correct * 20;
+    return (
+      <GameResult 
+        state={correct === total ? "win" : "lose"}
+        title={`${correct}/${total} bonnes associations`}
+        points={finalPoints}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Associations</span>
-        <span style={{ fontSize:12, color:C.muted }}>{Object.keys(connections).length}/{total}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Associations
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {Object.keys(connections).length}/{total}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'16px', display:'flex', flexDirection:'column', gap:12 }}>
-        <div style={{ fontSize:12, color:C.muted, textAlign:'center', marginBottom:4 }}>Sélectionne un mot à gauche, puis sa définition à droite</div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, flex:1 }}>
-          {/* Gauche */}
-          <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-            {data.pairs.map(p => {
-              const isSelected = selected===p.id;
-              const isConnected = connections[p.id];
-              const isCorrect = submitted && connections[p.id]===p.id;
-              const isWrong = submitted && connections[p.id] && connections[p.id]!==p.id;
+
+      <div className="flex-1 p-4 flex flex-col gap-4 max-w-2xl mx-auto w-full">
+        <div className="text-xs text-center" style={{ color: theme.colors.muted }}>
+          Sélectionne un mot à gauche, puis sa définition à droite
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 flex-1">
+          {/* Left Column */}
+          <div className="flex flex-col gap-2">
+            {pairs.map((p) => {
+              const isSelected = selected === p.id;
+              const isConnected = !!connections[p.id];
+              const isCorrect = submitted && connections[p.id] === p.id;
+              const isWrong = submitted && connections[p.id] && connections[p.id] !== p.id;
+              
               return (
-                <button key={p.id} onClick={() => pickLeft(p.id)} style={{
-                  background: isCorrect?'rgba(45,122,79,.2)':isWrong?'rgba(192,57,43,.15)':isSelected?'rgba(199,91,57,.2)':isConnected?'rgba(255,255,255,.08)':C.surface,
-                  border: `2px solid ${isCorrect?C.success:isWrong?C.danger:isSelected?C.primary:C.border}`,
-                  borderRadius:12, padding:'12px 10px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color:C.ink, cursor:'pointer', textAlign:'left', transition:'all .15s'
-                }}>{p.left.text}</button>
+                <button 
+                  key={p.id} 
+                  onClick={() => pickLeft(p.id)} 
+                  className="p-3 text-left border-2 font-bold text-[13px] transition-all cursor-pointer select-none active:scale-[0.98]"
+                  style={{
+                    backgroundColor: isCorrect ? `${theme.colors.success}33` : isWrong ? `${theme.colors.danger}26` : isSelected ? `${theme.colors.primary}33` : isConnected ? `${theme.colors.ink}14` : theme.colors.surface,
+                    borderColor: isCorrect ? theme.colors.success : isWrong ? theme.colors.danger : isSelected ? theme.colors.primary : isConnected ? `${theme.colors.primary}80` : border,
+                    borderRadius: radCard, 
+                    fontFamily: theme.fonts.display, 
+                    color: theme.colors.ink,
+                    boxShadow: isSelected ? `0 0 0 2px ${theme.colors.primary}33` : !submitted ? shadow : 'none'
+                  }}
+                >
+                  {p.left.text}
+                </button>
               );
             })}
           </div>
-          {/* Droite */}
-          <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-            {rights.map(r => {
+
+          {/* Right Column */}
+          <div className="flex flex-col gap-2">
+            {rights.map((r) => {
               const isLinked = Object.values(connections).includes(r.pairId);
               const leftKey = Object.keys(connections).find(k=>connections[k]===r.pairId);
               const isCorrect = submitted && leftKey===r.pairId;
               const isWrong = submitted && isLinked && leftKey!==r.pairId;
+              const isTargetable = selected && !isLinked;
+              
               return (
-                <button key={r.pairId} onClick={() => pickRight(r.pairId)} style={{
-                  background: isCorrect?'rgba(45,122,79,.2)':isWrong?'rgba(192,57,43,.15)':isLinked?'rgba(255,255,255,.08)':selected?'rgba(99,102,241,.1)':C.surface,
-                  border: `2px solid ${isCorrect?C.success:isWrong?C.danger:isLinked?C.primary:selected?'rgba(99,102,241,.4)':C.border}`,
-                  borderRadius:12, padding:'12px 10px', fontFamily:'Sora,sans-serif', fontWeight:600, fontSize:12, color:C.ink, cursor:'pointer', textAlign:'left', transition:'all .15s'
-                }}>{r.text}</button>
+                <button 
+                  key={r.pairId} 
+                  onClick={() => pickRight(r.pairId)} 
+                  className="p-3 text-left border-2 font-semibold text-xs transition-all cursor-pointer select-none active:scale-[0.98]"
+                  style={{
+                    backgroundColor: isCorrect ? `${theme.colors.success}33` : isWrong ? `${theme.colors.danger}26` : isLinked ? `${theme.colors.ink}14` : isTargetable ? `${theme.colors.primary}10` : theme.colors.surface,
+                    borderColor: isCorrect ? theme.colors.success : isWrong ? theme.colors.danger : isLinked ? `${theme.colors.primary}80` : isTargetable ? `${theme.colors.primary}40` : border,
+                    borderRadius: radCard, 
+                    fontFamily: theme.fonts.display, 
+                    color: theme.colors.ink,
+                    boxShadow: !submitted ? shadow : 'none'
+                  }}
+                >
+                  {r.text}
+                </button>
               );
             })}
           </div>
         </div>
-        {!submitted ? (
-          <button onClick={validate} disabled={Object.keys(connections).length < total} style={{ background: Object.keys(connections).length>=total?C.primary:'rgba(255,255,255,.08)', color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Valider</button>
-        ) : (
-          <button onClick={finish} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Terminer → +{correct*20} pts</button>
-        )}
+
+        {/* Actions */}
+        <div className="mt-auto pt-2 pb-4 flex flex-col gap-3">
+          {!submitted ? (
+            <button 
+              onClick={validate} 
+              disabled={Object.keys(connections).length < total} 
+              className="w-full py-3.5 border-none font-bold text-[15px] transition-transform disabled:opacity-50"
+              style={{ 
+                backgroundColor: Object.keys(connections).length >= total ? theme.colors.primary : `${theme.colors.ink}14`, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display, 
+                cursor: Object.keys(connections).length >= total ? 'pointer' : 'default',
+                transform: Object.keys(connections).length >= total ? 'scale(1)' : 'scale(0.98)'
+              }}
+            >
+              Valider
+            </button>
+          ) : (
+            <button 
+              onClick={finish} 
+              className="w-full py-3.5 border-none cursor-pointer font-bold text-[15px] active:scale-95 transition-transform animate-in slide-in-from-bottom-2"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              Terminer → +{correct * 20} pts
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -22893,206 +33521,465 @@ export default function LineMatching({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/11_Bingo.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { BingoData } from '../types/mechanics';
+import { shuffle } from '../utils/array';
+import GameResult from '../components/GameResult';
 
+type BingoItem = {
+  id: string;
+  term: string;
+  clue: string;
+};
 
-
-function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
-function checkBingo(marked, size) {
-  const grid = Array.from({length:size}, (_,r) => Array.from({length:size}, (_,c) => marked.has(r*size+c)));
-  for(let r=0;r<size;r++) if(grid[r].every(Boolean)) return true;
-  for(let c=0;c<size;c++) if(grid.every(row=>row[c])) return true;
-  if(grid.every((row,i)=>row[i])) return true;
-  if(grid.every((row,i)=>row[size-1-i])) return true;
+function checkBingo(marked: Set<number>, size: number): boolean {
+  const grid = Array.from({ length: size }, (_, r) => 
+    Array.from({ length: size }, (_, c) => marked.has(r * size + c))
+  );
+  for (let r = 0; r < size; r++) if (grid[r].every(Boolean)) return true;
+  for (let c = 0; c < size; c++) if (grid.every(row => row[c])) return true;
+  if (grid.every((row, i) => row[i])) return true;
+  if (grid.every((row, i) => row[size - 1 - i])) return true;
   return false;
 }
 
-export default function Bingo({ data, onBack, onComplete }: any) {
+export default function Bingo({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: BingoData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
 
-  const size = data.config?.gridSize || 4;
-  const [grid] = useState(() => shuffle(data.items).slice(0, size*size));
-  const [called, setCalled] = useState([]);
-  const [marked, setMarked] = useState(new Set());
-  const [bingo, setBingo] = useState(false);
-  const [callerIdx, setCallerIdx] = useState(-1);
-  const [started, setStarted] = useState(false);
-  const callQueue = useRef(shuffle(data.items));
-  const callRef = useRef(null);
+  const { config = {} } = data || {};
+  const size = config?.gridSize || 3;
+
+  const mappedItems: BingoItem[] = items && items.length > 0 ? items.map(item => ({
+    id: item.id,
+    term: item.payload.answer || item.payload.question || "",
+    clue: item.payload.question || item.payload.translation || ""
+  })) : [
+    { id: '1', term: 'Tiguidou', clue: "C'est super, d'accord" },
+    { id: '2', term: 'Pantoute', clue: "Pas du tout" },
+    { id: '3', term: 'Poudrerie', clue: "Neige soufflée par le vent" },
+    { id: '4', term: 'Dépanneur', clue: "Petit commerce de proximité" },
+    { id: '5', term: 'Chum', clue: "Petit ami / ami" },
+    { id: '6', term: 'Blonde', clue: "Petite amie" },
+    { id: '7', term: 'Piastre', clue: "Un dollar" },
+    { id: '8', term: 'Frette', clue: "Très froid" },
+    { id: '9', term: 'Gougounes', clue: "Sandales de plage" },
+  ];
+
+  const [grid] = useState<BingoItem[]>(() => shuffle([...mappedItems]).slice(0, size * size));
+  const [called, setCalled] = useState<BingoItem[]>([]);
+  const [marked, setMarked] = useState<Set<number>>(new Set());
+  const [bingo, setBingo] = useState<boolean>(false);
+  const [started, setStarted] = useState<boolean>(false);
+  const [done, setDone] = useState<boolean>(false);
+  
+  const callQueue = useRef<BingoItem[]>(shuffle([...mappedItems]));
+  const callRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const callNext = useCallback(() => {
-    setCallerIdx(i => {
-      const ni = i+1;
-      if (ni >= callQueue.current.length) return i;
+    setCalled(c => {
+      const ni = c.length;
+      if (ni >= callQueue.current.length) return c;
       const item = callQueue.current[ni];
-      setCalled(c => [...c, item]);
-      return ni;
+      return [...c, item];
     });
   }, []);
 
   useEffect(() => {
     if (!started || bingo) return;
-    if (data.config?.callerMode === 'auto') {
-      callRef.current = setInterval(callNext, data.config?.callerInterval||5000);
-      callNext();
-      return () => clearInterval(callRef.current);
+    if (config?.callerMode === 'auto') {
+      callRef.current = setInterval(callNext, config?.callerInterval || 5000);
+      return () => {
+        if (callRef.current) clearInterval(callRef.current);
+      };
     }
-  }, [started, bingo, callNext, data.config]);
+  }, [started, bingo, callNext, config]);
 
-  const markCell = (idx) => {
+  const markCell = (idx: number) => {
     if (!started || bingo) return;
     const item = grid[idx];
-    const lastCall = called[called.length-1];
-    if (!lastCall || item.id !== lastCall.id) return; // must match last called
+    const lastCall = called[called.length - 1];
+    
+    if (!lastCall || item.id !== lastCall.id) {
+      if (onResponse) onResponse(item.id, 1);
+      return; 
+    }
+    
     const newMarked = new Set(marked);
     newMarked.add(idx);
     setMarked(newMarked);
-    if (checkBingo(newMarked, size)) { setBingo(true); clearInterval(callRef.current); onComplete?.(100); }
+    
+    if (onResponse) onResponse(item.id, 3);
+
+    if (checkBingo(newMarked, size)) { 
+      setBingo(true); 
+      if (callRef.current) clearInterval(callRef.current); 
+      setTimeout(() => {
+        setDone(true);
+        onComplete?.(100); 
+      }, 1500); // Wait a bit to show BINGO before closing
+    }
   };
 
-  const currentCall = called[called.length-1];
+  const currentCall = called[called.length - 1];
+
+  if (!mappedItems || mappedItems.length < size * size) {
+    return <div className="p-4" style={{ color: theme.colors.ink }}>Pas assez d'items pour une grille de {size}x{size}.</div>;
+  }
+
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="BINGO !"
+        points={100}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Bingo Québécois</span>
-        <span style={{ fontSize:12, color:C.muted }}>{marked.size} cochés</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Bingo
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {marked.size} cochés
+        </span>
       </div>
-      <div style={{ flex:1, padding:'16px', display:'flex', flexDirection:'column', gap:14 }}>
-        {/* Caleur */}
-        <div style={{ background:C.surface, borderRadius:16, padding:16, border:`1px solid ${currentCall?C.primary:C.border}`, textAlign:'center', minHeight:80, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center' }}>
+
+      <div className="flex-1 p-5 flex flex-col gap-6 max-w-md mx-auto w-full">
+        {/* Caller */}
+        <div 
+          className="p-5 text-center min-h-[100px] flex flex-col items-center justify-center transition-colors duration-300"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `1px solid ${currentCall && !bingo ? theme.colors.primary : border}`,
+            boxShadow: shadow
+          }}
+        >
           {!started ? (
-            <button onClick={() => setStarted(true)} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:12, padding:'12px 28px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, cursor:'pointer' }}>▶ Commencer</button>
-          ) : currentCall ? (
-            <>
-              <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:4 }}>Le caleur dit…</div>
-              <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:15, color:C.ink }}>{currentCall.clue}</div>
-            </>
-          ) : <div style={{ fontSize:13, color:C.muted }}>En attente du premier appel…</div>}
+            <button 
+              onClick={() => setStarted(true)} 
+              className="px-6 py-3 border-none cursor-pointer font-bold text-sm active:scale-95 transition-transform"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              ▶ Commencer
+            </button>
+          ) : currentCall && !bingo ? (
+            <div className="animate-in fade-in zoom-in-95 duration-200">
+              <div className="text-[11px] font-bold uppercase tracking-wider mb-2" style={{ color: theme.colors.muted }}>
+                Le caleur dit…
+              </div>
+              <div className="font-extrabold text-[15px] leading-snug" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+                {currentCall.clue}
+              </div>
+            </div>
+          ) : bingo ? (
+            <div className="animate-in fade-in zoom-in duration-300 font-extrabold text-2xl" style={{ fontFamily: theme.fonts.display, color: theme.colors.success }}>
+              🎉 BINGO !
+            </div>
+          ) : (
+            <div className="text-[13px]" style={{ color: theme.colors.muted }}>
+              En attente du premier appel…
+            </div>
+          )}
         </div>
-        {/* Grille */}
-        {bingo && <div style={{ textAlign:'center', fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:22, color:C.success }}>🎉 BINGO !</div>}
-        <div style={{ display:'grid', gridTemplateColumns:`repeat(${size},1fr)`, gap:6, flex:1 }}>
+
+        {/* Grid */}
+        <div 
+          className="grid flex-1 max-h-[400px] gap-2 mx-auto w-full"
+          style={{ gridTemplateColumns: `repeat(${size}, minmax(0, 1fr))` }}
+        >
           {grid.map((item, i) => {
             const isMarked = marked.has(i);
-            const isCurrentCall = currentCall && item.id===currentCall.id && !isMarked;
+            const isCurrentCall = currentCall && item.id === currentCall.id && !isMarked;
+            
             return (
-              <button key={item.id} onClick={() => markCell(i)} style={{
-                background: isMarked ? C.success : isCurrentCall ? 'rgba(199,91,57,.2)' : C.surface,
-                border: `1px solid ${isMarked?C.success:isCurrentCall?C.primary:C.border}`,
-                borderRadius:10, padding:'8px 4px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:11,
-                color: isMarked?'#fff':C.ink, cursor:'pointer', textAlign:'center', lineHeight:1.3, transition:'all .2s',
-                opacity: isMarked?0.7:1
-              }}>{item.term}</button>
+              <button 
+                key={item.id} 
+                onClick={() => markCell(i)} 
+                className="p-2 border-2 font-bold text-xs leading-snug transition-all cursor-pointer break-words flex items-center justify-center text-center active:scale-95"
+                style={{
+                  backgroundColor: isMarked ? theme.colors.success : isCurrentCall ? `${theme.colors.primary}33` : theme.colors.surface,
+                  borderColor: isMarked ? theme.colors.success : isCurrentCall ? theme.colors.primary : border,
+                  borderRadius: radBtn, 
+                  fontFamily: theme.fonts.display,
+                  color: isMarked ? '#fff' : theme.colors.ink, 
+                  opacity: isMarked ? 0.8 : 1,
+                  boxShadow: !isMarked && !isCurrentCall ? shadow : 'none'
+                }}
+              >
+                {item.term}
+              </button>
             );
           })}
         </div>
-        {data.config?.callerMode==='manual' && started && !bingo && (
-          <button onClick={callNext} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Appel suivant →</button>
+
+        {/* Manual Call Next */}
+        {config?.callerMode === 'manual' && started && !bingo && (
+          <button 
+            onClick={callNext} 
+            className="w-full py-3.5 border-none cursor-pointer font-bold text-[15px] active:scale-95 transition-transform mt-auto"
+            style={{ 
+              backgroundColor: theme.colors.primary, 
+              color: '#fff', 
+              borderRadius: radBtn, 
+              fontFamily: theme.fonts.display 
+            }}
+          >
+            Appel suivant →
+          </button>
         )}
       </div>
     </div>
   );
 }
-
-Bingo.defaultProps = {};
-const ref = { current: null };
 </file>
 
 <file path="src/mechanics/12_SituationalChoice.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { SituationalChoiceData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
+type Choice = {
+  id: string;
+  text: string;
+  register: 'formal' | 'casual' | 'wrong';
+  correct: boolean;
+  feedback: string;
+};
 
+type Scenario = {
+  id: string;
+  situation: string;
+  question: string;
+  choices: Choice[];
+};
 
-const REGISTER_COLORS = { formal:'#2B5AA0', casual:'#2D7A4F', wrong:'#c0392b' };
-
-export default function SituationalChoice({ data, onBack, onComplete }: any) {
+export default function SituationalChoice({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: SituationalChoiceData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
 
-  const [idx, setIdx] = useState(0);
-  const [picked, setPicked] = useState(null);
-  const [score, setScore] = useState(0);
-  const [done, setDone] = useState(false);
+  const REGISTER_COLORS: Record<Choice['register'], string> = { 
+    formal: '#2B5AA0', 
+    casual: theme.colors.success, 
+    wrong: theme.colors.danger 
+  };
 
-  const sc = data.scenarios[idx];
+  const scenarios: Scenario[] = items && items.length > 0 ? items.map((i, index) => ({
+    id: i.id,
+    situation: i.payload.question || "",
+    question: "Que dites-vous ?",
+    choices: [
+      { id: `c1-${index}`, text: i.payload.answer || "Oui", register: 'formal', correct: true, feedback: i.payload.exemple || 'Parfait.' },
+      { id: `c2-${index}`, text: (i.payload.answer || "Oui").toLowerCase(), register: 'casual', correct: true, feedback: 'Un peu familier, mais correct.' },
+      { id: `c3-${index}`, text: 'Je ne sais pas', register: 'wrong', correct: false, feedback: 'Mauvaise réponse.' }
+    ]
+  })) : [
+    {
+      id: 's1',
+      situation: 'Vous arrivez à un entretien d\'embauche et rencontrez le recruteur.',
+      question: 'Que dites-vous ?',
+      choices: [
+        { id: 'c1', text: 'Enchanté de vous rencontrer.', register: 'formal', correct: true, feedback: 'Parfait pour un contexte professionnel.' },
+        { id: 'c2', text: 'Salut, ça va ?', register: 'casual', correct: false, feedback: 'Trop familier pour un entretien.' },
+        { id: 'c3', text: 'Quoi de neuf ?', register: 'wrong', correct: false, feedback: 'Totalement inadapté.' }
+      ]
+    }
+  ];
+
+  const [idx, setIdx] = useState<number>(0);
+  const [picked, setPicked] = useState<string | null>(null);
+  const [score, setScore] = useState<number>(0);
+  const [done, setDone] = useState<boolean>(false);
+
+  if (!scenarios || scenarios.length === 0) {
+    return <div className="p-4" style={{ color: theme.colors.ink }}>No scenarios found.</div>;
+  }
+
+  const sc: Scenario = scenarios[idx];
   const answered = picked !== null;
 
-  const pick = useCallback((choice) => {
+  const pick = useCallback((choice: Choice) => {
     if (answered) return;
     setPicked(choice.id);
-    if (choice.correct) setScore(s=>s+30);
-  }, [answered]);
+    if (choice.correct) setScore(s => s + 30);
+
+    if (onResponse && sc.id) {
+      onResponse(sc.id, choice.correct ? 3 : 1);
+    }
+  }, [answered, onResponse, sc.id]);
 
   const next = () => {
-    if (idx+1 >= data.scenarios.length) { setDone(true); onComplete?.(score); }
-    else { setIdx(i=>i+1); setPicked(null); }
+    if (idx + 1 >= scenarios.length) { 
+      setDone(true); 
+      onComplete?.(score); 
+    } else { 
+      setIdx(i => i + 1); 
+      setPicked(null); 
+    }
   };
 
-  const choiceBg = (c) => {
-    if (!answered) return C.surface;
-    if (c.correct) return 'rgba(45,122,79,.2)';
-    if (c.id===picked) return 'rgba(192,57,43,.15)';
-    return 'rgba(255,255,255,.03)';
+  const choiceBg = (c: Choice): string => {
+    if (!answered) return theme.colors.surface;
+    if (c.correct) return `${theme.colors.success}33`;
+    if (c.id === picked) return `${theme.colors.danger}26`;
+    return `${theme.colors.ink}08`;
   };
-  const choiceBorder = (c) => {
-    if (!answered) return C.border;
-    if (c.correct) return C.success;
-    if (c.id===picked && !c.correct) return C.danger;
-    return 'rgba(255,255,255,.05)';
+  
+  const choiceBorder = (c: Choice): string => {
+    if (!answered) return border;
+    if (c.correct) return theme.colors.success;
+    if (c.id === picked && !c.correct) return theme.colors.danger;
+    return `${theme.colors.ink}14`;
   };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🎭</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Scénarios terminés !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Scénarios terminés !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Situation</span>
-        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{data.scenarios.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Situation
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {idx + 1}/{scenarios.length}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:14 }}>
-        {/* Situation */}
-        <div style={{ background:C.surface, borderRadius:16, padding:18, border:`1px solid ${C.border}` }}>
-          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:8 }}>🎭 Situation</div>
-          <p style={{ fontSize:14, color:C.ink, lineHeight:1.65, margin:'0 0 10px' }}>{sc.situation}</p>
-          <p style={{ fontSize:13, color:C.primary, fontWeight:700, margin:0 }}>{sc.question}</p>
+
+      <div className="flex-1 p-5 flex flex-col gap-4 max-w-md mx-auto w-full">
+        {/* Situation Card */}
+        <div 
+          className="p-5"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `1px solid ${border}`,
+            boxShadow: shadow
+          }}
+        >
+          <div className="text-[10px] font-bold uppercase tracking-widest mb-3" style={{ color: theme.colors.muted }}>
+            🎭 Situation
+          </div>
+          <p className="text-sm leading-relaxed mb-3" style={{ color: theme.colors.ink }}>
+            {sc.situation}
+          </p>
+          <p className="text-[13px] font-bold m-0" style={{ color: theme.colors.primary }}>
+            {sc.question}
+          </p>
         </div>
-        {/* Choix */}
-        <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
-          {sc.choices.map(c => (
-            <button key={c.id} onClick={() => pick(c)} style={{
-              background:choiceBg(c), border:`2px solid ${choiceBorder(c)}`,
-              borderRadius:14, padding:'14px 16px', textAlign:'left', cursor: answered?'default':'pointer',
-              transition:'all .2s'
-            }}>
-              <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', gap:8 }}>
-                <div style={{ fontFamily:'Sora,sans-serif', fontWeight:600, fontSize:14, color:C.ink, lineHeight:1.5 }}>{c.text}</div>
-                <div style={{ background:`${REGISTER_COLORS[c.register]}33`, color:REGISTER_COLORS[c.register], borderRadius:999, padding:'2px 8px', fontSize:9, fontWeight:700, textTransform:'uppercase', flexShrink:0 }}>{c.register}</div>
+
+        {/* Choices */}
+        <div className="flex flex-col gap-3">
+          {sc.choices.map((c: Choice) => (
+            <button 
+              key={c.id} 
+              onClick={() => pick(c)} 
+              className={`p-4 text-left border-2 transition-all ${answered ? 'cursor-default' : 'cursor-pointer active:scale-[0.98]'}`}
+              style={{
+                backgroundColor: choiceBg(c), 
+                borderColor: choiceBorder(c),
+                borderRadius: radCard, 
+              }}
+            >
+              <div className="flex justify-between items-start gap-3">
+                <div className="font-semibold text-sm leading-snug" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+                  {c.text}
+                </div>
+                <div 
+                  className="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase shrink-0"
+                  style={{ 
+                    backgroundColor: `${REGISTER_COLORS[c.register]}33`, 
+                    color: REGISTER_COLORS[c.register] 
+                  }}
+                >
+                  {c.register}
+                </div>
               </div>
-              {answered && c.id===picked && (
-                <div style={{ marginTop:8, fontSize:12, color:c.correct?C.success:C.danger, lineHeight:1.5 }}>{c.feedback}</div>
+              
+              {/* Feedback Section */}
+              {answered && c.id === picked && (
+                <div 
+                  className="mt-3 text-xs leading-relaxed animate-in slide-in-from-top-1" 
+                  style={{ color: c.correct ? theme.colors.success : theme.colors.danger }}
+                >
+                  {c.feedback}
+                </div>
               )}
-              {answered && c.correct && c.id!==picked && (
-                <div style={{ marginTop:8, fontSize:12, color:C.success, lineHeight:1.5 }}>✓ {c.feedback}</div>
+              {answered && c.correct && c.id !== picked && (
+                <div 
+                  className="mt-3 text-xs leading-relaxed animate-in slide-in-from-top-1" 
+                  style={{ color: theme.colors.success }}
+                >
+                  ✓ {c.feedback}
+                </div>
               )}
             </button>
           ))}
         </div>
+
+        {/* Next Button */}
         {answered && (
-          <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>
-            {idx+1<data.scenarios.length ? 'Scénario suivant →' : 'Voir résultats'}
+          <button 
+            onClick={next} 
+            className="w-full py-3.5 border-none cursor-pointer font-bold text-[15px] active:scale-95 transition-transform mt-2 animate-in slide-in-from-bottom-2"
+            style={{ 
+              backgroundColor: theme.colors.primary, 
+              color: '#fff', 
+              borderRadius: radBtn, 
+              fontFamily: theme.fonts.display 
+            }}
+          >
+            {idx + 1 < scenarios.length ? 'Scénario suivant →' : 'Voir résultats'}
           </button>
         )}
       </div>
@@ -23102,44 +33989,79 @@ export default function SituationalChoice({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/13_CategoryBlaster.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { CategoryBlasterData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
+import { shuffle } from '../utils/array';
 
+type BlasterItem = {
+  id: string;
+  categoryId: string;
+  text: string;
+};
 
+type BlasterCategory = {
+  id: string;
+  label: string;
+  emoji: string;
+  color: string;
+};
 
-function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
+type FeedbackData = { correct: boolean; label: string };
 
-export default function CategoryBlaster({ data, onBack, onComplete }: any) {
+export default function CategoryBlaster({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: CategoryBlasterData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, shadow } = useThemeTokens();
 
-  const items = useRef(shuffle(data.items));
-  const [idx, setIdx] = useState(0);
-  const [score, setScore] = useState(0);
-  const [combo, setCombo] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(1);
-  const [timeMax, setTimeMax] = useState(data.config?.baseTimeMs || 3500);
-  const [feedback, setFeedback] = useState(null);
-  const [done, setDone] = useState(false);
-  const timerRef = useRef(null);
+  const { config = {} } = data || {};
 
-  const startTimer = useCallback((ms) => {
+  const categories: BlasterCategory[] = [
+    { id: 'c1', label: 'Nourriture', emoji: '🍔', color: '#3498db' },
+    { id: 'c2', label: 'Transport', emoji: '🚗', color: '#e67e22' },
+  ];
+
+  const mappedItems: BlasterItem[] = items && items.length > 0 ? items.map((i, index) => ({
+    id: i.id,
+    categoryId: index % 2 === 0 ? 'c1' : 'c2', // placeholder categorization
+    text: i.payload.question || i.payload.answer || ""
+  })) : [
+    { id: '1', categoryId: 'c1', text: 'Pomme' },
+    { id: '2', categoryId: 'c2', text: 'Voiture' },
+    { id: '3', categoryId: 'c1', text: 'Pizza' },
+    { id: '4', categoryId: 'c2', text: 'Avion' }
+  ];
+
+  const gameItems = useRef<BlasterItem[]>(shuffle([...mappedItems]));
+  const [idx, setIdx] = useState<number>(0);
+  const [score, setScore] = useState<number>(0);
+  const [combo, setCombo] = useState<number>(0);
+  const [timeLeft, setTimeLeft] = useState<number>(1);
+  const [timeMax, setTimeMax] = useState<number>(config.baseTimeMs || 3500);
+  const [feedback, setFeedback] = useState<FeedbackData | null>(null);
+  const [done, setDone] = useState<boolean>(false);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const startTimer = useCallback((ms: number) => {
     setTimeLeft(ms);
     setTimeMax(ms);
-    clearInterval(timerRef.current);
+    if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
       setTimeLeft(t => {
         if (t <= 50) {
-          clearInterval(timerRef.current);
-          // Time's up = wrong
-          setFeedback({ correct:false, label:'⏱ Temps !' });
+          if (timerRef.current) clearInterval(timerRef.current);
+          setFeedback({ correct: false, label: '⏱ Temps !' });
           setCombo(0);
           setTimeout(() => {
             setFeedback(null);
             setIdx(i => {
-              const ni = i+1;
-              if (ni >= items.current.length) { setDone(true); return i; }
-              const nextMs = Math.max(ms * (data.config?.speedupFactor||.92), data.config?.minTimeMs||1200);
+              const ni = i + 1;
+              if (ni >= gameItems.current.length) { 
+                setDone(true); 
+                return i; 
+              }
+              const nextMs = Math.max(ms * (config?.speedupFactor || .92), config?.minTimeMs || 1200);
               startTimer(nextMs);
               return ni;
             });
@@ -23149,75 +34071,139 @@ export default function CategoryBlaster({ data, onBack, onComplete }: any) {
         return t - 50;
       });
     }, 50);
-  }, [data.config]);
+  }, [config]);
 
   useEffect(() => {
-    startTimer(data.config?.baseTimeMs || 3500);
-    return () => clearInterval(timerRef.current);
-  }, []);
+    startTimer(config?.baseTimeMs || 3500);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [config, startTimer]);
 
-  const pick = useCallback((catId) => {
+  const pick = useCallback((catId: string) => {
     if (feedback) return;
-    clearInterval(timerRef.current);
-    const item = items.current[idx];
+    if (timerRef.current) clearInterval(timerRef.current);
+    
+    const item = gameItems.current[idx];
     const correct = item.categoryId === catId;
-    const newCombo = correct ? combo+1 : 0;
-    const pts = correct ? (10 + (data.config?.comboBonus && newCombo>=3 ? newCombo*5 : 0)) : 0;
-    setScore(s => s+pts);
+    
+    if (onResponse) {
+      onResponse(item.id, correct ? 3 : 1);
+    }
+    
+    const newCombo = correct ? combo + 1 : 0;
+    const pts = correct ? (10 + (config?.comboBonus && newCombo >= 3 ? newCombo * 5 : 0)) : 0;
+    
+    setScore(s => s + pts);
     setCombo(newCombo);
-    setFeedback({ correct, label: correct ? (newCombo>=3 ? `🔥 COMBO x${newCombo}!` : '✓ Correct !') : '✗ Mauvais' });
+    setFeedback({ correct, label: correct ? (newCombo >= 3 ? `🔥 COMBO x${newCombo}!` : '✓ Correct !') : '✗ Mauvais' });
+    
     setTimeout(() => {
       setFeedback(null);
-      const ni = idx+1;
-      if (ni >= items.current.length) { setDone(true); onComplete?.(score+pts); return; }
+      const ni = idx + 1;
+      if (ni >= gameItems.current.length) { 
+        setDone(true); 
+        onComplete?.(score + pts); 
+        return; 
+      }
       setIdx(ni);
-      const nextMs = Math.max(timeMax * (data.config?.speedupFactor||.92), data.config?.minTimeMs||1200);
+      const nextMs = Math.max(timeMax * (config?.speedupFactor || .92), config?.minTimeMs || 1200);
       startTimer(nextMs);
     }, 700);
-  }, [feedback, idx, combo, score, timeMax, data.config, startTimer, onComplete]);
+  }, [feedback, idx, combo, score, timeMax, config, startTimer, onComplete, onResponse]);
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>⚡</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{score} points !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>{items.current.length} items classés</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title={`${score} points !`}
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
-  const item = items.current[idx];
-  const pct = timeMax > 0 ? (timeLeft/timeMax)*100 : 0;
+  const item = gameItems.current[idx];
+  const pct = timeMax > 0 ? (timeLeft / timeMax) * 100 : 0;
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Blaster</span>
-        <span style={{ fontSize:12, color:C.muted }}>⭐ {score} {combo>=3?'🔥':''}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Blaster
+        </span>
+        <span className="text-xs font-bold" style={{ color: theme.colors.muted }}>
+          ⭐ {score} {combo >= 3 ? '🔥' : ''}
+        </span>
       </div>
+
       {/* Timer bar */}
-      <div style={{ height:6, background:C.border, transition:'none' }}>
-        <div style={{ height:6, background: pct>50?C.success:pct>25?'#f59e0b':C.danger, width:`${pct}%`, transition:'width .05s linear' }} />
+      <div className="h-1.5 w-full" style={{ backgroundColor: border }}>
+        <div 
+          className="h-full transition-all duration-75" 
+          style={{ 
+            backgroundColor: pct > 50 ? theme.colors.success : pct > 25 ? '#f59e0b' : theme.colors.danger, 
+            width: `${pct}%` 
+          }} 
+        />
       </div>
-      <div style={{ flex:1, padding:'24px 16px', display:'flex', flexDirection:'column', alignItems:'center', gap:24 }}>
+
+      <div className="flex-1 p-6 flex flex-col items-center gap-6 max-w-md mx-auto w-full">
         {/* Item card */}
-        <div style={{ width:'100%', maxWidth:340, background:feedback?(feedback.correct?'rgba(45,122,79,.15)':'rgba(192,57,43,.12)'):C.surface, borderRadius:22, border:`2px solid ${feedback?(feedback.correct?C.success:C.danger):C.border}`, padding:'36px 20px', textAlign:'center', transition:'all .15s', minHeight:160, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center' }}>
+        <div 
+          className="w-full text-center p-9 min-h-[160px] flex flex-col items-center justify-center transition-all duration-200"
+          style={{ 
+            backgroundColor: feedback ? (feedback.correct ? `${theme.colors.success}26` : `${theme.colors.danger}1f`) : theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `2px solid ${feedback ? (feedback.correct ? theme.colors.success : theme.colors.danger) : border}`,
+            boxShadow: shadow
+          }}
+        >
           {feedback ? (
-            <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:20, color:feedback.correct?C.success:C.danger }}>{feedback.label}</div>
+            <div className="font-extrabold text-xl animate-in fade-in zoom-in-95" style={{ fontFamily: theme.fonts.display, color: feedback.correct ? theme.colors.success : theme.colors.danger }}>
+              {feedback.label}
+            </div>
           ) : (
-            <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:30, color:C.ink }}>{item.text}</div>
+            <div className="font-extrabold text-3xl animate-in fade-in" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+              {item?.text}
+            </div>
           )}
         </div>
-        <div style={{ fontSize:11, color:C.muted }}>{idx+1}/{items.current.length} · Combo: {combo}</div>
-        {/* Catégories */}
-        <div style={{ display:'flex', flexDirection:'column', gap:10, width:'100%', maxWidth:340 }}>
-          {data.categories.map(cat => (
-            <button key={cat.id} onClick={() => pick(cat.id)} style={{
-              background:`${cat.color}22`, border:`2px solid ${cat.color}66`,
-              borderRadius:14, padding:'16px 20px', display:'flex', alignItems:'center', gap:14,
-              fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:16, color:C.ink, cursor:'pointer'
-            }}>
-              <span style={{ fontSize:24 }}>{cat.emoji}</span>
+
+        <div className="text-[11px] uppercase tracking-widest font-bold" style={{ color: theme.colors.muted }}>
+          {idx + 1}/{gameItems.current.length} · Combo: {combo}
+        </div>
+
+        {/* Categories */}
+        <div className="flex flex-col gap-3 w-full">
+          {categories.map((cat: BlasterCategory) => (
+            <button 
+              key={cat.id} 
+              onClick={() => pick(cat.id)} 
+              className="w-full flex items-center gap-4 p-4 border-2 font-bold text-base cursor-pointer active:scale-95 transition-all"
+              style={{
+                backgroundColor: `${cat.color}22`, 
+                borderColor: `${cat.color}66`,
+                borderRadius: radCard, 
+                fontFamily: theme.fonts.display, 
+                color: theme.colors.ink
+              }}
+            >
+              <span className="text-2xl">{cat.emoji}</span>
               <span>{cat.label}</span>
             </button>
           ))}
@@ -23229,14 +34215,16 @@ export default function CategoryBlaster({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/14_TileMerge.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { TileMergeData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
+import { shuffle } from '../utils/array';
 
+type TileMergeBankItem = NonNullable<TileMergeData['tileBank']>[number];
 
-
-function shuffle(arr) { return [...arr].sort(()=>Math.random()-.5); }
-
-function initGrid(bank, size) {
+function initGrid(bank: TileMergeBankItem[], size: number) {
   const picked = shuffle(bank).slice(0, size*size);
   return Array.from({length:size}, (_,r) =>
     Array.from({length:size}, (_,c) => {
@@ -23246,25 +34234,40 @@ function initGrid(bank, size) {
   );
 }
 
-export default function TileMerge({ data, onBack, onComplete }: any) {
+export default function TileMerge({ items: propItems, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: TileMergeData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
-
-  const size = data.config?.gridSize || 4;
-  const [grid, setGrid] = useState(() => initGrid(data.tileBank, size));
+  const { border, shadow } = useThemeTokens();
+  const { config = {} } = data || {};
+  const size = config?.gridSize || 4;
+  
+  const tileBank: TileMergeBankItem[] = data?.tileBank && data.tileBank.length > 0 ? data.tileBank : (propItems && propItems.length > 0 ? propItems.flatMap((i, index) => [
+    { id: `t1-${index}`, pairId: `p-${index}`, sourceId: i.id, label: i.payload.question || "" },
+    { id: `t2-${index}`, pairId: `p-${index}`, sourceId: i.id, label: i.payload.answer || "" }
+  ]) : [
+    { id: '1', pairId: 'p1', label: 'A' },
+    { id: '2', pairId: 'p1', label: 'A' },
+    { id: '3', pairId: 'p2', label: 'B' },
+    { id: '4', pairId: 'p2', label: 'B' }
+  ]);
+  
+  const [grid, setGrid] = useState(() => initGrid(tileBank, size));
   const [merged, setMerged] = useState(0);
   const [score, setScore] = useState(0);
-  const [selected, setSelected] = useState(null); // {r,c}
-  const total = Math.floor(data.tileBank.length / 2);
+  const [selected, setSelected] = useState<{r:number, c:number} | null>(null);
 
-  const selectTile = useCallback((r, c) => {
+  const total = Math.floor(tileBank.length / 2);
+
+  const selectTile = useCallback((r: number, c: number) => {
     const tile = grid[r][c];
     if (!tile) return;
+    
     if (!selected) { setSelected({r,c}); return; }
     if (selected.r===r && selected.c===c) { setSelected(null); return; }
+    
     const selTile = grid[selected.r][selected.c];
-    if (selTile && tile.pairId === selTile.id) {
-      // Match! Remove both
+    if (selTile && tile.pairId === selTile.pairId) {
+      if (onResponse && tile.sourceId) onResponse(tile.sourceId, 3);
+      
       const newGrid = grid.map(row => [...row]);
       newGrid[selected.r][selected.c] = null;
       newGrid[r][c] = null;
@@ -23272,57 +34275,97 @@ export default function TileMerge({ data, onBack, onComplete }: any) {
       const newMerged = merged+1;
       setMerged(newMerged);
       setScore(s => s+50);
+      
       if (newMerged >= total) { setTimeout(() => onComplete?.(score+50), 400); }
     }
     setSelected(null);
-  }, [grid, selected, merged, score, total, onComplete]);
+  }, [grid, selected, merged, score, total, onComplete, onResponse]);
 
   const tileColors = [
     '#6366f1','#8b5cf6','#C75B39','#2D7A4F','#2B5AA0','#f59e0b','#06b6d4','#ec4899'
   ];
-  const colorMap = {};
-  data.tileBank.forEach((t,i) => { colorMap[t.id]=tileColors[i%tileColors.length]; colorMap[t.pairId]=tileColors[i%tileColors.length]; });
+  
+  const colorMap: Record<string, string> = {};
+  tileBank.forEach((t: TileMergeBankItem, i: number) => { colorMap[t.id]=tileColors[i%tileColors.length]; colorMap[t.pairId]=tileColors[i%tileColors.length]; });
 
   const done = merged >= total;
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🔢</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Toutes les paires !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Toutes les paires !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Fusion de Tuiles</span>
-        <span style={{ fontSize:12, color:C.muted }}>{merged}/{total} paires · {score} pts</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Fusion de Tuiles
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {merged}/{total} paires · {score} pts
+        </span>
       </div>
-      <div style={{ flex:1, padding:16, display:'flex', flexDirection:'column', alignItems:'center', gap:16, justifyContent:'center' }}>
-        <div style={{ fontSize:12, color:C.muted, textAlign:'center' }}>Sélectionne deux tuiles qui vont ensemble</div>
-        <div style={{ display:'grid', gridTemplateColumns:`repeat(${size},1fr)`, gap:8, width:'100%', maxWidth:360 }}>
+
+      <div className="flex-1 p-5 flex flex-col items-center gap-5 justify-center">
+        <div className="text-xs text-center" style={{ color: theme.colors.muted }}>
+          Sélectionne deux tuiles qui vont ensemble
+        </div>
+        
+        <div 
+          className="grid gap-2 w-full max-w-sm"
+          style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}
+        >
           {grid.map((row, r) => row.map((tile, c) => {
-            const isSel = selected && selected.r===r && selected.c===c;
-            const color = tile ? (colorMap[tile.id]||C.primary) : 'transparent';
+            const isSel = selected && selected.r === r && selected.c === c;
+            const color = tile ? (colorMap[tile.id] || theme.colors.primary) : 'transparent';
+            
             return (
-              <div key={`${r}-${c}`} onClick={() => tile && selectTile(r,c)} style={{
-                aspectRatio:'1', borderRadius:12,
-                background: tile ? `${color}22` : 'rgba(255,255,255,.02)',
-                border: `2px solid ${isSel ? color : tile ? color+'66' : 'rgba(255,255,255,.05)'}`,
-                display:'flex', alignItems:'center', justifyContent:'center',
-                fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:11, color:C.ink,
-                cursor: tile?'pointer':'default', textAlign:'center', padding:4,
-                transform: isSel ? 'scale(1.05)' : 'scale(1)',
-                transition:'all .15s', lineHeight:1.2,
-                boxShadow: isSel ? `0 0 12px ${color}66` : 'none'
-              }}>{tile ? tile.label : ''}</div>
+              <div 
+                key={`${r}-${c}`} 
+                onClick={() => tile && selectTile(r, c)} 
+                className={`
+                  aspect-square rounded-xl flex items-center justify-center p-1 text-center leading-tight
+                  font-extrabold text-[11px] transition-all duration-150
+                  ${tile ? 'cursor-pointer' : 'cursor-default'}
+                `}
+                style={{
+                  backgroundColor: tile ? `${color}22` : `${theme.colors.ink}05`,
+                  border: `2px solid ${isSel ? color : tile ? `${color}66` : `${theme.colors.ink}0d`}`,
+                  color: theme.colors.ink,
+                  fontFamily: theme.fonts.display,
+                  transform: isSel ? 'scale(1.05)' : 'scale(1)',
+                  boxShadow: isSel ? `0 0 12px ${color}66` : tile ? shadow : 'none'
+                }}
+              >
+                {tile ? tile.label : ''}
+              </div>
             );
           }))}
         </div>
-        <div style={{ fontSize:12, color:C.muted }}>Tuiles restantes : {grid.flat().filter(Boolean).length}</div>
+        
+        <div className="text-xs" style={{ color: theme.colors.muted }}>
+          Tuiles restantes : {grid.flat().filter(Boolean).length}
+        </div>
       </div>
     </div>
   );
@@ -23330,19 +34373,29 @@ export default function TileMerge({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/15_WordSearch.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useRef, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { WordSearchData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
-
+type WordSearchWord = NonNullable<WordSearchData['words']>[number];
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const COLORS = ['#6366f1','#C75B39','#2D7A4F','#f59e0b','#06b6d4'];
 
-function buildGrid(words, size) {
+type PlacedWord = {
+  wordId: string;
+  cells: {r: number, c: number}[];
+};
+
+function buildGrid(words: WordSearchWord[], size: number) {
   const grid = Array.from({length:size}, () => Array(size).fill(''));
-  const placed = []; // {wordId, cells:[{r,c}]}
-  const dirs = [{dr:0,dc:1},{dr:1,dc:0}]; // H, V
+  const placed: PlacedWord[] = [];
+  const dirs = [{dr:0,dc:1},{dr:1,dc:0}];
+  
   for (const w of words) {
+    if (!w.word) continue;
     const letters = w.word.toUpperCase();
     let tries = 0, ok = false;
     while (tries++ < 200 && !ok) {
@@ -23357,43 +34410,56 @@ function buildGrid(words, size) {
       }
     }
   }
+  
   for(let r=0;r<size;r++) for(let c=0;c<size;c++) if(!grid[r][c]) grid[r][c]=LETTERS[Math.floor(Math.random()*26)];
+  
   return { grid, placed };
 }
 
-function cellKey(r,c) { return `${r}-${c}`; }
+function cellKey(r: number,c: number) { return `${r}-${c}`; }
 
-export default function WordSearch({ data, onBack, onComplete }: any) {
+export default function WordSearch({ items: propItems, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: WordSearchData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border } = useThemeTokens();
+  const { config = {} } = data || {};
+  const size = config.gridSize || 10;
+  
+  const words: WordSearchWord[] = data?.words && data.words.length > 0 ? data.words : (propItems && propItems.length > 0 ? propItems.map((i) => ({
+    id: i.id,
+    word: (i.payload.answer || i.payload.question || "").replace(/[^A-Za-z]/g, '').substring(0, 8),
+    hint: i.payload.question || ""
+  })) : [
+    { id: '1', word: 'POMME', hint: 'Fruit rouge' },
+    { id: '2', word: 'BANANE', hint: 'Fruit jaune' }
+  ]);
 
-  const size = data.config?.gridSize || 10;
-  const [{ grid, placed }] = useState(() => buildGrid(data.words, size));
-  const [found, setFound] = useState([]); // wordIds
-  const [selecting, setSelecting] = useState([]); // [{r,c}]
+  const [{ grid, placed }] = useState(() => buildGrid(words, size));
+  const [found, setFound] = useState<string[]>([]);
+  const [selecting, setSelecting] = useState<{r:number, c:number}[]>([]);
   const [touching, setTouching] = useState(false);
-  const gridRef = useRef(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   const foundCells = new Set(
     placed.filter(p=>found.includes(p.wordId)).flatMap(p=>p.cells.map(c=>cellKey(c.r,c.c)))
   );
   const selCells = new Set(selecting.map(c=>cellKey(c.r,c.c)));
 
-  const checkSelection = useCallback((sel) => {
+  const checkSelection = useCallback((sel: {r:number, c:number}[]) => {
     for (const p of placed) {
       if (found.includes(p.wordId)) continue;
       const match = p.cells.every((c,i) => sel[i] && sel[i].r===c.r && sel[i].c===c.c);
       const revMatch = p.cells.every((c,i) => sel[i] && sel[p.cells.length-1-i] && sel[p.cells.length-1-i].r===c.r && sel[p.cells.length-1-i].c===c.c);
       if ((sel.length===p.cells.length) && (match||revMatch)) {
+        if (onResponse) onResponse(p.wordId, 3);
         const newFound = [...found, p.wordId];
         setFound(newFound);
-        if (newFound.length >= data.words.length) setTimeout(() => onComplete?.(newFound.length*30), 500);
+        if (newFound.length >= words.length) setTimeout(() => onComplete?.(newFound.length*30), 500);
         return;
       }
     }
-  }, [found, placed, data.words.length, onComplete]);
+  }, [found, placed, words.length, onComplete, onResponse]);
 
-  const getCell = useCallback((clientX, clientY) => {
+  const getCell = useCallback((clientX: number, clientY: number) => {
     if (!gridRef.current) return null;
     const rect = gridRef.current.getBoundingClientRect();
     const cellW = rect.width / size;
@@ -23404,49 +34470,110 @@ export default function WordSearch({ data, onBack, onComplete }: any) {
     return { r, c };
   }, [size]);
 
-  const onMouseDown = (r,c) => setSelecting([{r,c}]);
-  const onMouseEnter = (r,c) => { if (selecting.length>0) setSelecting(s => [...s.filter(x=>!(x.r===r&&x.c===c)), {r,c}]); };
+  const onMouseDown = (r: number,c: number) => setSelecting([{r,c}]);
+  const onMouseEnter = (r: number,c: number) => { if (selecting.length>0) setSelecting(s => [...s.filter(x=>!(x.r===r&&x.c===c)), {r,c}]); };
   const onMouseUp = () => { checkSelection(selecting); setSelecting([]); };
-  const onTouchStart = (e) => { e.preventDefault(); setTouching(true); const cell=getCell(e.touches[0].clientX,e.touches[0].clientY); if(cell) setSelecting([cell]); };
-  const onTouchMove = (e) => { e.preventDefault(); const cell=getCell(e.touches[0].clientX,e.touches[0].clientY); if(cell&&selecting.length>0) setSelecting(s=>{const last=s[s.length-1];return last.r===cell.r&&last.c===cell.c?s:[...s,cell]}); };
+
+  const onTouchStart = (e: React.TouchEvent) => { e.preventDefault(); setTouching(true); const cell=getCell(e.touches[0].clientX,e.touches[0].clientY); if(cell) setSelecting([cell]); };
+  const onTouchMove = (e: React.TouchEvent) => { e.preventDefault(); const cell=getCell(e.touches[0].clientX,e.touches[0].clientY); if(cell&&selecting.length>0) setSelecting(s=>{const last=s[s.length-1];return last.r===cell.r&&last.c===cell.c?s:[...s,cell]}); };
   const onTouchEnd = () => { checkSelection(selecting); setSelecting([]); setTouching(false); };
 
-  const colorMap = {};
+  const colorMap: Record<string, string> = {};
   placed.forEach((p,i) => { colorMap[p.wordId] = COLORS[i%COLORS.length]; });
 
+  if (found.length >= words.length) {
+    return (
+      <GameResult 
+        state="win"
+        title="Mots tous trouvés !"
+        points={words.length * 30}
+        onBack={onBack}
+      />
+    );
+  }
+
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Mots cachés</span>
-        <span style={{ fontSize:12, color:C.muted }}>{found.length}/{data.words.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Mots cachés
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {found.length}/{words.length}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'12px', display:'flex', flexDirection:'column', gap:12 }}>
+
+      <div className="flex-1 p-3 flex flex-col gap-4 max-w-lg mx-auto w-full justify-center">
         {/* Grid */}
-        <div ref={gridRef}
-          onMouseUp={onMouseUp} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
-          style={{ display:'grid', gridTemplateColumns:`repeat(${size},1fr)`, gap:2, userSelect:'none', touchAction:'none' }}>
+        <div 
+          ref={gridRef}
+          onMouseUp={onMouseUp} 
+          onTouchStart={onTouchStart} 
+          onTouchMove={onTouchMove} 
+          onTouchEnd={onTouchEnd}
+          className="grid gap-0.5 select-none touch-none mx-auto w-full"
+          style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}
+        >
           {grid.map((row,r) => row.map((letter,c) => {
             const key = cellKey(r,c);
             const isFnd = foundCells.has(key);
             const isSel = selCells.has(key);
             const fndWord = placed.find(p=>found.includes(p.wordId)&&p.cells.some(cl=>cl.r===r&&cl.c===c));
-            const bg = isFnd ? `${colorMap[fndWord?.wordId]||C.success}44` : isSel ? 'rgba(199,91,57,.3)' : 'transparent';
+            const bg = isFnd ? `${colorMap[fndWord?.wordId || '']||theme.colors.success}44` : isSel ? `${theme.colors.primary}4d` : 'transparent';
+            
             return (
-              <div key={key} onMouseDown={() => onMouseDown(r,c)} onMouseEnter={() => onMouseEnter(r,c)}
-                style={{ aspectRatio:'1', display:'flex', alignItems:'center', justifyContent:'center', borderRadius:4, background:bg, fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:11, color: isFnd?C.ink:isSel?C.primary:C.muted, cursor:'default', transition:'background .1s' }}>
+              <div 
+                key={key} 
+                onMouseDown={() => onMouseDown(r,c)} 
+                onMouseEnter={() => onMouseEnter(r,c)}
+                className="aspect-square flex items-center justify-center rounded transition-colors duration-100 font-bold text-[11px] cursor-default"
+                style={{ 
+                  backgroundColor: bg, 
+                  fontFamily: theme.fonts.display, 
+                  color: isFnd ? theme.colors.ink : isSel ? theme.colors.primary : theme.colors.muted 
+                }}
+              >
                 {letter}
               </div>
             );
           }))}
         </div>
+
         {/* Words list */}
-        <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
-          {data.words.map((w,i) => (
-            <div key={w.id} style={{ background: found.includes(w.id) ? `${COLORS[i%COLORS.length]}22` : C.surface, border:`1px solid ${found.includes(w.id)?COLORS[i%COLORS.length]:C.border}`, borderRadius:999, padding:'4px 12px', fontSize:12, fontWeight:700, color:C.ink, textDecoration:found.includes(w.id)?'line-through':'none', opacity:found.includes(w.id)?0.6:1 }}>
-              {data.config?.hintMode==='word' ? w.word : w.hint}
-            </div>
-          ))}
+        <div className="flex flex-wrap gap-2 justify-center mt-2">
+          {words.map((w: WordSearchWord, i: number) => {
+            const isFound = found.includes(w.id);
+            const wColor = COLORS[i % COLORS.length];
+            return (
+              <div 
+                key={w.id} 
+                className="rounded-full px-3 py-1 text-xs font-bold transition-all duration-300"
+                style={{ 
+                  backgroundColor: isFound ? `${wColor}22` : theme.colors.surface, 
+                  border: `1px solid ${isFound ? wColor : border}`, 
+                  color: theme.colors.ink, 
+                  textDecoration: isFound ? 'line-through' : 'none', 
+                  opacity: isFound ? 0.6 : 1 
+                }}
+              >
+                {config?.hintMode === 'word' ? w.word : w.hint}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -23455,40 +34582,65 @@ export default function WordSearch({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/16_ChainReaction.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { ChainReactionData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
+type ChainReactionWord = NonNullable<ChainReactionData['wordBank']>[number];
 
-
-export default function ChainReaction({ data, onBack, onComplete }: any) {
+export default function ChainReaction({ items: propItems, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: ChainReactionData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
-
-  const timer = data.config?.timerSeconds || 8;
-  const [chain, setChain] = useState([]);
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
+  const { config = {} } = data || {};
+  
+  const wordBank: ChainReactionWord[] = data?.wordBank && data.wordBank.length > 0 ? data.wordBank : (propItems && propItems.length > 0 ? propItems.map((i) => {
+    const w = (i.payload.answer || i.payload.question || "").toUpperCase().replace(/[^A-Z]/g, '');
+    return {
+      id: i.id,
+      word: w,
+      startLetter: w.charAt(0) || 'A',
+      endLetter: w.charAt(w.length-1) || 'A'
+    };
+  }) : [
+    { id: '1', word: 'POMME', startLetter: 'P', endLetter: 'E' },
+    { id: '2', word: 'ELEPHANT', startLetter: 'E', endLetter: 'T' }
+  ]);
+  
+  const timer = config?.timerSeconds || 8;
+  const [chain, setChain] = useState<ChainReactionWord[]>([]);
   const [input, setInput] = useState('');
   const [timeLeft, setTimeLeft] = useState(timer);
   const [error, setError] = useState('');
   const [done, setDone] = useState(false);
-  const [usedIds, setUsedIds] = useState(new Set());
-  const timerRef = useRef(null);
-  const inputRef = useRef(null);
+  const [usedIds, setUsedIds] = useState(new Set<string>());
 
-  const startWord = data.wordBank[Math.floor(Math.random()*data.wordBank.length)];
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const startWord = wordBank[Math.floor(Math.random()*wordBank.length)] || { id: 'x', word: 'X', startLetter: 'X', endLetter: 'X' };
   const [firstWord] = useState(startWord);
 
   useEffect(() => {
     if (done) return;
     setTimeLeft(timer);
-    clearInterval(timerRef.current);
+    if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
       setTimeLeft(t => {
-        if (t <= 1) { clearInterval(timerRef.current); setDone(true); onComplete?.(chain.length*20); return 0; }
+        if (t <= 1) { 
+          if (timerRef.current) clearInterval(timerRef.current); 
+          setDone(true); 
+          onComplete?.(chain.length*20); 
+          return 0; 
+        }
         return t-1;
       });
     }, 1000);
-    return () => clearInterval(timerRef.current);
-  }, [chain.length, done]);
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, [chain.length, done, timer, onComplete]);
 
   const lastWord = chain.length > 0 ? chain[chain.length-1] : firstWord;
   const neededLetter = lastWord.endLetter;
@@ -23496,67 +34648,147 @@ export default function ChainReaction({ data, onBack, onComplete }: any) {
   const submit = useCallback(() => {
     const val = input.toUpperCase().trim();
     if (!val) return;
-    const match = data.wordBank.find(w => w.word===val && !usedIds.has(w.id) && w.startLetter===neededLetter);
+    
+    const match = wordBank.find((w: ChainReactionWord) => w.word===val && !usedIds.has(w.id) && w.startLetter===neededLetter);
     if (!match) {
       setError(val.startsWith(neededLetter) ? 'Mot non trouvé dans la banque !' : `Doit commencer par la lettre "${neededLetter}" !`);
       setTimeout(() => setError(''), 1500);
+      if (onResponse && chain.length > 0) onResponse(chain[chain.length-1].id, 1);
     } else {
+      if (onResponse) onResponse(match.id, 3);
       setChain(c => [...c, match]);
       setUsedIds(s => new Set([...s, match.id]));
       setInput('');
       setError('');
     }
-  }, [input, data.wordBank, usedIds, neededLetter]);
+  }, [input, wordBank, usedIds, neededLetter, onResponse, chain]);
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>⛓️</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Chaîne de {chain.length} mots !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:20 }}>+{chain.length*20} pts</div>
-      <div style={{ display:'flex', flexDirection:'column', gap:6, width:'100%', maxWidth:340, marginBottom:24 }}>
-        {[firstWord,...chain].map((w,i) => (
-          <div key={i} style={{ fontSize:12, color:C.muted, textAlign:'center' }}>{i===0?'🎯':'→'} {w.word}</div>
-        ))}
-      </div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title={`Chaîne de ${chain.length} mots !`}
+        points={chain.length * 20}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Chaîne de mots</span>
-        <span style={{ fontSize:12, color: timeLeft<=3?C.danger:C.muted, fontWeight:700 }}>⏱ {timeLeft}s</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Chaîne de mots
+        </span>
+        <span 
+          className="text-xs font-bold" 
+          style={{ color: timeLeft <= 3 ? theme.colors.danger : theme.colors.muted }}
+        >
+          ⏱ {timeLeft}s
+        </span>
       </div>
-      <div style={{ height:4, background:C.border }}><div style={{ height:4, background:timeLeft>timer*.4?C.success:C.danger, width:`${(timeLeft/timer)*100}%`, transition:'width 1s linear' }}/></div>
-      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
-        {/* Current word */}
-        <div style={{ background:C.surface, borderRadius:18, padding:'20px', border:`1px solid ${C.border}`, textAlign:'center' }}>
-          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:8 }}>Mot actuel</div>
-          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:28, color:C.ink, marginBottom:8 }}>{lastWord.word}</div>
-          <div style={{ fontSize:13, color:C.primary, fontWeight:700 }}>Prochain mot commence par : <span style={{ fontSize:22 }}>"{neededLetter}"</span></div>
+
+      {/* Timer Bar */}
+      <div className="h-1 w-full" style={{ backgroundColor: border }}>
+        <div 
+          className="h-full transition-all duration-1000 ease-linear" 
+          style={{ 
+            backgroundColor: timeLeft > timer * 0.4 ? theme.colors.success : theme.colors.danger, 
+            width: `${(timeLeft / timer) * 100}%` 
+          }}
+        />
+      </div>
+
+      <div className="flex-1 p-5 flex flex-col gap-4 max-w-md mx-auto w-full">
+        {/* Current Word Card */}
+        <div 
+          className="p-5 text-center"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `1px solid ${border}`,
+            boxShadow: shadow
+          }}
+        >
+          <div className="text-[11px] font-bold uppercase tracking-widest mb-2" style={{ color: theme.colors.muted }}>
+            Mot actuel
+          </div>
+          <div className="font-extrabold text-3xl mb-3" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+            {lastWord.word}
+          </div>
+          <div className="text-[13px] font-bold" style={{ color: theme.colors.primary }}>
+            Prochain mot commence par : <span className="text-2xl ml-1">"{neededLetter}"</span>
+          </div>
         </div>
+        
         {/* Input */}
-        <div style={{ display:'flex', gap:8 }}>
-          <input ref={inputRef} value={input} onChange={e=>setInput(e.target.value.toUpperCase())}
-            onKeyDown={e=>e.key==='Enter'&&submit()}
+        <div className="flex gap-2">
+          <input 
+            ref={inputRef} 
+            value={input} 
+            onChange={e => setInput(e.target.value.toUpperCase())}
+            onKeyDown={e => e.key === 'Enter' && submit()}
             placeholder={`Mot commençant par "${neededLetter}"…`}
-            style={{ flex:1, background:C.surface, border:`1px solid ${error?C.danger:C.border}`, borderRadius:12, padding:'12px 14px', color:C.ink, fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, outline:'none' }} />
-          <button onClick={submit} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:12, padding:'12px 18px', fontFamily:'Sora,sans-serif', fontWeight:700, cursor:'pointer' }}>→</button>
+            className="flex-1 p-3 outline-none transition-colors"
+            style={{ 
+              backgroundColor: theme.colors.surface, 
+              border: `2px solid ${error ? theme.colors.danger : border}`, 
+              borderRadius: radCard, 
+              color: theme.colors.ink, 
+              fontFamily: theme.fonts.display, 
+              fontWeight: 700, 
+              fontSize: 14 
+            }} 
+          />
+          <button 
+            onClick={submit} 
+            className="px-5 border-none font-bold cursor-pointer active:scale-95 transition-transform"
+            style={{ 
+              backgroundColor: theme.colors.primary, 
+              color: '#fff', 
+              borderRadius: radCard, 
+              fontFamily: theme.fonts.display 
+            }}
+          >
+            →
+          </button>
         </div>
-        {error && <div style={{ fontSize:13, color:C.danger, textAlign:'center', fontWeight:700 }}>{error}</div>}
-        {/* Chain */}
-        <div style={{ display:'flex', flexDirection:'column', gap:6, maxHeight:200, overflow:'auto' }}>
-          {[firstWord,...chain].map((w,i) => (
-            <div key={i} style={{ fontSize:12, color:C.muted, display:'flex', alignItems:'center', gap:8 }}>
-              <span style={{ width:20, textAlign:'right', color:'rgba(255,255,255,.25)' }}>{i+1}</span>
-              <span style={{ width:20 }}>{i===0?'🎯':'→'}</span>
-              <span style={{ fontWeight:700, color:C.ink }}>{w.word}</span>
+        {error && (
+          <div className="text-[13px] font-bold text-center animate-in fade-in" style={{ color: theme.colors.danger }}>
+            {error}
+          </div>
+        )}
+        
+        {/* Chain Display */}
+        <div className="flex flex-col gap-2 overflow-auto py-2 flex-1">
+          {[firstWord, ...chain].map((w, i) => (
+            <div key={i} className="flex items-center gap-3 text-xs" style={{ color: theme.colors.muted }}>
+              <span className="w-5 text-right font-medium opacity-50">{i + 1}</span>
+              <span className="w-5 text-center">{i === 0 ? '🎯' : '→'}</span>
+              <span className="font-bold text-sm" style={{ color: theme.colors.ink }}>{w.word}</span>
             </div>
           ))}
+          {/* Scroll anchor */}
+          <div />
         </div>
-        <div style={{ fontSize:11, color:C.muted, textAlign:'center' }}>Chaîne actuelle : {chain.length} mots · {chain.length*20} pts</div>
+
+        <div className="text-[11px] text-center pt-2 mt-auto" style={{ color: theme.colors.muted }}>
+          Chaîne actuelle : {chain.length} mots · {chain.length * 20} pts
+        </div>
       </div>
     </div>
   );
@@ -23564,30 +34796,32 @@ export default function ChainReaction({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/17_CombinationBuilder.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { CombinationBuilderData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
-
-
-export default function CombinationBuilder({ data, onBack, onComplete }: any) {
+export default function CombinationBuilder({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: CombinationBuilderData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, shadow } = useThemeTokens();
 
-  const reels = data.reels;
+  const { config = {}, reels = [], validCombinations = [] } = data || {};
+
   const [positions, setPositions] = useState(reels.map(() => 0));
   const [held, setHeld] = useState(reels.map(() => false));
   const [spinning, setSpinning] = useState(false);
-  const [spinsLeft, setSpinsLeft] = useState(data.config?.maxSpins || 3);
-  const [result, setResult] = useState(null);
+  const [spinsLeft, setSpinsLeft] = useState(config?.maxSpins || 3);
+  const [result, setResult] = useState<{ win: boolean; result?: string; definition?: string; points?: number } | null>(null);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
 
   const currentCombo = positions.map((p,i) => reels[i].items[p]);
 
-  const checkCombo = useCallback((pos) => {
+  const checkCombo = useCallback((pos: number[]) => {
     const combo = pos.map((p,i) => reels[i].items[p]);
-    return data.validCombinations.find(v => v.combo.every((c,i) => c===combo[i]));
-  }, [reels, data.validCombinations]);
+    return validCombinations.find((v) => v.combo.every((c, i: number) => c===combo[i]));
+  }, [reels, validCombinations]);
 
   const spin = useCallback(() => {
     if (spinning || spinsLeft <= 0) return;
@@ -23603,80 +34837,176 @@ export default function CombinationBuilder({ data, onBack, onComplete }: any) {
         setSpinsLeft(newSpins);
         setPositions(pos => {
           const match = checkCombo(pos);
-          if (match) { setResult({ win:true, ...match }); setScore(s=>s+match.points); onComplete?.(score+match.points); }
-          else if (newSpins<=0) { setResult({ win:false }); }
+          if (match) {
+            setResult({ win:true, ...match });
+            setScore(s=>s+(match.points || 0));
+            // Simulate response logic for integration
+            if (onResponse) onResponse(`combo_${match.result}`, 3);
+            onComplete?.(score+(match.points || 0));
+          }
+          else if (newSpins<=0) {
+             setResult({ win:false });
+          }
           return pos;
         });
       }
     }, 80);
-  }, [spinning, spinsLeft, held, reels, checkCombo, score, onComplete]);
+  }, [spinning, spinsLeft, held, reels, checkCombo, score, onComplete, onResponse]);
 
-  const toggleHold = (i) => {
+  const toggleHold = (i: number) => {
     if (spinning || spinsLeft<=0 || result?.win) return;
     setHeld(h => h.map((v,idx) => idx===i?!v:v));
   };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🎰</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Terminé !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Loto-Vocab 🎰</span>
-        <span style={{ fontSize:12, color:C.muted }}>{spinsLeft} tours · {score} pts</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Loto-Vocab 🎰
+        </span>
+        <span className="text-xs font-bold" style={{ color: theme.colors.muted }}>
+          {spinsLeft} tours · {score} pts
+        </span>
       </div>
-      <div style={{ flex:1, padding:'32px 16px', display:'flex', flexDirection:'column', alignItems:'center', gap:28 }}>
+
+      <div className="flex-1 p-6 flex flex-col items-center gap-7 justify-center max-w-md mx-auto w-full">
         {/* Reels */}
-        <div style={{ display:'flex', gap:12, justifyContent:'center' }}>
+        <div className="flex gap-3 justify-center">
           {reels.map((reel, i) => (
-            <div key={reel.id} onClick={() => toggleHold(i)} style={{ display:'flex', flexDirection:'column', alignItems:'center', gap:8, cursor:'pointer' }}>
-              <div style={{ width:80, height:80, borderRadius:16, background: spinning && !held[i] ? C.surface : C.surface, border:`2px solid ${held[i]?C.success:C.border}`, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color:C.ink, transition:'border-color .15s' }}>
+            <div 
+              key={reel.id} 
+              onClick={() => toggleHold(i)} 
+              className="flex flex-col items-center gap-2 cursor-pointer active:scale-95 transition-transform"
+            >
+              <div 
+                className="w-20 h-20 rounded-2xl border-2 flex items-center justify-center font-extrabold text-lg transition-colors"
+                style={{ 
+                  backgroundColor: spinning && !held[i] ? theme.colors.surface : theme.colors.surface, 
+                  borderColor: held[i] ? theme.colors.success : border, 
+                  color: theme.colors.ink,
+                  fontFamily: theme.fonts.display,
+                  boxShadow: shadow
+                }}
+              >
                 {reel.items[positions[i]] || '—'}
               </div>
-              <div style={{ fontSize:10, fontWeight:700, color:held[i]?C.success:C.muted, textTransform:'uppercase' }}>{held[i]?'🔒 Tenu':'Tap tenir'}</div>
+              <div 
+                className="text-[10px] font-bold uppercase tracking-wider" 
+                style={{ color: held[i] ? theme.colors.success : theme.colors.muted }}
+              >
+                {held[i] ? '🔒 Tenu' : 'Tap tenir'}
+              </div>
             </div>
           ))}
         </div>
+
         {/* Résultat */}
         {result && (
-          <div style={{ background: result.win?'rgba(45,122,79,.15)':'rgba(192,57,43,.1)', borderRadius:16, padding:16, border:`1px solid ${result.win?C.success:C.danger}`, textAlign:'center', width:'100%', maxWidth:340 }}>
+          <div 
+            className="w-full text-center p-4 border-2 animate-in zoom-in-95"
+            style={{ 
+              backgroundColor: result.win ? `${theme.colors.success}26` : `${theme.colors.danger}1f`, 
+              borderRadius: radCard, 
+              borderColor: result.win ? theme.colors.success : theme.colors.danger 
+            }}
+          >
             {result.win ? (
               <>
-                <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:20, color:C.success, marginBottom:4 }}>🎉 {result.result} !</div>
-                <div style={{ fontSize:13, color:C.muted, marginBottom:8 }}>{result.definition}</div>
-                <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color:'#F5C542' }}>+{result.points} pts</div>
-                <button onClick={() => setDone(true)} style={{ marginTop:12, background:C.primary, color:'#fff', border:'none', borderRadius:12, padding:'10px 24px', fontFamily:'Sora,sans-serif', fontWeight:700, cursor:'pointer' }}>Terminer</button>
+                <div className="font-extrabold text-xl mb-1" style={{ fontFamily: theme.fonts.display, color: theme.colors.success }}>
+                  🎉 {result.result} !
+                </div>
+                <div className="text-[13px] mb-2" style={{ color: theme.colors.muted }}>
+                  {result.definition}
+                </div>
+                <div className="font-extrabold text-base mb-3" style={{ fontFamily: theme.fonts.display, color: '#F5C542' }}>
+                  +{result.points} pts
+                </div>
+                <button 
+                  onClick={() => setDone(true)} 
+                  className="px-6 py-2.5 rounded-xl border-none font-bold text-sm cursor-pointer"
+                  style={{ backgroundColor: theme.colors.primary, color: '#fff', fontFamily: theme.fonts.display }}
+                >
+                  Terminer
+                </button>
               </>
             ) : (
               <>
-                <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color:C.danger, marginBottom:8 }}>Aucune combinaison valide</div>
-                <button onClick={() => setDone(true)} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:12, padding:'10px 24px', fontFamily:'Sora,sans-serif', fontWeight:700, cursor:'pointer' }}>Terminer</button>
+                <div className="font-extrabold text-base mb-3" style={{ fontFamily: theme.fonts.display, color: theme.colors.danger }}>
+                  Aucune combinaison valide
+                </div>
+                <button 
+                  onClick={() => setDone(true)} 
+                  className="px-6 py-2.5 rounded-xl border-none font-bold text-sm cursor-pointer"
+                  style={{ backgroundColor: theme.colors.primary, color: '#fff', fontFamily: theme.fonts.display }}
+                >
+                  Terminer
+                </button>
               </>
             )}
           </div>
         )}
+
         {/* Spin button */}
         {!result && (
-          <button onClick={spin} disabled={spinning||spinsLeft<=0} style={{
-            background: spinsLeft>0?C.primary:'rgba(255,255,255,.08)', color:'#fff', border:'none', borderRadius:20,
-            padding:'18px 48px', fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:18, cursor: spinsLeft>0?'pointer':'default',
-            boxShadow: spinsLeft>0?'0 4px 20px rgba(199,91,57,.4)':'none'
-          }}>
+          <button 
+            onClick={spin} 
+            disabled={spinning || spinsLeft <= 0} 
+            className="rounded-full px-12 py-4 border-none font-extrabold text-lg transition-transform active:scale-95"
+            style={{
+              backgroundColor: spinsLeft > 0 ? theme.colors.primary : `${theme.colors.ink}14`, 
+              color: spinsLeft > 0 ? '#fff' : theme.colors.muted,
+              fontFamily: theme.fonts.display,
+              cursor: spinsLeft > 0 ? 'pointer' : 'default',
+              boxShadow: spinsLeft > 0 ? `0 4px 20px ${theme.colors.primary}66` : 'none'
+            }}
+          >
             {spinning ? '🎰 …' : `Tourner (${spinsLeft} restants)`}
           </button>
         )}
+
         {/* Combinaisons valides */}
-        <div style={{ width:'100%', maxWidth:340 }}>
-          <div style={{ fontSize:10, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:8 }}>Combinaisons possibles</div>
-          <div style={{ display:'flex', flexWrap:'wrap', gap:6 }}>
-            {data.validCombinations.map(v => (
-              <div key={v.result} style={{ background:C.surface, borderRadius:999, padding:'4px 10px', fontSize:11, fontWeight:700, color:C.muted, border:`1px solid ${C.border}` }}>{v.result}</div>
+        <div className="w-full mt-4">
+          <div className="text-[10px] font-bold uppercase tracking-widest mb-3" style={{ color: theme.colors.muted }}>
+            Combinaisons possibles
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {validCombinations.map((v) => (
+              <div 
+                key={v.result} 
+                className="rounded-full px-3 py-1 text-[11px] font-bold border"
+                style={{ 
+                  backgroundColor: theme.colors.surface, 
+                  borderColor: border,
+                  color: theme.colors.muted 
+                }}
+              >
+                {v.result}
+              </div>
             ))}
           </div>
         </div>
@@ -23687,37 +35017,43 @@ export default function CombinationBuilder({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/18_DialogueTree.tsx">
-import { useTheme } from '../store/useTheme';
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import React, { useState } from 'react';
+import { BaseGameProps } from '../types';
+import { DialogueTreeData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
-
-
-export default function DialogueTree({ data, onBack, onComplete }: any) {
+export default function DialogueTree({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: DialogueTreeData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
 
-  const char = data.config?.character || { name:'PNJ', avatar:'🤖' };
-  const [nodeId, setNodeId] = useState(data.startNode);
+  const { config = { character: { name: 'PNJ', avatar: '🤖' } }, startNode = 'n1', nodes = {} } = data || {};
+
+  const char = config?.character || { name:'PNJ', avatar:'🤖' };
+  const [nodeId, setNodeId] = useState(startNode);
   const [score, setScore] = useState(0);
-  const [lastFeedback, setLastFeedback] = useState(null);
-  const [history, setHistory] = useState([]);
+  const [lastFeedback, setLastFeedback] = useState<{text: string; good: boolean} | null>(null);
+  const [history, setHistory] = useState<{npc: string; player?: string}[]>([]);
   const [done, setDone] = useState(false);
-  const [outcome, setOutcome] = useState(null);
+  const [outcome, setOutcome] = useState<'win' | 'neutral' | 'lose' | null>(null);
 
-  const node = data.nodes[nodeId];
+  const node = nodes[nodeId];
 
-  const pick = (choice) => {
+  const pick = (choice: any) => {
     const newScore = score + (choice.points||0);
     setScore(newScore);
     setLastFeedback({ text: choice.feedback, good: (choice.points||0) > 0 });
     setHistory(h => [...h, { npc: node.npc, player: choice.text }]);
     setTimeout(() => {
       setLastFeedback(null);
-      const nextNode = data.nodes[choice.next];
+      const nextNode = nodes[choice.next];
       if (nextNode?.isEnd) {
         setOutcome(nextNode.outcome);
         setHistory(h => [...h, { npc: nextNode.npc }]);
         setDone(true);
+        if (items?.[0] && onResponse) {
+           onResponse(items[0].id, (choice.points || 0) > 0 ? 5 : 1);
+        }
         onComplete?.(newScore);
       } else {
         setNodeId(choice.next);
@@ -23725,68 +35061,129 @@ export default function DialogueTree({ data, onBack, onComplete }: any) {
     }, 1600);
   };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', padding:20 }}>
-      <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:20 }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:16, color:C.ink }}>Dialogue terminé</span>
+  if (done) {
+    return (
+      <GameResult 
+        state={outcome === 'win' || outcome === 'neutral' ? 'win' : 'lose'}
+        title="Dialogue terminé"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
+
+  return (
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <div className="flex items-center gap-2">
+          <span className="text-xl">{char.avatar}</span>
+          <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+            {char.name}
+          </span>
+        </div>
+        <span className="text-xs font-bold" style={{ color: theme.colors.muted }}>
+          ⭐ {score}
+        </span>
       </div>
-      <div style={{ flex:1, display:'flex', flexDirection:'column', gap:12, marginBottom:20 }}>
-        {history.map((h, i) => (
+
+      <div className="flex-1 p-4 flex flex-col gap-4 max-w-lg mx-auto w-full">
+        {/* Historique compact */}
+        {history.slice(-2).map((h,i) => (
           <React.Fragment key={i}>
-            <div style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
-              <span style={{ fontSize:24, flexShrink:0 }}>{char.avatar}</span>
-              <div style={{ background:C.surface, borderRadius:14, borderTopLeftRadius:4, padding:'10px 14px', maxWidth:'75%', fontSize:13, color:C.ink, lineHeight:1.5 }}>{h.npc}</div>
+            <div className="flex gap-2.5 items-start">
+              <span className="text-xl shrink-0 opacity-70">{char.avatar}</span>
+              <div 
+                className="p-3 text-xs leading-relaxed max-w-[85%]"
+                style={{ 
+                  backgroundColor: theme.colors.surface, 
+                  borderRadius: radCard, 
+                  borderTopLeftRadius: 4, 
+                  color: theme.colors.muted 
+                }}
+              >
+                {h.npc}
+              </div>
             </div>
             {h.player && (
-              <div style={{ display:'flex', justifyContent:'flex-end' }}>
-                <div style={{ background:'rgba(199,91,57,.2)', border:'1px solid rgba(199,91,57,.4)', borderRadius:14, borderTopRightRadius:4, padding:'10px 14px', maxWidth:'75%', fontSize:13, color:C.ink, lineHeight:1.5 }}>{h.player}</div>
+              <div className="flex justify-end">
+                <div 
+                  className="p-3 text-xs max-w-[85%]"
+                  style={{ 
+                    backgroundColor: `${theme.colors.primary}26`, 
+                    borderRadius: radCard, 
+                    borderTopRightRadius: 4, 
+                    color: theme.colors.muted 
+                  }}
+                >
+                  {h.player}
+                </div>
               </div>
             )}
           </React.Fragment>
         ))}
-      </div>
-      <div style={{ textAlign:'center', marginBottom:16 }}>
-        <div style={{ fontSize:36, marginBottom:8 }}>{outcome==='win'?'🎉':outcome==='neutral'?'😐':'😕'}</div>
-        <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:18, color:C.ink, marginBottom:4 }}>Score : {score} pts</div>
-      </div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
 
-  return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <div style={{ display:'flex', alignItems:'center', gap:8 }}><span style={{ fontSize:20 }}>{char.avatar}</span><span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color:C.ink }}>{char.name}</span></div>
-        <span style={{ fontSize:12, color:C.muted }}>⭐ {score}</span>
-      </div>
-      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
-        {/* Historique compact */}
-        {history.slice(-2).map((h,i) => (
-          <React.Fragment key={i}>
-            <div style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
-              <span style={{ fontSize:20, flexShrink:0 }}>{char.avatar}</span>
-              <div style={{ background:C.surface, borderRadius:12, borderTopLeftRadius:4, padding:'8px 12px', fontSize:12, color:C.muted, lineHeight:1.5 }}>{h.npc}</div>
-            </div>
-            {h.player && <div style={{ display:'flex', justifyContent:'flex-end' }}><div style={{ background:'rgba(199,91,57,.15)', borderRadius:12, borderTopRightRadius:4, padding:'8px 12px', fontSize:12, color:C.muted }}>{h.player}</div></div>}
-          </React.Fragment>
-        ))}
         {/* Message actuel */}
-        <div style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
-          <span style={{ fontSize:24, flexShrink:0 }}>{char.avatar}</span>
-          <div style={{ background:C.surface, borderRadius:14, borderTopLeftRadius:4, padding:'14px 16px', flex:1, fontSize:14, color:C.ink, lineHeight:1.6, border:`1px solid ${C.border}` }}>{node.npc}</div>
+        <div className="flex gap-2.5 items-start animate-in fade-in slide-in-from-bottom-2">
+          <span className="text-2xl shrink-0">{char.avatar}</span>
+          <div 
+            className="flex-1 p-4 text-sm leading-relaxed border"
+            style={{ 
+              backgroundColor: theme.colors.surface, 
+              borderRadius: radCard, 
+              borderTopLeftRadius: 4, 
+              color: theme.colors.ink, 
+              borderColor: border,
+              boxShadow: shadow
+            }}
+          >
+            {node.npc}
+          </div>
         </div>
+
         {lastFeedback && (
-          <div style={{ background: lastFeedback.good?'rgba(45,122,79,.15)':'rgba(192,57,43,.12)', borderRadius:12, padding:'10px 14px', fontSize:12, color:lastFeedback.good?C.success:C.danger, border:`1px solid ${lastFeedback.good?C.success:C.danger}` }}>
+          <div 
+            className="p-3 text-xs border animate-in zoom-in-95"
+            style={{ 
+              backgroundColor: lastFeedback.good ? `${theme.colors.success}26` : `${theme.colors.danger}1f`, 
+              borderRadius: radCard, 
+              color: lastFeedback.good ? theme.colors.success : theme.colors.danger, 
+              borderColor: lastFeedback.good ? theme.colors.success : theme.colors.danger 
+            }}
+          >
             💬 {lastFeedback.text}
           </div>
         )}
+
         {/* Choix */}
         {!lastFeedback && (
-          <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-            {node.choices?.map((c,i) => (
-              <button key={i} onClick={() => pick(c)} style={{ background:C.surface, border:`1px solid ${C.border}`, borderRadius:14, padding:'13px 16px', textAlign:'left', fontFamily:'Sora,sans-serif', fontWeight:600, fontSize:13, color:C.ink, cursor:'pointer' }}>
+          <div className="flex flex-col gap-2 mt-2">
+            {node.choices?.map((c: any, i: number) => (
+              <button 
+                key={i} 
+                onClick={() => pick(c)} 
+                className="p-4 text-left border font-semibold text-sm cursor-pointer active:scale-[0.98] transition-transform animate-in slide-in-from-bottom-3"
+                style={{ 
+                  backgroundColor: theme.colors.surface, 
+                  borderColor: border, 
+                  borderRadius: radBtn, 
+                  fontFamily: theme.fonts.display, 
+                  color: theme.colors.ink 
+                }}
+              >
                 {c.text}
               </button>
             ))}
@@ -23799,91 +35196,176 @@ export default function DialogueTree({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/19_RebusPuzzle.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { RebusPuzzleData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
-
-
-export default function RebusPuzzle({ data, onBack, onComplete }: any) {
+export default function RebusPuzzle({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: RebusPuzzleData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
+
+  const { config = { hintLevel: 1 }, puzzles = [] } = data || {};
 
   const [idx, setIdx] = useState(0);
-  const [picked, setPicked] = useState(null);
+  const [picked, setPicked] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
 
-  const puzzle = data.puzzles[idx];
+  const puzzle = puzzles[idx];
   const answered = picked !== null;
-  const correct = picked === puzzle.answer;
 
-  const pick = useCallback((choice) => {
-    if (answered) return;
+  const pick = useCallback((choice: string) => {
+    if (answered || !puzzle) return;
     setPicked(choice);
-    if (choice === puzzle.answer) setScore(s => s+40);
-  }, [answered, puzzle.answer]);
+    const isCorrect = choice === puzzle.answer;
+    if (isCorrect) setScore(s => s+40);
+    if (puzzle.itemId && onResponse) {
+      onResponse(puzzle.itemId, isCorrect ? 5 : 1);
+    }
+  }, [answered, puzzle, onResponse]);
 
   const next = () => {
-    if (idx+1 >= data.puzzles.length) { setDone(true); onComplete?.(score); }
+    if (idx+1 >= puzzles.length) { setDone(true); onComplete?.(score); }
     else { setIdx(i=>i+1); setPicked(null); }
   };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🧩</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Rébus résolus !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Rébus résolus !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
+
+  if (!puzzle) return (
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col items-center justify-center p-6 text-center`} style={{ backgroundColor: theme.colors.bg }}>
+      <div className="text-6xl mb-4">🧩</div>
+      <div className="font-extrabold text-2xl mb-2" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+        Aucun rébus disponible
+      </div>
+      <button 
+        onClick={onBack} 
+        className="mt-6 px-8 py-3 rounded-xl border-none font-bold text-sm cursor-pointer"
+        style={{ backgroundColor: theme.colors.primary, color: '#fff', fontFamily: theme.fonts.display }}
+      >
+        Retour
+      </button>
     </div>
   );
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Rébus 🧩</span>
-        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{data.puzzles.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Rébus 🧩
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {idx+1}/{puzzles.length}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'28px 16px', display:'flex', flexDirection:'column', alignItems:'center', gap:24 }}>
+
+      <div className="flex-1 p-6 flex flex-col items-center gap-6 max-w-md mx-auto w-full">
         {/* Rébus */}
-        <div style={{ background:C.surface, borderRadius:22, padding:'28px 20px', border:`1px solid ${C.border}`, width:'100%', maxWidth:340, textAlign:'center' }}>
-          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:16 }}>Quel mot se cache ici ?</div>
-          <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:8, flexWrap:'wrap' }}>
-            {puzzle.pieces.map((p,i) => (
+        <div 
+          className="w-full text-center p-7 border flex flex-col items-center"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            borderColor: border,
+            boxShadow: shadow
+          }}
+        >
+          <div className="text-[11px] font-bold uppercase tracking-widest mb-4" style={{ color: theme.colors.muted }}>
+            Quel mot se cache ici ?
+          </div>
+          <div className="flex items-center justify-center gap-2 flex-wrap">
+            {puzzle.pieces.map((p, i) => (
               <React.Fragment key={i}>
-                <div style={{ textAlign:'center' }}>
-                  <div style={{ fontSize:48 }}>{p.emoji}</div>
-                  {data.config?.hintLevel >= 1 && <div style={{ fontSize:12, color:C.primary, fontWeight:700, marginTop:4 }}>({p.sound})</div>}
+                <div className="text-center flex flex-col items-center justify-center">
+                  <div className="text-5xl leading-none">{p.emoji}</div>
+                  {config?.hintLevel >= 1 && (
+                    <div className="text-xs font-bold mt-2" style={{ color: theme.colors.primary }}>
+                      ({p.sound})
+                    </div>
+                  )}
                 </div>
-                {i < puzzle.pieces.length-1 && <div style={{ fontSize:24, color:C.muted, fontWeight:800 }}>+</div>}
+                {i < puzzle.pieces.length-1 && (
+                  <div className="text-2xl font-extrabold mx-1" style={{ color: theme.colors.muted }}>+</div>
+                )}
               </React.Fragment>
             ))}
           </div>
-          <div style={{ marginTop:16, fontSize:18, color:C.muted }}>= ?</div>
+          <div className="mt-4 text-lg font-medium" style={{ color: theme.colors.muted }}>= ?</div>
         </div>
+
         {/* Choix */}
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, width:'100%', maxWidth:340 }}>
+        <div className="grid grid-cols-2 gap-3 w-full">
           {puzzle.choices.map(c => {
             const isCorrect = answered && c===puzzle.answer;
             const isWrong = answered && c===picked && c!==puzzle.answer;
             return (
-              <button key={c} onClick={() => pick(c)} style={{
-                background: isCorrect?'rgba(45,122,79,.2)':isWrong?'rgba(192,57,43,.15)':C.surface,
-                border:`2px solid ${isCorrect?C.success:isWrong?C.danger:C.border}`,
-                borderRadius:14, padding:'14px 10px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink, cursor: answered?'default':'pointer', transition:'all .15s'
-              }}>{isCorrect?'✓ ':isWrong?'✗ ':''}{c}</button>
+              <button 
+                key={c} 
+                onClick={() => pick(c)} 
+                className={`p-3.5 border-2 text-sm font-bold text-center transition-all ${answered ? 'cursor-default' : 'cursor-pointer active:scale-95'}`}
+                style={{
+                  backgroundColor: isCorrect ? `${theme.colors.success}33` : isWrong ? `${theme.colors.danger}26` : theme.colors.surface,
+                  borderColor: isCorrect ? theme.colors.success : isWrong ? theme.colors.danger : border,
+                  borderRadius: radCard, 
+                  fontFamily: theme.fonts.display, 
+                  color: theme.colors.ink, 
+                }}
+              >
+                {isCorrect ? '✓ ' : isWrong ? '✗ ' : ''}{c}
+              </button>
             );
           })}
         </div>
+
         {answered && (
-          <>
-            <div style={{ background:'rgba(255,255,255,.05)', borderRadius:14, padding:'12px 16px', width:'100%', maxWidth:340, textAlign:'center', fontSize:13, color:C.muted }}>
+          <div className="w-full flex flex-col gap-4 animate-in slide-in-from-bottom-2">
+            <div 
+              className="p-3.5 text-center text-sm leading-relaxed"
+              style={{ 
+                backgroundColor: `${theme.colors.ink}0a`, 
+                borderRadius: radCard, 
+                color: theme.colors.muted 
+              }}
+            >
               💡 {puzzle.explanation}
             </div>
-            <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer', width:'100%', maxWidth:340 }}>
-              {idx+1<data.puzzles.length?'Rébus suivant →':'Voir résultats'}
+            <button 
+              onClick={next} 
+              className="w-full py-3.5 border-none cursor-pointer font-bold text-[15px] active:scale-95 transition-transform"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              {idx+1<puzzles.length ? 'Rébus suivant →' : 'Voir résultats'}
             </button>
-          </>
+          </div>
         )}
       </div>
     </div>
@@ -23892,42 +35374,46 @@ export default function RebusPuzzle({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/20_AudioTranscription.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useRef, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { AudioTranscriptionData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
-
-
-function levenshtein(a, b) {
+function levenshtein(a: string, b: string) {
   const m=a.length, n=b.length, dp=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i||j));
   for(let i=1;i<=m;i++) for(let j=1;j<=n;j++) dp[i][j]=a[i-1]===b[j-1]?dp[i-1][j-1]:1+Math.min(dp[i-1][j],dp[i][j-1],dp[i-1][j-1]);
   return dp[m][n];
 }
-function normalize(s) { return s.toLowerCase().replace(/[^a-zàâçéèêëîïôùûü ]/g,'').trim(); }
+function normalize(s: string) { return s.toLowerCase().replace(/[^a-zàâçéèêëîïôùûü ]/g,'').trim(); }
 
-export default function AudioTranscription({ data, onBack, onComplete }: any) {
+export default function AudioTranscription({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: AudioTranscriptionData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
+
+  const { config = {}, items: mappedItems = [] } = data || {};
 
   const [idx, setIdx] = useState(0);
   const [input, setInput] = useState('');
   const [replays, setReplays] = useState(0);
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState<{ correct: boolean; partial: boolean; dist: number; pts: number; expected: string } | null>(null);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
-  const audioRef = useRef(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
-  const item = data.items[idx];
-  const maxReplays = data.config?.maxReplays || 3;
-  const tolerance = data.config?.tolerance || 1;
-  const hint = data.config?.hint;
+  const item = mappedItems[idx];
+  const maxReplays = config?.maxReplays || 3;
+  const tolerance = config?.tolerance || 1;
+  const hint = config?.hint;
 
   const playAudio = () => {
-    if (replays >= maxReplays) return;
+    if (replays >= maxReplays || !item) return;
     if (item.audioUrl && audioRef.current) { audioRef.current.play(); }
     setReplays(r => r+1);
   };
 
   const validate = useCallback(() => {
+    if (!item) return;
     const expected = item.normalize ? normalize(item.expected) : item.expected;
     const given = item.normalize ? normalize(input) : input;
     const dist = levenshtein(expected, given);
@@ -23936,74 +35422,193 @@ export default function AudioTranscription({ data, onBack, onComplete }: any) {
     const pts = correct ? item.points : partial ? Math.round(item.points*0.5) : 0;
     setScore(s => s+pts);
     setResult({ correct, partial, dist, pts, expected:item.expected });
-  }, [input, item, tolerance]);
+    if (item.itemId && onResponse) {
+      onResponse(item.itemId, correct ? 5 : partial ? 3 : 1);
+    }
+  }, [input, item, tolerance, onResponse]);
 
   const next = () => {
-    if (idx+1 >= data.items.length) { setDone(true); onComplete?.(score); }
+    if (idx+1 >= mappedItems.length) { setDone(true); onComplete?.(score); }
     else { setIdx(i=>i+1); setInput(''); setReplays(0); setResult(null); }
   };
 
-  const wordCount = item.expected.split(' ').length;
+  const wordCount = item?.expected?.split(' ').length || 0;
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🎙️</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Dictée terminée !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Dictée terminée !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
+
+  if (!item) return (
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col items-center justify-center p-6 text-center`} style={{ backgroundColor: theme.colors.bg }}>
+      <div className="text-6xl mb-4">🎙️</div>
+      <div className="font-extrabold text-2xl mb-2" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+        Aucune transcription disponible
+      </div>
+      <button 
+        onClick={onBack} 
+        className="mt-6 px-8 py-3 rounded-xl border-none font-bold text-sm cursor-pointer"
+        style={{ backgroundColor: theme.colors.primary, color: '#fff', fontFamily: theme.fonts.display }}
+      >
+        Retour
+      </button>
     </div>
   );
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Dictée Audio</span>
-        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{data.items.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Dictée Audio
+        </span>
+        <span className="text-xs font-bold" style={{ color: theme.colors.muted }}>
+          {idx+1}/{mappedItems.length}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'24px 16px', display:'flex', flexDirection:'column', gap:18 }}>
+
+      <div className="flex-1 p-6 flex flex-col gap-6 max-w-md mx-auto w-full">
         {/* Audio player */}
-        <div style={{ background:C.surface, borderRadius:18, padding:20, border:`1px solid ${C.border}`, textAlign:'center' }}>
+        <div 
+          className="p-6 text-center border"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            borderColor: border,
+            boxShadow: shadow
+          }}
+        >
           {item.audioUrl && <audio ref={audioRef} src={item.audioUrl} />}
-          <button onClick={playAudio} disabled={replays>=maxReplays} style={{
-            background: replays<maxReplays?C.primary:'rgba(255,255,255,.08)', color:'#fff', border:'none', borderRadius:14, padding:'16px 32px',
-            fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor: replays<maxReplays?'pointer':'default'
-          }}>
+          <button 
+            onClick={playAudio} 
+            disabled={replays >= maxReplays} 
+            className={`px-8 py-4 border-none font-bold text-[15px] transition-transform ${replays < maxReplays ? 'cursor-pointer active:scale-95' : 'cursor-default'}`}
+            style={{
+              backgroundColor: replays < maxReplays ? theme.colors.primary : `${theme.colors.ink}14`, 
+              color: replays < maxReplays ? '#fff' : theme.colors.muted, 
+              borderRadius: radBtn, 
+              fontFamily: theme.fonts.display, 
+            }}
+          >
             {item.audioUrl ? '▶ Écouter' : '🔇 (audio non dispo — démo)'}
           </button>
-          <div style={{ marginTop:12, fontSize:11, color:C.muted }}>{maxReplays-replays} écoute{maxReplays-replays!==1?'s':''} restante{maxReplays-replays!==1?'s':''}</div>
-          {hint==='word_count' && <div style={{ marginTop:8, fontSize:12, color:C.primary, fontWeight:700 }}>{wordCount} mots à transcrire</div>}
+          <div className="mt-3 text-[11px] font-bold" style={{ color: theme.colors.muted }}>
+            {maxReplays-replays} écoute{maxReplays-replays!==1?'s':''} restante{maxReplays-replays!==1?'s':''}
+          </div>
+          {hint === 'word_count' && (
+            <div className="mt-2 text-xs font-bold" style={{ color: theme.colors.primary }}>
+              {wordCount} mots à transcrire
+            </div>
+          )}
         </div>
+
         {/* Demo text */}
         {!item.audioUrl && (
-          <div style={{ background:'rgba(255,255,255,.04)', borderRadius:12, padding:12, fontSize:12, color:C.muted, textAlign:'center' }}>
-            🔈 Audio de démo : <em style={{ color:C.ink }}>"{item.expected}"</em>
+          <div 
+            className="p-3 text-xs text-center border"
+            style={{ 
+              backgroundColor: `${theme.colors.ink}0a`, 
+              borderRadius: radCard, 
+              borderColor: border,
+              color: theme.colors.muted 
+            }}
+          >
+            🔈 Audio de démo : <em className="font-medium" style={{ color: theme.colors.ink }}>"{item.expected}"</em>
           </div>
         )}
+
         {/* Input */}
-        <div>
-          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:8 }}>Ta transcription</div>
-          <textarea value={input} onChange={e=>setInput(e.target.value)} disabled={!!result}
+        <div className="flex flex-col gap-2">
+          <div className="text-[11px] font-bold uppercase tracking-widest" style={{ color: theme.colors.muted }}>
+            Ta transcription
+          </div>
+          <textarea 
+            value={input} 
+            onChange={e=>setInput(e.target.value)} 
+            disabled={!!result}
             placeholder="Écris ce que tu entends…"
-            style={{ width:'100%', minHeight:80, background:C.surface, border:`1px solid ${result?(result.correct?C.success:C.danger):C.border}`, borderRadius:12, padding:12, color:C.ink, fontFamily:'Space Grotesk,sans-serif', fontSize:14, lineHeight:1.6, resize:'none', outline:'none', boxSizing:'border-box' }} />
+            className="w-full min-h-[100px] p-4 text-sm leading-relaxed resize-none outline-none border transition-colors"
+            style={{ 
+              backgroundColor: theme.colors.surface, 
+              borderColor: result ? (result.correct ? theme.colors.success : theme.colors.danger) : border, 
+              borderRadius: radCard, 
+              color: theme.colors.ink, 
+            }} 
+          />
         </div>
+
         {/* Résultat */}
         {result && (
-          <div style={{ background: result.correct?'rgba(45,122,79,.15)':result.partial?'rgba(245,158,11,.1)':'rgba(192,57,43,.12)', borderRadius:14, padding:14, border:`1px solid ${result.correct?C.success:result.partial?'#f59e0b':C.danger}` }}>
-            <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:15, color:result.correct?C.success:result.partial?'#f59e0b':C.danger, marginBottom:6 }}>
-              {result.correct?'✓ Parfait !':result.partial?'~ Presque !':'✗ Pas tout à fait'}
+          <div 
+            className="p-4 border animate-in slide-in-from-bottom-2"
+            style={{ 
+              backgroundColor: result.correct ? `${theme.colors.success}26` : result.partial ? '#f59e0b1a' : `${theme.colors.danger}1f`, 
+              borderRadius: radCard, 
+              borderColor: result.correct ? theme.colors.success : result.partial ? '#f59e0b' : theme.colors.danger 
+            }}
+          >
+            <div className="font-extrabold text-[15px] mb-1.5" style={{ fontFamily: theme.fonts.display, color: result.correct ? theme.colors.success : result.partial ? '#f59e0b' : theme.colors.danger }}>
+              {result.correct ? '✓ Parfait !' : result.partial ? '~ Presque !' : '✗ Pas tout à fait'}
             </div>
-            <div style={{ fontSize:12, color:C.muted }}>Bonne réponse : <em style={{ color:C.ink }}>"{result.expected}"</em></div>
-            <div style={{ fontSize:12, color:C.muted, marginTop:4 }}>Écart de {result.dist} caractère{result.dist!==1?'s':''} · +{result.pts} pts</div>
+            <div className="text-xs" style={{ color: theme.colors.muted }}>
+              Bonne réponse : <em className="font-medium" style={{ color: theme.colors.ink }}>"{result.expected}"</em>
+            </div>
+            <div className="text-xs font-bold mt-2 opacity-80" style={{ color: theme.colors.muted }}>
+              Écart de {result.dist} caractère{result.dist!==1?'s':''} · +{result.pts} pts
+            </div>
           </div>
         )}
-        {!result ? (
-          <button onClick={validate} disabled={!input.trim()} style={{ background:input.trim()?C.primary:'rgba(255,255,255,.08)', color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:input.trim()?'pointer':'default' }}>Vérifier</button>
-        ) : (
-          <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>
-            {idx+1<data.items.length?'Item suivant →':'Voir résultats'}
-          </button>
-        )}
+
+        <div className="mt-auto pt-4">
+          {!result ? (
+            <button 
+              onClick={validate} 
+              disabled={!input.trim()} 
+              className="w-full py-3.5 border-none font-bold text-[15px] transition-transform active:scale-95"
+              style={{ 
+                backgroundColor: input.trim() ? theme.colors.primary : `${theme.colors.ink}14`, 
+                color: input.trim() ? '#fff' : theme.colors.muted, 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display, 
+                cursor: input.trim() ? 'pointer' : 'default' 
+              }}
+            >
+              Vérifier
+            </button>
+          ) : (
+            <button 
+              onClick={next} 
+              className="w-full py-3.5 border-none cursor-pointer font-bold text-[15px] transition-transform active:scale-95 animate-in slide-in-from-bottom-2"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              {idx+1<mappedItems.length ? 'Item suivant →' : 'Voir résultats'}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -24011,107 +35616,234 @@ export default function AudioTranscription({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/21_ErrorCorrection.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { ErrorCorrectionData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
+type ErrorItem = NonNullable<NonNullable<ErrorCorrectionData['exercises']>[number]['errors']>[number];
 
-
-function renderText(text, errors, found, onTap) {
+function renderText(text: string, errors: ErrorItem[], found: string[], onTap: (err: ErrorItem) => void, themeTokens: any) {
+  const { radCard } = themeTokens;
   const sorted = [...errors].sort((a,b)=>a.start-b.start);
   const parts = [];
   let last = 0;
   sorted.forEach(err => {
-    if (err.start > last) parts.push(<span key={last} style={{ color:'rgba(255,255,255,.8)' }}>{text.slice(last,err.start)}</span>);
+    if (err.start > last) parts.push(<span key={last} className="opacity-80 leading-relaxed">{text.slice(last,err.start)}</span>);
     const isFound = found.includes(err.id);
     parts.push(
-      <span key={err.id} onClick={() => !isFound && onTap(err)} style={{
-        background: isFound?'rgba(45,122,79,.25)':'rgba(255,220,100,.12)',
-        color: isFound?'#4ade80':'#fde68a',
-        borderRadius:4, padding:'1px 3px', cursor: isFound?'default':'pointer',
-        textDecoration: isFound?'none':'underline dotted', fontWeight:700, fontSize:14
-      }}>{isFound ? err.correct : err.wrong}</span>
+      <span 
+        key={err.id} 
+        onClick={() => !isFound && onTap(err)} 
+        className={`px-1 py-0.5 rounded transition-colors ${isFound ? 'cursor-default no-underline' : 'cursor-pointer active:scale-95'}`}
+        style={{
+          backgroundColor: isFound ? 'rgba(45,122,79,.25)' : 'rgba(255,220,100,.12)',
+          color: isFound ? '#4ade80' : '#fde68a',
+          borderRadius: radCard ? 4 : 4,
+          textDecoration: isFound ? 'none' : 'underline dotted',
+          fontWeight: 700,
+          fontSize: 14
+        }}
+      >
+        {isFound ? err.correct : err.wrong}
+      </span>
     );
     last = err.end;
   });
-  if (last < text.length) parts.push(<span key='end' style={{ color:'rgba(255,255,255,.8)' }}>{text.slice(last)}</span>);
+  if (last < text.length) parts.push(<span key='end' className="opacity-80 leading-relaxed">{text.slice(last)}</span>);
   return parts;
 }
 
-export default function ErrorCorrection({ data, onBack, onComplete }: any) {
+export default function ErrorCorrection({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: ErrorCorrectionData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const tokens = useThemeTokens();
+  const { border, radCard, radBtn, shadow } = tokens;
+
+  const { config = {}, exercises = [] } = data || {};
 
   const [exIdx, setExIdx] = useState(0);
-  const [found, setFound] = useState([]);
-  const [selected, setSelected] = useState(null);
+  const [found, setFound] = useState<string[]>([]);
+  const [selected, setSelected] = useState<ErrorItem | null>(null);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
-  const [showExpl, setShowExpl] = useState(null);
+  const [showExpl, setShowExpl] = useState<ErrorItem | null>(null);
 
-  const ex = data.exercises[exIdx];
-  const allFound = ex.errors.every(e => found.includes(e.id));
+  const ex = exercises[exIdx];
+  const allFound = ex?.errors?.every((e) => found.includes(e.id));
 
-  const tapError = useCallback((err) => {
+  const tapError = useCallback((err: ErrorItem) => {
     setSelected(err);
   }, []);
 
-  const confirm = (err) => {
+  const confirm = (err: ErrorItem) => {
     const newFound = [...found, err.id];
     setFound(newFound);
     setScore(s => s+30);
     setShowExpl(err);
     setSelected(null);
+    if (ex?.itemId && onResponse) {
+       onResponse(ex.itemId, 5);
+    }
   };
 
   const next = () => {
     setShowExpl(null);
-    if (exIdx+1 >= data.exercises.length) { setDone(true); onComplete?.(score); }
+    if (exIdx+1 >= exercises.length) { setDone(true); onComplete?.(score); }
     else { setExIdx(i=>i+1); setFound([]); setSelected(null); }
   };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🔎</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Corrections terminées !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Corrections terminées !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
+
+  if (!ex) return (
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col items-center justify-center p-6 text-center`} style={{ backgroundColor: theme.colors.bg }}>
+      <div className="text-6xl mb-4">🔎</div>
+      <div className="font-extrabold text-2xl mb-2" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+        Aucun exercice disponible
+      </div>
+      <button 
+        onClick={onBack} 
+        className="mt-6 px-8 py-3 rounded-xl border-none font-bold text-sm cursor-pointer"
+        style={{ backgroundColor: theme.colors.primary, color: '#fff', fontFamily: theme.fonts.display }}
+      >
+        Retour
+      </button>
     </div>
   );
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Correction</span>
-        <span style={{ fontSize:12, color:C.muted }}>{found.length}/{ex.errors.length} erreur{ex.errors.length>1?'s':''}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Correction
+        </span>
+        <span className="text-xs font-bold" style={{ color: theme.colors.muted }}>
+          {found.length}/{ex.errors.length} erreur{ex.errors.length>1?'s':''}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
-        {data.config?.showErrorCount && (
-          <div style={{ background:'rgba(255,220,100,.08)', borderRadius:12, padding:'8px 14px', fontSize:12, color:'#fde68a', border:'1px solid rgba(255,220,100,.2)' }}>
-            ⚠️ Ce texte contient <strong>{ex.errors.length} erreur{ex.errors.length>1?'s':''}</strong>. Tape sur les mots surlignés pour les corriger.
+
+      <div className="flex-1 p-4 flex flex-col gap-4 max-w-lg mx-auto w-full">
+        {config?.showErrorCount && (
+          <div 
+            className="p-3 text-xs border"
+            style={{ 
+              backgroundColor: 'rgba(255,220,100,.08)', 
+              borderRadius: radCard, 
+              borderColor: 'rgba(255,220,100,.2)',
+              color: '#fde68a'
+            }}
+          >
+            ⚠️ Ce texte contient <strong className="font-bold">{ex.errors.length} erreur{ex.errors.length>1?'s':''}</strong>. Tape sur les mots surlignés pour les corriger.
           </div>
         )}
-        <div style={{ background:C.surface, borderRadius:16, padding:18, border:`1px solid ${C.border}`, lineHeight:1.9, fontSize:14 }}>
-          {renderText(ex.text, ex.errors, found, tapError)}
+
+        <div 
+          className="p-5 text-sm leading-loose border"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            borderColor: border,
+            color: theme.colors.ink,
+            boxShadow: shadow
+          }}
+        >
+          {renderText(ex.text, ex.errors, found, tapError, tokens)}
         </div>
+
         {selected && (
-          <div style={{ background:'rgba(255,255,255,.06)', borderRadius:14, padding:14, border:`1px solid ${C.primary}` }}>
-            <div style={{ fontSize:12, color:C.muted, marginBottom:8 }}>Corriger <strong style={{ color:C.ink }}>"{selected.wrong}"</strong> par :</div>
-            <button onClick={() => confirm(selected)} style={{ background:C.success, color:'#fff', border:'none', borderRadius:10, padding:'10px 20px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer', marginRight:8 }}>✓ {selected.correct}</button>
-            <button onClick={() => setSelected(null)} style={{ background:'rgba(255,255,255,.08)', color:C.muted, border:'none', borderRadius:10, padding:'10px 16px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>Annuler</button>
+          <div 
+            className="p-4 border animate-in zoom-in-95"
+            style={{ 
+              backgroundColor: `${theme.colors.ink}0a`, 
+              borderRadius: radCard, 
+              borderColor: theme.colors.primary 
+            }}
+          >
+            <div className="text-xs mb-3" style={{ color: theme.colors.muted }}>
+              Corriger <strong className="font-bold" style={{ color: theme.colors.ink }}>"{selected.wrong}"</strong> par :
+            </div>
+            <div className="flex gap-2">
+              <button 
+                onClick={() => confirm(selected)} 
+                className="px-5 py-2.5 rounded-lg border-none font-bold text-sm cursor-pointer transition-transform active:scale-95 flex-1"
+                style={{ backgroundColor: theme.colors.success, color: '#fff', fontFamily: theme.fonts.display }}
+              >
+                ✓ {selected.correct}
+              </button>
+              <button 
+                onClick={() => setSelected(null)} 
+                className="px-4 py-2.5 rounded-lg border-none font-bold text-sm cursor-pointer transition-colors"
+                style={{ backgroundColor: `${theme.colors.ink}14`, color: theme.colors.muted, fontFamily: theme.fonts.display }}
+              >
+                Annuler
+              </button>
+            </div>
           </div>
         )}
+
         {showExpl && (
-          <div style={{ background:'rgba(45,122,79,.1)', borderRadius:14, padding:14, border:`1px solid ${C.success}` }}>
-            <div style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color:C.success, marginBottom:4 }}>✓ Bonne correction !</div>
-            <div style={{ fontSize:12, color:C.muted, lineHeight:1.6 }}>{showExpl.explanation}</div>
-            <button onClick={() => setShowExpl(null)} style={{ marginTop:10, background:'rgba(255,255,255,.08)', color:C.muted, border:'none', borderRadius:8, padding:'6px 14px', fontSize:11, cursor:'pointer' }}>OK</button>
+          <div 
+            className="p-4 border animate-in slide-in-from-bottom-2"
+            style={{ 
+              backgroundColor: `${theme.colors.success}1a`, 
+              borderRadius: radCard, 
+              borderColor: theme.colors.success 
+            }}
+          >
+            <div className="font-bold text-sm mb-1.5" style={{ fontFamily: theme.fonts.display, color: theme.colors.success }}>
+              ✓ Bonne correction !
+            </div>
+            <div className="text-xs leading-relaxed" style={{ color: theme.colors.muted }}>
+              {showExpl.explanation}
+            </div>
+            <button 
+              onClick={() => setShowExpl(null)} 
+              className="mt-3 px-3.5 py-1.5 rounded-md border-none text-xs cursor-pointer transition-colors"
+              style={{ backgroundColor: `${theme.colors.ink}14`, color: theme.colors.muted }}
+            >
+              OK
+            </button>
           </div>
         )}
+
         {allFound && !showExpl && (
-          <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>
-            {exIdx+1<data.exercises.length?'Exercice suivant →':'Voir résultats'}
-          </button>
+          <div className="mt-auto pt-4 animate-in fade-in">
+            <button 
+              onClick={next} 
+              className="w-full py-3.5 border-none font-bold text-[15px] transition-transform active:scale-95 cursor-pointer"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              {exIdx+1<exercises.length ? 'Exercice suivant →' : 'Voir résultats'}
+            </button>
+          </div>
         )}
       </div>
     </div>
@@ -24120,92 +35852,185 @@ export default function ErrorCorrection({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/22_DeceptivePairs.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { DeceptivePairsData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
-
-
-export default function DeceptivePairs({ data, onBack, onComplete }: any) {
+export default function DeceptivePairs({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: DeceptivePairsData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
+
+  const { config = {}, pairs = [] } = data || {};
 
   const [idx, setIdx] = useState(0);
-  const [picked, setPicked] = useState(null);
+  const [picked, setPicked] = useState<string | null>(null);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
 
-  const pair = data.pairs[idx];
-  const answered = picked !== null;
-  const pickedChoice = pair.choices.find(c=>c.id===picked);
+  type PairItem = NonNullable<DeceptivePairsData['pairs']>[number];
+  type ChoiceItem = NonNullable<PairItem['choices']>[number];
 
-  const pick = useCallback((choice) => {
-    if (answered) return;
+  const pair = pairs[idx];
+  const answered = picked !== null;
+
+  const pick = useCallback((choice: ChoiceItem) => {
+    if (answered || !pair) return;
     setPicked(choice.id);
     if (choice.correct) setScore(s=>s+35);
-  }, [answered]);
+    if (pair.itemId && onResponse) {
+       onResponse(pair.itemId, choice.correct ? 5 : 1);
+    }
+  }, [answered, pair, onResponse]);
 
   const next = () => {
-    if (idx+1 >= data.pairs.length) { setDone(true); onComplete?.(score); }
+    if (idx+1 >= pairs.length) { setDone(true); onComplete?.(score); }
     else { setIdx(i=>i+1); setPicked(null); }
   };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🤥</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Faux amis démasqués !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Faux amis démasqués !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
+
+  if (!pair) return (
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col items-center justify-center p-6 text-center`} style={{ backgroundColor: theme.colors.bg }}>
+      <div className="text-6xl mb-4">🤥</div>
+      <div className="font-extrabold text-2xl mb-2" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+        Aucune paire disponible
+      </div>
+      <button 
+        onClick={onBack} 
+        className="mt-6 px-8 py-3 rounded-xl border-none font-bold text-sm cursor-pointer"
+        style={{ backgroundColor: theme.colors.primary, color: '#fff', fontFamily: theme.fonts.display }}
+      >
+        Retour
+      </button>
     </div>
   );
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Faux Amis</span>
-        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{data.pairs.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Faux Amis
+        </span>
+        <span className="text-xs font-bold" style={{ color: theme.colors.muted }}>
+          {idx+1}/{pairs.length}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
+
+      <div className="flex-1 p-5 flex flex-col gap-6 max-w-lg mx-auto w-full">
         {/* Mot + contexte A */}
-        <div style={{ background:C.surface, borderRadius:18, padding:20, border:`1px solid ${C.border}` }}>
-          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:26, color:C.ink, marginBottom:10 }}>{pair.term}</div>
-          <div style={{ display:'flex', alignItems:'center', gap:8, marginBottom:6 }}>
-            <div style={{ background:'rgba(43,90,160,.25)', borderRadius:999, padding:'3px 10px', fontSize:10, fontWeight:700, color:'#93c5fd' }}>{data.config?.contextA}</div>
+        <div 
+          className="p-6 border flex flex-col gap-3"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            borderColor: border,
+            boxShadow: shadow
+          }}
+        >
+          <div className="font-extrabold text-[26px]" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+            {pair.term}
           </div>
-          <div style={{ fontSize:13, color:C.muted, lineHeight:1.6, fontStyle:'italic' }}>"{pair.meaningA}"</div>
+          <div className="flex items-center gap-2">
+            <div className="px-3 py-1 rounded-full text-[10px] font-bold" style={{ backgroundColor: 'rgba(43,90,160,.25)', color: '#93c5fd' }}>
+              {config?.contextA}
+            </div>
+          </div>
+          <div className="text-sm leading-relaxed italic" style={{ color: theme.colors.muted }}>
+            "{pair.meaningA}"
+          </div>
         </div>
+
         {/* Question */}
-        <div style={{ fontSize:13, color:C.primary, fontWeight:700, textAlign:'center' }}>
-          Que signifie <strong>"{pair.term}"</strong> en <span style={{ background:'rgba(199,91,57,.2)', borderRadius:4, padding:'1px 6px' }}>{data.config?.contextB}</span> ?
+        <div className="text-[13px] font-bold text-center px-4" style={{ color: theme.colors.primary }}>
+          Que signifie <strong className="font-extrabold">"{pair.term}"</strong> en <span className="px-2 py-0.5 rounded ml-1" style={{ backgroundColor: `${theme.colors.primary}33` }}>{config?.contextB}</span> ?
         </div>
+
         {/* Choix */}
-        <div style={{ display:'flex', flexDirection:'column', gap:10 }}>
-          {pair.choices.map(c => {
+        <div className="flex flex-col gap-3">
+          {pair.choices.map((c) => {
             const isCorrect = answered && c.correct;
             const isWrong = answered && c.id===picked && !c.correct;
             return (
-              <button key={c.id} onClick={() => pick(c)} style={{
-                background: isCorrect?'rgba(45,122,79,.2)':isWrong?'rgba(192,57,43,.15)':C.surface,
-                border:`2px solid ${isCorrect?C.success:isWrong?C.danger:C.border}`,
-                borderRadius:14, padding:'14px 16px', textAlign:'left',
-                fontFamily:'Sora,sans-serif', fontWeight:600, fontSize:14, color:C.ink, cursor:answered?'default':'pointer', transition:'all .15s', display:'flex', alignItems:'center', gap:10
-              }}>
-                {c.isMeaningA && <span style={{ fontSize:10, background:'rgba(99,102,241,.2)', color:'#a5b4fc', borderRadius:4, padding:'2px 6px', fontWeight:700, flexShrink:0 }}>⚠️ Piège</span>}
-                <span>{isCorrect?'✓ ':isWrong?'✗ ':''}{c.text}</span>
+              <button 
+                key={c.id} 
+                onClick={() => pick(c)} 
+                className={`flex items-center gap-3 p-4 text-left border-2 font-semibold text-sm transition-all ${answered ? 'cursor-default' : 'cursor-pointer active:scale-[0.98]'}`}
+                style={{
+                  backgroundColor: isCorrect ? `${theme.colors.success}33` : isWrong ? `${theme.colors.danger}26` : theme.colors.surface,
+                  borderColor: isCorrect ? theme.colors.success : isWrong ? theme.colors.danger : border,
+                  borderRadius: radBtn, 
+                  fontFamily: theme.fonts.display, 
+                  color: theme.colors.ink, 
+                }}
+              >
+                {c.isMeaningA && (
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded shrink-0" style={{ backgroundColor: 'rgba(99,102,241,.2)', color: '#a5b4fc' }}>
+                    ⚠️ Piège
+                  </span>
+                )}
+                <span>{isCorrect ? '✓ ' : isWrong ? '✗ ' : ''}{c.text}</span>
               </button>
             );
           })}
         </div>
+
         {answered && (
-          <>
-            <div style={{ background:'rgba(255,255,255,.04)', borderRadius:14, padding:14, border:`1px solid rgba(255,255,255,.08)` }}>
-              <div style={{ fontSize:12, color:C.muted, lineHeight:1.6, marginBottom:6 }}>💡 {pair.explanation}</div>
-              {pair.etymology && <div style={{ fontSize:11, color:'rgba(255,255,255,.3)', fontStyle:'italic' }}>📜 {pair.etymology}</div>}
+          <div className="flex flex-col gap-4 mt-2 animate-in slide-in-from-bottom-2">
+            <div 
+              className="p-4 border"
+              style={{ 
+                backgroundColor: `${theme.colors.ink}0a`, 
+                borderRadius: radCard, 
+                borderColor: border 
+              }}
+            >
+              <div className="text-xs leading-relaxed mb-1.5" style={{ color: theme.colors.muted }}>
+                💡 {pair.explanation}
+              </div>
+              {pair.etymology && (
+                <div className="text-[11px] italic opacity-60" style={{ color: theme.colors.muted }}>
+                  📜 {pair.etymology}
+                </div>
+              )}
             </div>
-            <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>
-              {idx+1<data.pairs.length?'Paire suivante →':'Voir résultats'}
+            <button 
+              onClick={next} 
+              className="w-full py-4 border-none font-bold text-[15px] cursor-pointer transition-transform active:scale-95"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              {idx+1<pairs.length ? 'Paire suivante →' : 'Voir résultats'}
             </button>
-          </>
+          </div>
         )}
       </div>
     </div>
@@ -24214,10 +36039,12 @@ export default function DeceptivePairs({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/23_DiagramLabeling.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useRef, useCallback } from 'react';
-
-
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { DiagramLabelingData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
+import { shuffle } from '../utils/array';
 
 const DEMO_SVG = `<svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
   <rect width="400" height="320" fill="#1a2744"/>
@@ -24234,25 +36061,27 @@ const DEMO_SVG = `<svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
   <text x="200" y="20" fill="rgba(255,255,255,.3)" fontSize="12" textAnchor="middle">Carte du Québec — Démo</text>
 </svg>`;
 
-export default function DiagramLabeling({ data, onBack, onComplete }: any) {
-  const { theme } = useTheme();
-  const C = theme.colors;
+type LabelItem = NonNullable<DiagramLabelingData['labels']>[number];
 
-  const labels = data.labels;
-  const [remaining, setRemaining] = useState(() => [...labels].sort(()=>Math.random()-.5));
-  const [placed, setPlaced] = useState({}); // labelId -> {x,y} in %
-  const [correct, setCorrect] = useState([]);
-  const [wrong, setWrong] = useState([]);
-  const [selected, setSelected] = useState(null);
+export default function DiagramLabeling({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: DiagramLabelingData }) {
+  const { theme } = useTheme();
+  const { border, radCard, shadow } = useThemeTokens();
+
+  const { config = {}, labels = [], image } = data || {};
+
+  const [remaining, setRemaining] = useState<LabelItem[]>(() => shuffle([...labels]));
+  const [correct, setCorrect] = useState<string[]>([]);
+  const [wrong, setWrong] = useState<string[]>([]);
+  const [selected, setSelected] = useState<LabelItem | null>(null);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
-  const imgRef = useRef(null);
+  const imgRef = useRef<HTMLDivElement>(null);
 
-  const tolerance = data.config?.tolerancePct || 6;
+  const tolerance = config?.tolerancePct || 6;
 
-  const pickLabel = (label) => setSelected(s => s?.id===label.id ? null : label);
+  const pickLabel = (label: LabelItem) => setSelected((s) => s?.id===label.id ? null : label);
 
-  const placeOnMap = useCallback((e) => {
+  const placeOnMap = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!selected || !imgRef.current) return;
     const rect = imgRef.current.getBoundingClientRect();
     const xPct = ((e.clientX - rect.left) / rect.width) * 100;
@@ -24262,61 +36091,123 @@ export default function DiagramLabeling({ data, onBack, onComplete }: any) {
     const cy = zone.y + zone.height/2;
     const isCorrect = Math.abs(xPct-cx) <= tolerance && Math.abs(yPct-cy) <= tolerance;
     if (isCorrect) {
-      setCorrect(c=>[...c,selected.id]);
-      setScore(s=>s+25);
-      setRemaining(r=>r.filter(l=>l.id!==selected.id));
+      setCorrect((c)=>[...c,selected.id]);
+      setScore((s)=>s+25);
+      setRemaining((r)=>r.filter((l)=>l.id!==selected.id));
+      if (selected.itemId && onResponse) onResponse(selected.itemId, 5);
     } else {
-      setWrong(w=>[...w,selected.id]);
-      setTimeout(()=>setWrong(w=>w.filter(id=>id!==selected.id)),1000);
+      setWrong((w)=>[...w,selected.id]);
+      setTimeout(()=>setWrong((w)=>w.filter((id: string)=>id!==selected.id)),1000);
+      if (selected.itemId && onResponse) onResponse(selected.itemId, 1);
     }
     setSelected(null);
-    if (correct.length+1 >= labels.length) { setDone(true); onComplete?.(score+25); }
-  }, [selected, correct, labels, score, tolerance, onComplete]);
+    if (correct.length+1 >= labels.length) { setDone(true); onComplete?.(score+(isCorrect?25:0)); }
+  }, [selected, correct, labels, score, tolerance, onComplete, onResponse]);
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🗺️</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{correct.length}/{labels.length} bien placés !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Carte complétée !"
+        subtitle={`${correct.length}/${labels.length} bien placés`}
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Étiquetage</span>
-        <span style={{ fontSize:12, color:C.muted }}>{correct.length}/{labels.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Étiquetage
+        </span>
+        <span className="text-xs font-bold" style={{ color: theme.colors.muted }}>
+          {correct.length}/{labels.length}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'16px', display:'flex', flexDirection:'column', gap:14 }}>
-        <div style={{ fontSize:12, color:C.muted, textAlign:'center' }}>
-          {selected ? `📍 Clique sur la carte pour placer "${selected.text}"` : 'Sélectionne une étiquette, puis clique sa position sur la carte'}
+
+      <div className="flex-1 p-4 flex flex-col gap-4 max-w-lg mx-auto w-full">
+        <div className="text-xs text-center font-semibold" style={{ color: theme.colors.muted }}>
+          {selected 
+            ? `📍 Clique sur la carte pour placer "${selected.text}"` 
+            : 'Sélectionne une étiquette, puis clique sa position sur la carte'
+          }
         </div>
+
         {/* Carte */}
-        <div ref={imgRef} onClick={placeOnMap} style={{ borderRadius:16, overflow:'hidden', border:`2px solid ${selected?C.primary:C.border}`, cursor:selected?'crosshair':'default', position:'relative', width:'100%', aspectRatio:'4/3' }}>
-          {data.image ? (
-            <img src={data.image} style={{ width:'100%', height:'100%', objectFit:'contain', display:'block' }} alt="diagram" />
+        <div 
+          ref={imgRef} 
+          onClick={placeOnMap} 
+          className={`w-full aspect-[4/3] relative overflow-hidden transition-all ${selected ? 'cursor-crosshair scale-[1.01]' : 'cursor-default'}`}
+          style={{ 
+            borderRadius: radCard, 
+            border: `2px solid ${selected ? theme.colors.primary : border}`, 
+            boxShadow: shadow
+          }}
+        >
+          {image ? (
+            <img src={image} className="w-full h-full object-contain block" alt="diagram" />
           ) : (
-            <div dangerouslySetInnerHTML={{ __html:DEMO_SVG }} style={{ width:'100%', height:'100%' }} />
+            <div dangerouslySetInnerHTML={{ __html: DEMO_SVG }} className="w-full h-full" />
           )}
+
           {/* Markers pour étiquettes placées correctement */}
           {correct.map(id => {
             const lbl = labels.find(l=>l.id===id);
-            return <div key={id} style={{ position:'absolute', left:`${lbl.zone.x+lbl.zone.width/2}%`, top:`${lbl.zone.y+lbl.zone.height/2}%`, transform:'translate(-50%,-50%)', background:C.success, color:'#fff', borderRadius:999, padding:'3px 8px', fontSize:10, fontWeight:700, whiteSpace:'nowrap', pointerEvents:'none' }}>{lbl.text}</div>;
+            if (!lbl) return null;
+            return (
+              <div 
+                key={id} 
+                className="absolute px-2 py-1 text-[10px] font-bold whitespace-nowrap pointer-events-none rounded-full"
+                style={{ 
+                  left: `${lbl.zone.x+lbl.zone.width/2}%`, 
+                  top: `${lbl.zone.y+lbl.zone.height/2}%`, 
+                  transform: 'translate(-50%,-50%)', 
+                  backgroundColor: theme.colors.success, 
+                  color: '#fff',
+                  fontFamily: theme.fonts.display
+                }}
+              >
+                {lbl.text}
+              </div>
+            );
           })}
         </div>
+
         {/* Étiquettes */}
-        <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
+        <div className="flex flex-wrap gap-2 justify-center mt-2">
           {remaining.map(lbl => {
-            const isSel = selected?.id===lbl.id;
+            const isSel = selected?.id === lbl.id;
             const isWrong = wrong.includes(lbl.id);
             return (
-              <button key={lbl.id} onClick={() => pickLabel(lbl)} style={{
-                background: isWrong?'rgba(192,57,43,.2)':isSel?'rgba(199,91,57,.25)':C.surface,
-                border:`2px solid ${isWrong?C.danger:isSel?C.primary:C.border}`,
-                borderRadius:999, padding:'7px 14px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color:C.ink, cursor:'pointer', transition:'all .15s'
-              }}>{lbl.text}</button>
+              <button 
+                key={lbl.id} 
+                onClick={() => pickLabel(lbl)} 
+                className="px-3.5 py-2 rounded-full border-2 font-bold text-[13px] cursor-pointer transition-all active:scale-95"
+                style={{
+                  backgroundColor: isWrong ? `${theme.colors.danger}33` : isSel ? `${theme.colors.primary}40` : theme.colors.surface,
+                  borderColor: isWrong ? theme.colors.danger : isSel ? theme.colors.primary : border,
+                  color: theme.colors.ink,
+                  fontFamily: theme.fonts.display
+                }}
+              >
+                {lbl.text}
+              </button>
             );
           })}
         </div>
@@ -24327,46 +36218,69 @@ export default function DiagramLabeling({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/24_VoiceRecording.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useRef, useCallback, useEffect } from 'react';
+import { useTheme, useThemeTokens, AppColors } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { VoiceRecordingData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
-
-
-function WaveBar({ active, idx, C }: any) {
-  const height = active ? (Math.sin(idx*0.8 + Date.now()*0.003)*30+40) : 4;
-  return <div style={{ width:3, borderRadius:999, background:active?C.primary:'rgba(255,255,255,.15)', height, transition:'height .1s', flexShrink:0 }} />;
+interface WaveBarProps {
+  active: boolean;
+  idx: number;
+  C: AppColors;
 }
 
-export default function VoiceRecording({ data, onBack, onComplete }: any) {
+function WaveBar({ active, idx, C }: WaveBarProps) {
+  const height = active ? (Math.sin(idx*0.8 + Date.now()*0.003)*30+40) : 4;
+  return (
+    <div 
+      className="w-[3px] rounded-full shrink-0 transition-[height]"
+      style={{ 
+        backgroundColor: active ? C.primary : 'rgba(255,255,255,.15)', 
+        height, 
+        transitionDuration: '0.1s' 
+      }} 
+    />
+  );
+}
+
+export default function VoiceRecording({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: VoiceRecordingData }) {
   const { theme } = useTheme();
+  const tokens = useThemeTokens();
+  const { border, radCard, radBtn, shadow } = tokens;
   const C = theme.colors;
+
+  const { config = {}, items: mappedItems = [] } = data || {};
 
   const [idx, setIdx] = useState(0);
   const [phase, setPhase] = useState('idle'); // idle | playing_ref | recording | reviewing | rated
   const [attempts, setAttempts] = useState(0);
-  const [selfScore, setSelfScore] = useState(null);
+  const [selfScore, setSelfScore] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
   const [tick, setTick] = useState(0);
-  const mediaStream = useRef(null);
-  const mediaRecorder = useRef(null);
-  const recordedBlob = useRef(null);
-  const audioRef = useRef(null);
-  const recAudioRef = useRef(null);
-  const timerRef = useRef(null);
+  const mediaStream = useRef<MediaStream | null>(null);
+  const mediaRecorder = useRef<MediaRecorder | null>(null);
+  const recordedBlob = useRef<Blob | null>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const recAudioRef = useRef<HTMLAudioElement>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const item = data.items[idx];
-  const maxAttempts = data.config?.maxAttempts || 3;
+  const item = mappedItems[idx];
+  const maxAttempts = config?.maxAttempts || 3;
 
   useEffect(() => {
     if (phase==='recording') {
       timerRef.current = setInterval(() => setTick(t=>t+1), 100);
-      return () => clearInterval(timerRef.current);
+      return () => {
+        if (timerRef.current) clearInterval(timerRef.current);
+      };
     }
-    clearInterval(timerRef.current);
+    if (timerRef.current) clearInterval(timerRef.current);
   }, [phase]);
 
   const playRef = () => {
+    if (!item) return;
     setPhase('playing_ref');
     if (item.referenceAudio && audioRef.current) {
       audioRef.current.play();
@@ -24382,8 +36296,8 @@ export default function VoiceRecording({ data, onBack, onComplete }: any) {
       const stream = await navigator.mediaDevices.getUserMedia({ audio:true });
       mediaStream.current = stream;
       const mr = new MediaRecorder(stream);
-      const chunks = [];
-      mr.ondataavailable = e => chunks.push(e.data);
+      const chunks: Blob[] = [];
+      mr.ondataavailable = (e: BlobEvent) => chunks.push(e.data);
       mr.onstop = () => {
         recordedBlob.current = new Blob(chunks, { type:'audio/webm' });
         if (recAudioRef.current) recAudioRef.current.src = URL.createObjectURL(recordedBlob.current);
@@ -24404,72 +36318,181 @@ export default function VoiceRecording({ data, onBack, onComplete }: any) {
 
   const playRecording = () => { recAudioRef.current?.play(); };
 
-  const rate = (r) => {
+  const rate = (r: number) => {
     setSelfScore(r);
     const pts = r * 15;
-    setScore(s=>s+pts);
+    setScore((s)=>s+pts);
+    if (item?.itemId && onResponse) {
+      onResponse(item.itemId, r === 4 ? 5 : r === 3 ? 3 : 1);
+    }
     setPhase('rated');
   };
 
   const next = () => {
     setSelfScore(null); setAttempts(0); recordedBlob.current=null; setPhase('idle');
-    if (idx+1 >= data.items.length) { setDone(true); onComplete?.(score); }
-    else setIdx(i=>i+1);
+    if (idx+1 >= mappedItems.length) { setDone(true); onComplete?.(score); }
+    else setIdx((i)=>i+1);
   };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🎤</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Session terminée !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Session terminée !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
+
+  if (!item) return (
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col items-center justify-center p-6 text-center`} style={{ backgroundColor: theme.colors.bg }}>
+      <div className="text-6xl mb-4">🎤</div>
+      <div className="font-extrabold text-2xl mb-2" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+        Aucune phrase disponible
+      </div>
+      <button 
+        onClick={onBack} 
+        className="mt-6 px-8 py-3 rounded-xl border-none font-bold text-sm cursor-pointer"
+        style={{ backgroundColor: theme.colors.primary, color: '#fff', fontFamily: theme.fonts.display }}
+      >
+        Retour
+      </button>
     </div>
   );
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Prononciation</span>
-        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{data.items.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Prononciation
+        </span>
+        <span className="text-xs font-bold" style={{ color: theme.colors.muted }}>
+          {idx+1}/{mappedItems.length}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'24px 16px', display:'flex', flexDirection:'column', gap:20 }}>
+
+      <div className="flex-1 p-6 flex flex-col gap-5 max-w-lg mx-auto w-full">
         {/* Texte à prononcer */}
-        <div style={{ background:C.surface, borderRadius:18, padding:20, border:`1px solid ${C.border}`, textAlign:'center' }}>
-          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:12 }}>PRONONCE CETTE PHRASE</div>
-          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:22, color:C.ink, marginBottom:8, lineHeight:1.4 }}>{item.text}</div>
-          {item.phonetic && <div style={{ fontSize:13, color:C.muted, fontFamily:'serif', fontStyle:'italic' }}>/{item.phonetic}/</div>}
-          <div style={{ display:'flex', gap:4, marginTop:4, justifyContent:'center' }}>
-            {Array.from({length:item.difficulty}).map((_,i)=><span key={i} style={{ fontSize:12 }}>⭐</span>)}
+        <div 
+          className="p-5 border text-center flex flex-col items-center"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            borderColor: border,
+            boxShadow: shadow
+          }}
+        >
+          <div className="text-[11px] font-bold uppercase tracking-wider mb-3" style={{ color: theme.colors.muted }}>
+            Prononce cette phrase
+          </div>
+          <div className="font-extrabold text-[22px] leading-snug mb-2" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+            {item.text}
+          </div>
+          {item.phonetic && (
+            <div className="text-[13px] font-serif italic mb-2" style={{ color: theme.colors.muted }}>
+              /{item.phonetic}/
+            </div>
+          )}
+          <div className="flex gap-1 mt-1 justify-center">
+            {Array.from({length: item.difficulty || 1}).map((_,i) => (
+              <span key={i} className="text-[12px]">⭐</span>
+            ))}
           </div>
         </div>
 
         {/* Waveform */}
-        <div style={{ background:C.surface, borderRadius:14, padding:'14px', border:`1px solid ${C.border}`, display:'flex', alignItems:'center', justifyContent:'center', gap:3, height:64, overflow:'hidden' }}>
-          {Array.from({length:40}).map((_,i)=><WaveBar key={i} active={phase==='recording'} idx={i} C={C} />)}
+        <div 
+          className="p-3 border flex items-center justify-center gap-[3px] h-16 overflow-hidden"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            borderColor: border 
+          }}
+        >
+          {Array.from({length:40}).map((_,i) => (
+            <WaveBar key={i} active={phase==='recording'} idx={i} C={C} />
+          ))}
         </div>
 
         {/* Contrôles */}
-        <div style={{ display:'flex', flexDirection:'column', gap:12 }}>
+        <div className="flex flex-col gap-3">
           {item.referenceAudio && <audio ref={audioRef} src={item.referenceAudio} />}
           <audio ref={recAudioRef} />
 
-          <button onClick={playRef} disabled={phase==='recording'} style={{ background:'rgba(43,90,160,.25)', border:'1px solid rgba(43,90,160,.5)', color:'#93c5fd', borderRadius:12, padding:'12px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, cursor:'pointer' }}>
-            {phase==='playing_ref'?'▶ Référence en cours…':'▶ Écouter la référence'}
+          <button 
+            onClick={playRef} 
+            disabled={phase==='recording'} 
+            className="p-3.5 rounded-xl border font-bold text-sm transition-all"
+            style={{ 
+              backgroundColor: 'rgba(43,90,160,.25)', 
+              borderColor: 'rgba(43,90,160,.5)', 
+              color: '#93c5fd', 
+              fontFamily: theme.fonts.display, 
+              cursor: phase==='recording' ? 'default' : 'pointer',
+              opacity: phase==='recording' ? 0.5 : 1
+            }}
+          >
+            {phase==='playing_ref' ? '▶ Référence en cours…' : '▶ Écouter la référence'}
           </button>
 
           {phase==='idle' && (
-            <button onClick={startRec} disabled={attempts>=maxAttempts} style={{ background: attempts<maxAttempts?'rgba(192,57,43,.25)':'rgba(255,255,255,.05)', border:`1px solid ${attempts<maxAttempts?C.danger:'rgba(255,255,255,.1)'}`, color:attempts<maxAttempts?'#fca5a5':C.muted, borderRadius:12, padding:'14px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, cursor:attempts<maxAttempts?'pointer':'default' }}>
-              🎙️ {attempts<maxAttempts?`Enregistrer (essai ${attempts+1}/${maxAttempts})`:'Tentatives épuisées'}
+            <button 
+              onClick={startRec} 
+              disabled={attempts>=maxAttempts} 
+              className="p-3.5 rounded-xl border font-bold text-sm transition-transform active:scale-95"
+              style={{ 
+                backgroundColor: attempts<maxAttempts ? 'rgba(192,57,43,.25)' : 'rgba(255,255,255,.05)', 
+                borderColor: attempts<maxAttempts ? theme.colors.danger : 'rgba(255,255,255,.1)', 
+                color: attempts<maxAttempts ? '#fca5a5' : theme.colors.muted, 
+                fontFamily: theme.fonts.display, 
+                cursor: attempts<maxAttempts ? 'pointer' : 'default' 
+              }}
+            >
+              🎙️ {attempts<maxAttempts ? `Enregistrer (essai ${attempts+1}/${maxAttempts})` : 'Tentatives épuisées'}
             </button>
           )}
+          
           {phase==='recording' && (
-            <button onClick={stopRec} style={{ background:'rgba(192,57,43,.3)', border:`1px solid ${C.danger}`, color:'#fca5a5', borderRadius:12, padding:'14px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, cursor:'pointer', animation:'pulse 1s infinite' }}>
+            <button 
+              onClick={stopRec} 
+              className="p-3.5 rounded-xl border font-bold text-sm cursor-pointer animate-pulse"
+              style={{ 
+                backgroundColor: 'rgba(192,57,43,.3)', 
+                borderColor: theme.colors.danger, 
+                color: '#fca5a5', 
+                fontFamily: theme.fonts.display 
+              }}
+            >
               ⏹ Arrêter l'enregistrement
             </button>
           )}
-          {(phase==='reviewing'||phase==='rated') && (
-            <button onClick={playRecording} style={{ background:'rgba(45,122,79,.2)', border:`1px solid ${C.success}`, color:'#4ade80', borderRadius:12, padding:'12px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, cursor:'pointer' }}>
+
+          {(phase==='reviewing' || phase==='rated') && (
+            <button 
+              onClick={playRecording} 
+              className="p-3.5 rounded-xl border font-bold text-sm cursor-pointer active:scale-95 transition-transform"
+              style={{ 
+                backgroundColor: 'rgba(45,122,79,.2)', 
+                borderColor: theme.colors.success, 
+                color: '#4ade80', 
+                fontFamily: theme.fonts.display 
+              }}
+            >
               ▶ Réécouter mon enregistrement
             </button>
           )}
@@ -24477,24 +36500,57 @@ export default function VoiceRecording({ data, onBack, onComplete }: any) {
 
         {/* Auto-évaluation */}
         {phase==='reviewing' && (
-          <div>
-            <div style={{ fontSize:12, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:10, textAlign:'center' }}>Comment était ta prononciation ?</div>
-            <div style={{ display:'flex', gap:8, justifyContent:'center' }}>
-              {[{r:1,label:'😬 Difficile'},{r:2,label:'🙂 Passable'},{r:3,label:'😊 Bon'},{r:4,label:'🤩 Excellent'}].map(({r,label})=>(
-                <button key={r} onClick={()=>rate(r)} style={{ flex:1, background:'rgba(255,255,255,.06)', border:`1px solid ${C.border}`, borderRadius:10, padding:'10px 4px', fontSize:10, fontWeight:700, color:C.ink, cursor:'pointer', textAlign:'center', lineHeight:1.4 }}>{label}</button>
+          <div className="animate-in fade-in slide-in-from-bottom-2 mt-2">
+            <div className="text-[12px] font-bold uppercase tracking-wider mb-3 text-center" style={{ color: theme.colors.muted }}>
+              Comment était ta prononciation ?
+            </div>
+            <div className="flex gap-2 justify-center">
+              {[
+                {r:1, label:'😬 Difficile'},
+                {r:2, label:'🙂 Passable'},
+                {r:3, label:'😊 Bon'},
+                {r:4, label:'🤩 Excellent'}
+              ].map(({r,label}) => (
+                <button 
+                  key={r} 
+                  onClick={() => rate(r)} 
+                  className="flex-1 py-2.5 px-1 border rounded-xl text-[10px] sm:text-xs font-bold leading-tight cursor-pointer hover:bg-white/5 active:scale-95 transition-all"
+                  style={{ 
+                    backgroundColor: 'rgba(255,255,255,.06)', 
+                    borderColor: border, 
+                    color: theme.colors.ink 
+                  }}
+                >
+                  {label}
+                </button>
               ))}
             </div>
           </div>
         )}
+
         {phase==='rated' && (
-          <>
-            <div style={{ textAlign:'center', fontSize:14, color:C.success, fontWeight:700 }}>✓ Auto-évaluation enregistrée · +{selfScore*15} pts</div>
-            <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>
-              {idx+1<data.items.length?'Phrase suivante →':'Voir résultats'}
+          <div className="flex flex-col gap-3 animate-in fade-in">
+            <div className="text-center text-sm font-bold" style={{ color: theme.colors.success }}>
+              ✓ Auto-évaluation enregistrée · +{selfScore && selfScore*15} pts
+            </div>
+            <button 
+              onClick={next} 
+              className="w-full py-4 border-none font-bold text-[15px] cursor-pointer transition-transform active:scale-95 mt-2"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              {idx+1<mappedItems.length ? 'Phrase suivante →' : 'Voir résultats'}
             </button>
-          </>
+          </div>
         )}
-        <div style={{ fontSize:11, color:C.muted, textAlign:'center' }}>Note : requiert un navigateur avec accès au microphone (Chrome/Edge)</div>
+
+        <div className="text-[11px] text-center mt-auto opacity-50" style={{ color: theme.colors.muted }}>
+          Note : requiert un navigateur avec accès au microphone
+        </div>
       </div>
     </div>
   );
@@ -24502,30 +36558,37 @@ export default function VoiceRecording({ data, onBack, onComplete }: any) {
 </file>
 
 <file path="src/mechanics/25_AudioAB.tsx">
-import { useTheme } from '../store/useTheme';
 import React, { useState, useRef, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
+import { BaseGameProps } from '../types';
+import { AudioABData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
-
-
-export default function AudioAB({ data, onBack, onComplete }: any) {
+export default function AudioAB({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: AudioABData }) {
   const { theme } = useTheme();
+  const tokens = useThemeTokens();
+  const { border, radCard, radBtn, shadow } = tokens;
   const C = theme.colors;
 
+  const { config = {}, pairs = [] } = data || {};
+
   const [idx, setIdx] = useState(0);
-  const [picked, setPicked] = useState(null);
-  const [playing, setPlaying] = useState(null);
+  const [picked, setPicked] = useState<'A' | 'B' | null>(null);
+  const [playing, setPlaying] = useState<'A' | 'B' | null>(null);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
-  const audioA = useRef(null);
-  const audioB = useRef(null);
+  const audioA = useRef<HTMLAudioElement>(null);
+  const audioB = useRef<HTMLAudioElement>(null);
 
-  const pair = data.pairs[idx];
+  const pair = pairs[idx];
   const answered = picked !== null;
 
-  const playClip = (which) => {
+  const playClip = (which: 'A' | 'B') => {
+    if (!pair) return;
     setPlaying(which);
     const ref = which==='A' ? audioA : audioB;
-    if (ref.current && pair[`audio${which}`]) {
+    const audioUrl = which==='A' ? pair.audioA : pair.audioB;
+    if (ref.current && audioUrl) {
       ref.current.play();
       ref.current.onended = () => setPlaying(null);
     } else {
@@ -24533,75 +36596,167 @@ export default function AudioAB({ data, onBack, onComplete }: any) {
     }
   };
 
-  const pick = (which) => {
-    if (answered) return;
+  const pick = (which: 'A' | 'B') => {
+    if (answered || !pair) return;
     setPicked(which);
     const correct = which === pair.correct;
-    if (correct) setScore(s=>s+30);
+    if (correct) setScore((s)=>s+30);
+    if (pair.itemId && onResponse) {
+      onResponse(pair.itemId, correct ? 5 : 1);
+    }
   };
 
   const next = () => {
-    if (idx+1 >= data.pairs.length) { setDone(true); onComplete?.(score); }
-    else { setIdx(i=>i+1); setPicked(null); setPlaying(null); }
+    if (idx+1 >= pairs.length) { setDone(true); onComplete?.(score); }
+    else { setIdx((i)=>i+1); setPicked(null); setPlaying(null); }
   };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>👂</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Oreille exercée !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Oreille exercée !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
+
+  if (!pair) return (
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col items-center justify-center p-6 text-center`} style={{ backgroundColor: theme.colors.bg }}>
+      <div className="text-6xl mb-4">👂</div>
+      <div className="font-extrabold text-2xl mb-2" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+        Aucune paire disponible
+      </div>
+      <button 
+        onClick={onBack} 
+        className="mt-6 px-8 py-3 rounded-xl border-none font-bold text-sm cursor-pointer"
+        style={{ backgroundColor: theme.colors.primary, color: '#fff', fontFamily: theme.fonts.display }}
+      >
+        Retour
+      </button>
     </div>
   );
 
-  const isCorrect = (w) => answered && w===pair.correct;
-  const isWrong   = (w) => answered && picked===w && w!==pair.correct;
+  const isCorrect = (w: 'A' | 'B') => answered && w===pair.correct;
+  const isWrong   = (w: 'A' | 'B') => answered && picked===w && w!==pair.correct;
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Comparaison A/B</span>
-        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{data.pairs.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Comparaison A/B
+        </span>
+        <span className="text-xs font-bold" style={{ color: theme.colors.muted }}>
+          {idx+1}/{pairs.length}
+        </span>
       </div>
+
       {pair.audioA && <audio ref={audioA} src={pair.audioA} />}
       {pair.audioB && <audio ref={audioB} src={pair.audioB} />}
-      <div style={{ flex:1, padding:'28px 16px', display:'flex', flexDirection:'column', alignItems:'center', gap:24 }}>
+
+      <div className="flex-1 p-6 flex flex-col items-center gap-6 max-w-sm mx-auto w-full">
         {/* Critère */}
-        <div style={{ background:C.surface, borderRadius:16, padding:'14px 18px', border:`1px solid ${C.border}`, textAlign:'center', width:'100%', maxWidth:340 }}>
-          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:6 }}>Critère</div>
-          <div style={{ fontSize:13, color:C.ink, fontWeight:600 }}>{data.config?.criterion}</div>
+        <div 
+          className="p-4 border text-center w-full"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            borderColor: border,
+            boxShadow: shadow
+          }}
+        >
+          <div className="text-[11px] font-bold uppercase tracking-wider mb-1.5" style={{ color: theme.colors.muted }}>
+            Critère
+          </div>
+          <div className="text-[13px] font-semibold" style={{ color: theme.colors.ink }}>
+            {config?.criterion}
+          </div>
         </div>
+
         {/* Label */}
-        <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink }}>{pair.label}</div>
+        <div className="font-extrabold text-2xl text-center" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          {pair.label}
+        </div>
+
         {/* Clips A et B */}
-        <div style={{ display:'flex', gap:16, width:'100%', maxWidth:340 }}>
-          {['A','B'].map(w => (
-            <div key={w} style={{ flex:1, display:'flex', flexDirection:'column', gap:10 }}>
-              <button onClick={() => playClip(w)} style={{
-                background:playing===w?'rgba(199,91,57,.2)':C.surface, border:`2px solid ${playing===w?C.primary:C.border}`,
-                borderRadius:14, padding:'20px 10px', fontSize:24, cursor:'pointer', textAlign:'center'
-              }}>{playing===w?'⏸':'▶'}</button>
-              <button onClick={() => pick(w)} disabled={answered} style={{
-                background: isCorrect(w)?'rgba(45,122,79,.2)':isWrong(w)?'rgba(192,57,43,.15)':C.surface,
-                border:`2px solid ${isCorrect(w)?C.success:isWrong(w)?C.danger:C.border}`,
-                borderRadius:12, padding:'10px 0', fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color:C.ink, cursor:answered?'default':'pointer'
-              }}>Version {w}</button>
+        <div className="flex gap-4 w-full">
+          {(['A','B'] as const).map(w => (
+            <div key={w} className="flex-1 flex flex-col gap-2.5">
+              <button 
+                onClick={() => playClip(w)} 
+                className="p-5 border-2 text-2xl text-center rounded-xl cursor-pointer transition-transform active:scale-95"
+                style={{
+                  backgroundColor: playing===w ? `${theme.colors.primary}33` : theme.colors.surface, 
+                  borderColor: playing===w ? theme.colors.primary : border,
+                  boxShadow: playing===w ? `0 0 15px ${theme.colors.primary}40` : 'none'
+                }}
+              >
+                {playing===w ? '⏸' : '▶'}
+              </button>
+              <button 
+                onClick={() => pick(w)} 
+                disabled={answered} 
+                className="p-2.5 border-2 text-[15px] font-bold text-center cursor-pointer transition-all active:scale-95"
+                style={{
+                  backgroundColor: isCorrect(w) ? `${theme.colors.success}33` : isWrong(w) ? `${theme.colors.danger}26` : theme.colors.surface,
+                  borderColor: isCorrect(w) ? theme.colors.success : isWrong(w) ? theme.colors.danger : border,
+                  borderRadius: radBtn, 
+                  fontFamily: theme.fonts.display, 
+                  color: theme.colors.ink, 
+                  opacity: answered && picked !== w && !isCorrect(w) ? 0.6 : 1
+                }}
+              >
+                Version {w}
+              </button>
             </div>
           ))}
         </div>
+
         {answered && (
-          <>
-            <div style={{ background:'rgba(255,255,255,.05)', borderRadius:14, padding:14, border:`1px solid rgba(255,255,255,.08)`, width:'100%', maxWidth:340, textAlign:'center' }}>
-              <div style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:picked===pair.correct?C.success:C.danger, marginBottom:6 }}>
-                {picked===pair.correct?'✓ Bonne oreille !':'✗ Version '+pair.correct+' était la bonne'}
+          <div className="flex flex-col gap-4 w-full mt-2 animate-in slide-in-from-bottom-2">
+            <div 
+              className="p-4 border text-center"
+              style={{ 
+                backgroundColor: `${theme.colors.ink}0a`, 
+                borderRadius: radCard, 
+                borderColor: border 
+              }}
+            >
+              <div className="font-bold text-sm mb-1.5" style={{ fontFamily: theme.fonts.display, color: picked===pair.correct ? theme.colors.success : theme.colors.danger }}>
+                {picked===pair.correct ? '✓ Bonne oreille !' : '✗ Version '+pair.correct+' était la bonne'}
               </div>
-              <div style={{ fontSize:12, color:C.muted, lineHeight:1.6 }}>{pair.explanation}</div>
+              <div className="text-xs leading-relaxed" style={{ color: theme.colors.muted }}>
+                {pair.explanation}
+              </div>
             </div>
-            <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer', width:'100%', maxWidth:340 }}>
-              {idx+1<data.pairs.length?'Paire suivante →':'Voir résultats'}
+            <button 
+              onClick={next} 
+              className="w-full py-3.5 border-none font-bold text-[15px] cursor-pointer transition-transform active:scale-95"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              {idx+1<pairs.length ? 'Paire suivante →' : 'Voir résultats'}
             </button>
-          </>
+          </div>
         )}
       </div>
     </div>
@@ -24635,6 +36790,126 @@ export { default as DeceptivePairs } from './22_DeceptivePairs';
 export { default as DiagramLabeling } from './23_DiagramLabeling';
 export { default as VoiceRecording } from './24_VoiceRecording';
 export { default as AudioAB } from './25_AudioAB';
+</file>
+
+<file path="src/server/rag.ts">
+import { GoogleGenAI } from "@google/genai";
+
+export interface RagDocumentChunk {
+    id: string;
+    text: string;
+    embedding: number[];
+}
+
+export interface RagIndex {
+    chunks: RagDocumentChunk[];
+}
+
+// In-memory store: courseId -> RagIndex
+const vectorStore: Record<string, RagIndex> = {};
+
+// Helper: Cosine similarity
+export function cosineSimilarity(vecA: number[], vecB: number[]): number {
+    let dotProduct = 0;
+    let normA = 0;
+    let normB = 0;
+    for (let i = 0; i < vecA.length; i++) {
+        dotProduct += vecA[i] * vecB[i];
+        normA += vecA[i] * vecA[i];
+        normB += vecB[i] * vecB[i];
+    }
+    if (normA === 0 || normB === 0) return 0;
+    return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+}
+
+// Chunking function
+export function chunkText(text: string, maxChunkSize = 1000, overlap = 200): string[] {
+    const chunks: string[] = [];
+    let startIndex = 0;
+    while (startIndex < text.length) {
+        let endIndex = startIndex + maxChunkSize;
+        if (endIndex < text.length) {
+            // Try to find a sentence boundary
+            const lastPeriod = text.lastIndexOf('.', endIndex);
+            if (lastPeriod > startIndex + maxChunkSize / 2) {
+                endIndex = lastPeriod + 1;
+            }
+        }
+        chunks.push(text.slice(startIndex, endIndex).trim());
+        startIndex = endIndex - overlap;
+        
+        // Prevent infinite loop if something goes wrong with indices
+        if (overlap >= maxChunkSize) break;
+    }
+    return chunks;
+}
+
+// Ingest text
+export async function ingestDocument(aiInstance: GoogleGenAI, courseId: string, text: string) {
+    const chunks = chunkText(text);
+    const embeddedChunks: RagDocumentChunk[] = [];
+    
+    // We process chunks sequentially to respect API rate limits
+    for (let i = 0; i < chunks.length; i++) {
+        const chunk = chunks[i];
+        if (!chunk) continue;
+        try {
+             const response = await aiInstance.models.embedContent({
+                 model: 'text-embedding-004',
+                 contents: chunk
+             });
+             if (response.embeddings && response.embeddings[0]?.values) {
+                 embeddedChunks.push({
+                     id: `${courseId}-chunk-${i}`,
+                     text: chunk,
+                     embedding: response.embeddings[0].values
+                 });
+             }
+        } catch (e) {
+             console.error(`Error embedding chunk ${i}:`, e);
+        }
+    }
+    
+    // Store or append in memory
+    if (!vectorStore[courseId]) {
+        vectorStore[courseId] = { chunks: [] };
+    }
+    vectorStore[courseId].chunks.push(...embeddedChunks);
+    
+    return { success: true, ingestedChunks: embeddedChunks.length, totalChunks: vectorStore[courseId].chunks.length };
+}
+
+// Clear index for a specific course
+export function clearCourseIndex(courseId: string) {
+    if (vectorStore[courseId]) {
+        delete vectorStore[courseId];
+    }
+}
+
+// Retrieve relevant chunks
+export async function retrieveChunks(aiInstance: GoogleGenAI, courseId: string, query: string, topK: number = 3): Promise<RagDocumentChunk[]> {
+    const index = vectorStore[courseId];
+    if (!index || index.chunks.length === 0) {
+        return [];
+    }
+    
+    const response = await aiInstance.models.embedContent({
+        model: 'text-embedding-004',
+        contents: query
+    });
+    
+    const queryEmbedding = response.embeddings?.[0]?.values;
+    if (!queryEmbedding) return [];
+    
+    const scoredChunks = index.chunks.map(chunk => ({
+        chunk,
+        score: cosineSimilarity(queryEmbedding, chunk.embedding)
+    }));
+    
+    scoredChunks.sort((a, b) => b.score - a.score);
+    
+    return scoredChunks.slice(0, topK).map(sc => sc.chunk);
+}
 </file>
 
 <file path="src/services/analytics.ts">
@@ -24942,11 +37217,290 @@ if (import.meta.env.VITE_RECAPTCHA_SITE_KEY) {
 
 export const auth = getAuth(app);
 setPersistence(auth, browserLocalPersistence);
-export const db = initializeFirestore(app, {
-  localCache: undefined,
-  experimentalForceLongPolling: true,
-}, firebaseConfig.firestoreDatabaseId || undefined);
+export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
 export const storage = getStorage(app);
+</file>
+
+<file path="src/services/mechanicDataMapper.ts">
+import { ContentItem, MechanicId } from '../types';
+import { MechanicDataLot1, MechanicDataLot2, MechanicDataLot3, MechanicDataLot4, MechanicDataLot5 } from '../types/mechanics';
+
+export function mapMechanicData(mechanicId: string, items: ContentItem[]): MechanicDataLot1 | MechanicDataLot2 | MechanicDataLot3 | MechanicDataLot4 | MechanicDataLot5 | null {
+  if (!items || items.length === 0) return null;
+
+  switch (mechanicId) {
+    case 'flashcard':
+      return { _type: 'FlashcardSRSData' };
+
+    case 'quiz':
+      return { _type: 'MultipleChoiceData' };
+
+    case 'swipe':
+      return { _type: 'BinarySwipeData' };
+
+    case 'hangman':
+    case 'pendu':
+      return { _type: 'HangmanData' };
+
+    case 'memory':
+      return {
+        config: { gridCols: 4, flipBackDelay: 1100 },
+        pairs: items.map((item, idx) => ({
+          id: item.id || String(idx),
+          cardA: { text: item.payload.question || item.payload.translation || "Question" },
+          cardB: { text: item.payload.answer || "Réponse" }
+        }))
+      };
+
+    case 'anagram':
+      return {
+        words: items.map((item) => ({
+          word: (item.payload.answer || item.id).toUpperCase(),
+          hint: item.payload.question || item.payload.translation || ''
+        }))
+      };
+
+    case 'category_blaster':
+      return {
+        config: { baseTimeMs: 3500, speedupFactor: 0.92, minTimeMs: 1200, comboBonus: true },
+        categories: [
+          { id: 'c1', label: 'Mot', emoji: '📝', color: '#6366f1' },
+          { id: 'c2', label: 'Verbe', emoji: '🏃', color: '#f59e0b' }
+        ],
+        items: items.map((item, idx) => ({
+          id: item.id || `item_${idx}`,
+          text: item.payload.answer || item.payload.question || item.id,
+          categoryId: (item.tags as string[])?.includes('verbe') ? 'c2' : 'c1'
+        }))
+      };
+
+    case 'word_search':
+      return {
+        config: { gridSize: 10, hintMode: 'hint' },
+        words: items.map(item => ({
+          id: item.id,
+          word: (item.payload.answer || item.payload.question || '').replace(/[^a-zA-Z]/g, '').toUpperCase(),
+          hint: item.payload.translation || item.payload.question || item.payload.answer
+        })).filter(w => w.word.length > 2 && w.word.length <= 10).slice(0, 6)
+      };
+
+    case 'fill_in_the_blank':
+      return {
+        exercises: items.map(item => {
+          const q = item.payload.question || item.payload.translation || "";
+          const text = q.includes('[1]') ? q : (q + " [1]");
+          return {
+            text,
+            blanks: [{ id: '1', answer: item.payload.answer }]
+          };
+        })
+      };
+
+    case 'sequencing':
+      return {
+        config: { showLabels: true },
+        items: items.map((it, index) => ({
+          id: it.id,
+          text: it.payload.answer || it.payload.question || it.id,
+          label: it.payload.translation || '',
+          order: index + 1
+        }))
+      };
+
+    case 'drag_drop':
+      {
+        const uniqueAnswers = [...new Set(items.map(i => i.payload.answer))].filter(Boolean);
+        const colors = ['#2D7A4F', '#c0392b', '#2980b9', '#f39c12', '#8e44ad'];
+        
+        return {
+          config: { validateMode: 'immediate' },
+          groups: uniqueAnswers.map((ans, idx) => ({
+            id: ans,
+            label: ans,
+            emoji: '📁',
+            color: colors[idx % colors.length]
+          })),
+          items: items.map(item => ({
+            id: item.id,
+            groupId: item.payload.answer,
+            text: item.payload.question || item.payload.translation || item.payload.answer || item.id
+          }))
+        };
+      }
+
+    case 'line_matching':
+      return {
+        config: { shuffleRight: true },
+        pairs: items.map((it) => ({
+          id: it.id,
+          left: { text: it.payload.question || it.payload.translation || it.id },
+          right: { text: it.payload.answer || '' }
+        }))
+      };
+
+    case 'bingo':
+      return {
+        config: { gridSize: 3, callerMode: 'auto', callerInterval: 5000 },
+        items: items.map(it => ({
+          id: it.id,
+          term: it.payload.answer || it.payload.question || it.id,
+          clue: it.payload.translation || it.payload.question || it.payload.answer || ''
+        }))
+      };
+
+    case 'situational_choice':
+      return {
+        scenarios: items.map(it => ({
+          id: it.id,
+          situation: it.payload.question || it.id,
+          question: 'Que dites-vous ?',
+          choices: [
+            { id: '1', text: it.payload.answer || '...', register: 'casual', correct: true, feedback: 'Correct !' },
+            { id: '2', text: it.payload.translation || 'Autre option', register: 'formal', correct: false, feedback: 'Incorrect' }
+          ]
+        }))
+      };
+
+    case 'tile_merge':
+      return {
+        config: { gridSize: 4 },
+        tileBank: items.slice(0, 8).flatMap((item, idx) => [
+          { id: `t_${idx}_A`, label: item.payload.question || item.payload.translation || item.id, pairId: `t_${idx}_B`, sourceId: item.id },
+          { id: `t_${idx}_B`, label: item.payload.answer || '?', pairId: `t_${idx}_A`, sourceId: item.id }
+        ])
+      };
+
+    case 'chain_reaction':
+      return {
+        config: { timerSeconds: 8 },
+        wordBank: items.map(item => {
+          const word = (item.payload.answer || item.payload.question || item.id).replace(/[^a-zA-Z]/g, '').toUpperCase();
+          return {
+            id: item.id,
+            word,
+            startLetter: word[0],
+            endLetter: word[word.length - 1]
+          };
+        }).filter(w => w.word.length >= 2)
+      };
+    case 'combination_builder':
+      return {
+        config: { maxSpins: 3 },
+        reels: [
+          { id: 'r1', items: ['P', 'T', 'C', 'M', 'B'] },
+          { id: 'r2', items: ['A', 'O', 'I', 'E', 'U'] },
+          { id: 'r3', items: ['T', 'M', 'L', 'R', 'S'] }
+        ],
+        validCombinations: [
+          { result: 'PAT', combo: ['P', 'A', 'T'], definition: 'Action de...', points: 50 },
+          { result: 'COL', combo: ['C', 'O', 'L'], definition: 'Partie d\'un vêtement', points: 60 },
+          { result: 'MUR', combo: ['M', 'U', 'R'], definition: 'Paroi vertical', points: 70 }
+        ]
+      };
+
+    case 'dialogue_tree':
+      return {
+        config: { character: { name: 'PNJ', avatar: '🤖' } },
+        startNode: 'n1',
+        nodes: {
+          n1: { 
+            npc: items?.[0]?.payload?.question || "Bonjour !", 
+            choices: [ 
+              { text: items?.[0]?.payload?.answer || "Salut", next: 'end_win', points: 10 }, 
+              { text: items?.[0]?.payload?.translation || "...", next: 'end_neutral' } 
+            ] 
+          },
+          end_win: { isEnd: true, npc: "Super", outcome: 'win' },
+          end_neutral: { isEnd: true, npc: "Ok", outcome: 'neutral' }
+        }
+      };
+
+    case 'rebus_puzzle':
+      return {
+        config: { hintLevel: 1 },
+        puzzles: items.map(item => ({
+          itemId: item.id,
+          answer: item.payload.answer || item.payload.question,
+          pieces: [ { emoji: '🧩', sound: '...' } ],
+          choices: [item.payload.answer || item.payload.question, 'Autre'],
+          explanation: item.payload.translation || ''
+        }))
+      };
+
+    case 'audio_transcription':
+      return {
+        config: { maxReplays: 3, tolerance: 1, hint: 'word_count' },
+        items: items.map((item) => ({
+          itemId: item.id,
+          expected: item.payload.answer || item.payload.question || '',
+          audioUrl: '',
+          points: 10,
+          normalize: true
+        }))
+      };
+
+    case 'error_correction':
+      return {
+        config: { showErrorCount: true },
+        exercises: items.map((item, i) => ({
+          itemId: item.id,
+          text: item.payload.question || item.payload.translation || "Ceci est un texte avec une érreur.",
+          errors: [{ id: `e${i}`, start: 29, end: 35, wrong: "érreur", correct: item.payload.answer || "erreur", explanation: "Pas d'accent ici." }]
+        }))
+      };
+
+    case 'deceptive_pairs':
+      return {
+        config: { contextA: "FR (France)", contextB: "QC (Québec)" },
+        pairs: items.map((item, j) => ({
+          itemId: item.id,
+          term: item.payload.question || item.payload.answer || "gosses",
+          meaningA: "enfants",
+          etymology: "",
+          choices: [
+            { id: "c1", text: item.payload.translation || "testicules", correct: true },
+            { id: "c2", text: "enfants", correct: false, isMeaningA: true }
+          ],
+          explanation: "Les faux amis sont des mots identiques qui ont un sens différent."
+        }))
+      };
+
+    case 'diagram_labeling':
+      return {
+        config: { tolerancePct: 6 },
+        labels: items.map((item, i) => ({
+          id: item.id || `l${i}`,
+          itemId: item.id,
+          text: item.payload.answer || item.payload.question || `Label ${i+1}`,
+          zone: { x: 40 + i*5, y: 40 + i*5, width: 10, height: 10 }
+        }))
+      };
+
+    case 'voice_recording':
+      return {
+        config: { maxAttempts: 3 },
+        items: items.map((item) => ({
+          itemId: item.id,
+          text: item.payload.question || item.payload.answer || "Enregistrez votre voix",
+          difficulty: 1,
+          referenceAudio: item.payload.audioUrl || ""
+        }))
+      };
+
+    case 'audio_ab':
+      return {
+        config: { criterion: "Laquelle sonne le plus naturel ?" },
+        pairs: items.map((item) => ({
+          itemId: item.id,
+          label: item.payload.question || item.payload.answer || "Écoutez et comparez",
+          audioA: (item.payload as any).audioA || "",
+          audioB: (item.payload as any).audioB || "",
+          correct: 'A' as const,
+          explanation: item.payload.translation || "A est meilleur."
+        }))
+      };
+  }
+}
 </file>
 
 <file path="src/services/notifications.ts">
@@ -25174,6 +37728,9 @@ export interface SrsCard {
   state: number; // 0=New 1=Learning 2=Review 3=Relearning
   last_review?: string;
   learning_steps: number;
+  // Champs personnalisés pour détecter les blocages conceptuels (R1)
+  consecutive_lapses?: number;
+  is_blocked?: boolean;
 }
 
 export interface ScheduleResult {
@@ -25229,8 +37786,20 @@ export function scheduleNext(
   const fsrsCard = toFsrsCard(card);
   const scheduling = f.repeat(fsrsCard, now);
   const result = scheduling[rating];
+  
+  const updatedCard = fromFsrsCard(result.card, card.itemId, card.module);
+  
+  // R1: Détecteur de blocage conceptuel
+  // Si on échoue (Rating.Again = 1), on incrémente. Sinon on remet à zéro.
+  const isFail = rating === Rating.Again;
+  const currentLapses = card.consecutive_lapses || 0;
+  
+  updatedCard.consecutive_lapses = isFail ? currentLapses + 1 : 0;
+  // Seuil de blocage fixé à 3 échecs consécutifs
+  updatedCard.is_blocked = updatedCard.consecutive_lapses >= 3;
+  
   return {
-    updatedCard: fromFsrsCard(result.card, card.itemId, card.module),
+    updatedCard,
     reviewLog: result.log,
   };
 }
@@ -25874,7 +38443,13 @@ export const createSyncSlice: StateCreator<ProgressionState, [], [], SyncSlice> 
           tenantId,
           derniereMiseAJour: serverTimestamp()
         }, { merge: true });
+      } catch (error) {
+        console.error('Erreur lors de la sauvegarde utilisateurs vers Firebase:', error);
+      }
 
+      try {
+        const state = get();
+        const tenantId = useTenant.getState().currentTenant?.id || 'eduforge';
         const classementRef = doc(db, 'classement', user.uid);
         await setDoc(classementRef, {
           surnom: state.surnom,
@@ -25883,7 +38458,7 @@ export const createSyncSlice: StateCreator<ProgressionState, [], [], SyncSlice> 
           derniereMiseAJour: serverTimestamp()
         }, { merge: true });
       } catch (error) {
-        console.error('Erreur lors de la sauvegarde vers Firebase:', error);
+        console.error('Erreur lors de la sauvegarde classement vers Firebase:', error);
       }
     }, 2000);
   }
@@ -25953,7 +38528,7 @@ export interface LeconConfig {
   id: string;
   nom: string;
   type: 'theorie' | 'jeu';
-  mechanic?: string;
+  mechanic?: "flashcard" | "quiz" | "swipe" | "pendu" | "drag_drop" | "fill_in_the_blank" | "memory";
   tags: string[];
   contentSource?: 'lesson' | 'chapter' | 'level';
   theorieContent?: string;
@@ -26239,6 +38814,10 @@ interface AppConfigState {
   updateNavItem: (id: string, updates: Partial<NavItem>) => void;
   appName: string;
   setAppName: (name: string) => void;
+  appDescription: string;
+  setAppDescription: (desc: string) => void;
+  marketingSlogan: string;
+  setMarketingSlogan: (slogan: string) => void;
   currency: CurrencyConfig;
   setCurrency: (config: Partial<CurrencyConfig>) => void;
   features: FeatureFlags;
@@ -26256,6 +38835,8 @@ export const useAppConfig = create<AppConfigState>()(
   persist(
     (set) => ({
       appName: 'Mots & Blocs',
+      appDescription: '',
+      marketingSlogan: '',
       navItems: [
         { id: 'home', label: 'Accueil', iconName: 'Home', enabled: true },
         { id: 'ville', label: 'Ville', iconName: 'Map', enabled: true },
@@ -26287,6 +38868,8 @@ export const useAppConfig = create<AppConfigState>()(
         navItems: state.navItems.map(item => item.id === id ? { ...item, ...updates } : item)
       })),
       setAppName: (name) => set({ appName: name }),
+      setAppDescription: (desc) => set({ appDescription: desc }),
+      setMarketingSlogan: (slogan) => set({ marketingSlogan: slogan }),
       setCurrency: (config) => set((state) => ({ currency: { ...state.currency, ...config } })),
       setFeatures: (features) => set((state) => ({ features: { ...state.features, ...features } })),
       setSrsConfig: (config) => set((state) => ({ srsConfig: { ...state.srsConfig, ...config } })),
@@ -26328,6 +38911,154 @@ export const useAuth = create<AuthState>((set) => ({
   isLoading: true,
   setAuth: (user, claims) => set({ user, claims, isLoading: false }),
   setIsLoading: (loading) => set({ isLoading: loading }),
+}));
+</file>
+
+<file path="src/store/useCreatorHub.ts">
+import { create } from 'zustand';
+import { db, auth } from '../services/firebase';
+import { collection, query, where, getDocs, doc, setDoc, deleteDoc, serverTimestamp } from 'firebase/firestore';
+import { Course, Bundle } from '../types';
+
+interface CreatorHubState {
+  courses: Course[];
+  bundles: Bundle[];
+  isLoading: boolean;
+  error: string | null;
+  
+  fetchData: (tenantId: string) => Promise<void>;
+  createCourse: (course: Omit<Course, 'id' | 'createdAt' | 'updatedAt' | 'authorId'>) => Promise<void>;
+  updateCourse: (id: string, updates: Partial<Course>) => Promise<void>;
+  deleteCourse: (id: string) => Promise<void>;
+  
+  createBundle: (bundle: Omit<Bundle, 'id'>) => Promise<void>;
+  updateBundle: (id: string, updates: Partial<Bundle>) => Promise<void>;
+  deleteBundle: (id: string) => Promise<void>;
+}
+
+export const useCreatorHub = create<CreatorHubState>((set, get) => ({
+  courses: [],
+  bundles: [],
+  isLoading: false,
+  error: null,
+
+  fetchData: async (tenantId: string) => {
+    if (!tenantId) return;
+    set({ isLoading: true, error: null });
+    try {
+      // Fetch Courses
+      const coursesRef = collection(db, 'courses');
+      const qCourses = query(coursesRef, where('tenantId', '==', tenantId));
+      const coursesSnap = await getDocs(qCourses);
+      const courses = coursesSnap.docs.map(d => ({ id: d.id, ...d.data() } as Course));
+
+      // Fetch Bundles
+      const bundlesRef = collection(db, 'bundles');
+      const qBundles = query(bundlesRef, where('tenantId', '==', tenantId));
+      const bundlesSnap = await getDocs(qBundles);
+      const bundles = bundlesSnap.docs.map(d => ({ id: d.id, ...d.data() } as Bundle));
+
+      set({ courses, bundles, isLoading: false });
+    } catch (error: any) {
+      console.error('Error fetching creator hub data:', error);
+      set({ error: error.message, isLoading: false });
+    }
+  },
+
+  createCourse: async (courseData) => {
+    try {
+      const user = auth.currentUser;
+      if (!user) throw new Error('Not authenticated');
+
+      const newRef = doc(collection(db, 'courses'));
+      const newCourse: Course = {
+        id: newRef.id,
+        ...courseData,
+        authorId: user.uid,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+
+      await setDoc(newRef, {
+        ...newCourse,
+        // Optional: add server timestamp for strict ordering if needed
+        // serverCreatedAt: serverTimestamp(),
+      });
+
+      set(state => ({ courses: [...state.courses, newCourse] }));
+    } catch (error: any) {
+      console.error('Error creating course:', error);
+      throw error;
+    }
+  },
+
+  updateCourse: async (id, updates) => {
+    try {
+      const ref = doc(db, 'courses', id);
+      const updateData = {
+        ...updates,
+        updatedAt: new Date().toISOString()
+      };
+      await setDoc(ref, updateData, { merge: true });
+      
+      set(state => ({
+        courses: state.courses.map(c => c.id === id ? { ...c, ...updateData } : c)
+      }));
+    } catch (error: any) {
+      console.error('Error updating course:', error);
+      throw error;
+    }
+  },
+
+  deleteCourse: async (id) => {
+    try {
+      await deleteDoc(doc(db, 'courses', id));
+      set(state => ({ courses: state.courses.filter(c => c.id !== id) }));
+    } catch (error: any) {
+      console.error('Error deleting course:', error);
+      throw error;
+    }
+  },
+
+  createBundle: async (bundleData) => {
+    try {
+      const newRef = doc(collection(db, 'bundles'));
+      const newBundle: Bundle = {
+        id: newRef.id,
+        ...bundleData,
+      };
+
+      await setDoc(newRef, newBundle);
+      set(state => ({ bundles: [...state.bundles, newBundle] }));
+    } catch (error: any) {
+      console.error('Error creating bundle:', error);
+      throw error;
+    }
+  },
+
+  updateBundle: async (id, updates) => {
+    try {
+      const ref = doc(db, 'bundles', id);
+      await setDoc(ref, updates, { merge: true });
+      
+      set(state => ({
+        bundles: state.bundles.map(b => b.id === id ? { ...b, ...updates } : b)
+      }));
+    } catch (error: any) {
+      console.error('Error updating bundle:', error);
+      throw error;
+    }
+  },
+
+  deleteBundle: async (id) => {
+    try {
+      await deleteDoc(doc(db, 'bundles', id));
+      set(state => ({ bundles: state.bundles.filter(b => b.id !== id) }));
+    } catch (error: any) {
+      console.error('Error deleting bundle:', error);
+      throw error;
+    }
+  }
 }));
 </file>
 
@@ -26382,6 +39113,154 @@ export const useGames = create<GamesState>()(
 );
 </file>
 
+<file path="src/store/useNotes.ts">
+import { create } from 'zustand';
+import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { auth, db } from '../services/firebase';
+import { useTenant } from './useTenant';
+
+// ─── Types and Constants ──────────────────────────────────────────────────
+
+enum OperationType {
+  CREATE = 'create',
+  UPDATE = 'update',
+  DELETE = 'delete',
+  LIST = 'list',
+  GET = 'get',
+  WRITE = 'write',
+}
+
+interface FirestoreErrorInfo {
+  error: string;
+  operationType: OperationType;
+  path: string | null;
+  authInfo: {
+    userId?: string | null;
+    email?: string | null;
+    emailVerified?: boolean | null;
+    isAnonymous?: boolean | null;
+    tenantId?: string | null;
+    providerInfo?: {
+      providerId?: string | null;
+      email?: string | null;
+    }[];
+  };
+}
+
+function handleFirestoreError(error: unknown, operationType: OperationType, path: string | null) {
+  const errInfo: FirestoreErrorInfo = {
+    error: error instanceof Error ? error.message : String(error),
+    authInfo: {
+      userId: auth.currentUser?.uid,
+      email: auth.currentUser?.email,
+      emailVerified: auth.currentUser?.emailVerified,
+      isAnonymous: auth.currentUser?.isAnonymous,
+      tenantId: auth.currentUser?.tenantId,
+      providerInfo: auth.currentUser?.providerData?.map(provider => ({
+        providerId: provider.providerId,
+        email: provider.email,
+      })) || []
+    },
+    operationType,
+    path
+  };
+  console.error('Firestore Error: ', JSON.stringify(errInfo));
+  throw new Error(JSON.stringify(errInfo));
+}
+
+interface NotesState {
+  noteText: string;
+  isLoading: boolean;
+  isSaving: boolean;
+  lastUpdated: string | null;
+  error: string | null;
+  
+  // Actions
+  chargerNotes: () => Promise<void>;
+  setNoteTextLocally: (text: string) => void;
+  sauvegarderNotes: (text: string) => Promise<void>;
+  clearError: () => void;
+}
+
+// ─── Store ──────────────────────────────────────────────────────────────
+
+export const useNotes = create<NotesState>((set, get) => ({
+  noteText: '',
+  isLoading: false,
+  isSaving: false,
+  lastUpdated: null,
+  error: null,
+
+  clearError: () => set({ error: null }),
+
+  chargerNotes: async () => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    set({ isLoading: true });
+    const path = `notes/${user.uid}`;
+    try {
+      const docRef = doc(db, 'notes', user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        set({
+          noteText: data.noteText || '',
+          lastUpdated: data.lastUpdated ? new Date(data.lastUpdated.seconds * 1000).toISOString() : null,
+          isLoading: false,
+          error: null
+        });
+      } else {
+        set({ noteText: '', lastUpdated: null, isLoading: false, error: null });
+      }
+    } catch (error) {
+      console.error('[Notes] Erreur de chargement Firestore:', error);
+      const errorMessage = error instanceof Error ? error.message : "Erreur de chargement.";
+      set({ isLoading: false, error: errorMessage });
+      handleFirestoreError(error, OperationType.GET, path);
+    }
+  },
+
+  setNoteTextLocally: (text: string) => {
+    set({ noteText: text });
+  },
+
+  sauvegarderNotes: async (text: string) => {
+    const user = auth.currentUser;
+    if (!user) return;
+
+    const tenantId = useTenant.getState().currentTenant?.id || 'eduforge';
+    const path = `notes/${user.uid}`;
+
+    set({ isSaving: true });
+    try {
+      const docRef = doc(db, 'notes', user.uid);
+      await setDoc(docRef, {
+        tenantId,
+        userId: user.uid,
+        noteText: text,
+        lastUpdated: serverTimestamp()
+      }, { merge: true });
+
+      set({
+        isSaving: false,
+        lastUpdated: new Date().toISOString(),
+        error: null
+      });
+    } catch (error) {
+      console.error('[Notes] Erreur de sauvegarde Firestore:', error);
+      const errorMessage = error instanceof Error ? error.message : "Erreur de synchronisation avec le serveur.";
+      set({ isSaving: false, error: errorMessage });
+      
+      // Fallback native visual notification
+      alert("Erreur: Impossible de synchroniser vos notes avec le serveur.");
+      
+      handleFirestoreError(error, OperationType.WRITE, path);
+    }
+  }
+}));
+</file>
+
 <file path="src/store/useProgression.ts">
 import { create } from 'zustand';
 import { ProgressionState } from './progressionTypes';
@@ -26412,7 +39291,8 @@ import { persist } from 'zustand/middleware';
 export interface DocumentMeta {
   id: string;
   name: string;
-  content: string;
+  content?: string;
+  size?: number;
 }
 
 interface SettingsState {
@@ -26486,6 +39366,7 @@ import { COMPATIBILITY_MATRIX, MechanicId } from '../types';
 interface SrsState {
   cards: Record<string, SrsCard>; // itemId → SrsCard
   sessionItemIds: string[];       // IDs de la session en cours
+  recentFailures: string[];       // IDs des items échoués récemment (pour le Tuteur IA)
   isLoading: boolean;
   isSyncing: boolean;
   lastSyncedAt: string | null;
@@ -26502,6 +39383,7 @@ interface SrsState {
 export const useSrs = create<SrsState>((set, get) => ({
   cards: {},
   sessionItemIds: [],
+  recentFailures: [],
   isLoading: false,
   isSyncing: false,
   lastSyncedAt: null,
@@ -26586,9 +39468,20 @@ export const useSrs = create<SrsState>((set, get) => ({
     const { updatedCard } = scheduleNext(existingCard, rating);
 
     // Mise à jour locale immédiate
-    set((state) => ({
-      cards: { ...state.cards, [itemId]: updatedCard },
-    }));
+    set((state) => {
+      const isFail = rating === Rating.Again;
+      let newRecentFailures = [...state.recentFailures];
+      if (isFail && !newRecentFailures.includes(itemId)) {
+        newRecentFailures.push(itemId);
+      } else if (!isFail) {
+        newRecentFailures = newRecentFailures.filter(id => id !== itemId);
+      }
+
+      return {
+        cards: { ...state.cards, [itemId]: updatedCard },
+        recentFailures: newRecentFailures
+      };
+    });
 
     // XP selon la qualité de la réponse
     const routineBase = useProgression.getState().getPointsConfig().routineBase;
@@ -27295,11 +40188,14 @@ export interface ContentItem {
   };
 }
 
-export interface GameMechanicProps {
+import { MechanicDataLot1, MechanicDataLot2, MechanicDataLot3, MechanicDataLot4, MechanicDataLot5 } from './mechanics';
+
+export interface BaseGameProps {
   items: ContentItem[];
+  data?: MechanicDataLot1 | MechanicDataLot2 | MechanicDataLot3 | MechanicDataLot4 | MechanicDataLot5;
   onBack: () => void;
   onComplete: (score: number) => void;
-  onResponse?: (itemId: string, rating: number) => void;
+  onResponse: (itemId: string, rating: number) => void;
   isEmbedded?: boolean;
 }
 
@@ -27351,6 +40247,403 @@ export const COMPATIBILITY_MATRIX: Record<MechanicId, MechanicConstraints> = {
     isCompatible: (item) => !!item.payload.answer,
   }
 };
+</file>
+
+<file path="src/types/mechanics.ts">
+export interface FlashcardSRSData {
+  _type?: 'FlashcardSRSData';
+}
+
+export interface MultipleChoiceData {
+  _type?: 'MultipleChoiceData';
+  config?: {
+    timer?: number;
+  };
+}
+
+export interface BinarySwipeItem {
+  id: string;
+  question?: string;
+  answer: string;
+  explanation?: string;
+}
+
+export interface BinarySwipeData {
+  _type?: 'BinarySwipeData';
+  config?: {
+    left?: { label: string; emoji: string; color: string };
+    right?: { label: string; emoji: string; color: string };
+  };
+}
+
+export interface MemoryMatchData {
+  config?: {
+    gridCols?: number;
+    flipBackDelay?: number;
+  };
+  pairs: Array<{
+    id: string;
+    cardA: {
+      text: string;
+      image?: string;
+    };
+    cardB: {
+      text: string;
+      image?: string;
+    };
+  }>;
+}
+
+export interface HangmanData {
+  _type?: 'HangmanData';
+  config?: {
+    maxErr?: number;
+  };
+}
+
+export type MechanicDataLot1 =
+  | FlashcardSRSData
+  | MultipleChoiceData
+  | BinarySwipeData
+  | MemoryMatchData
+  | HangmanData;
+
+export interface AnagramData {
+  words: Array<{
+    word: string;
+    hint: string;
+  }>;
+}
+
+export interface ClozeTestData {
+  exercises: Array<{
+    text: string;
+    blanks: Array<{
+      id: string;
+      answer: string;
+      alternatives?: string[];
+    }>;
+  }>;
+}
+
+export type MechanicDataLot2 =
+  | AnagramData
+  | ClozeTestData
+  | SequencingData
+  | SortGroupData
+  | LineMatchingData;
+
+export interface SequencingItem {
+  id: string;
+  text: string;
+  label?: string; // It's optional if some mechanics don't use it, but here it says string
+  order: number;
+}
+
+export interface SequencingData {
+  config?: {
+    showLabels?: boolean;
+  };
+  items: SequencingItem[];
+}
+
+export interface SortGroupItem {
+  id: string;
+  groupId: string;
+  text: string;
+}
+
+export interface SortGroupGroup {
+  id: string;
+  label: string;
+  emoji: string;
+  color: string;
+}
+
+export interface SortGroupData {
+  config?: {
+    validateMode?: string;
+  };
+  groups: SortGroupGroup[];
+  items: SortGroupItem[];
+}
+
+export interface LineMatchingData {
+  config?: {
+    shuffleRight?: boolean;
+  };
+  pairs: Array<{
+    id: string;
+    left: {
+      text: string;
+    };
+    right: {
+      text: string;
+    };
+  }>;
+}
+
+export interface BingoData {
+  config?: {
+    gridSize?: number;
+    callerMode?: 'auto' | 'manual';
+    callerInterval?: number;
+  };
+  items: Array<{
+    id: string;
+    term: string;
+    clue: string;
+  }>;
+}
+
+export interface SituationalChoiceData {
+  scenarios: Array<{
+    id: string;
+    situation: string;
+    question: string;
+    choices: Array<{
+      id: string;
+      text: string;
+      register: string;
+      correct: boolean;
+      feedback: string;
+    }>;
+  }>;
+}
+
+export interface CategoryBlasterData {
+  config?: {
+    baseTimeMs?: number;
+    speedupFactor?: number;
+    minTimeMs?: number;
+    comboBonus?: boolean;
+  };
+  categories: Array<{
+    id: string;
+    label: string;
+    emoji: string;
+    color: string;
+  }>;
+  items: Array<{
+    id: string;
+    text: string;
+    categoryId: string;
+  }>;
+}
+
+export interface TileMergeData {
+  config?: {
+    gridSize?: number;
+  };
+  tileBank: Array<{
+    id: string;
+    label: string;
+    pairId: string;
+    sourceId?: string;
+  }>;
+}
+
+export interface WordSearchData {
+  config?: {
+    gridSize?: number;
+    hintMode?: 'word' | 'hint';
+  };
+  words: Array<{
+    id: string;
+    word: string;
+    hint: string;
+  }>;
+}
+
+export type MechanicDataLot3 =
+  | BingoData
+  | SituationalChoiceData
+  | CategoryBlasterData
+  | TileMergeData
+  | WordSearchData;
+
+export interface ChainReactionData {
+  config?: {
+    timerSeconds?: number;
+  };
+  wordBank: Array<{
+    id: string;
+    word: string;
+    startLetter: string;
+    endLetter: string;
+  }>;
+}
+
+export interface CombinationBuilderData {
+  config?: {
+    maxSpins?: number;
+  };
+  reels: Array<{
+    id: string;
+    items: string[];
+  }>;
+  validCombinations: Array<{
+    combo: string[];
+    result: string;
+    definition: string;
+    points: number;
+  }>;
+}
+
+export interface DialogueTreeData {
+  config?: {
+    character: {
+      name: string;
+      avatar: string;
+    };
+  };
+  startNode: string;
+  nodes: Record<string, {
+    npc: string;
+    isEnd?: boolean;
+    outcome?: 'win' | 'neutral' | 'lose';
+    choices?: Array<{
+      text: string;
+      next: string;
+      points?: number;
+      feedback?: string;
+    }>;
+  }>;
+}
+
+export interface RebusPuzzleData {
+  config?: {
+    hintLevel?: number;
+  };
+  puzzles: Array<{
+    itemId?: string;
+    pieces: Array<{
+      emoji: string;
+      sound: string;
+    }>;
+    answer: string;
+    choices: string[];
+    explanation: string;
+  }>;
+}
+
+export interface AudioTranscriptionData {
+  config?: {
+    maxReplays?: number;
+    tolerance?: number;
+    hint?: string;
+  };
+  items: Array<{
+    itemId?: string;
+    expected: string;
+    audioUrl?: string;
+    normalize?: boolean;
+    points: number;
+  }>;
+}
+
+export type MechanicDataLot4 =
+  | ChainReactionData
+  | CombinationBuilderData
+  | DialogueTreeData
+  | RebusPuzzleData
+  | AudioTranscriptionData;
+
+export interface ErrorCorrectionData {
+  config?: {
+    showErrorCount?: boolean;
+  };
+  exercises: Array<{
+    itemId?: string;
+    text: string;
+    errors: Array<{
+      id: string;
+      start: number;
+      end: number;
+      wrong: string;
+      correct: string;
+      explanation: string;
+    }>;
+  }>;
+}
+
+export interface DeceptivePairsData {
+  config?: {
+    contextA?: string;
+    contextB?: string;
+  };
+  pairs: Array<{
+    itemId?: string;
+    term: string;
+    meaningA: string;
+    explanation: string;
+    etymology?: string;
+    choices: Array<{
+      id: string;
+      text: string;
+      correct: boolean;
+      isMeaningA?: boolean;
+    }>;
+  }>;
+}
+
+export interface DiagramLabelingData {
+  config?: {
+    tolerancePct?: number;
+  };
+  image?: string;
+  labels: Array<{
+    id: string;
+    itemId?: string;
+    text: string;
+    zone: {
+      x: number;
+      y: number;
+      width: number;
+      height: number;
+    };
+  }>;
+}
+
+export interface VoiceRecordingData {
+  config?: {
+    maxAttempts?: number;
+  };
+  items: Array<{
+    itemId?: string;
+    text: string;
+    phonetic?: string;
+    difficulty: number;
+    referenceAudio?: string;
+  }>;
+}
+
+export interface AudioABData {
+  config?: {
+    criterion?: string;
+  };
+  pairs: Array<{
+    itemId?: string;
+    label: string;
+    audioA?: string;
+    audioB?: string;
+    correct: 'A' | 'B';
+    explanation: string;
+  }>;
+}
+
+export type MechanicDataLot5 =
+  | ErrorCorrectionData
+  | DeceptivePairsData
+  | DiagramLabelingData
+  | VoiceRecordingData
+  | AudioABData;
+</file>
+
+<file path="src/utils/array.ts">
+export function shuffle<T>(arr: T[]): T[] {
+  return [...arr].sort(() => Math.random() - 0.5);
+}
 </file>
 
 <file path="src/utils/revenue.test.ts">
@@ -27640,6 +40933,7 @@ const PaywallScreen = lazy(() => import('./features/paywall/PaywallScreen'));
 const VilleScreen = lazy(() => import('./features/ville/VilleScreen'));
 const SuccesScreen = lazy(() => import('./features/succes/SuccesScreen'));
 const ApparenceScreen = lazy(() => import('./features/apparence/ApparenceScreen'));
+const DashboardMemorielScreen = lazy(() => import('./features/memoire/DashboardMemorielScreen'));
 const MarketingPreviewScreen = lazy(() => import('./features/admin/MarketingPreviewScreen'));
 const DynamicGameScreen = lazy(() => import('./features/arcade/DynamicGameScreen').then(module => ({ default: module.DynamicGameScreen })));
 const LessonGameScreen = lazy(() => import('./features/education/LessonGameScreen'));
@@ -27784,7 +41078,7 @@ export default function App() {
       ) : (!hasCompletedOnboarding) ? (
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
-            <Route path="*" element={<OnboardingScreen onComplete={() => window.location.href = '/'} />} />
+            <Route path="*" element={<OnboardingScreen onComplete={() => {}} />} />
           </Routes>
         </Suspense>
       ) : (
@@ -27803,6 +41097,7 @@ export default function App() {
               <Route path="/dictionnaire" element={<ProtectedRoute><DictionnaireScreen onBack={() => window.history.back()} /></ProtectedRoute>} />
               <Route path="/succes" element={<ProtectedRoute><SuccesScreen onBack={() => window.history.back()} /></ProtectedRoute>} />
               <Route path="/apparence" element={<ProtectedRoute><ApparenceScreen onBack={() => window.history.back()} /></ProtectedRoute>} />
+              <Route path="/memoire" element={<ProtectedRoute><DashboardMemorielScreen onBack={() => window.history.back()} /></ProtectedRoute>} />
               <Route path="/depanneur" element={<ProtectedRoute><DepanneurScreen onBack={() => window.history.back()} /></ProtectedRoute>} />
               <Route path="/appartement" element={<ProtectedRoute><AppartementScreen onBack={() => window.history.back()} /></ProtectedRoute>} />
               <Route path="/education" element={<ProtectedRoute><EducationScreen onBack={() => window.history.back()} /></ProtectedRoute>} />
@@ -28127,7 +41422,9 @@ VITE_RECAPTCHA_SITE_KEY=
 </file>
 
 <file path=".gitignore">
+node_modules
 node_modules/
+**/node_modules
 build/
 dist/
 coverage/
@@ -28135,6 +41432,329 @@ coverage/
 *.log
 .env*
 !.env.example
+.astro
+.astro/
+**/dist
+**/build
+</file>
+
+<file path="APP_OVERVIEW.md">
+# Présentation Globale de la Plateforme
+
+## Ce qu'elle fait
+Cette application est une plateforme LMS (Learning Management System) SaaS multi-locataires (multi-tenant) B2B2C. Elle permet de créer, diffuser, et monétiser des formations interactives, ludifiées et adaptatives. Elle gère la progression des apprenants via un moteur de répétition espacée (SRS), intègre des mécaniques de jeux variées (25 mécaniques allant du QCM aux flashcards, en passant par des jeux de type 2048 ou des dialogues interactifs), et propose un système complet de gestion financière (répartition des revenus/royalties entre la plateforme et les créateurs).
+
+## À qui elle s'adresse
+- **Organismes de formation et entreprises (B2B)** : Ceux qui ont besoin de portails dédiés (white-label, multi-tenant) pour former leurs collaborateurs ou clients avec des outils de reporting, d'administration (gestion des rôles, cohortes) et de personnalisation.
+- **Créateurs de contenu / Infopreneurs (B2C/B2B)** : Les experts métiers souhaitant monétiser leur savoir à travers des parcours gamifiés (économie virtuelle, badges, niveaux).
+- **Apprenants finaux** : Utilisateurs cherchant une expérience d'apprentissage engageante, sur mobile ou bureau, avec un feedback immédiat, de la ludification, et un suivi granulaire de leurs compétences.
+
+## Structure technique
+- **Frontend** : Application Single-Page (SPA) développée en **React (Vite) avec TypeScript**. L'interface est stylisée avec **Tailwind CSS**.
+- **Gestion d'état** : **Zustand** pour les états globaux complexes (Progression, Économie, Tenant, Auth, SRS), découpés en slices modulaires.
+- **Backend** : Un serveur **Node.js / Express** intégrant des API sécurisées pour les opérations sensibles (royalties, webhooks, transactions), servant également le build frontend en production.
+- **Base de données & Authentification** : **Firebase (Firestore & Auth)**. Les données sont structurées pour supporter le multi-tenant. La sécurité est renforcée par Firebase App Check (reCAPTCHA v3) et des règles Firestore (Rules).
+- **Tests & Qualité** : **Vitest** pour les tests unitaires métiers, **ESLint** pour le linting, et **Sentry** pour le monitoring des erreurs.
+- **Architecture Multi-Tenant** : Le code est pensé pour cloisonner les données par espace (`tenantId`), avec une personnalisation de thème par locataire.
+- **Marketing** : Un site statique vitrine séparé géré avec **Astro** (`/marketing-site`).
+
+## Philosophie pédagogique
+La plateforme s'écarte du modèle traditionnel "entrepôt de cours vidéo". Elle privilégie l'**apprentissage actif et le micro-learning** :
+- **Apprentissage adaptatif (SRS)** : Un algorithme de répétition espacée optimise la mémorisation à long terme en adaptant la fréquence de révision des concepts.
+- **Gamification intrinsèque** : La progression est récompensée par une économie virtuelle (pièces, items, portefeuilles), des niveaux et des badges, favorisant la rétention.
+- **Interactivité** : Une bibliothèque de 25 mécaniques interactives force l'apprenant à agir, tester et appliquer, plutôt que de lire ou regarder passivement.
+
+## Unité fondamentale actuelle
+L'unité fondamentale est la **"Leçon" / "Mécanique"**. Le système repose sur des "Parcours" constitués de leçons, chaque leçon instanciant une mécanique interactive spécifique (ex: `01_FlashcardSRS`, `18_DialogueTree`). La réussite à ces blocs alimente directement le profil de l'apprenant (inventaire, monnaie, progression SRS).
+
+## Forces et limites perçues
+**Forces :**
+- **Architecture évolutive et multi-tenant** nativement intégrée, idéale pour les offres en marque blanche.
+- **Richesse des mécaniques interactives** (25+ modèles pré-codés) offrant une expérience très différenciée par rapport aux LMS classiques.
+- **Robustesse métier** : Système financier de redevances poussé, monitoring (Sentry), et sécurisation (App Check).
+- **Moteur SRS intégré**, une vraie valeur ajoutée pédagogique souvent absente des LMS grand public.
+
+**Limites :**
+- **Complexité pour un simple créateur** : L'interface et les concepts (SRS, Économie, Multi-tenant) peuvent intimider un solopreneur cherchant juste à héberger 3 vidéos.
+- **Absence actuelle d'outils auteur IA poussés** : La création des leçons reste manuelle, nécessitant de remplir des configurations spécifiques.
+- **Reporting institutionnel / académique** : Il manque encore un système de "transcript" consolidé et officiel, bien que prévu dans le plan de développement (Phase 12).
+- **Couche sociale** : L'apprentissage social (forums, cohortes, chat en direct) est encore en devenir.
+
+## Vision à long terme
+Devenir un **"Système d'Exploitation de l'Apprentissage Actif" (Knowledge Graph Learning OS)**.
+La plateforme vise à intégrer de plus en plus d'Intelligence Artificielle de bout en bout :
+- **Création IA (AI Copilot)** : Convertir des documents ou vidéos existantes en modules interactifs et quiz.
+- **Adaptive Learning explicable** : Tracer précisément le niveau de compétence (Skill Graph) de chaque apprenant et ajuster le parcours en conséquence.
+- **Outil d'Opérations B2B complet** : Renforcer l'analytique actionnable (recommander des actions aux admins) et l'interopérabilité (SCORM/LTI, bien que la priorité soit le format natif) pour s'imposer sur le marché de la formation professionnelle formelle et certifiante.
+</file>
+
+<file path="ASTRO_ARCHITECTURE_PLAN.md">
+# Architecture du Site Vitrine Multi-Tenant (Astro)
+
+## 1. Structure de Dossiers Proposée
+
+Pour une architecture claire, séparée du CMS React, nous vous recommandons de placer le projet Astro dans un dossier séparé (ex: `marketing-site/` ou via un monorepo type Turborepo/Nx).
+
+```text
+marketing-site/
+├── public/                 # Assets statiques globaux
+├── src/
+│   ├── components/
+│   │   ├── astro/          # Composants purement Astro (Header, Footer, SEO)
+│   │   └── react/          # Composants React injectés en Islands (Teaser, Games)
+│   ├── layouts/
+│   │   └── TenantLayout.astro # Layout dynamique qui applique le thème du tenant
+│   ├── lib/
+│   │   ├── firebase.ts     # Initialisation Firebase Admin pour SSR
+│   │   ├── tenantApi.ts    # Logique pour récupérer la config du tenant (couleurs, textes)
+│   │   └── utils.ts        # Utilitaires divers
+│   ├── pages/
+│   │   ├── index.astro     # Landing page de la plateforme B2B principale
+│   │   └── [tenant]/       # Routage SSR basé sur le sous-domaine/paramètre
+│   │       ├── index.astro # Landing page dynamique du client Whitelabel
+│   │       └── lesson/
+│   │           └── [id].astro # Pages de leçons publiques pour le SEO
+│   ├── styles/
+│   │   └── global.css      # Entrée Tailwind CSS
+│   └── env.d.ts
+├── astro.config.mjs        # Config Astro (React, Tailwind, Node SSR adapter)
+├── tailwind.config.mjs     # Config Tailwind (partagée ou synchronisée avec React)
+├── package.json
+└── tsconfig.json
+```
+
+## 2. Configuration d'Astro, React et Tailwind CSS
+
+### Installation des dépendances
+Dans le dossier du projet Astro, installez les intégrations nécessaires :
+```bash
+npx astro add react tailwind node
+```
+*Note: L'adaptateur `node` (ou `vercel`, `cloudflare`) est nécessaire pour le rendu SSR, indispensable pour un site multi-tenant basé sur les requêtes.*
+
+### Configuration `astro.config.mjs`
+```javascript
+import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
+import tailwind from '@astrojs/tailwind';
+import node from '@astrojs/node';
+
+export default defineConfig({
+  // Active l'intégration React et Tailwind
+  integrations: [react(), tailwind()],
+  // Active le mode SSR (Server-Side Rendering) pour router dynamiquement selon le domaine
+  output: 'server',
+  adapter: node({
+    mode: 'standalone'
+  })
+});
+```
+
+### Partage des Composants React
+Dans un environnement monorepo (ex: npm workspaces), le projet Astro peut importer directement les composants React du projet principal :
+```typescript
+// Dans un fichier Astro
+import { InteractiveTeaser } from 'app-react/src/components/InteractiveTeaser';
+import { GameCard } from 'app-react/src/components/GameCard';
+```
+
+## 3. Marche à suivre technique pour la Première Page (Landing Page Whitelabel)
+
+### Étape 1 : Récupération de la configuration (SSR)
+Astro doit déterminer quel client est demandé via l'URL (ex: `tenant1.notreplateforme.com` ou via un paramètre de route `/[tenant]/`). 
+Dans `src/pages/[tenant]/index.astro` :
+
+```astro
+---
+// Code serveur exécuté à chaque requête (SSR)
+import TenantLayout from '../../../layouts/TenantLayout.astro';
+import { getTenantConfig } from '../../../lib/tenantApi';
+import { InteractiveTeaser } from 'shared-react-app/components/InteractiveTeaser';
+
+const { tenant } = Astro.params;
+// Mocker la récupération depuis Firebase/votre API
+const tenantConfig = await getTenantConfig(tenant);
+
+if (!tenantConfig) {
+  return Astro.redirect('/404');
+}
+---
+
+<TenantLayout config={tenantConfig}>
+  <main class="flex flex-col items-center justify-center min-h-screen">
+    <!-- Header dynamique avec les textes du CMS -->
+    <h1 class="text-4xl font-bold" style={`color: ${tenantConfig.theme.primary}`}>
+      {tenantConfig.marketing.heroTitle}
+    </h1>
+    <p class="mt-4 text-lg">
+      {tenantConfig.marketing.heroSubtitle}
+    </p>
+
+    <!-- Injection d'un composant React en Island -->
+    <div class="mt-12 w-full max-w-3xl">
+      <InteractiveTeaser 
+        client:visible 
+        theme={tenantConfig.theme}
+        gameData={tenantConfig.featuredGame} 
+      />
+    </div>
+  </main>
+</TenantLayout>
+```
+
+### Étape 2 : Le Layout Dynamique (TenantLayout.astro)
+Ce layout va appliquer les couleurs du thème (gérées par votre `useTheme` dans React) sous forme de variables CSS globales, pour que Tailwind puisse les utiliser.
+
+```astro
+---
+const { config } = Astro.props;
+---
+<html lang="fr">
+  <head>
+    <title>{config.marketing.siteTitle}</title>
+    <!-- Injection des variables CSS générées depuis la config du CMS -->
+    <style define:vars={{
+      primaryColor: config.theme.primary,
+      backgroundColor: config.theme.background,
+      fontFamily: config.theme.fontFamily
+    }}>
+      :root {
+        --theme-primary: var(--primaryColor);
+        --theme-bg: var(--backgroundColor);
+        --theme-font: var(--fontFamily);
+      }
+      body {
+        background-color: var(--theme-bg);
+        font-family: var(--theme-font), sans-serif;
+      }
+    </style>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
+```
+
+### Étape 3 : Mockups UI (Device Frames)
+Pour les vues "purement visuelles" (ex: Progression, Timeline), vous pouvez créer un composant Astro ou React `DeviceFrame` :
+
+```astro
+---
+// Composant DeviceFrame.astro
+---
+<div class="relative mx-auto border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px]">
+  <div class="h-[32px] w-[3px] bg-gray-800 absolute -left-[17px] top-[72px] rounded-l-lg"></div>
+  <div class="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[124px] rounded-l-lg"></div>
+  <div class="h-[46px] w-[3px] bg-gray-800 absolute -left-[17px] top-[178px] rounded-l-lg"></div>
+  <div class="h-[64px] w-[3px] bg-gray-800 absolute -right-[17px] top-[142px] rounded-r-lg"></div>
+  <div class="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white">
+    <!-- Le composant React visuel injecté ici. client:idle pour le charger sans bloquer le rendu initial -->
+    <slot />
+  </div>
+</div>
+```
+
+Utilisation :
+```astro
+import DeviceFrame from '../components/astro/DeviceFrame.astro';
+import { GameProgress } from 'shared-react-app/components/GameProgress';
+
+<DeviceFrame>
+  <GameProgress client:idle progressionData={demoData} />
+</DeviceFrame>
+```
+
+## Résumé de l'Approche
+1. **CMS Headless (React)** : Vos admins Whitelabel configurent leurs couleurs et textes. La configuration est sauvegardée dans Firestore.
+2. **SSR Astro** : À chaque visite, Astro lit l'URL (ou le paramètre), interroge Firestore pour la configuration correspondante, et génère le HTML statique avec les bonnes couleurs (SEO-friendly).
+3. **Astro Islands (`client:visible` / `client:idle`)** : Les composants interactifs React (`InteractiveTeaser`, UI complexes) sont hydratés côté client intelligemment, minimisant le Javascript au chargement initial.
+</file>
+
+<file path="CHANGELOG.md">
+# Changelog
+
+Toutes les modifications notables apportées à la plateforme **EduForge** (le moteur SaaS B2B) seront documentées dans ce fichier. Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
+
+## Prochaine Étape Prioritaire
+
+La prochaine étape logique est **la Génération Pédagogique Granulaire (Leçons)** dans l'éditeur de Parcours (`AdminParcours.tsx`).
+*Pourquoi ?* Nous avons implémenté la génération globale de l'architecture de l'application via RAG ("Le Gros JSON") et validé la route backend de génération de leçon RAG (`/api/gemini/generate-lesson-rag`). La prochaine étape est de permettre aux créateurs de générer le texte détaillé d'une leçon spécifique directement depuis l'éditeur de Syllabus, en utilisant le contexte de la leçon et de l'application via le pipeline RAG.
+
+## [Unreleased] - En cours de développement
+
+### Ajouté
+- **Intégration Design Handoff (Batch 1 à 6)** : Fusion pixel-perfect de l'esthétique du Handoff (`design_handoff_theme_system/mechanics`) avec la logique métier et le typage strict dans `src/mechanics`. Remplacement des couleurs codées en dur par le système dynamique `useThemeTokens`.
+  - Intégration achevée pour **TOUTES LES MÉCANIQUES (1 à 25)** : `01_FlashcardSRS` à `25_AudioAB`.
+  - Fix des props du composant universel `GameResult` (state, points, title) au lieu des props obsolètes (score, xp).
+- **Refactoring "Gold Standard" des Mécaniques de Jeu** : Élimination complète de `any` et typage strict des mécaniques de jeu `02_MultipleChoice.tsx`, `03_BinarySwipe.tsx`, `04_MemoryMatch.tsx` et `05_Hangman.tsx` avec validation de compilation linter sans erreur (`npm run lint`).
+  - *Multiple Choice* : Raccordé au type structuré `MultipleChoiceData` pour supporter la configuration de minuteurs customisés.
+  - *Binary Swipe* : Création de `BinarySwipeItem` et structuration des swipes, raccordé à la configuration `BinarySwipeData` (labels, emojis, couleurs personnalisables).
+  - *Memory Match* : Création de l'interface `MemoryCard`, typage strict du cycle d'état, sécurisation du moteur de comparaison contre les valeurs undefined au runtime, et ajout de flexibilité dans `MemoryMatchData` pour les propriétés de configuration.
+  - *Hangman* : Création de l'interface locale `HangmanWord` et raccordement aux configurations typées `HangmanData`.
+- **Enrichissement du Scaffolding RAG** : Ajout du marketing (slogan, description) et d'un jeu de vocabulaire de base généré par RAG (route `/api/gemini/generate-scaffold-rag`). Ce vocabulaire est automatiquement injecté dans l'Arcade (SRS) en tant que `CustomContentItems`.
+- **Générateur de Leçons RAG (UI)** : Ajout d'une interface de test dans `AdminIA.tsx` pour appeler `/api/gemini/generate-lesson-rag`, validant ainsi la brique fonctionnelle de rédaction granulaire de cours via IA.
+- **Mutualisation et Migration RAG (Syllabus & Leçons)** : Renommage de la route backend en `/api/gemini/generate-json-rag` (au lieu de `generate-game-rag`) pour refléter son rôle générique. Migration complète de `AdminParcours.tsx` (Générateur de Syllabus) pour utiliser cette route RAG au lieu de l'ancienne route sans contexte.
+- **Nettoyage de la dette technique** : Suppression de la fonctionnalité dupliquée obsolète "Super Ready-to-Learn App Creator" dans `AdminParcours.tsx`.
+- **Migration RAG de la génération de jeux** : Mise à jour du frontend (`genererJeu` dans `AdminIA.tsx`) pour qu'il intègre le `schema` de validation stricte requis par la route `/api/gemini/generate-json-rag`. Le payload transmet correctement le contexte RAG et produit un JSON structuré valide pour le moteur SRS.
+- **Backend RAG (Retrieval-Augmented Generation)** : Implémentation du pipeline d'ingestion et de recherche vectorielle en mémoire (`/api/gemini/rag-ingest`, `/api/gemini/generate-lesson-rag`) utilisant `text-embedding-004` et la similarité cosinus, posant les bases de la Phase 14.1 (Knowledge to Course).
+- **Scaffolding RAG** : Intégration du RAG pour la génération de l'architecture d'application (Scaffolding). Création de la route `/api/gemini/generate-scaffold-rag` et raccordement au frontend (`AdminIA.tsx`). Le frontend ne stocke plus le contenu massif des documents en mémoire, allégeant drastiquement le state.
+- **Planification des Profils de Recherche** : Ajout à l'architecture globale des intentions d'intégration d'APIs externes (Perplexity, YouTube, Scite.ai, etc.) pour enrichir le RAG avec des données web en temps réel.
+- **R3 & R11 - IA Partenaire Pédagogique et Validation avant publication** : Refonte de l'assistant IA de création (`DataGeneratorModal`). L'IA ne se contente plus de générer des éléments ; elle endosse le rôle de "Partenaire Pédagogique" en simulant un apprenant naïf pour détecter les sauts logiques, en classifiant la profondeur cognitive des concepts, et en identifiant d'éventuelles redondances (R11). Une étape de revue et de validation manuelle explicite a été instaurée avant toute publication (R3).
+- **R1 - Détecteur de blocage conceptuel** : Intégration d'un mécanisme dans le moteur SRS pour distinguer un échec mémoriel (oubli) d'un échec de compréhension (blocage conceptuel). Si un item est échoué 3 fois consécutivement (`consecutive_lapses >= 3`), il est désormais marqué comme `is_blocked`.
+- **R2 - Dashboard Mémoriel Honnête** : Création du nouvel écran `DashboardMemorielScreen` accessible depuis le Profil (Portefeuille). Cet écran offre une transparence totale sur la rétention en catégorisant les items en "Concepts Solides", "Concepts Fragiles" et "Concepts Non Testés", en y intégrant les items bloqués par incompréhension.
+- **R12 - Tuteur IA Honnête et Connecté (Étapes 1 et 2)** : Le composant `AITutorChat` a été mis à jour. Étape 1 : Le tuteur est connecté aux échecs récents de la session SRS pour fournir un contexte précis ("L'apprenant a eu des difficultés avec..."). Étape 2 : Le tuteur affiche désormais explicitement ses limites à l'ouverture du chat, se présentant comme une aide ponctuelle et non un mentor global.
+- **Tests Unitaires (Vitest)** : Implémentation d'une suite de tests unitaires avec Vitest pour valider la logique métier pure (`calculateRevenueSplits` dans `revenue.ts`) et les stores Zustand complexes (`useTenant.ts` avec mocks Firestore). Ajout des scripts `test:ci` et `test:coverage` pour faciliter l'intégration continue.
+- **Monitoring des erreurs avec Sentry** : Intégration complète de Sentry sur le backend (Express) et le frontend (React) pour capturer les erreurs de production. Testé et validé via des endpoints de debug (`/api/debug-sentry`).
+- **Sécurisation via Firebase App Check** : Implémentation d'App Check avec reCAPTCHA v3 (`ReCaptchaV3Provider`) sur le client et validation via middleware (`requireAppCheck`) sur le serveur Express pour protéger nos endpoints API de tout trafic abusif. Un utilitaire `secureFetch` a été ajouté pour intégrer les tokens automatiquement aux requêtes API depuis le front.
+- **Tableau de Bord des Redevances (Royalties)** : Création de la vue `AdminRoyalties.tsx` permettant au SuperAdmin et aux locataires B2B de visualiser l'historique des transactions, les partages de revenus et le solde dû pour chaque créateur selon le modèle `RevenueShareAgreement`. Intégration de KPIs financiers en temps réel.
+- **Logique Serveur pour les Transactions** : Implémentation des endpoints backend (`/api/revenue/transactions`, `/api/revenue/ledgers`, `/api/revenue/process-transaction`) pour calculer et répartir automatiquement les paiements entre la plateforme et les créateurs avec enregistrement atomique dans Firestore.
+- **Authentification Réelle et Gestion des Rôles (Firebase Auth)** : Remplacement de l'authentification mockée par Firebase Auth (`signInWithEmailAndPassword` et Google Auth). Implémentation complète du RBAC côté client via Zustand (`useAuth`) qui extrait et stocke les Custom Claims Firebase (`superadmin`, `admin`, `creator`) pour adapter dynamiquement l'interface d'administration (masquage d'onglets pour les simples créateurs).
+- **Refonte du Routeur Client (React Router)** : Remplacement complet du système de navigation basé sur l'état local (`currentScreen`) par `react-router-dom`. Ajout du support pour les vraies URLs, l'historique du navigateur (bouton retour), le deep-linking (liens directs vers `/game/:id`, `/lesson/:id`), et création d'un wrapper `ProtectedRoute` pour encapsuler la vérification d'authentification et de l'onboarding.
+- **Découpage Zustand (Slices Pattern)** : Refactorisation majeure du fichier `useProgression.ts` (précédemment plus de 700 lignes) en de multiples slices (modules) spécialisés : `economySlice`, `settingsSlice`, `inventorySlice`, `statsSlice`, `coursesSlice` et `syncSlice`. Les types et constantes ont été extraits dans `progressionTypes.ts` et `progressionConstants.ts` pour une maintenance simplifiée, sans casser l'interface existante.
+- **Lazy Loading et Composant d'attente (Suspense)** : Intégration de `React.lazy` dans `App.tsx` pour charger les principaux écrans (Admin, Parcours, Boutiques, Scénarios, etc.) uniquement lorsqu'ils sont affichés. Ajout du composant générique `LoadingSpinner` comme `fallback` de `<Suspense>`, réduisant ainsi le poids du bundle JavaScript initial.
+- **Sécurité et Isolation Multi-Tenant (RBAC)** : Implémentation complète de l'isolation par `tenantId` dans les règles Firestore (`firestore.rules`). Les requêtes sont désormais strictement cloisonnées.
+- **API Serveur Custom Claims** : Création d'endpoints sécurisés (`/api/admin/bootstrap`, `/api/admin/members/invite`) pour attribuer de vrais rôles Firebase Auth (Custom Claims) tels que `superadmin`, `admin`, ou `creator`.
+- **Persistance Admin Multi-Tenant** : Migration de l'enregistrement et de la lecture des scénarios, de la configuration globale et des forfaits de l'application sous l'arborescence `/tenants/{tenantId}/`. L'interface d'administration est maintenant connectée aux données réelles et isolées.
+- **Hub Créateur (Cours & Bundles)** : Création de la vue `AdminCreatorHub.tsx` pour permettre aux formateurs et administrateurs d'assembler des modules en *Cours*, et des cours en *Bundles*. Intégration d'une interface claire avec navigation par onglets pour gérer ses produits, voir les statuts (brouillon/publié), et filtrer par titre.
+- **Gestion des Membres et Formateurs (Admin)** : Création de la nouvelle interface `AdminMembers.tsx` intégrée au tableau de bord d'administration B2B. Cette vue permet aux locataires (tenants) d'inviter des collaborateurs, de leur attribuer des rôles (Créateur, Admin, Employé, Support) et de consulter leur statut.
+- **Interface de Partage de Revenus (Creators)** : Ajout d'une fonctionnalité de simulation et de configuration des pourcentages de partage de revenus pour les formateurs/créateurs directement depuis le panneau des membres.
+- **Modèle RBAC Multi-Comptes (`TenantMember`)** : Ajout d'une gestion granulaire des rôles au sein d'un même espace de marque blanche (Owner, Admin, Creator, Employee, Support), permettant aux clients d'inviter des formateurs et des collaborateurs.
+- **Partage de Revenus (`RevenueShareAgreement`)** : Implémentation du modèle de données pour supporter les contrats de partage de revenus, permettant de rétribuer automatiquement les créateurs (montant fixe ou pourcentage) sur les ventes de cours ou bundles.
+- **Pages de vente adaptatives Astro** : Création de pages de destination générées dynamiquement pour les cours (`/[tenant]/course/[courseId]`) et les bundles (`/[tenant]/bundle/[bundleId]`). Ces templates intègrent des designs prémium distincts (clair pour les cours individuels, "Dark Mode Premium" pour les bundles) et exploitent les données structurées SEO. Les couleurs des pages s'adaptent automatiquement au thème défini par le locataire dans Firestore (via `tenantConfig.theme`).
+- **Modèles de données Multi-Cours & Monétisation** : Découplage de l'entité de monétisation et de la structure pédagogique. Ajout des types `Course`, `Bundle`, `Product`, `Entitlement`, et `UserCourseProgression` dans `src/types/index.ts`.
+- **Progression Indépendante (Multi-parcours)** : Mise à jour du store `useProgression` pour supporter la progression individualisée par cours (`courseProgressions`) au lieu d'un seul parcours global.
+- **Gestion des Droits d'Accès** : Ajout du système d'entitlements dans le store global permettant de débloquer des cours et de valider les accès de manière sécurisée.
+- **Planification des fonctionnalités d'adhésion multi-cours** : Analyse et conception d'une architecture modulaire pour soutenir la vente de cours individuels, de bundles et de tarification par niveaux.
+
+### Optimisé / Modifié
+- **Performance (Zustand)** : Migration massive vers les sélecteurs stricts Zustand (`useProgression(s => s.property)`) dans de nombreux composants (HUD, AudioPlayer, écrans de jeu, admin) pour éviter les re-rendus inutiles en chaîne.
+- **Découpage Architectural & Améliorations UI** : Scission de l'immense composant `AdminScreen` en sous-composants plus maintenables. Extraction de `AdminDataTab` pour gérer l'édition des listes de données, avec un affichage adaptatif optimisé en grille (1 à 3 colonnes) pour un meilleur confort visuel lors de la gestion du contenu.
+
+## [0.2.0] - 2026-06-27
+
+### Ajouté
+- **Balisage structuré JSON-LD (Astro)** : Création d'un composant de balisage de données structurées `<Schema />` pour le site vitrine Astro (`marketing-site`), améliorant la lisibilité par les crawlers de recherche et d'IA.
+- **Utilitaire SEO Dynamique** : Ajout de `generateSEOMetaTags` pour centraliser et unifier la génération des titres, descriptions, mots-clés et données OpenGraph à partir des configurations multi-tenant de Firestore.
+- **Intégration Astro-SEO** : Connexion réussie du composant d'injection SEO d'Astro avec le layout de marque blanche (`TenantLayout.astro`).
+
+### Modifié
+- **Thématisation Astro** : Correction de l'accès aux variables de thème (`tenantConfig.theme.primary` au lieu de l'ancienne clé imbriquée obsolète).
+
+### Sécurité & Correctifs
+- **Résolution d'erreurs d'exécution serveur (ESM)** : Éradication de l'erreur `ReferenceError: require is not defined` dans le script d'entrée du serveur `server.ts` en remplaçant l'appel dynamique `require('fs')` par un import statique ES standard `fs`.
+- **Journalisation robuste des erreurs client** : Mise à jour de la route `/api/debug/error` pour écrire proprement les erreurs du navigateur dans `client_errors.log` de manière asynchrone sans bloquer la boucle d'événements du serveur.
+
+## [0.1.0] - Fondations (Historique)
+
+### Ajouté
+- **Moteur de Mécaniques** : Implémentation des jeux interactifs de base (QCM, Glisser-déposer, Cartes mémoires, Texte à trous).
+- **Marque Blanche (Whitelabel)** : Système de thématisation dynamique permettant aux locataires de configurer leurs couleurs, typographies et branding.
+- **Gestionnaire d'IA** : Intégration de Gemini pour l'assistance à la création de leçons et la génération de données pédagogiques.
+- **Tableau de Bord Administrateur** : Interface centrale (`AdminScreen`) permettant de configurer la progression, les parcours, les tags et les statistiques.
+- **Gamification** : Algorithmes de progression de l'apprenant, gestion de l'XP et système de badges personnalisables.
+## [2026-07-01]
+### Changed
+- Refactored `17_CombinationBuilder.tsx` through `25_AudioAB.tsx` in `src/mechanics/` to remove all instances of `any`. Replaced with strictly typed logic and `NonNullable<Data['prop']>[number]` where applicable. Validated with ESLint.
 </file>
 
 <file path="DRAFT_firestore.rules">
@@ -28207,6 +41827,114 @@ export default [
 ];
 </file>
 
+<file path="firebase-applet-config.json">
+{
+  "projectId": "gen-lang-client-0808256771",
+  "appId": "1:906490759700:web:abba0155b3d3f6e5c33501",
+  "apiKey": "AIzaSyCp9VBssCMQFQv2kzN7ZX6dT3SsMh4C0jQ",
+  "authDomain": "gen-lang-client-0808256771.firebaseapp.com",
+  "firestoreDatabaseId": "ai-studio-f07a6670-0671-4de0-9caf-b551ab6f37a7",
+  "storageBucket": "gen-lang-client-0808256771.firebasestorage.app",
+  "messagingSenderId": "906490759700",
+  "measurementId": ""
+}
+</file>
+
+<file path="firebase-blueprint.json">
+{
+  "entities": {
+    "Utilisateur": {
+      "title": "Utilisateur",
+      "description": "Profil et progression du joueur",
+      "type": "object",
+      "properties": {
+        "etoiles": {
+          "type": "number",
+          "description": "Nombre d'étoiles gagnées"
+        },
+        "motsDebloques": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Liste des IDs des mots débloqués"
+        },
+        "derniereMiseAJour": {
+          "type": "object",
+          "description": "Timestamp de la dernière sauvegarde"
+        }
+      },
+      "required": ["etoiles", "motsDebloques"]
+    },
+    "Course": {
+      "title": "Course",
+      "description": "Représente un cours de formation",
+      "type": "object",
+      "properties": {
+        "tenantId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "authorId": { "type": "string" },
+        "status": { "type": "string", "enum": ["draft", "published", "archived"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["tenantId", "title", "authorId", "status"]
+    },
+    "Bundle": {
+      "title": "Bundle",
+      "description": "Regroupe plusieurs cours",
+      "type": "object",
+      "properties": {
+        "tenantId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "courseIds": { "type": "array", "items": { "type": "string" } }
+      },
+      "required": ["tenantId", "title", "courseIds"]
+    },
+    "Notes": {
+      "title": "Notes",
+      "description": "Notes privées de l'apprenant",
+      "type": "object",
+      "properties": {
+        "tenantId": { "type": "string" },
+        "userId": { "type": "string" },
+        "noteText": { "type": "string" },
+        "lastUpdated": { "type": "object", "description": "Timestamp de la dernière sauvegarde" }
+      },
+      "required": ["tenantId", "userId", "noteText"]
+    }
+  },
+  "firestore": {
+    "notes/{userId}": {
+      "schema": {
+        "$ref": "#/entities/Notes"
+      },
+      "description": "Notes privées de l'apprenant, indexées par userId"
+    },
+    "utilisateurs/{userId}": {
+      "schema": {
+        "$ref": "#/entities/Utilisateur"
+      },
+      "description": "Contient la progression et les données d'état global du joueur"
+    },
+    "courses/{courseId}": {
+      "schema": {
+        "$ref": "#/entities/Course"
+      },
+      "description": "Les cours de la plateforme, isolés par tenantId"
+    },
+    "bundles/{bundleId}": {
+      "schema": {
+        "$ref": "#/entities/Bundle"
+      },
+      "description": "Les packs de cours, isolés par tenantId"
+    }
+  }
+}
+</file>
+
 <file path="firestore.rules">
 rules_version = '2';
 
@@ -28228,7 +41956,7 @@ service cloud.firestore {
     }
     
     function isTenantMember(tenantId) {
-      return isSignedIn() && request.auth.token.get('tenantId', '') == tenantId;
+      return isSignedIn() && getUserTenantId() == tenantId;
     }
 
     function isTenantAdmin(tenantId) {
@@ -28240,7 +41968,11 @@ service cloud.firestore {
     }
 
     function getUserTenantId() {
-      return ('tenantId' in request.auth.token) ? request.auth.token.tenantId : get(/databases/$(database)/documents/utilisateurs/$(request.auth.uid)).data.tenantId;
+      return ('tenantId' in request.auth.token) 
+        ? request.auth.token.tenantId 
+        : (exists(/databases/$(database)/documents/utilisateurs/$(request.auth.uid)) 
+          ? get(/databases/$(database)/documents/utilisateurs/$(request.auth.uid)).data.get('tenantId', 'eduforge')
+          : 'eduforge');
     }
 
     function isValidId(id) { 
@@ -28278,7 +42010,7 @@ service cloud.firestore {
     // TENANTS (SaaS B2B configs)
     // -----------------------------------------------------------------------------
     match /tenants/{tenantId} {
-      allow read: if isAdmin() || isTenantMember(tenantId);
+      allow read: if true;
       allow write: if isAdmin() || isTenantAdmin(tenantId);
       
       // Members subcollection (managed via Admin API in server.ts)
@@ -28289,7 +42021,7 @@ service cloud.firestore {
 
       // Configuration subcollection
       match /configuration/{document=**} {
-        allow read: if isAdmin() || isTenantMember(tenantId);
+        allow read: if true;
         allow write: if isAdmin() || isTenantAdmin(tenantId);
       }
 
@@ -28305,7 +42037,7 @@ service cloud.firestore {
     // -----------------------------------------------------------------------------
     match /utilisateurs/{userId} {
       // READ : Uniquement le propriétaire ou admin
-      allow get: if (isOwner(userId) && isValidId(userId)) || isAdmin() || isTenantAdmin(existing().tenantId);
+      allow get: if (isOwner(userId) && isValidId(userId)) || isAdmin() || (('tenantId' in existing()) && isTenantAdmin(existing().tenantId));
       allow list: if isAdmin() || (isSignedIn() && isTenantAdmin(resource.data.tenantId));
       
       // CREATE / UPDATE
@@ -28321,8 +42053,7 @@ service cloud.firestore {
                     && (!('derniereMiseAJour' in incoming()) || incoming().derniereMiseAJour == null || incoming().derniereMiseAJour is timestamp);
                     
       allow update: if isOwner(userId) && isValidId(userId)
-                    && !incoming().diff(existing()).affectedKeys().hasAny(['isAdmin', 'piasses', 'xp', 'isPremium', 'subscriptionPlan', 'entitlements', 'scoreTotal'])
-                    && (!('tenantId' in incoming()) || incoming().tenantId == existing().tenantId)
+                    && !incoming().diff(existing()).affectedKeys().hasAny(['isAdmin', 'piasses', 'xp', 'isPremium', 'subscriptionPlan', 'entitlements'])
                     // Validation de types
                     && (!('streakCount' in incoming()) || incoming().streakCount == null || isValidNumber(incoming().streakCount, 0))
                     && (!('longestStreak' in incoming()) || incoming().longestStreak == null || isValidNumber(incoming().longestStreak, 0))
@@ -28337,6 +42068,20 @@ service cloud.firestore {
     }
 
     // -----------------------------------------------------------------------------
+    // NOTES PRIVÉES
+    // -----------------------------------------------------------------------------
+    match /notes/{userId} {
+      allow get: if isOwner(userId) && isValidId(userId);
+      allow create, update: if isOwner(userId) && isValidId(userId)
+                    && incoming().tenantId is string
+                    && incoming().userId == userId
+                    && incoming().noteText is string
+                    && incoming().noteText.size() <= 100000
+                    && (!('lastUpdated' in incoming()) || incoming().lastUpdated == null || incoming().lastUpdated is timestamp);
+      allow delete: if isOwner(userId) && isValidId(userId);
+    }
+
+    // -----------------------------------------------------------------------------
     // CLASSEMENT
     // -----------------------------------------------------------------------------
     match /classement/{userId} {
@@ -28344,14 +42089,33 @@ service cloud.firestore {
       allow list: if isSignedIn() && resource.data.tenantId == getUserTenantId();
       allow create: if isOwner(userId) && isValidId(userId)
                     && incoming().tenantId is string
-                    && (!('scoreTotal' in incoming()) || incoming().scoreTotal == 0)
-                    && (!('surnom' in incoming()) || isValidString(incoming().surnom, 100))
+                    && (!('scoreTotal' in incoming()) || incoming().scoreTotal == null || isValidNumber(incoming().scoreTotal, 0))
+                    && (!('surnom' in incoming()) || incoming().surnom == null || isValidString(incoming().surnom, 100))
                     && (!('derniereMiseAJour' in incoming()) || incoming().derniereMiseAJour is timestamp);
       allow update: if isOwner(userId) && isValidId(userId)
-                    && !incoming().diff(existing()).affectedKeys().hasAny(['scoreTotal'])
-                    && (!('tenantId' in incoming()) || incoming().tenantId == existing().tenantId)
-                    && (!('surnom' in incoming()) || isValidString(incoming().surnom, 100))
+                    && (!('scoreTotal' in incoming()) || incoming().scoreTotal == null || isValidNumber(incoming().scoreTotal, 0))
+                    && (!('surnom' in incoming()) || incoming().surnom == null || isValidString(incoming().surnom, 100))
                     && (!('derniereMiseAJour' in incoming()) || incoming().derniereMiseAJour is timestamp);
+    }
+    // -----------------------------------------------------------------------------
+    // COURSES & BUNDLES (Creator Hub)
+    // -----------------------------------------------------------------------------
+    match /courses/{courseId} {
+      allow read: if isAdmin() || (isSignedIn() && resource.data.tenantId == getUserTenantId());
+      allow create: if (isAdmin() || isTenantCreator(incoming().tenantId) || isTenantAdmin(incoming().tenantId))
+                    && incoming().tenantId == getUserTenantId();
+      allow update: if (isAdmin() || isTenantCreator(existing().tenantId) || isTenantAdmin(existing().tenantId))
+                    && incoming().tenantId == existing().tenantId;
+      allow delete: if isAdmin() || isTenantAdmin(existing().tenantId) || isTenantCreator(existing().tenantId);
+    }
+
+    match /bundles/{bundleId} {
+      allow read: if isAdmin() || (isSignedIn() && resource.data.tenantId == getUserTenantId());
+      allow create: if (isAdmin() || isTenantCreator(incoming().tenantId) || isTenantAdmin(incoming().tenantId))
+                    && incoming().tenantId == getUserTenantId();
+      allow update: if (isAdmin() || isTenantCreator(existing().tenantId) || isTenantAdmin(existing().tenantId))
+                    && incoming().tenantId == existing().tenantId;
+      allow delete: if isAdmin() || isTenantAdmin(existing().tenantId) || isTenantCreator(existing().tenantId);
     }
   }
 }
@@ -28423,6 +42187,496 @@ files.forEach(f => {
 </html>
 </file>
 
+<file path="metadata.json">
+{
+  "name": "Arrive en ville",
+  "description": "Application ludique d'intégration et d'apprentissage du français québécois (vocabulaire, slang, culture).",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+</file>
+
+<file path="package.json">
+{
+  "name": "react-example",
+  "private": true,
+  "workspaces": [
+    "marketing-site"
+  ],
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx server.ts",
+    "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
+    "start": "node dist/server.cjs",
+    "dev:marketing": "cd marketing-site && npm run dev",
+    "db:push": "drizzle-kit push",
+    "preview": "vite preview",
+    "clean": "rm -rf dist server.js",
+    "lint": "tsc --noEmit",
+    "test": "vitest run",
+    "test:ci": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "@google/genai": "^2.4.0",
+    "@sentry/node": "^10.62.0",
+    "@sentry/profiling-node": "^10.62.0",
+    "@sentry/react": "^10.62.0",
+    "@tailwindcss/typography": "^0.5.20",
+    "@tailwindcss/vite": "^4.1.14",
+    "@tiptap/extension-bold": "^3.27.1",
+    "@tiptap/extension-heading": "^3.27.1",
+    "@tiptap/extension-italic": "^3.27.1",
+    "@tiptap/react": "^3.27.1",
+    "@tiptap/starter-kit": "^3.27.1",
+    "@vitejs/plugin-react": "^5.0.4",
+    "astro-seo": "^1.1.0",
+    "date-fns": "^4.4.0",
+    "dotenv": "^17.4.2",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.5.2",
+    "firebase": "^12.15.0",
+    "firebase-admin": "^14.1.0",
+    "i18next": "^26.3.1",
+    "lucide-react": "^0.546.0",
+    "mammoth": "^1.12.0",
+    "motion": "^12.23.24",
+    "multer": "^2.2.0",
+    "pdf-parse": "^2.4.5",
+    "react": "^19.0.1",
+    "react-dom": "^19.0.1",
+    "react-i18next": "^17.0.8",
+    "react-markdown": "^10.1.0",
+    "react-router-dom": "^7.18.0",
+    "recharts": "^3.8.1",
+    "ts-fsrs": "^5.4.1",
+    "vite": "^6.2.3",
+    "zustand": "^5.0.14"
+  },
+  "devDependencies": {
+    "@firebase/eslint-plugin-security-rules": "^0.0.2",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@types/express": "^4.17.21",
+    "@types/multer": "^2.1.0",
+    "@types/node": "^22.14.0",
+    "@types/pdf-parse": "^1.1.5",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitest/coverage-v8": "^4.1.9",
+    "autoprefixer": "^10.4.21",
+    "esbuild": "^0.25.0",
+    "jsdom": "^29.1.1",
+    "puppeteer": "^25.2.1",
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.22.4",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.3",
+    "vite-plugin-pwa": "^1.3.0",
+    "vitest": "^4.1.9"
+  }
+}
+</file>
+
+<file path="plan.md">
+# Plan d'Action Global
+
+## Phase 1 : Les Fondations Visuelles et Architecturales (Terminé)
+- [x] **Éradication des styles "en dur"** : Utilisation des tokens dynamiques de `useTheme` (Côté Client).
+- [x] **Thématisation de l'Administration** : Création et application de `useAdminTheme` pour le tableau de bord (Terminé).
+- [x] **Standardisation du Gabarit de Jeu** : `GameHUD`, `GameProgress`, `GameButton`, `GameResult` sont purs et utilisent `useTheme` (Zone C prête).
+- [x] **Configuration Dynamique de l'App (`useAppConfig`)** : Création d'un store permettant de gérer dynamiquement les noms, icônes et visibilité des sections principales de l'app.
+
+## Phase 2 : Le Cerveau Pédagogique & Architecture Multi-Tenant (En cours)
+- [x] **Registre des Jeux Centralisé** : Index dynamique des jeux finalisé pour que la section "Arcade" se génère toute seule (`useGames.ts`, `ArcadeScreen.tsx`, `DynamicGameScreen.tsx`).
+- [x] **Monnaie & Éléments Dynamiques** : Configuration globale de devise (`useCurrency`, `useAppConfig` mis à jour).
+- [x] **Feature Flags & Marque Blanche** : Permissions granulaires pour l'accès aux fonctionnalités (`useAppConfig`, `Admin` UI mis à jour).
+- [x] **Réorganisation du Panel Admin** : Distinction entre SuperAdmin (Plateforme) et Admin Client (Whitelabel).
+- [x] **Gestion des Rôles & Accès** : Mettre en place la distinction stricte entre le rôle "SuperAdmin" (moi) et "Client Whitelabel" (Accès paramétrage, thèmes, feature flags).
+- [x] **Généralisation de la Taxonomie** : Remplacer les catégories figées par un système de tags génériques ("Vocabulaire", "Leçon 1") configurables par l'admin.
+- [x] **Tags de Compatibilité** : Ajouter des métadonnées au contenu pour indiquer à quels jeux ils s'appliquent (ex: `["pendu", "quiz"]`).
+- [x] **Connexion Jeux ↔ SRS** : Mettre à jour les mécaniques pour qu'elles demandent au moteur SRS : "Donne-moi X éléments à réviser", au lieu de lire un JSON fixe.
+  - [x] Connecter `DynamicGameScreen` (et le composant `FlashcardSRS`) au `useSrs`.
+  - [x] Rendre les autres mécaniques (Pendu, Quiz, etc.) compatibles avec les données SRS.
+  - [x] Gérer l'enregistrement des résultats (succès/échecs) de chaque mécanique vers le SRS.
+
+## Phase 3 : L'Assistant IA Omniprésent et Personnalisé (Terminé)
+- [x] **Configuration BYOK** : Interface pour fournir sa propre clé API Gemini (Implémentée dans AdminIA).
+- [x] **Profil de l'IA paramétrable** : Interface pour définir le persona et le texte de contexte.
+- [x] **Base de Connaissances (RAG)** : Interface pour téléverser des documents (PDF, Word, TXT) afin d'alimenter le contexte de l'IA dans l'admin. (Upload géré par `multer` + parsing côté serveur)
+- [x] **Génération d'images et de mini-jeux** (BGC implémentés).
+- [x] **Autres Boutons de Génération Contextuelle (BGC)** : Intégration de l'IA dans l'Admin pour la génération de mots (vocabulaire) et de succès.
+- [x] **Assistant IA Joueur** : Intégration d'un chat IA contextuel pendant les jeux/leçons pour expliquer les erreurs ou donner des exemples.
+- [x] **Générateur IA de Parcours thématiques** : Proposer instantanément des structures de chapitres et leçons sur mesure.
+- [x] **Super Assistant IA (App Creator clé-en-main)** : Métamorphoser toute l'identité (Nom, Slogan, Palette de couleurs), créer le curriculum de leçons complet, et générer le vocabulaire thématique en 1 clic.
+
+## Phase 4 : Hub Pédagogique, Moteur SRS & Mécaniques de Jeux (Terminé)
+- [x] **Hub Pédagogique Centralisé** : Rassembler tout le contenu pédagogique dans une base globale indépendante des mécaniques de jeu (Structure `ContentItem` et adaptation du `contentProvider` terminées).
+- [x] **Migration des Mécaniques** : Refactorisation des mécaniques principales (Flashcard, QCM, Pendu, Swipe) pour qu'elles consomment le format universel `ContentItem`.
+- [x] **Matrice de Compatibilité Contenu ↔ Jeux** : Enforcer le filtrage lors de la génération de session SRS (ex: empêcher une phrase de se retrouver dans le Pendu).
+- [x] **Gestionnaire de Tags (Tag Manager)** : Système robuste pour étiqueter les contenus afin de permettre au moteur SRS de piocher intelligemment les révisions.
+- [x] **Sélection Dynamique par l'Utilisateur** : Permettre à l'apprenant de choisir la mécanique de jeu de son choix pour réviser un set de contenu défini par le moteur SRS (et filtré par la compatibilité).
+
+## Phase 4.1 : Structuration des Parcours et Théorie (Terminé)
+- [x] **Leçons Théoriques** : Création d'écrans d'apprentissage purs (textes, vidéos, grammaire) sans mécanique de jeu immédiate, servant de pré-requis.
+- [x] **Parcours Thématiques Imposés** : Capacité à forcer un sujet (ex: anglicismes) dans un module spécifique, tout en laissant le choix du jeu ou en imposant un jeu.
+- [x] **Chemin de Progression Visuel (Apprenant)** : Réintégration de la vue "Timeline" (façon Duolingo) sur l'écran d'accueil pour visualiser clairement son avancée à travers les niveaux personnalisés.
+- [x] **Éditeur de Parcours Linéaire (Admin)** : Interface simple pour ordonner les niveaux, chapitres et leçons et configurer les tags, théories et mécaniques de jeu.
+- [x] **Conditions de passage** : Intégration d'indicateurs de réussite (leçons terminées) et planification instantanée dans le moteur SRS lors du visionnage.
+
+## Phase 5 : Déploiement Whitelabel, Facturation & Infrastructure
+- [x] **Authentification et Gestion des Rôles avancée** : Sécurisation des accès via un vrai système d'authentification (ex: Firebase Auth) séparant SuperAdmin, Clients Whitelabel et Utilisateurs finaux.
+- [x] **Domaines Personnalisés** : Permettre aux clients Whitelabel de connecter leur propre nom de domaine.
+- [x] **Tableau de Bord Financier (SuperAdmin & Whitelabel)** : Espace dédié avec graphiques (Recharts) pour suivre l'acquisition, la rétention, les conversions et le MRR (Implémenté dans AdminStats).
+- [x] **Monétisation et Configuration des Forfaits** : Gestion dynamique des prix, limites gratuites et avantages du Paywall (Implémenté dans AdminForfaits).
+
+## Phase 6 : Marketing & Site Vitrine (Côté React / Headless CMS) (Terminé)
+- [x] **Générateur de Site Promotionnel** : Modèle "clé en main" intégré au tableau de bord (AdminWebsite) pour configurer la landing page, ses sections et ses mockups.
+- [x] **Stratégie SEO Pédagogique (Headless CMS)** : Interface d'administration pour choisir les leçons et les glossaires à exposer publiquement sur le site vitrine pour générer du trafic SEO organique. L'application React agit comme un Headless CMS.
+- [x] **Tableau de Bord SEO (Multi-Tenant)** : Espace d'administration complet (`AdminSEO.tsx`) pour analyser le trafic, les impressions, les requêtes et les taux de clics (GSC/GA4 simulés) et le classement des locataires, sans pénaliser les performances de l'app.
+- [x] **Interactive Teaser** : Création d'un wrapper de mini-jeu jouable avec gestion de temps/nombre de coups et un paywall/call-to-action personnalisable.
+- [x] **Prévisualisation Landing Page (Vue Apprenant)** : Injection dynamique du teaser avec sa propre configuration, distincte du mode démo client/B2B.
+
+## Phase 7 : Déploiement Vitrine & Architecture Astro (Terminé)
+- [x] **Architecture Multi-Tenant & SSR (Astro)** : Mise en place d'Astro avec le rendu côté serveur (SSR) pour servir dynamiquement les sites B2B (clients finaux) et le site SuperAdmin (SaaS) avec une seule base de code.
+- [x] **Balisage Structuré (Schema.astro)** : Intégration de balises de données structurées JSON-LD (`Schema.astro` et utilitaire de génération de métadonnées SEO) pour optimiser le référencement naturel et la lecture par les robots et les IA.
+- [x] **Composants Astro UI** : Création des Hero, Features, Pricing et Footer optimisés pour les performances.
+- [x] **SEO Hybride & Squelette SEO** : Mise en place du package `astro-seo` (`TenantLayout.astro`) et rédaction de l'architecture programmatique SEO (Planificateur d'URL IA).
+- [x] **Synchronisation de la Marque & Données (Backend)** : Astro va consommer l'état réel et la configuration (Couleurs, Nom, Textes SEO) depuis notre base de données (ex: Firebase).
+- [x] **Astro Islands (Ilôts Interactifs)** : Intégration des mini-jeux React (`InteractiveTeaser`, `DeviceFrame`) directement dans les landing pages Astro via la directive `client:idle` ou `client:visible`.
+- [x] **Moteur SEO / GEO Automatisé** : Génération asynchrone des landing pages par niche ou ville avec l'IA.
+- [x] **Sitemap Dynamique (Astro)** : Génération automatique des `sitemap.xml` par tenant pour exposer les landing pages SEO au crawlers.
+
+## Phase 8 : Architecture de Monétisation Flexible (Cours, Bundles, Produits)
+- [x] **Découplage Modèle de Données (Produits & Contenu)** : Séparer l'entité de monétisation (`Product`) de la structure pédagogique (`Course` > `Module` > `Lesson`).
+- [x] **Gestion des Bundles & Niveaux Payants** : Permettre de créer des produits qui accordent l'accès à plusieurs cours (bundles), à un cours complet, ou à des modules/niveaux spécifiques.
+- [x] **Progressions Indépendantes** : Séparer la progression de l'apprenant par "Cours" plutôt qu'une progression globale unique, permettant à un utilisateur de suivre plusieurs parcours simultanément.
+- [x] **Gestion des Droits d'Accès (Entitlements)** : Vérifier l'accès à un contenu (leçon/module) en fonction des achats de l'utilisateur avant d'autoriser le démarrage.
+- [x] **Espace Créateur (Cours & Bundles)** : Interface d'administration pour permettre à un formateur d'assembler des cours à partir de modules existants, et des bundles à partir de cours.
+- [x] **Pages de Vente Adaptatives** : Création de landing pages générées dynamiquement pour présenter et vendre des cours individuels ou des bundles (description, contenu inclus, tarification).
+
+## Phase 9 : Collaboration, RBAC & Partage de Revenus
+- [x] **Modèle de Données RBAC (`TenantMember`)** : Création de l'interface `TenantMember` pour gérer les membres d'un tenant avec des rôles distincts (Owner, Admin, Creator, Employee, Support).
+- [x] **Modèle de Partage de Revenus (`RevenueShareAgreement`)** : Mise en place des contrats de partage de revenus, permettant de définir des pourcentages ou montants fixes par produit et par créateur.
+- [x] **Gestion des Membres (Admin)** : Interface d'administration permettant d'inviter de nouveaux collaborateurs et de gérer leurs rôles (via `AdminMembers.tsx`).
+- [x] **Espace Formateur/Créateur** : Tableau de bord dédié aux créateurs pour gérer les accès et configurer/générer leurs cours et bundles (via `AdminCreatorHub.tsx`).
+- [x] **Calcul Automatique des Redevances** : Logique de répartition des gains lors d'un achat selon les `RevenueShareAgreement` actifs.
+
+## Assistant IA & Versatilité (App Scaffolding)
+- [x] **Configuration BYOK** : Interface pour fournir sa propre clé API Gemini (Implémentée dans AdminIA).
+- [x] **Personnalisation des Prompts et Contexte** : Interface permettant de modifier la personnalité (System Prompt), la base de connaissances (Contexte additionnel), et d'ajouter des documents personnalisés pour rendre l'assistant complètement agnostique et versatile.
+- [x] **Scaffolding / Générateur d'Application Complète** : Interface d'administration permettant de configurer un "Prompt de génération d'Application" afin que l'IA puisse générer l'architecture entière d'une nouvelle instance de l'application (leçons, arborescence, thème visuel, nom) en un seul clic.
+
+## Phase 10 : Qualité, Audits & Tests Systèmes (Terminé)
+- [x] **Audit de l'Architecture et Structure du Code** : Analyse du découplage des composants, de la gestion globale de l'état (Zustand) et de l'organisation des dossiers pour identifier les redondances ou les goulots d'étranglement de maintenance.
+- [x] **Audit UX/UI et Accessibilité** : Vérification de la cohérence visuelle, des contrastes, du responsive design, et des parcours utilisateurs (onboarding, navigation) pour s'assurer qu'il n'y a pas de friction.
+- [x] **Audit de Sécurité et Modèle RBAC** : Simulation de tentatives d'accès non autorisées, analyse des règles de sécurité Firebase (`firestore.rules`) et vérification de la robustesse des rôles (SuperAdmin, Admin, Creator, etc.).
+- [x] **Simulations de Performance et Gestion de l'État** : Tests sur la performance des rendus React (évitement des re-renders inutiles), la gestion du cache et l'optimisation des appels réseau (notamment lors de l'utilisation des mécaniques de jeu).
+- [x] **Audit Fonctionnel et Edge Cases** : Tests systématiques des flux critiques de bout en bout (création d'un bundle, parcours d'apprentissage, achat, et calcul des redevances) en incluant les cas d'erreur réseau et les états de chargement.
+
+## Phase 11 : Remédiation Audit (Sécurité et Fondations)
+- [x] **Urgence Absolue (Sécurité du serveur et des règles Firestore)** :
+  - [x] Authentifier + rate-limiter les endpoints `server.ts`.
+  - [x] Réécrire `firestore.rules` en deny-by-default ; verrouiller `read` sur `tenants/configuration/scenarios`.
+  - [x] Rendre la valeur économique (premium, entitlements, piasses) en lecture seule côté client et la déplacer côté serveur.
+  - [x] Retirer le sélecteur de tenant public et le faux gate admin.
+- [x] **Urgence Haute (Fondations B2B)** :
+  - [x] Custom claims + vrai RBAC Firebase.
+  - [x] Isolation complète du Tenant (Cloisonnement des requêtes et règles Firestore).
+  - [x] Persister réellement membres et contenu admin (Scénarios, Configuration, Forfaits migrés sous `tenantId`).
+  - [x] Brancher analytics et monitoring (Sentry + App Check intégrés).
+- [x] **Urgence Moyenne (Performance & Robustesse)** :
+  - [x] Découper les méga-composants admin (`AdminScreen` refactorisé avec `AdminDataTab`, et ajout d'une grille adaptative à 3 colonnes).
+  - [x] Optimisation des rendus via les sélecteurs stricts Zustand (`useProgression`, `useTenant`, `useGames`).
+  - [x] Découper le méga-store `useProgression` en slices Zustand.
+  - [x] Lazy loading des écrans + debounce des sauvegardes.
+  - [x] Introduire Vitest sur les modules purs ; activer ESLint en CI.
+- [x] **Assainissement "Gold Standard" (Typage strict et suppression de `any`)** :
+  - [x] `01_FlashcardSRS` à `16_ChainReaction` (Terminé)
+  - [x] `17_CombinationBuilder` à `25_AudioAB` (Terminé)
+- [ ] **Reportable (UX & Qualité)** :
+  - [x] Refonte du routeur en de vraies URLs via React Router (Historique, deep-linking).
+  - [ ] i18n réel, virtualisation des listes, unification fine du Design System, accessibilité avancée.
+
+## Phase 15 : Intégration Design Handoff (Pixel-Perfect)
+- [x] **Gabarit et Tokens Globaux** : Connexion réussie des `useThemeTokens()` sur les composants.
+- [x] **Mécaniques 01 à 04** : Fusion de l'esthétique du Handoff (Design JSX) avec la logique métier et TS (Flashcard, MultipleChoice, BinarySwipe, MemoryMatch).
+- [x] **Mécaniques 05 à 08** : Intégration métier, TypeScript, et pixels du Handoff (Hangman, Anagram, ClozeTest, Sequencing).
+- [x] **Mécaniques 09 à 12** : Intégration métier, TypeScript, et pixels du Handoff (SortGroup, LineMatching, Bingo, SituationalChoice).
+- [x] **Mécaniques 13 à 16** : Intégration métier, TypeScript, et pixels du Handoff (CategoryBlaster, TileMerge, WordSearch, ChainReaction).
+- [x] **Mécaniques 17 à 20** : Intégration métier, TypeScript, et pixels du Handoff (CombinationBuilder, DialogueTree, RebusPuzzle, AudioTranscription).
+- [x] **Mécaniques 21 à 25** : Intégration métier, TypeScript, et pixels du Handoff (ErrorCorrection, DeceptivePairs, DiagramLabeling, VoiceRecording, AudioAB).
+
+## Phase 12 : Alignement stratégique EdTech (Recommandations de la Recherche Produit)
+
+Cette phase regroupe l'implémentation des fonctionnalités issues de l'étude comparative des plateformes LMS (Kajabi, Teachable, LearnWorlds) et des retours utilisateurs 2025-2026.
+
+### 1. Notes Privées de l'Apprenant (Student Notes)
+- [ ] **Tâche** : Implémenter un volet de prise de notes persistantes pour les apprenants.
+  - **Quoi** : Un bloc d'édition de texte riche accessible sur l'écran d'apprentissage (`LessonGameScreen` et mécaniques) permettant à l'apprenant de sauvegarder ses propres annotations sous la leçon.
+  - **Comment** : Créer un store `useNotes` (Zustand) connecté à Firestore (`tenantId_studentNotes`), avec un composant `PrivateNotesWidget` collapsible et une sauvegarde automatique débouclée à chaud.
+  - **Pourquoi** : Répond à la **Priorité 5** de la recherche (les étudiants ont besoin de centraliser leurs notes sans outils externes comme OneNote, augmentant la rétention d'information et l'engagement).
+
+### 2. Module d'Analytics Actionnables (Dashboard IA Pédagogique)
+- [ ] **Tâche** : Transformer les dashboards descriptifs en moteur de recommandations proactives pour l'administrateur.
+  - **Quoi** : Des cartes de recommandations "Smart Actions" ("Leçon 3 bloque 35% des apprenants : simplifier", "L'élève X est inactif depuis 10 jours : envoyer un rappel").
+  - **Comment** : Dans `AdminStats` et `AdminSEO`, analyser statistiquement les données de progression (`useProgression` et résultats des jeux) et de rétention, puis utiliser un prompt ciblé Gemini pour générer des suggestions d'optimisation pédagogique concrètes.
+  - **Pourquoi** : Répond aux **Priorité 3 et Priorité 11** de la recherche (les analytics traditionnels des LMS concurrents sont jugés trop passifs et non actionnables pour piloter une académie).
+
+### 3. Transcript Académique Unifié & Certificats de Fin de Parcours
+- [ ] **Tâche** : Système de certification officiel et de suivi d'activité formel téléchargeable.
+  - **Quoi** : Un tableau de bord regroupant l'historique complet, les dates de complétion, les scores, et la possibilité d'exporter un relevé de notes officiel ou un certificat de réussite.
+  - **Comment** : Créer une vue `StudentTranscript` et un utilitaire d'export PDF, sécurisés côté serveur, qui compilent l'historique de progression et de réussite du moteur SRS.
+  - **Pourquoi** : Répond aux **Priorité 4 et Priorité 7** de la recherche (les organisations B2B et les apprenants sérieux exigent des preuves tangibles de formation et des documents de complétion de qualité "académique").
+
+### 4. Diagnostics Pédagogiques & Pré/Post-tests Adaptatifs
+- [ ] **Tâche** : Évaluation initiale et certificative non binaire.
+  - **Quoi** : Intégrer un flux de "Test de positionnement" (pré-test) à l'onboarding pour débloquer automatiquement les niveaux appropriés, et un "Examen final" (post-test) pour valider l'acquisition de compétences.
+  - **Comment** : Créer des configurations de quiz spécifiques (`isPlacementTest`, `isFinalExam`) dans notre base de données et adapter le `contentProvider` pour ajuster le score initial du SRS de l'apprenant.
+  - **Pourquoi** : Répond à la **Priorité 9** de la recherche (les utilisateurs demandent une évaluation plus intelligente et adaptative que le simple scoring binaire de fin de leçon).
+
+### 5. Cartographie par Compétences (Skill Graph Mapping)
+- [ ] **Tâche** : Visualisation de l'apprentissage par graphe de compétences.
+  - **Quoi** : Une interface apprenant montrant un graphe interactif ou un arbre de compétences acquises/en cours (ex: "Vocabulaire courant", "Grammaire de base"), au lieu d'une simple suite chronologique.
+  - **Comment** : Structurer des liaisons entre les tags de contenus et un dictionnaire de compétences définies par l'admin, puis afficher un graphe SVG interactif d3.js dans l'espace apprenant.
+  - **Pourquoi** : Répond à l'innovation stratégique **Skill graph + progression** de la recherche (valoriser l'apprentissage par la compétence pour attirer les clients corporatifs B2B).
+
+## Phase 13 : Recommandations d'Architecture (Rapport Claude) - (En cours)
+
+Cette phase est priorisée pour transformer le socle mémoriel en véritable outil de mesure et de développement de la compréhension (vers la création pédagogique de grande qualité), en laissant de côté les couches communautaires complexes.
+
+### Phase 13.1 : Fondations de la distinction mémoire/compréhension (Terminée)
+- [x] **R1 : Détecteur de blocage conceptuel** : Distinguer un "échec par oubli" (nécessitant plus de répétition) d'un "échec par incompréhension" (nécessitant une autre approche).
+  - *Implémenté via `consecutive_lapses` et `is_blocked` dans le moteur SRS.*
+- [x] **R2 : Dashboard Mémoriel Honnête** : Création d'une interface utilisateur dédiée offrant une transparence totale sur la rétention (Concepts Solides, Fragiles, Incompris).
+  - *Implémenté via `DashboardMemorielScreen`.*
+- [x] **R12 : Tuteur IA Honnête et Connecté (Étapes 1 & 2)** :
+  - *Étape 1* : L'IA a accès au contexte d'apprentissage réel de la session (les concepts en échec récent) pour fournir une aide ciblée.
+  - *Étape 2* : L'interface du tuteur affiche clairement ses limites pour ne pas créer de fausses attentes ("Tuteur ponctuel" vs "Mentor global").
+- [x] **R3 : Validation IA avant publication** : Ajouter une étape de vérification automatisée puis humaine avant la publication de tout contenu généré par l'IA.
+  - *Implémenté dans `DataGeneratorModal` en demandant validation explicite après analyse.*
+
+### Phase 13.2 : Développement de la compréhension (En cours)
+- [x] **R11 : IA Créateur : De Générateur à Partenaire Pédagogique** : Utiliser l'IA pour simuler un "apprenant naïf" afin de détecter les sauts logiques du formateur, classifier la profondeur cognitive, et détecter les redondances de contenu.
+  - *Implémenté avec R3 dans `DataGeneratorModal` (Analyse du partenaire pédagogique).*
+- [ ] **R4 : Mécanique de Génération (26e mécanique)** : Tester la capacité à produire (expliquer, justifier) plutôt que de simplement rappeler, afin de mesurer la compréhension réelle.
+- [ ] **R6 : Vue Réseau Conceptuel (Optionnel)** : Visualisation sous forme de graphe des relations (prérequis, oppositions) entre concepts enseignés.
+- [ ] **R7 : Scénario Ramifié Étendu (Optionnel)** : Étendre la mécanique de dialogue à de vraies simulations de décision professionnelle (conséquences différées).
+
+### Phase 13.3 : Signal de compétence et preuve (À venir)
+- [ ] **R5 : Défis de Transfert (Transfer Challenges)** : Simuler des tâches non planifiées combinant plusieurs concepts pour tester la compétence réelle d'application ("Far transfer").
+- [ ] **R9 : Évaluation Authentique (Evidence Portfolio)** : Collecter et consolider les preuves réelles (réponses ouvertes R4, décisions R7, défis de transfert R5) plutôt que de réduire l'évaluation à un simple "Score de complétion".
+- [ ] **R10 : Portabilité du Parcours (Optionnel)** : Export des données et émission de certificats ouverts/vérifiables (Open Badges).
+
+### Phase 14 : Génération Profonde ("Deep Generation") & Écosystème Avancé
+
+Cette phase concrétise la vision d'une IA omniprésente capable de générer l'intégralité d'un cours (RAG), de ses supports d'évaluation, et de l'écosystème marketing qui l'entoure. L'objectif est de s'éloigner du workflow classique de création manuelle au profit d'une "Génération Profonde" guidée par l'utilisateur.
+
+### 14.1 : Architecture "Knowledge to Course" (RAG)
+- [x] **Upload & Ingestion** : Interface (`AdminIA.tsx`) pour téléverser divers formats de documents servant de source de vérité stricte.
+- [x] **Pipeline RAG (Retrieval-Augmented Generation)** : Indexation vectorielle du contenu. L'IA s'appuie exclusivement sur ce contexte pour empêcher les hallucinations.
+- [x] **Scaffolding (Le "Gros JSON")** : Génération globale d'une application clé-en-main (Thème, Couleurs, Syllabus) centralisée dans `AdminIA.tsx`.
+- [ ] **Génération Pédagogique Granulaire** : Édition fine du syllabus (`AdminParcours.tsx`) avec génération de leçons et d'exercices spécifiques (Quiz, Flashcards) s'appuyant sur le RAG.
+- [x] **Couche Marketing & Contenu Profond** : Intégration dans le Scaffolding de la génération des slogans, descriptions et du vocabulaire initial.
+
+### 14.2 : Moteur de Gamification Dynamique & Choix des Mécaniques
+- [ ] **Mapping de Compatibilité Intelligent** : Lors de la génération de l'évaluation, l'IA catégorise le contenu et assigne automatiquement les mécaniques jouables compatibles (Ex: "Vocabulaire" -> Flashcards, Bingo ; "Grammaire" -> QCM, Déduction).
+- [ ] **Sélecteur de Jeux Flexibles (Créateur & Apprenant)** : 
+  - Le créateur se voit proposer un jeu par défaut mais peut "switcher" pour un autre jeu compatible.
+  - L'apprenant (si l'admin l'autorise) peut choisir de réviser un module via la mécanique de son choix (ex: réviser les conjugaisons en jouant au "Pendu" ou en "Cartes Mémoire").
+
+### 14.3 : Écosystème Marketing & SEO Automatisé (Astro)
+- [ ] **Génération du Site Vitrine Astro par l'IA** : L'IA analyse le contenu du cours généré et rédige intégralement les pages de ventes (Hero, Bénéfices, Témoignages, Tarifs).
+- [ ] **Moteur d'Optimisation SEO Natif** : 
+  - Génération automatisée des balises meta, JSON-LD schema.org, et ciblage des mots-clés de longue traîne.
+  - Création programmatique par l'IA de multiples pages d'atterrissages (Landing Pages par niche/ville).
+- [ ] **Design Assisté par Persona** : L'utilisateur définit un persona et une ambiance (ex: "Corporate", "Zen", "Tech"). L'IA en déduit automatiquement la charte graphique, les visuels (logos, bannières générés), et les textes marketing.
+
+### 14.4 : Leaderboards & Engagement
+- [ ] **Classements Dynamiques (Leaderboards)** : Introduction de systèmes de points compétitifs ou collaboratifs.
+- [ ] **Filtres de Cohortes** : Leaderboards globaux, par session de cours, ou par groupes d'amis/entreprise pour encourager l'engagement sans décourager les nouveaux.
+
+### 14.5 : Feature Flags Avancés & Modèle de Monétisation
+- [ ] **Accès Basé sur les Rôles et Forfaits (Feature Flags)** : L'IA et l'infrastructure limitent l'accès aux fonctionnalités selon le "Tier" du tenant (Gratuit, Pro, Entreprise).
+- [ ] **Monétisation de la Génération** : 
+  - Restreindre l'usage du RAG massif, de la génération d'images ou de certains mini-jeux premium aux comptes payants.
+  - Interface adaptative : Les options premium non souscrites restent visibles mais sont "grisées" avec des boutons d'up-sell directs.
+
+### 14.6 : Enrichissement RAG par Profils de Recherche (APIs Externes)
+- [ ] **Recherche Web Temps Réel (Perplexity API)** : Intégration optionnelle pour enrichir le RAG avec des données d'actualité, permettant de générer des cours sur des sujets récents ou en constante évolution.
+- [ ] **Ingestion de Vidéos (YouTube API)** : Capacité à extraire et vectoriser les transcriptions de vidéos YouTube pour transformer instantanément une vidéo pertinente en module de cours et évaluations.
+- [ ] **Profil SEO & Tendances (Google Keyword Planner, Search Console, Trends)** : Utilisation des données de recherche pour orienter la création de l'architecture du cours (Syllabus) et optimiser la génération des Landing Pages afin de répondre aux vraies requêtes des utilisateurs.
+- [ ] **Profil Académique & Scientifique (Scite.ai, Google Scholar)** : Connexion aux banques d'articles scientifiques pour garantir un contenu "Evidence-Based", sourcé et avec un taux de confiance maximal (réduction drastique des hallucinations pour les sujets critiques/médicaux).
+- [ ] **Toggle UI "Sources Actives"** : Interface permettant au créateur de cocher/décocher les sources de recherche à utiliser pour générer son cours (ex: "Mes PDF" + "YouTube" + "Recherche Académique").
+
+### 14.7 : Moteur de Génération Documentaire (Intégration Typst)
+- [ ] **Génération Automatisée de PDFs Professionnels** : Intégration de Typst pour générer des documents premium directement à partir des données de la base de connaissances / RAG et des progressions utilisateurs.
+- [ ] **Templates Non Modifiables par l'Apprenant** : Création de modèles (gérés par l'admin via la plateforme web de Typst, puis importés/connectés dans l'app) qui assurent un rendu parfait, débloqués via des fonctionnalités de forfaits supérieurs.
+- [ ] **Cas d'Usages Pédagogiques & Profiling (Premium)** :
+  - **Ebooks & Manuels** : Support de cours complet généré à la volée.
+  - **Workbooks Adaptatifs (Remédiation)** : Cahiers d'exercices PDF personnalisés selon les faiblesses d'un apprenant (basé sur le moteur SRS).
+  - **Bilans de Compétences & Profiling (Lead Gen)** : Génération de bilans professionnels suite à des pré-tests / questionnaires.
+  - **CVs & Plans d'Orientation Scolaire** : Documents synthétisant les acquis, destinés aux étudiants ou à des recrutements.
+  - **Export de Notes Privées** : L'apprenant pourra exporter l'ensemble du module de "Prise de notes" (à développer) dans une fiche de synthèse esthétique.
+- [ ] **Architecture de la Brique (JSON vers Typst)** : 
+  - Flux cible : IA + RAG -> Structuration en JSON -> Moteur de template (Variables injectées) -> Compilation Typst -> Fichier PDF téléchargeable.
+  - Rétrocompatibilité avec les nouveautés Typst 0.15 (améliorations typographiques, structuration, support HTML si applicable pour des aperçus rapides).
+</file>
+
+<file path="security_spec.md">
+# Security Spec: Mots & Blocs Québec
+
+## 1. Data Invariants
+- An `Utilisateur` document can only be read and written by its owner (`userId == request.auth.uid`).
+- `etoiles` must be an integer >= 0.
+- `motsDebloques` must be an array of strings (max 2000 items to prevent size issues).
+- Every update or create must maintain the document structure.
+
+## 2. Dirty Dozen Payloads
+1. Create empty document
+2. Create document for another user
+3. Update someone else's document
+4. Update `etoiles` to string
+5. Update `etoiles` to negative number
+6. Update `motsDebloques` with a non-string array element
+7. Inject a huge string as a document ID
+8. Inject an oversized array for `motsDebloques` (Denial of wallet)
+9. Delete someone else's document
+10. Update `derniereMiseAJour` to a non-timestamp value
+11. Unauthenticated read/write
+12. Shadow Update (add extra unsolicited fields like `isAdmin: true`).
+</file>
+
+<file path="seed_course.ts">
+import { initializeApp, cert } from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
+import { readFileSync } from 'fs';
+
+const serviceAccount = JSON.parse(readFileSync('./service-account.json', 'utf8'));
+
+const app = initializeApp({
+  credential: cert(serviceAccount)
+});
+
+const db = getFirestore(app);
+
+async function seed() {
+  const tenants = await db.collection('tenants').get();
+  if (tenants.empty) {
+    console.log("No tenants found.");
+    return;
+  }
+  const tenantId = tenants.docs[0].id;
+  console.log("Found tenant:", tenantId);
+}
+seed().catch(console.error);
+</file>
+
+<file path="SEO_DASHBOARD_PLAN.md">
+# Architecture du Tableau de Bord SEO Multi-Tenant
+
+En tant qu'architecte logiciel, voici ma recommandation détaillée pour intégrer un moteur et un tableau de bord SEO complet dans votre solution SaaS marque blanche.
+
+## 1. Où intégrer ce tableau de bord ? (React vs Astro)
+
+**Réponse courte : Dans l'application React (CMS Admin).**
+
+- **Astro (`marketing-site`)** est conçu pour le **front-end public** : la génération des pages vitrines, le rendu côté serveur (SSR) rapide pour Googlebot, et la présentation des jeux/leçons aux utilisateurs finaux sans compte administrateur. Ces pages doivent être indexables et ultrarapides.
+- **L'application React (`src/features/admin/...`)** est votre **back-office**. Un tableau de bord SEO est un outil d'administration, lourd en données, protégé par authentification, contenant des graphiques (ex: Recharts) et des filtres dynamiques. Il n'a aucun besoin d'être indexé par Google. C'est donc naturellement dans le CMS React actuel qu'il doit vivre (ex: `src/features/admin/AdminSEO.tsx`).
+
+---
+
+## 2. Architecture & Fonctionnalités (KPIs)
+
+Le tableau de bord doit avoir un niveau de permission pour afficher différentes données.
+
+### A. Niveau Super-Admin (Vous)
+*Objectif : Vue d'ensemble (Macro), monitoring de la plateforme, ET pilotage de votre propre site vitrine.*
+* **Votre propre Site Vitrine (Le "Tenant 0")** : Accès exact aux mêmes fonctionnalités granulaires que vos clients (Clics, impressions, requêtes, top pages) mais dédiées à votre site marketing principal (blogs, pages de vente, etc.). Vous êtes votre propre premier client.
+* **Trafic Agrégé (Réseau)** : Clics et impressions totaux sur tous les tenants combinés (pour voir la force de frappe de votre réseau).
+* **Classement des Tenants** : "Top 10 des clients générant le plus de trafic" (Utile pour détecter des cas d'usage à succès et faire de l'upsell).
+* **Santé Globale du Réseau** : Pourcentage global de pages 404, état des sitemaps globaux.
+* **Monitoring API** : Consommation des quotas de vos API.
+
+### B. Niveau Tenant / Client Marque Blanche
+*Objectif : Preuve de valeur. Le client doit voir que son investissement chez vous génère du trafic.*
+* **Vue d'ensemble SEO** : Graphique d'évolution des Clics, Impressions, CTR (Taux de clic) et Position Moyenne (issues de Google Search Console).
+* **Trafic Organique vs Reste** : Pourcentage de visiteurs venant de Google vs Accès directs (issues de Google Analytics).
+* **Top Pages** : Les 5 landing pages ou "Jeux" qui attirent le plus de visiteurs organiques.
+* **Top Requêtes (Mots-clés)** : Les termes exacts tapés dans Google par les utilisateurs pour trouver ce client.
+* **Santé basique** : Nombre de pages indexées vs non indexées.
+
+### C. Niveau Granulaire (Par Page / Jeu)
+*Objectif : Optimisation tactique d'un contenu.*
+* **Trafic spécifique à la page** : Impressions et clics ciblés.
+* **Éditeur de Métadonnées (Aperçu SERP)** : Édition du Title, Meta Description avec un aperçu visuel (façon Snippet Google).
+* **Analyseur de mots-clés (IA)** : Bouton "Suggérer des optimisations avec l'IA" qui analyse le texte du jeu et propose de meilleurs Titles/Descriptions.
+
+---
+
+## 3. Stratégie d'intégration (Sources de données)
+
+Pour un vrai tableau de bord SEO, **Google Search Console (GSC) API** est la source la plus importante, suivie de **Google Analytics 4 (GA4) API**.
+
+### Comparatif des approches
+
+| Outil | Ce qu'il apporte | Avantages | Inconvénients (en Multi-tenant) |
+| :--- | :--- | :--- | :--- |
+| **Google Search Console API** | Les vrais Mots-clés, Impressions Google, Positionnement, CTR. La vérité SEO absolue. | Gratuit, données 100% réelles de Google. | Si les clients ont leur propre domaine (ex: `client.com`), il faut un flux OAuth pour qu'ils connectent leur compte GSC à votre app. |
+| **Google Analytics 4 API** | Comportement post-clic : Taux d'engagement, temps passé sur la page, conversions (ventes). | Gratuit. Indispensable pour mesurer l'usage. | Complexe à requêter. Ne donne pas les mots-clés de recherche (not provided). |
+| **Ahrefs / Semrush API** | Analyse concurrentielle, Backlinks (liens entrants), Volume de recherche global des mots-clés. | Zéro configuration requise côté client (données tierces). | Extrêmement cher (payé au crédit d'API). Compliqué à rentabiliser pour tous les locataires. |
+
+**La stratégie recommandée pour votre MVP SaaS :**
+1. Utilisez l'**API Google Search Console**.
+2. **Pour les sous-domaines (`client1.plateformedu.com`)** : Vous pouvez vérifier la propriété "Domaine" racine (`plateformedu.com`) dans votre GSC, et interroger l'API en filtrant par le sous-domaine du client. (Zéro effort pour le client).
+3. **Pour les domaines personnalisés (`www.siteclient.com`)** : Implémentez un bouton "Connecter mon compte Google Search Console" en utilisant OAuth (que nous pouvons gérer avec la skill `workspace_integration` pour l'authentification Google).
+
+---
+
+## 4. Architecture des Données (Stockage)
+
+**NE PAS interroger les API Google (GSC/GA4) en temps réel à chaque fois qu'un client ouvre son dashboard.** 
+1. C'est très lent (plusieurs secondes).
+2. Vous exploserez les quotas de l'API Google.
+
+**Solution : Agrégation et mise en cache nocturne (ETL).**
+
+Dans votre base de données (Firestore ou PostgreSQL), créez une structure de données pour stocker des agrégations temporelles.
+
+**Structure Firestore suggérée :**
+Une collection `seo_metrics_daily` (Données statistiques historiques, optimisée pour tracer des graphiques rapides)
+```json
+{
+  "tenantId": "tenant_123",
+  "date": "2024-03-25", // Format YYYY-MM-DD
+  "source": "GSC", // ou GA4
+  "metrics": {
+    "clicks": 145,
+    "impressions": 3400,
+    "ctr": 0.042,
+    "position": 12.4
+  },
+  "topKeywords": [
+    { "term": "cours anglais paris", "clicks": 50, "impressions": 300 },
+    { "term": "jeu vocabulaire anglais", "clicks": 20, "impressions": 150 }
+  ]
+}
+```
+
+**Le flux de travail (Cron Job) :**
+1. Chaque nuit à 2h du matin, un Cron Job (Firebase Cloud Function ou un service Node backend) se déclenche.
+2. Il interroge l'API Google Search Console pour récupérer les données de la veille pour *chaque* tenant.
+3. Il sauvegarde le résultat dans la collection `seo_metrics_daily` dans Firebase.
+4. Quand le client se connecte à son dashboard React, il requête directement Firebase (`where tenantId == X`). L'affichage des graphiques est quasi-instantané et ne consomme pas d'API Google.
+</file>
+
 <file path="server.ts">
 import express from "express";
 import path from "path";
@@ -28436,10 +42690,12 @@ import { initializeApp, getApps } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { getAppCheck } from 'firebase-admin/app-check';
+import firebaseConfig from './firebase-applet-config.json';
 import rateLimit from 'express-rate-limit';
 import * as Sentry from '@sentry/node';
 import { nodeProfilingIntegration } from '@sentry/profiling-node';
 import { calculateRevenueSplits } from './src/utils/revenue';
+import { ingestDocument, retrieveChunks, clearCourseIndex } from './src/server/rag';
 
 if (process.env.SENTRY_DSN) {
   Sentry.init({
@@ -28571,7 +42827,7 @@ async function startServer() {
 
       await getAuth().setCustomUserClaims(targetUser.uid, { tenantId, role });
 
-      const db = getFirestore();
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
       await db.collection('tenants').doc(tenantId).collection('members').doc(targetUser.uid).set({
         email,
         name: name || targetUser.displayName || '',
@@ -28599,7 +42855,7 @@ async function startServer() {
       }
 
       await getAuth().setCustomUserClaims(uid, null);
-      const db = getFirestore();
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
       await db.collection('tenants').doc(tenantId).collection('members').doc(uid).delete();
 
       res.json({ success: true });
@@ -28614,7 +42870,7 @@ async function startServer() {
       const { piasses, xp } = req.body;
       const userId = (req as any).user.uid;
       
-      const db = getFirestore();
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
       const userRef = db.collection('utilisateurs').doc(userId);
       const rankingRef = db.collection('classement').doc(userId);
       
@@ -28644,7 +42900,7 @@ async function startServer() {
     try {
       const caller = (req as any).user;
       const tenantId = req.query.tenantId as string;
-      const db = getFirestore();
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
       
       const isSuperAdmin = caller.role === 'superadmin';
       const isTenantAdmin = caller.tenantId === tenantId && caller.role === 'admin';
@@ -28676,7 +42932,7 @@ async function startServer() {
     try {
       const caller = (req as any).user;
       const tenantId = req.query.tenantId as string;
-      const db = getFirestore();
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
       
       const isSuperAdmin = caller.role === 'superadmin';
       const isTenantAdmin = caller.tenantId === tenantId && caller.role === 'admin';
@@ -28725,7 +42981,7 @@ async function startServer() {
          return res.status(400).json({ error: "Paramètres manquants" });
       }
 
-      const db = getFirestore();
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
       
       // Calculate revenue splits using utility
       const { platformPercentage, creatorPercentage, platformAmount, creatorAmount } = calculateRevenueSplits(amount, 30);
@@ -28922,6 +43178,73 @@ Format de retour strict JSON.`,
     }
   });
 
+  app.post("/api/gemini/generate-marketing", requireAuth, geminiLimiter, async (req, res) => {
+    try {
+      if (!process.env.GEMINI_API_KEY) {
+        return res.status(500).json({ error: "Clé API Gemini non configurée." });
+      }
+
+      const { productName, productType, description, targetAudience, tone } = req.body;
+
+      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+      const prompt = `
+En tant qu'expert en copywriting et marketing digital, crée une page de vente (landing page) optimisée pour la conversion.
+
+Produit: ${productName}
+Type: ${productType === 'bundle' ? 'Pack de cours' : 'Cours en ligne'}
+Description initiale: ${description}
+Cible: ${targetAudience || 'Apprenants souhaitant se perfectionner'}
+Ton: ${tone || 'Professionnel, engageant, orienté résultat'}
+
+Génère une réponse au format JSON contenant:
+- headline: Un titre d'accroche puissant
+- subheadline: Un sous-titre explicatif
+- benefits: Un tableau de 3 à 5 bénéfices clés (chaque bénéfice ayant un titre et une description)
+- targetAudience: À qui s'adresse ce produit spécifiquement
+- salesPitch: Le texte principal de vente (markdown supporté)
+- callToAction: Le texte du bouton principal (ex: "Commencer maintenant")
+      `;
+
+      const response = await ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+        config: {
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: Type.OBJECT,
+            properties: {
+              headline: { type: Type.STRING },
+              subheadline: { type: Type.STRING },
+              benefits: {
+                type: Type.ARRAY,
+                items: {
+                  type: Type.OBJECT,
+                  properties: {
+                    title: { type: Type.STRING },
+                    description: { type: Type.STRING }
+                  }
+                }
+              },
+              targetAudience: { type: Type.STRING },
+              salesPitch: { type: Type.STRING },
+              callToAction: { type: Type.STRING }
+            },
+            required: ["headline", "subheadline", "benefits", "targetAudience", "salesPitch", "callToAction"]
+          }
+        }
+      });
+
+      if (!response.text) throw new Error("No response text");
+
+      const data = JSON.parse(response.text);
+      res.json(data);
+    } catch (err: any) {
+      console.error("Erreur Gemini Generate Marketing:", err);
+      res.status(500).json({ error: "Erreur lors de la génération." });
+    }
+  });
+
   app.post("/api/gemini/generate-json", requireAuth, geminiLimiter, async (req, res) => {
     try {
       const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
@@ -28990,6 +43313,321 @@ Format de retour strict JSON.`,
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Erreur lors du chat avec Gemini", details: err instanceof Error ? err.message : String(err) });
+    }
+  });
+
+  app.post("/api/gemini/rag-ingest", requireAuth, geminiLimiter, async (req, res) => {
+    try {
+      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
+      const ai = new GoogleGenAI({
+        apiKey: apiKey as string,
+        httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
+      });
+      const { courseId, text, clearPrevious } = req.body;
+      
+      if (!courseId || !text) {
+        return res.status(400).json({ error: "courseId et text sont requis" });
+      }
+
+      if (clearPrevious) {
+        clearCourseIndex(courseId);
+      }
+
+      const result = await ingestDocument(ai, courseId, text);
+      res.json(result);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Erreur lors de l'ingestion RAG", details: err instanceof Error ? err.message : String(err) });
+    }
+  });
+
+  app.post("/api/gemini/generate-lesson-rag", requireAuth, geminiLimiter, async (req, res) => {
+    try {
+      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
+      const ai = new GoogleGenAI({
+        apiKey: apiKey as string,
+        httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
+      });
+      
+      const { courseId, subject, prompt, persona } = req.body;
+      if (!courseId || !subject) {
+         return res.status(400).json({ error: "courseId et subject sont requis" });
+      }
+
+      // Retrieval: get top 5 relevant chunks for the subject/prompt
+      const query = `${subject} ${prompt || ''}`;
+      const relevantChunks = await retrieveChunks(ai, courseId, query, 5);
+      
+      const contextText = relevantChunks.map((c, i) => `[Source ${i+1}]: ${c.text}`).join("\n\n");
+      
+      const systemInstruction = 
+        (persona || "Tu es un expert pédagogique.") + 
+        "\n\nDIRECTIVE STRICTE DE ZERO-HALLUCINATION : Tu dois répondre UNIQUEMENT à partir du contexte fourni ci-dessous. Ne rajoute pas d'informations externes.\n\n" +
+        (contextText ? `CONTEXTE DE REFERENCE:\n${contextText}` : "Aucun contexte spécifique trouvé.");
+        
+      const response = await ai.models.generateContent({
+        model: "gemini-3.5-flash",
+        contents: `Rédige une leçon structurée sur le sujet suivant: "${subject}". ${prompt ? 'Instructions supplémentaires: ' + prompt : ''}`,
+        config: {
+          systemInstruction,
+        },
+      });
+
+      res.json({ 
+        lesson: response.text, 
+        sources: relevantChunks.length 
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Erreur lors de la génération de leçon RAG", details: err instanceof Error ? err.message : String(err) });
+    }
+  });
+
+  app.post("/api/gemini/generate-json-rag", requireAuth, geminiLimiter, async (req, res) => {
+    try {
+      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
+      const ai = new GoogleGenAI({
+        apiKey: apiKey as string,
+        httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
+      });
+      
+      const { courseId, prompt, persona, context, schema } = req.body;
+      if (!courseId) {
+         return res.status(400).json({ error: "courseId est requis" });
+      }
+
+      const query = `${prompt || ''} ${context || ''}`;
+      const relevantChunks = await retrieveChunks(ai, courseId, query, 5);
+      
+      const contextText = relevantChunks.map((c, i) => `[Source ${i+1}]: ${c.text}`).join("\n\n");
+      
+      const systemInstruction = 
+        (persona || "Tu es un expert pédagogique.") + 
+        (context ? `\n\nContexte global: ${context}` : "") +
+        "\n\nDIRECTIVE STRICTE DE ZERO-HALLUCINATION : Tu dois générer la configuration UNIQUEMENT à partir du contexte fourni ci-dessous. Ne rajoute pas d'informations externes.\n\n" +
+        (contextText ? `CONTEXTE DE REFERENCE (RAG):\n${contextText}` : "Aucun document de référence trouvé dans le RAG.");
+        
+      const response = await ai.models.generateContent({
+        model: "gemini-3.5-flash",
+        contents: prompt,
+        config: {
+          systemInstruction,
+          responseMimeType: "application/json",
+          responseSchema: schema,
+        },
+      });
+
+      let jsonStr = response.text?.trim() || '{}';
+      res.json(JSON.parse(jsonStr));
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Erreur lors de la génération de jeu RAG", details: err instanceof Error ? err.message : String(err) });
+    }
+  });
+
+  app.post("/api/gemini/generate-scaffold-rag", requireAuth, geminiLimiter, async (req, res) => {
+    try {
+      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
+      const ai = new GoogleGenAI({
+        apiKey: apiKey as string,
+        httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
+      });
+      
+      const { courseId, prompt, persona, context } = req.body;
+      if (!courseId) {
+         return res.status(400).json({ error: "courseId est requis" });
+      }
+
+      // Retrieval: get top 8 relevant chunks for the prompt
+      const query = `${prompt || ''} ${context || ''}`;
+      const relevantChunks = await retrieveChunks(ai, courseId, query, 8);
+      
+      const contextText = relevantChunks.map((c, i) => `[Source ${i+1}]: ${c.text}`).join("\n\n");
+      
+      const systemInstruction = 
+        (persona || "Tu es un expert pédagogique.") + 
+        (context ? `\n\nContexte global: ${context}` : "") +
+        "\n\nDIRECTIVE STRICTE DE ZERO-HALLUCINATION : Tu dois générer l'architecture UNIQUEMENT à partir du contexte fourni ci-dessous. Ne rajoute pas d'informations externes.\nTu dois générer un slogan accrocheur, une description marketing de l'application et un dictionnaire de vocabulaire éducatif initial extrait du contexte.\n\n" +
+        (contextText ? `CONTEXTE DE REFERENCE (RAG):\n${contextText}` : "Aucun document de référence trouvé dans le RAG.");
+
+      const schema = {
+        type: Type.OBJECT,
+        properties: {
+          appName: { type: Type.STRING },
+          appDescription: { type: Type.STRING },
+          marketingSlogan: { type: Type.STRING },
+          colors: {
+            type: Type.OBJECT,
+            properties: {
+              primary: { type: Type.STRING },
+              accent: { type: Type.STRING },
+              bg: { type: Type.STRING },
+              surface: { type: Type.STRING },
+              ink: { type: Type.STRING },
+              muted: { type: Type.STRING }
+            },
+            required: ["primary", "accent", "bg", "surface", "ink", "muted"]
+          },
+          parcours: {
+            type: Type.ARRAY,
+            items: {
+              type: Type.OBJECT,
+              properties: {
+                nom: { type: Type.STRING },
+                description: { type: Type.STRING },
+                lecons: {
+                  type: Type.ARRAY,
+                  items: {
+                    type: Type.OBJECT,
+                    properties: {
+                      nom: { type: Type.STRING },
+                      description: { type: Type.STRING }
+                    },
+                    required: ["nom", "description"]
+                  }
+                }
+              },
+              required: ["nom", "description", "lecons"]
+            }
+          },
+          vocabulary: {
+            type: Type.ARRAY,
+            items: {
+              type: Type.OBJECT,
+              properties: {
+                id: { type: Type.STRING },
+                mot: { type: Type.STRING },
+                definition: { type: Type.STRING },
+                exemple: { type: Type.STRING }
+              },
+              required: ["id", "mot", "definition", "exemple"]
+            }
+          }
+        },
+        required: ["appName", "appDescription", "marketingSlogan", "colors", "parcours", "vocabulary"]
+      };
+        
+      const response = await ai.models.generateContent({
+        model: "gemini-3.5-flash",
+        contents: `Génère l'architecture de l'application selon les instructions : "${prompt}".`,
+        config: {
+          systemInstruction,
+          responseMimeType: "application/json",
+          responseSchema: schema,
+        },
+      });
+
+      let jsonStr = response.text?.trim() || '{}';
+      res.json(JSON.parse(jsonStr));
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Erreur lors de la génération de scaffold RAG", details: err instanceof Error ? err.message : String(err) });
+    }
+  });
+
+  app.post("/api/gemini/generate-items-rag", requireAuth, geminiLimiter, async (req, res) => {
+    try {
+      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
+      const ai = new GoogleGenAI({
+        apiKey: apiKey as string,
+        httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
+      });
+      
+      const { courseId, prompt, count, schema, analysisSchema } = req.body;
+      if (!courseId) {
+         return res.status(400).json({ error: "courseId est requis" });
+      }
+
+      const query = prompt || '';
+      const relevantChunks = await retrieveChunks(ai, courseId, query, 8);
+      
+      const contextText = relevantChunks.map((c, i) => `[Source ${i+1}]: ${c.text}`).join("\n\n");
+      
+      const systemInstruction = 
+        "Tu es un expert pédagogique.\n\n" +
+        "DIRECTIVE STRICTE DE ZERO-HALLUCINATION : Tu dois générer le contenu UNIQUEMENT à partir du contexte fourni ci-dessous. Ne rajoute pas d'informations externes.\n\n" +
+        (contextText ? `CONTEXTE DE REFERENCE (RAG):\n${contextText}` : "Aucun document de référence trouvé dans le RAG.");
+
+      const combinedSchema = {
+        type: "OBJECT",
+        properties: {
+          items: { 
+            type: "ARRAY", 
+            items: schema || { type: "OBJECT" }
+          },
+          analysis: analysisSchema || { type: "OBJECT" }
+        },
+        required: ["items", "analysis"]
+      };
+        
+      const response = await ai.models.generateContent({
+        model: "gemini-3.5-flash",
+        contents: prompt,
+        config: {
+          systemInstruction,
+          responseMimeType: "application/json",
+          responseSchema: combinedSchema,
+        },
+      });
+
+      let jsonStr = response.text?.trim() || '{}';
+      res.json(JSON.parse(jsonStr));
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Erreur lors de la génération d'items RAG", details: err instanceof Error ? err.message : String(err) });
+    }
+  });
+
+  app.post("/api/gemini/suggest-mechanic", requireAuth, geminiLimiter, async (req, res) => {
+    try {
+      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
+      const ai = new GoogleGenAI({
+        apiKey: apiKey as string,
+        httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
+      });
+      
+      const { subject, description } = req.body;
+      if (!subject || !description) {
+         return res.status(400).json({ error: "subject et description sont requis" });
+      }
+
+      const systemInstruction = 
+        "Tu es un Game Designer IA expert en pédagogie. " +
+        "Analyse le sujet et la description de la leçon pour choisir LA mécanique de jeu la plus pertinente parmi cette liste stricte : [\"quiz\", \"flashcard\", \"drag_drop\", \"fill_in_the_blank\", \"memory\"].";
+
+      const schema = {
+        type: Type.OBJECT,
+        properties: {
+          mechanic: { 
+            type: Type.STRING,
+            enum: ["quiz", "flashcard", "drag_drop", "fill_in_the_blank", "memory"],
+            description: "La mécanique de jeu choisie"
+          },
+          reason: { 
+            type: Type.STRING,
+            description: "Une courte explication d'une phrase expliquant pourquoi cette mécanique est pédagogiquement adaptée."
+          }
+        },
+        required: ["mechanic", "reason"]
+      };
+
+      const prompt = `Sujet : ${subject}\nDescription : ${description}`;
+
+      const response = await ai.models.generateContent({
+        model: "gemini-3.5-flash",
+        contents: prompt,
+        config: {
+          systemInstruction,
+          responseMimeType: "application/json",
+          responseSchema: schema,
+        },
+      });
+
+      let jsonStr = response.text?.trim() || '{}';
+      res.json(JSON.parse(jsonStr));
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Erreur lors de la suggestion de mécanique", details: err instanceof Error ? err.message : String(err) });
     }
   });
 
@@ -29062,6 +43700,107 @@ Format de retour strict JSON.`,
 startServer();
 </file>
 
+<file path="spec.md">
+# Spécifications Techniques : Phase 5 — PWA + Notifications Push
+
+## 1. PWA de Base (Infrastructure)
+
+### 1.1 Manifest Web
+- Fichier : `public/manifest.webmanifest`.
+- Métadonnées cibles :
+  - `name`: "Mots & Blocs"
+  - `short_name`: "MotsBlocs"
+  - `theme_color`: "#2563eb" (correspond à `blue-600` dans Tailwind)
+  - `background_color`: "#ffffff"
+  - `display`: "standalone"
+  - `start_url`: "/"
+  - `icons`: [512x512 ou 192x192 génériques, placeholders ou générés depuis une source (les assets icones de base suffiront pour l'infra)].
+
+### 1.2 Configuration Vite (vite-plugin-pwa)
+- Ajout de la dépendance dev `vite-plugin-pwa`.
+- Fichier : `vite.config.ts`.
+- Stratégie `workbox` (Prudente) : Générer l'App Shell uniquement. Exclure explicitement les ressources volumineuses (audios ou très gros JSON de contenu) dont la mise en cache agressive est réservée à la Phase 12.
+- Intégrer l'inclusion du type standard du service worker et la gestion PWA en mode `autoUpdate` ou `prompt`.
+
+### 1.3 Entrée Index
+- Fichier : `index.html`.
+- Implémenter le lien vers le webmanifest : `<link rel="manifest" href="/manifest.webmanifest">`.
+- Configurer la balise meta `theme-color` associée.
+
+## 2. Firebase Cloud Messaging (FCM)
+
+### 2.1 Firebase Console (Tâches Pré-Requises pour l'Admin)
+1. Aller dans le projet Firebase de l'application via la console.
+2. Activer les services *Firebase Cloud Messaging API*.
+3. Naviguer vers : *Paramètres du projet > Cloud Messaging*.
+4. Sous la rubrique *Web Push certificates*, générer ou récupérer la clé VAPID (Paire de clés de notification Web Push).
+5. Copier cette clé et l'injecter en local sous le nom de variable `VITE_FIREBASE_VAPID_KEY`.
+
+### 2.2 Variables d'Environnement
+- Fichier : `.env.example`.
+- Ajout de : `VITE_FIREBASE_VAPID_KEY=` suivi de directives documentant sa nécessité.
+
+### 2.3 Service Worker FCM Indépendant
+- Fichier : `public/firebase-messaging-sw.js`.
+- Rôle : Assurer le contexte d'exécution en arrière-plan pour intercepter les envois FCM lorsque l'app est fermée. Chargement classique `importScripts` vers les librairies compat de firebase version 9+.
+- Implémentation : Extraction de la configuration via un trick de build, URL de config ou hardcodage via placeholders de config build-time depuis `vite.config.ts` (ou simplement en standard `getMessaging()` + options par défaut).
+
+### 2.4 Module de Notifications Frontend
+- Fichier : `src/services/notifications.ts`.
+- Responsabilités du service :
+  1. `requestNotificationPermission()` : Appel standard `Notification.requestPermission()`.
+  2. `registerForPush(userId)` : Validation si permission "granted".
+     - Initialiser la couche messaging de Firebase (`getMessaging(app)`).
+     - Solliciter un token `getToken(messaging, { vapidKey: import.meta.env.VITE_FIREBASE_VAPID_KEY })`.
+     - Appeler `setDoc(doc(db, "users", userId), { fcmToken: token }, { merge: true })` pour associer l'appareil au compte de l'app.
+  3. `setupMessageListener()` : Réception via `onMessage()` de Firebase pour lever des toasts (par exemple avec la suite alertes de la lib) si app au premier plan.
+
+## 3. Expérience Utilisateur et Rétention (UX)
+
+### 3.1 Point de Déclenchement
+- Fichier ciblés : `src/App.tsx`.
+- Principe de non-intrusion : Le trigger *doit* s'effectuer quand le marqueur `hasCompletedOnboarding` devient `true` (et que l'utilisateur est authentifié).
+- L'appel se fera via un useEffect sensible à la transition "onboarding non fini" -> "onboarding fini", en injectant la méthode de `notifications.ts`. Cela évite la redoutable popup à froid. On ne bloque pas non plus le flux de navigation direct.
+</file>
+
+<file path="test_dirs.js">
+const fs = require('fs');
+console.log('workspace:', fs.readdirSync('/workspace'));
+console.log('applet:', fs.readdirSync('/app/applet'));
+</file>
+
+<file path="tsconfig.json">
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "module": "ESNext",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "allowJs": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": [
+        "./*"
+      ]
+    },
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "types": ["vite/client"]
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "extracted_audit", "design_handoff_theme_system"]
+}
+</file>
+
 <file path="tsconfig.tsbuildinfo">
 {"root":["./add-faux-amis.js","./add-tu.cjs","./auto_classify.cjs","./clean.cjs","./eslint.config.js","./fix_locations.cjs","./fix_mots.cjs","./fix_mots2.cjs","./fix_quincaillerie.cjs","./replace_config.cjs","./server.ts","./update_garage.cjs","./update_items.cjs","./vite.config.ts","./app/applet/update_items2.cjs","./dist/firebase-messaging-sw.js","./dist/registerSW.js","./dist/assets/index-BaBp3cmB.js","./public/firebase-messaging-sw.js","./scripts/directus-setup.cjs","./src/App.tsx","./src/content.ts","./src/i18n.ts","./src/main.tsx","./src/components/AudioPlayer.tsx","./src/components/DevelopmentPlan.tsx","./src/components/HomeScreen.tsx","./src/components/LoginScreen.tsx","./src/components/ModalInstructions.tsx","./src/components/MoneyVisualizer.tsx","./src/components/OnboardingScreen.tsx","./src/features/2048/Game2048Screen.tsx","./src/features/admin/AdminProgression.tsx","./src/features/admin/AdminScreen.tsx","./src/features/admin/AudioRecorderModal.tsx","./src/features/appartement/AppartementScreen.tsx","./src/features/arcade/ArcadeScreen.tsx","./src/features/blocs/BlocsGrid.tsx","./src/features/contractions/ContractionsScreen.tsx","./src/features/depanneur/DepanneurScreen.tsx","./src/features/dictionnaire/DictionnaireScreen.tsx","./src/features/education/EducationScreen.tsx","./src/features/hache/HacheScreen.tsx","./src/features/leaderboard/LeaderboardScreen.tsx","./src/features/pendu/PenduScreen.tsx","./src/features/portefeuille/PortefeuilleScreen.tsx","./src/features/progression/NicknameEditor.tsx","./src/features/quiz/QuizScreen.tsx","./src/features/sort/SortScreen.tsx","./src/features/srs/SrsSessionScreen.tsx","./src/features/store/StoreScreen.tsx","./src/features/swipe/SwipeScreen.tsx","./src/features/tuinterrogatif/TuInterrogatifScreen.tsx","./src/features/tutoiement/TutoiementScreen.tsx","./src/hooks/useQuebecVoice.ts","./src/services/analytics.ts","./src/services/contentProvider.ts","./src/services/firebase.ts","./src/services/notifications.ts","./src/services/srs.ts","./src/store/useProgression.ts","./src/store/useSrs.ts"],"version":"5.8.3"}
 </file>
@@ -29119,6 +43858,9 @@ export default defineConfig(() => {
       hmr: process.env.DISABLE_HMR !== 'true',
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
+    },
+    test: {
+      environment: 'jsdom',
     },
   };
 });

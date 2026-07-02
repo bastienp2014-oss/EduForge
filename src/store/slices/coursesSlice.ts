@@ -46,7 +46,7 @@ export const createCoursesSlice: StateCreator<ProgressionState, [], [], CoursesS
         }
       };
     });
-    get().addXp(xpGained);
+    get().claimReward('lesson_complete', { score: Math.max(0, xpGained - 25) });
     get().sauvegarderVersFirebase();
   },
 

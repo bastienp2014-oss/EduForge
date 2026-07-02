@@ -10,6 +10,9 @@ La prochaine étape logique est **la Génération Pédagogique Granulaire (Leço
 ## [Unreleased] - En cours de développement
 
 ### Ajouté
+- **Sécurisation de l'Économie Côté Serveur (Phase 0)** : Retrait de toute possibilité d'injecter ou d'altérer arbitrairement de l'XP ou des piasses depuis le client. Tout gain passe désormais par `/api/economy/claim-reward` via une méthode `claimReward` dans le store Zustand `useProgression` (slice `economySlice`), validant le type d'activité par rapport à un barème strict côté serveur.
+- **Règles Firestore Verrouillées** : Mise à jour de `firestore.rules` pour bloquer toute création ou modification de document utilisateur contenant des champs d'économie (`xp` ou `piasses`) non nuls via le client.
+- **Migration Complète de la Gamification** : Alignement de tous les écrans, modules de jeux et actions utilisateur (`HacheScreen`, `SortScreen`, `SwipeScreen`, `TuInterrogatifScreen`, `QuizScreen`, `Game2048Screen`, `ContractionsScreen`, `TutoiementScreen`, `LessonGameScreen`, `DynamicGameScreen`, `OnboardingScreen`, `HomeScreen`, `coursesSlice`, `inventorySlice`, `useSrs`) sur l'utilisation exclusive de `claimReward` avec les identifiants d'activités serveur correspondants.
 - **Intégration Design Handoff (Batch 1 à 6)** : Fusion pixel-perfect de l'esthétique du Handoff (`design_handoff_theme_system/mechanics`) avec la logique métier et le typage strict dans `src/mechanics`. Remplacement des couleurs codées en dur par le système dynamique `useThemeTokens`.
   - Intégration achevée pour **TOUTES LES MÉCANIQUES (1 à 25)** : `01_FlashcardSRS` à `25_AudioAB`.
   - Fix des props du composant universel `GameResult` (state, points, title) au lieu des props obsolètes (score, xp).
@@ -52,6 +55,12 @@ La prochaine étape logique est **la Génération Pédagogique Granulaire (Leço
 - **Progression Indépendante (Multi-parcours)** : Mise à jour du store `useProgression` pour supporter la progression individualisée par cours (`courseProgressions`) au lieu d'un seul parcours global.
 - **Gestion des Droits d'Accès** : Ajout du système d'entitlements dans le store global permettant de débloquer des cours et de valider les accès de manière sécurisée.
 - **Planification des fonctionnalités d'adhésion multi-cours** : Analyse et conception d'une architecture modulaire pour soutenir la vente de cours individuels, de bundles et de tarification par niveaux.
+
+### Sécurité & Correctifs (Unreleased)
+- **Finalisation de la Phase 0 — Sécurité & hygiène** :
+  - **Éradication de l'email superadmin codé en dur** : Suppression complète de toutes les occurrences de l'adresse email de superadmin en dur (`bastienp2014@gmail.com`) dans `server.ts`, `firestore.rules` et `syncSlice.ts`.
+  - **Sécurisation des endpoints de debug** : Désactivation de `/api/debug-sentry` en production. Authentification requise (`requireAuth`) pour `/api/debug/error`, avec limitation de taille (50 Ko) et rotation des logs (max 5 Mo) pour protéger l'espace disque. Mise à jour du frontend pour inclure le token Firebase dans les en-têtes d'autorisation.
+  - **Purge de la dette technique et des fichiers morts** : Suppression définitive des résidus : `fix.js`, `scripts/directus-setup.cjs`, `scripts/out.txt`, `tsconfig.tsbuildinfo`, répertoire `design_handoff_theme_system/` (archivé), `client_errors.log`. Suppression du script `db:push` dans `package.json`.
 
 ### Optimisé / Modifié
 - **Performance (Zustand)** : Migration massive vers les sélecteurs stricts Zustand (`useProgression(s => s.property)`) dans de nombreux composants (HUD, AudioPlayer, écrans de jeu, admin) pour éviter les re-rendus inutiles en chaîne.

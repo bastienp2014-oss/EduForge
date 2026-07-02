@@ -16,17 +16,6 @@ export const createEconomySlice: StateCreator<ProgressionState, [], [], EconomyS
       analytics.piassesEarned(montant, 'module');
       analytics.xpEarned(montant, 'module');
     }
-    
-    const { auth } = await import('../../services/firebase');
-    if (auth.currentUser) {
-      try {
-        await fetch('/api/economy/update', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser.getIdToken()}` },
-          body: JSON.stringify({ piasses: montant, xp: montant > 0 ? montant : 0 })
-        });
-      } catch (e) {}
-    }
   },
 
   addXp: async (montant) => {
@@ -38,17 +27,6 @@ export const createEconomySlice: StateCreator<ProgressionState, [], [], EconomyS
     get().incrementStat('xp_total', montant);
     
     get().enregistrerActiviteDuJour();
-  
-    const { auth } = await import('../../services/firebase');
-    if (auth.currentUser) {
-      try {
-        await fetch('/api/economy/update', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser.getIdToken()}` },
-          body: JSON.stringify({ xp: montant })
-        });
-      } catch (e) {}
-    }
   },
 
   depenserPiasses: async (cout) => {
@@ -70,6 +48,47 @@ export const createEconomySlice: StateCreator<ProgressionState, [], [], EconomyS
       return true;
     }
     return false;
+  },
+
+  claimReward: async (activityId, metadata) => {
+    const { auth } = await import('../../services/firebase');
+    if (!auth.currentUser) return;
+
+    try {
+      const response = await fetch('/api/economy/claim-reward', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Authorization': `Bearer ${await auth.currentUser.getIdToken()}` 
+        },
+        body: JSON.stringify({ activityId, ...metadata })
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          set({
+            piasses: result.totalPiasses,
+            xp: result.totalXp
+          });
+          
+          if (result.piassesAdded > 0) {
+            analytics.piassesEarned(result.piassesAdded, activityId);
+          }
+          if (result.xpAdded > 0) {
+            analytics.xpEarned(result.xpAdded, activityId);
+            get().incrementStat('xp_total', result.xpAdded);
+            get().enregistrerActiviteDuJour();
+          }
+          
+          get().verifierBadges();
+        }
+      } else {
+        console.error("Erreur lors de la réclamation de récompense:", response.statusText);
+      }
+    } catch (e) {
+      console.error("Erreur réseau lors de la réclamation de récompense:", e);
+    }
   },
 
   getNiveau: () => {

@@ -239,7 +239,7 @@ export default function DepanneurScreen({ onBack,  isEmbedded, ruesSecondaires, 
 
               <div className="mt-12 rounded-3xl p-6 border text-center" style={{ backgroundColor: theme.colors.surface, borderColor: 'var(--color-border)' }}>
                 <p className="font-black mb-3" style={{ color: theme.colors.ink }}>À cours de {currencyName.toLowerCase()} ?</p>
-                <button onClick={() => { alert("Mock: Visionnement d'une publicité..."); useProgression.getState().addPiasses(10); }} className="w-full text-white font-black py-4 rounded-2xl transition-colors flex items-center justify-center gap-2" style={{ backgroundColor: theme.colors.primary }}>
+                <button onClick={() => { alert("Mock: Visionnement d'une publicité..."); useProgression.getState().claimReward('watch_ad'); }} className="w-full text-white font-black py-4 rounded-2xl transition-colors flex items-center justify-center gap-2" style={{ backgroundColor: theme.colors.primary }}>
                   <span>▶</span> Regarder une publicité (+10 {symbol})
                 </button>
               </div>

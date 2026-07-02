@@ -50,7 +50,7 @@ interface DynamicGameScreenProps {
 
 export function DynamicGameScreen({ gameId, onBack, onResponse, demoMode }: DynamicGameScreenProps) {
   const games = useGames(s => s.games);
-  const { addPiasses } = useProgression();
+  const { claimReward } = useProgression();
   const { preparerSession, getSessionCards, enregistrerReponse } = useSrs();
   const game = games.find(g => g.id === gameId);
   const [isSessionReady, setIsSessionReady] = useState(false);
@@ -108,7 +108,7 @@ export function DynamicGameScreen({ gameId, onBack, onResponse, demoMode }: Dyna
 
   const handleComplete = (score: number) => {
     if (!demoMode) {
-      addPiasses(score);
+      claimReward('arcade_score', { score });
     }
   };
 

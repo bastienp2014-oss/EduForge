@@ -152,7 +152,7 @@ export const useSrs = create<SrsState>((set, get) => ({
     const xp = xpForRating(rating, routineBase);
     
     if (xp > 0) {
-      useProgression.getState().addXp(xp);
+      useProgression.getState().claimReward('srs_review', { rating });
     }
 
     // Persistance Firestore (sans bloquer l'UI)

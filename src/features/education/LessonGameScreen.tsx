@@ -15,8 +15,7 @@ interface LessonGameScreenProps {
 export default function LessonGameScreen({ lessonId, onBack }: LessonGameScreenProps) {
   const progressionConfig = useProgression(s => s.progressionConfig);
   const completerLecon = useProgression(s => s.completerLecon);
-  const addXp = useProgression(s => s.addXp);
-  const addPiasses = useProgression(s => s.addPiasses);
+  const claimReward = useProgression(s => s.claimReward);
   const { enregistrerReponse } = useSrs();
 
   // Find the lesson in the progression structure
@@ -76,8 +75,7 @@ export default function LessonGameScreen({ lessonId, onBack }: LessonGameScreenP
     // 2. Award XP and Piasses
     const finalXp = 25 + score;
     const finalPiasses = 10 + Math.floor(score / 5);
-    addXp(finalXp);
-    addPiasses(finalPiasses);
+    claimReward('lesson_complete', { score });
 
     // 3. Register all items in SRS queue so they start appearing in Spaced Repetition reviews
     items.forEach(item => {

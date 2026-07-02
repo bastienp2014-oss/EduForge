@@ -61,7 +61,7 @@ export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) 
     analytics.isFrancophoSet(value);
     
     if (value && useProgression.getState().piasses < 1000) {
-      useProgression.getState().addPiasses(1000);
+      useProgression.getState().claimReward('onboarding_francophone');
     }
     navigateTo('step1_pays');
   };
@@ -253,7 +253,9 @@ export default function OnboardingScreen({ onComplete }: OnboardingScreenProps) 
               scenario={smsProprioScenario}
               compact
               onComplete={(outcome: Outcome, piasses: number, xp: number) => {
-                if (xp > 0) useProgression.getState().addXp(xp);
+                if (xp > 0 || piasses > 0) {
+                  useProgression.getState().claimReward('scenario_complete', { xp, piasses });
+                }
                 navigateTo('step3_timeline');
               }}
             />

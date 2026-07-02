@@ -74,8 +74,9 @@ export default function VilleScreen({ onBack }: VilleProps) {
 
   const handleScenarioComplete = (outcome: any, piasses: number, xp: number) => {
     if (playingScenario) {
-      if (xp > 0) useProgression.getState().addXp(xp);
-      if (piasses > 0) useProgression.getState().addPiasses(piasses);
+      if (xp > 0 || piasses > 0) {
+        useProgression.getState().claimReward('scenario_complete', { xp, piasses });
+      }
       useProgression.getState().completerScenario(playingScenario.id, outcome.type);
     }
     setPlayingScenario(null);

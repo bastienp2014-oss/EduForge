@@ -37,7 +37,7 @@ const SITUATION_MAPPING: Record<string, { label: string, icon: string }> = {
 const DEFAULT_SITUATION = { label: "Avec des chums (Amis)", icon: "🍻" };
 
 export default function SortScreen({ onBack }: { onBack: () => void }) {
-  const { piasses, addPiasses, getNiveau, getPointsConfig } = useProgression();
+  const { piasses, claimReward, getNiveau, getPointsConfig } = useProgression();
   const { theme } = useTheme();
   
   // Prepare 10 random words for the game based on level
@@ -88,7 +88,7 @@ export default function SortScreen({ onBack }: { onBack: () => void }) {
 
     if (situationLabel === correctSituation.label) {
       setScore(prev => prev + 1);
-      addPiasses(getPointsConfig().sortCorrect);
+      claimReward('sort_correct');
     }
   };
 

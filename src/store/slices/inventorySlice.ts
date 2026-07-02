@@ -12,7 +12,7 @@ export const createInventorySlice: StateCreator<ProgressionState, [], [], Invent
     set((s) => ({
       motsDebloques: [...s.motsDebloques, motId]
     }));
-    get().addXp(10);
+    get().claimReward('unlock_word', { wordId: motId });
     get().sauvegarderVersFirebase();
   },
 

@@ -10,7 +10,7 @@ interface TutoiementScreenProps {
 }
 
 export default function TutoiementScreen({ onBack }: TutoiementScreenProps) {
-  const { addPiasses, getPointsConfig } = useProgression();
+  const { claimReward, getPointsConfig } = useProgression();
   const [levelIndex, setLevelIndex] = useState(0);
   const [gameState, setGameState] = useState<GameState>('playing');
   const [options, setOptions] = useState<{ text: string; isCorrect: boolean }[]>([]);
@@ -37,7 +37,7 @@ export default function TutoiementScreen({ onBack }: TutoiementScreenProps) {
     
     if (isCorrect) {
       setGameState('success');
-      addPiasses(getPointsConfig().tutoiementCorrect);
+      claimReward('tutoiement_correct');
       if (levelIndex === tutoData.length - 1) {
         setTimeout(() => setGameState('finished'), 2500);
       }

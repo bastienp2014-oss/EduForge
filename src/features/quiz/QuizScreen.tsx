@@ -13,7 +13,7 @@ import GameResult from '../../components/GameResult';
 
 export default function QuizScreen({ onBack }: { onBack: () => void }) {
   const piasses = useProgression(s => s.piasses);
-  const addPiasses = useProgression(s => s.addPiasses);
+  const claimReward = useProgression(s => s.claimReward);
   const getNiveau = useProgression(s => s.getNiveau);
   const getPointsConfig = useProgression(s => s.getPointsConfig);
   const { theme } = useTheme();
@@ -62,7 +62,7 @@ export default function QuizScreen({ onBack }: { onBack: () => void }) {
 
     if (isCorrect) {
       setScore(prev => prev + 1);
-      addPiasses(getPointsConfig().quizCorrect); // Use configured amount
+      claimReward('quiz_correct'); // Use configured amount
     }
   };
 

@@ -13,7 +13,7 @@ interface ContractionsScreenProps {
 }
 
 export default function ContractionsScreen({ onBack }: ContractionsScreenProps) {
-  const { addPiasses, getPointsConfig } = useProgression();
+  const { claimReward, getPointsConfig } = useProgression();
   const { theme } = useTheme();
   const [levelIndex, setLevelIndex] = useState(0);
   const [shuffledChunks, setShuffledChunks] = useState<string[]>([]);
@@ -65,7 +65,7 @@ export default function ContractionsScreen({ onBack }: ContractionsScreenProps) 
 
       if (newSelected.join('') === originalChunksJoined) {
         setGameState('success');
-        addPiasses(getPointsConfig().contractionsCorrect);
+        claimReward('contractions_correct');
         analytics.answerRecorded({ module: 'contractions', correct: true, item_id: currentLevel.id });
         if (levelIndex === contrData.length - 1) {
           analytics.moduleCompleted('contractions', levelIndex + 1);

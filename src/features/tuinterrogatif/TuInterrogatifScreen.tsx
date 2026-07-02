@@ -11,7 +11,7 @@ interface TuScreenProps {
 }
 
 export default function TuInterrogatifScreen({ onBack }: TuScreenProps) {
-  const { addPiasses, getPointsConfig } = useProgression();
+  const { claimReward, getPointsConfig } = useProgression();
   const { theme } = useTheme();
   const [levelIndex, setLevelIndex] = useState(0);
   const [shuffledChunks, setShuffledChunks] = useState<string[]>([]);
@@ -50,7 +50,7 @@ export default function TuInterrogatifScreen({ onBack }: TuScreenProps) {
       
       if (builtString === targetString) {
         setGameState('success');
-        addPiasses(getPointsConfig().tuCorrect);
+        claimReward('tu_correct');
         if (levelIndex === tuData.length - 1) {
           setTimeout(() => setGameState('finished'), 1500);
         }

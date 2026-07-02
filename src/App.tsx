@@ -123,13 +123,16 @@ export default function App() {
       if (user) {
         try {
           const tokenResult = await user.getIdTokenResult();
+          (window as any).firebaseToken = tokenResult.token;
           setAuth(user, tokenResult.claims as any);
         } catch (e) {
           console.error("Failed to get claims", e);
+          (window as any).firebaseToken = null;
           setAuth(user, null);
         }
         setIsAuthenticated(true);
       } else {
+        (window as any).firebaseToken = null;
         setAuth(null, null);
         setIsAuthenticated(false);
       }

@@ -84,9 +84,9 @@ export default function ScenarioHubScreen({ rueId, onBack}: { rueId: string; onB
 
   const handleComplete = (outcome: any, piasses: number, xp: number) => {
     if (activeScenario) {
-      // Reward logic is typically handled implicitly or if we want, we add here
-      if (xp > 0) useProgression.getState().addXp(xp);
-      if (piasses > 0) useProgression.getState().addPiasses(piasses);
+      if (xp > 0 || piasses > 0) {
+        useProgression.getState().claimReward('scenario_complete', { xp, piasses });
+      }
       
       completerScenario(activeScenario.id, outcome.type);
     }

@@ -14,7 +14,7 @@ service cloud.firestore {
     }
     
     function isAdmin() {
-      return isSignedIn() && (request.auth.token.get('email', '') == 'bastienp2014@gmail.com' || request.auth.token.get('role', '') == 'superadmin');
+      return isSignedIn() && request.auth.token.get('role', '') == 'superadmin';
     }
     
     function isTenantMember(tenantId) {
@@ -105,6 +105,8 @@ service cloud.firestore {
       // CREATE / UPDATE
       allow create: if isOwner(userId) && isValidId(userId)
                     && !('isAdmin' in incoming()) // Interdiction absolue d'escalade
+                    && !('piasses' in incoming() && incoming().piasses != 0)
+                    && !('xp' in incoming() && incoming().xp != 0)
                     && incoming().tenantId is string
                     // Validation simple
                     && (!('streakCount' in incoming()) || incoming().streakCount == null || isValidNumber(incoming().streakCount, 0))

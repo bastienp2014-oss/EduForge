@@ -19,7 +19,7 @@ export default function SwipeScreen({ onBack }: { onBack: () => void }) {
   const [cards, setCards] = useState<Card[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
-  const { addPiasses, getNiveau, getPointsConfig } = useProgression();
+  const { claimReward, getNiveau, getPointsConfig } = useProgression();
   const { theme } = useTheme();
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function SwipeScreen({ onBack }: { onBack: () => void }) {
 
   const handleSwipe = (direction: 'left' | 'right') => {
     if (direction === 'right') {
-      addPiasses(getPointsConfig().swipeCorrect);
+      claimReward('swipe_correct');
     }
     useProgression.getState().incrementStat('swipe_played');
     setFlipped(false);

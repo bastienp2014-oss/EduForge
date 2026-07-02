@@ -18,7 +18,7 @@ export const createSyncSlice: StateCreator<ProgressionState, [], [], SyncSlice> 
 
       const claims = useAuth.getState().claims;
       const role = claims?.role;
-      const isAdmin = role === 'superadmin' || role === 'admin' || user.email === 'bastienp2014@gmail.com';
+      const isAdmin = role === 'superadmin' || role === 'admin';
 
       const docRef = doc(db, 'utilisateurs', user.uid);
       const docSnap = await getDoc(docRef);

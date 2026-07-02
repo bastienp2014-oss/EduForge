@@ -51,6 +51,7 @@ export interface EconomySlice {
   addPiasses: (montant: number) => Promise<void>;
   addXp: (montant: number) => Promise<void>;
   depenserPiasses: (cout: number) => Promise<boolean>;
+  claimReward: (activityId: string, metadata?: any) => Promise<void>;
   getNiveau: () => number;
   getPointsConfig: () => PointsConfig;
 }

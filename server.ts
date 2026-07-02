@@ -16,6 +16,8 @@ import * as Sentry from '@sentry/node';
 import { nodeProfilingIntegration } from '@sentry/profiling-node';
 import { calculateRevenueSplits } from './src/utils/revenue';
 import { ingestDocument, retrieveChunks, clearCourseIndex } from './src/server/rag';
+import { routeGenerateContent, routeChat, getGoogleAIInstance, encrypt, decrypt } from './src/server/llmRouter';
+
 
 if (process.env.SENTRY_DSN) {
   Sentry.init({
@@ -105,8 +107,13 @@ async function startServer() {
 
   app.post("/api/admin/bootstrap", requireAuth, async (req, res) => {
     try {
+      const { token } = req.body;
       const user = (req as any).user;
-      if (user.email === 'bastienp2014@gmail.com') {
+      
+      const isSuperAdmin = user.role === 'superadmin';
+      const isValidToken = process.env.SUPERADMIN_PROVISIONING_TOKEN && token === process.env.SUPERADMIN_PROVISIONING_TOKEN;
+
+      if (isSuperAdmin || isValidToken) {
         await getAuth().setCustomUserClaims(user.uid, { role: 'superadmin', tenantId: 'eduforge' });
         res.json({ success: true, message: "SuperAdmin claims granted. Please sign out and sign in again." });
       } else {
@@ -185,11 +192,98 @@ async function startServer() {
     }
   });
 
+  const ACTIVITY_REWARDS: Record<string, { xp: number; piasses: number; validate?: (body: any) => { xp: number; piasses: number } }> = {
+    quiz_correct: { xp: 1.25, piasses: 1.25 },
+    swipe_correct: { xp: 0.50, piasses: 0.50 },
+    blocs_correct: {
+      xp: 0.25,
+      piasses: 0.25,
+      validate: (body) => {
+        const qty = typeof body.quantity === 'number' && body.quantity > 0 ? body.quantity : 1;
+        const cappedQty = Math.min(qty, 100);
+        return { xp: cappedQty * 0.25, piasses: cappedQty * 0.25 };
+      }
+    },
+    sort_correct: { xp: 1, piasses: 1 },
+    hache_correct: { xp: 5, piasses: 5 },
+    tu_correct: { xp: 5, piasses: 5 },
+    contractions_correct: { xp: 5, piasses: 5 },
+    tutoiement_correct: { xp: 5, piasses: 5 },
+    game2048_correct: {
+      xp: 2.25,
+      piasses: 2.25,
+      validate: (body) => {
+        const qty = typeof body.quantity === 'number' && body.quantity > 0 ? body.quantity : 1;
+        const cappedQty = Math.min(qty, 20);
+        return { xp: cappedQty * 2.25, piasses: cappedQty * 2.25 };
+      }
+    },
+    lesson_complete: {
+      xp: 25,
+      piasses: 10,
+      validate: (body) => {
+        const score = typeof body.score === 'number' && body.score >= 0 ? body.score : 0;
+        const cappedScore = Math.min(score, 100);
+        return {
+          xp: 25 + cappedScore,
+          piasses: 10 + Math.floor(cappedScore / 5)
+        };
+      }
+    },
+    theory_complete: { xp: 15, piasses: 5 },
+    onboarding_complete: { xp: 100, piasses: 1000 },
+    watch_ad: { xp: 10, piasses: 10 },
+    srs_card_reviewed: {
+      xp: 2,
+      piasses: 0,
+      validate: (body) => {
+        const rating = typeof body.rating === 'number' ? body.rating : 3;
+        const routineBase = 2;
+        let xp = 0;
+        if (rating === 1) xp = routineBase * 0.5;
+        else if (rating === 2) xp = routineBase;
+        else if (rating === 3) xp = routineBase * 1.5;
+        else if (rating === 4) xp = routineBase * 2;
+        return { xp, piasses: 0 };
+      }
+    },
+    word_unlocked: { xp: 10, piasses: 0 },
+    arcade_game_complete: {
+      xp: 0,
+      piasses: 0,
+      validate: (body) => {
+        const score = typeof body.score === 'number' && body.score > 0 ? body.score : 0;
+        const cappedScore = Math.min(score, 100);
+        return { xp: cappedScore, piasses: cappedScore };
+      }
+    },
+    scenario_complete: {
+      xp: 0,
+      piasses: 0,
+      validate: (body) => {
+        const xp = typeof body.xp === 'number' ? body.xp : 0;
+        const piasses = typeof body.piasses === 'number' ? body.piasses : 0;
+        const cappedXp = Math.max(-500, Math.min(xp, 500));
+        const cappedPiasses = Math.max(-1000, Math.min(piasses, 1000));
+        return { xp: cappedXp, piasses: cappedPiasses };
+      }
+    }
+  };
+
   app.post("/api/economy/update", requireAuth, async (req, res) => {
     try {
       const { piasses, xp } = req.body;
       const userId = (req as any).user.uid;
       
+      // Verify that this endpoint is only used to spent money/debit (negative piasses)
+      // Disallow any XP additions or positive piasses additions
+      if (typeof xp === 'number' && xp > 0) {
+        return res.status(400).json({ error: "L'XP ne peut pas être augmentée directement via cet endpoint." });
+      }
+      if (typeof piasses === 'number' && piasses > 0) {
+        return res.status(400).json({ error: "Les gains de piasses doivent passer par /api/economy/claim-reward." });
+      }
+
       const db = getFirestore(firebaseConfig.firestoreDatabaseId);
       const userRef = db.collection('utilisateurs').doc(userId);
       const rankingRef = db.collection('classement').doc(userId);
@@ -213,6 +307,76 @@ async function startServer() {
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Erreur lors de la mise à jour économique" });
+    }
+  });
+
+  app.post("/api/economy/claim-reward", requireAuth, async (req, res) => {
+    try {
+      const { activityId } = req.body;
+      const userId = (req as any).user.uid;
+
+      if (!activityId || !ACTIVITY_REWARDS[activityId]) {
+        return res.status(400).json({ error: "Activité invalide ou non supportée" });
+      }
+
+      const rewardDef = ACTIVITY_REWARDS[activityId];
+      let xpToAward = rewardDef.xp;
+      let piassesToAward = rewardDef.piasses;
+
+      if (rewardDef.validate) {
+        const validated = rewardDef.validate(req.body);
+        xpToAward = validated.xp;
+        piassesToAward = validated.piasses;
+      }
+
+      // Rounded to 2 decimal places
+      xpToAward = Math.round(xpToAward * 100) / 100;
+      piassesToAward = Math.round(piassesToAward * 100) / 100;
+
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
+      const userRef = db.collection('utilisateurs').doc(userId);
+      const rankingRef = db.collection('classement').doc(userId);
+
+      const result = await db.runTransaction(async (transaction) => {
+        const userDoc = await transaction.get(userRef);
+        let currentPiasses = 0;
+        let currentXp = 0;
+
+        if (userDoc.exists) {
+          const data = userDoc.data() || {};
+          currentPiasses = data.piasses || 0;
+          currentXp = data.xp || 0;
+        }
+
+        const newPiasses = Math.max(0, Math.round((currentPiasses + piassesToAward) * 100) / 100);
+        const newXp = Math.max(0, Math.round((currentXp + xpToAward) * 100) / 100);
+
+        transaction.set(userRef, {
+          piasses: newPiasses,
+          xp: newXp,
+          derniereMiseAJour: FieldValue.serverTimestamp()
+        }, { merge: true });
+
+        if (xpToAward > 0) {
+          transaction.set(rankingRef, {
+            scoreTotal: newXp,
+            derniereMiseAJour: FieldValue.serverTimestamp()
+          }, { merge: true });
+        }
+
+        return { totalPiasses: newPiasses, totalXp: newXp };
+      });
+
+      res.json({
+        success: true,
+        xpAdded: xpToAward,
+        piassesAdded: piassesToAward,
+        totalPiasses: result.totalPiasses,
+        totalXp: result.totalXp
+      });
+    } catch (err) {
+      console.error("Erreur lors de la réclamation:", err);
+      res.status(500).json({ error: "Erreur lors de la réclamation de la récompense" });
     }
   });
 
@@ -349,15 +513,7 @@ async function startServer() {
 
   app.post("/api/gemini/generate-scenario", requireAuth, geminiLimiter, async (req, res) => {
     try {
-      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
-      const ai = new GoogleGenAI({
-        apiKey: apiKey as string,
-        httpOptions: {
-          headers: {
-            'User-Agent': 'aistudio-build',
-          }
-        }
-      });
+      const tenantId = (req as any).user?.tenantId;
       const { prompt, count, subject, persona, context } = req.body;
       
       const systemInstruction = (persona || "Tu es un expert.") + (context ? `\n\nContexte: ${context}` : "");
@@ -422,38 +578,26 @@ async function startServer() {
         }
       };
 
-      const response = await ai.models.generateContent({
-        model: "gemini-3.5-flash",
-        contents: `Génère ${count || 1} scénarios d'apprentissage du français québécois sur la thématique: "${subject}". ${prompt ? 'Instructions supplémentaires: ' + prompt : ''} 
-Veille à utiliser les expressions québécoises. Statut par défaut: brouillon.
-Format de retour strict JSON.`,
-        config: {
-          systemInstruction,
-          responseMimeType: "application/json",
-          responseSchema: scenarioSchema,
-        },
+      const resultText = await routeGenerateContent(tenantId, {
+        prompt: `Génère ${count || 1} scénarios d'apprentissage du français québécois sur la thématique: "${subject}". ${prompt ? 'Instructions supplémentaires: ' + prompt : ''} \nVeille à utiliser les expressions québécoises. Statut par défaut: brouillon.\nFormat de retour strict JSON.`,
+        systemInstruction,
+        responseMimeType: "application/json",
+        responseSchema: scenarioSchema,
       });
 
-      let jsonStr = response.text?.trim() || '[]';
+      let jsonStr = resultText?.trim() || '[]';
       let scenarios = JSON.parse(jsonStr);
       res.json(scenarios);
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: "Erreur lors de la génération avec Gemini" });
+      res.status(500).json({ error: "Erreur lors de la génération de scénarios", details: err instanceof Error ? err.message : String(err) });
     }
   });
 
   app.post("/api/gemini/generate-image", requireAuth, geminiLimiter, async (req, res) => {
     try {
-      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
-      const ai = new GoogleGenAI({
-        apiKey: apiKey as string,
-        httpOptions: {
-          headers: {
-            'User-Agent': 'aistudio-build',
-          }
-        }
-      });
+      const tenantId = (req as any).user?.tenantId;
+      const ai = await getGoogleAIInstance(tenantId);
       const { prompt, aspectRatio, imageReference } = req.body;
       
       const contents = [];
@@ -494,19 +638,14 @@ Format de retour strict JSON.`,
       res.json({ base64: base64Image, mimeType: mimeType });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: "Erreur lors de la génération avec Gemini", details: err instanceof Error ? err.message : String(err) });
+      res.status(500).json({ error: "Erreur lors de la génération d'image", details: err instanceof Error ? err.message : String(err) });
     }
   });
 
   app.post("/api/gemini/generate-marketing", requireAuth, geminiLimiter, async (req, res) => {
     try {
-      if (!process.env.GEMINI_API_KEY) {
-        return res.status(500).json({ error: "Clé API Gemini non configurée." });
-      }
-
+      const tenantId = (req as any).user?.tenantId;
       const { productName, productType, description, targetAudience, tone } = req.body;
-
-      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
       const prompt = `
 En tant qu'expert en copywriting et marketing digital, crée une page de vente (landing page) optimisée pour la conversion.
@@ -526,123 +665,91 @@ Génère une réponse au format JSON contenant:
 - callToAction: Le texte du bouton principal (ex: "Commencer maintenant")
       `;
 
-      const response = await ai.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: prompt,
-        config: {
-          responseMimeType: "application/json",
-          responseSchema: {
-            type: Type.OBJECT,
-            properties: {
-              headline: { type: Type.STRING },
-              subheadline: { type: Type.STRING },
-              benefits: {
-                type: Type.ARRAY,
-                items: {
-                  type: Type.OBJECT,
-                  properties: {
-                    title: { type: Type.STRING },
-                    description: { type: Type.STRING }
-                  }
-                }
-              },
-              targetAudience: { type: Type.STRING },
-              salesPitch: { type: Type.STRING },
-              callToAction: { type: Type.STRING }
-            },
-            required: ["headline", "subheadline", "benefits", "targetAudience", "salesPitch", "callToAction"]
-          }
-        }
+      const schema = {
+        type: Type.OBJECT,
+        properties: {
+          headline: { type: Type.STRING },
+          subheadline: { type: Type.STRING },
+          benefits: {
+            type: Type.ARRAY,
+            items: {
+              type: Type.OBJECT,
+              properties: {
+                title: { type: Type.STRING },
+                description: { type: Type.STRING }
+              }
+            }
+          },
+          targetAudience: { type: Type.STRING },
+          salesPitch: { type: Type.STRING },
+          callToAction: { type: Type.STRING }
+        },
+        required: ["headline", "subheadline", "benefits", "targetAudience", "salesPitch", "callToAction"]
+      };
+
+      const resultText = await routeGenerateContent(tenantId, {
+        prompt,
+        responseMimeType: "application/json",
+        responseSchema: schema,
+        modelOverride: "gemini-2.5-flash",
       });
 
-      if (!response.text) throw new Error("No response text");
+      if (!resultText) throw new Error("No response text");
 
-      const data = JSON.parse(response.text);
+      const data = JSON.parse(resultText);
       res.json(data);
     } catch (err: any) {
-      console.error("Erreur Gemini Generate Marketing:", err);
+      console.error("Erreur Generate Marketing:", err);
       res.status(500).json({ error: "Erreur lors de la génération." });
     }
   });
 
   app.post("/api/gemini/generate-json", requireAuth, geminiLimiter, async (req, res) => {
     try {
-      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
-      const ai = new GoogleGenAI({
-        apiKey: apiKey as string,
-        httpOptions: {
-          headers: {
-            'User-Agent': 'aistudio-build',
-          }
-        }
-      });
+      const tenantId = (req as any).user?.tenantId;
       const { prompt, schema, persona, context } = req.body;
       
       const systemInstruction = (persona || "Tu es un expert.") + (context ? `\n\nContexte: ${context}` : "");
 
-      const response = await ai.models.generateContent({
-        model: "gemini-3.5-flash",
-        contents: prompt,
-        config: {
-          systemInstruction,
-          responseMimeType: "application/json",
-          responseSchema: schema,
-        },
+      const resultText = await routeGenerateContent(tenantId, {
+        prompt,
+        systemInstruction,
+        responseMimeType: "application/json",
+        responseSchema: schema,
       });
 
-      let jsonStr = response.text?.trim() || '{}';
+      let jsonStr = resultText?.trim() || '{}';
       res.json(JSON.parse(jsonStr));
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: "Erreur lors de la génération avec Gemini", details: err instanceof Error ? err.message : String(err) });
+      res.status(500).json({ error: "Erreur lors de la génération", details: err instanceof Error ? err.message : String(err) });
     }
   });
 
   app.post("/api/gemini/chat", requireAuth, geminiLimiter, async (req, res) => {
     try {
-      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
-      const ai = new GoogleGenAI({
-        apiKey: apiKey as string,
-        httpOptions: {
-          headers: {
-            'User-Agent': 'aistudio-build',
-          }
-        }
-      });
+      const tenantId = (req as any).user?.tenantId;
       const { history, message, persona, context } = req.body;
       
       const systemInstruction = (persona || "Tu es un tuteur amical et encourageant.") + (context ? `\n\nContexte: ${context}` : "") + "\n\nRéponds de manière concise, directe et adaptée au contexte du jeu en cours.";
 
-      // map history from { role: 'user' | 'model', parts: [{text: string}] } format
-      const formattedHistory = (history || []).map((h: any) => ({
-        role: h.role,
-        parts: h.parts || [{ text: h.text }]
-      }));
-
-      // if no history we use generateContent, if history we use chats (wait, the SDK supports passing history)
-      const chat = ai.chats.create({
-        model: "gemini-3.5-flash",
-        history: formattedHistory,
-        config: {
-          systemInstruction,
-        }
+      const resultText = await routeChat(tenantId, {
+        history: history || [],
+        message,
+        systemInstruction,
       });
 
-      const response = await chat.sendMessage({ message });
-      res.json({ text: response.text });
+      res.json({ text: resultText });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: "Erreur lors du chat avec Gemini", details: err instanceof Error ? err.message : String(err) });
+      res.status(500).json({ error: "Erreur lors du chat", details: err instanceof Error ? err.message : String(err) });
     }
   });
 
   app.post("/api/gemini/rag-ingest", requireAuth, geminiLimiter, async (req, res) => {
     try {
-      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
-      const ai = new GoogleGenAI({
-        apiKey: apiKey as string,
-        httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
-      });
+      const tenantId = (req as any).user?.tenantId;
+      const ai = await getGoogleAIInstance(tenantId);
       const { courseId, text, clearPrevious } = req.body;
       
       if (!courseId || !text) {
@@ -663,11 +770,8 @@ Génère une réponse au format JSON contenant:
 
   app.post("/api/gemini/generate-lesson-rag", requireAuth, geminiLimiter, async (req, res) => {
     try {
-      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
-      const ai = new GoogleGenAI({
-        apiKey: apiKey as string,
-        httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
-      });
+      const tenantId = (req as any).user?.tenantId;
+      const ai = await getGoogleAIInstance(tenantId);
       
       const { courseId, subject, prompt, persona } = req.body;
       if (!courseId || !subject) {
@@ -685,16 +789,13 @@ Génère une réponse au format JSON contenant:
         "\n\nDIRECTIVE STRICTE DE ZERO-HALLUCINATION : Tu dois répondre UNIQUEMENT à partir du contexte fourni ci-dessous. Ne rajoute pas d'informations externes.\n\n" +
         (contextText ? `CONTEXTE DE REFERENCE:\n${contextText}` : "Aucun contexte spécifique trouvé.");
         
-      const response = await ai.models.generateContent({
-        model: "gemini-3.5-flash",
-        contents: `Rédige une leçon structurée sur le sujet suivant: "${subject}". ${prompt ? 'Instructions supplémentaires: ' + prompt : ''}`,
-        config: {
-          systemInstruction,
-        },
+      const responseText = await routeGenerateContent(tenantId, {
+        prompt: `Rédige une leçon structurée sur le sujet suivant: "${subject}". ${prompt ? 'Instructions supplémentaires: ' + prompt : ''}`,
+        systemInstruction,
       });
 
       res.json({ 
-        lesson: response.text, 
+        lesson: responseText, 
         sources: relevantChunks.length 
       });
     } catch (err) {
@@ -705,11 +806,8 @@ Génère une réponse au format JSON contenant:
 
   app.post("/api/gemini/generate-json-rag", requireAuth, geminiLimiter, async (req, res) => {
     try {
-      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
-      const ai = new GoogleGenAI({
-        apiKey: apiKey as string,
-        httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
-      });
+      const tenantId = (req as any).user?.tenantId;
+      const ai = await getGoogleAIInstance(tenantId);
       
       const { courseId, prompt, persona, context, schema } = req.body;
       if (!courseId) {
@@ -727,17 +825,14 @@ Génère une réponse au format JSON contenant:
         "\n\nDIRECTIVE STRICTE DE ZERO-HALLUCINATION : Tu dois générer la configuration UNIQUEMENT à partir du contexte fourni ci-dessous. Ne rajoute pas d'informations externes.\n\n" +
         (contextText ? `CONTEXTE DE REFERENCE (RAG):\n${contextText}` : "Aucun document de référence trouvé dans le RAG.");
         
-      const response = await ai.models.generateContent({
-        model: "gemini-3.5-flash",
-        contents: prompt,
-        config: {
-          systemInstruction,
-          responseMimeType: "application/json",
-          responseSchema: schema,
-        },
+      const responseText = await routeGenerateContent(tenantId, {
+        prompt,
+        systemInstruction,
+        responseMimeType: "application/json",
+        responseSchema: schema,
       });
 
-      let jsonStr = response.text?.trim() || '{}';
+      let jsonStr = responseText?.trim() || '{}';
       res.json(JSON.parse(jsonStr));
     } catch (err) {
       console.error(err);
@@ -747,11 +842,8 @@ Génère une réponse au format JSON contenant:
 
   app.post("/api/gemini/generate-scaffold-rag", requireAuth, geminiLimiter, async (req, res) => {
     try {
-      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
-      const ai = new GoogleGenAI({
-        apiKey: apiKey as string,
-        httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
-      });
+      const tenantId = (req as any).user?.tenantId;
+      const ai = await getGoogleAIInstance(tenantId);
       
       const { courseId, prompt, persona, context } = req.body;
       if (!courseId) {
@@ -827,17 +919,14 @@ Génère une réponse au format JSON contenant:
         required: ["appName", "appDescription", "marketingSlogan", "colors", "parcours", "vocabulary"]
       };
         
-      const response = await ai.models.generateContent({
-        model: "gemini-3.5-flash",
-        contents: `Génère l'architecture de l'application selon les instructions : "${prompt}".`,
-        config: {
-          systemInstruction,
-          responseMimeType: "application/json",
-          responseSchema: schema,
-        },
+      const responseText = await routeGenerateContent(tenantId, {
+        prompt: `Génère l'architecture de l'application selon les instructions : "${prompt}".`,
+        systemInstruction,
+        responseMimeType: "application/json",
+        responseSchema: schema,
       });
 
-      let jsonStr = response.text?.trim() || '{}';
+      let jsonStr = responseText?.trim() || '{}';
       res.json(JSON.parse(jsonStr));
     } catch (err) {
       console.error(err);
@@ -847,11 +936,8 @@ Génère une réponse au format JSON contenant:
 
   app.post("/api/gemini/generate-items-rag", requireAuth, geminiLimiter, async (req, res) => {
     try {
-      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
-      const ai = new GoogleGenAI({
-        apiKey: apiKey as string,
-        httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
-      });
+      const tenantId = (req as any).user?.tenantId;
+      const ai = await getGoogleAIInstance(tenantId);
       
       const { courseId, prompt, count, schema, analysisSchema } = req.body;
       if (!courseId) {
@@ -880,17 +966,14 @@ Génère une réponse au format JSON contenant:
         required: ["items", "analysis"]
       };
         
-      const response = await ai.models.generateContent({
-        model: "gemini-3.5-flash",
-        contents: prompt,
-        config: {
-          systemInstruction,
-          responseMimeType: "application/json",
-          responseSchema: combinedSchema,
-        },
+      const responseText = await routeGenerateContent(tenantId, {
+        prompt,
+        systemInstruction,
+        responseMimeType: "application/json",
+        responseSchema: combinedSchema,
       });
 
-      let jsonStr = response.text?.trim() || '{}';
+      let jsonStr = responseText?.trim() || '{}';
       res.json(JSON.parse(jsonStr));
     } catch (err) {
       console.error(err);
@@ -900,12 +983,7 @@ Génère une réponse au format JSON contenant:
 
   app.post("/api/gemini/suggest-mechanic", requireAuth, geminiLimiter, async (req, res) => {
     try {
-      const apiKey = req.headers['x-api-key'] || process.env.GEMINI_API_KEY;
-      const ai = new GoogleGenAI({
-        apiKey: apiKey as string,
-        httpOptions: { headers: { 'User-Agent': 'aistudio-build' } }
-      });
-      
+      const tenantId = (req as any).user?.tenantId;
       const { subject, description } = req.body;
       if (!subject || !description) {
          return res.status(400).json({ error: "subject et description sont requis" });
@@ -933,21 +1011,114 @@ Génère une réponse au format JSON contenant:
 
       const prompt = `Sujet : ${subject}\nDescription : ${description}`;
 
-      const response = await ai.models.generateContent({
-        model: "gemini-3.5-flash",
-        contents: prompt,
-        config: {
-          systemInstruction,
-          responseMimeType: "application/json",
-          responseSchema: schema,
-        },
+      const responseText = await routeGenerateContent(tenantId, {
+        prompt,
+        systemInstruction,
+        responseMimeType: "application/json",
+        responseSchema: schema,
       });
 
-      let jsonStr = response.text?.trim() || '{}';
+      let jsonStr = responseText?.trim() || '{}';
       res.json(JSON.parse(jsonStr));
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Erreur lors de la suggestion de mécanique", details: err instanceof Error ? err.message : String(err) });
+    }
+  });
+
+  // Endpoints administration BYOK
+  app.get("/api/admin/byok/config", requireAppCheck, requireAuth, async (req, res) => {
+    try {
+      const caller = (req as any).user;
+      const isSuperAdmin = caller.role === 'superadmin';
+      const isTenantAdmin = ['admin', 'owner'].includes(caller.role);
+      if (!isSuperAdmin && !isTenantAdmin) {
+        return res.status(403).json({ error: "Non autorisé" });
+      }
+      
+      const targetTenantId = isSuperAdmin ? (req.query.tenantId as string) : caller.tenantId;
+      if (!targetTenantId) {
+        return res.status(400).json({ error: "tenantId est requis" });
+      }
+
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
+      const doc = await db.collection('tenants').doc(targetTenantId).collection('secrets').doc('ai_config').get();
+      if (!doc.exists) {
+        return res.json({ configured: false });
+      }
+
+      const data = doc.data();
+      res.json({
+        configured: true,
+        provider: data?.provider,
+        modelName: data?.modelName,
+        apiKeyMasked: "••••••••••••••••"
+      });
+    } catch (err: any) {
+      console.error(err);
+      res.status(500).json({ error: "Erreur lors de la récupération de la configuration BYOK" });
+    }
+  });
+
+  app.post("/api/admin/byok/config", requireAppCheck, requireAuth, async (req, res) => {
+    try {
+      const caller = (req as any).user;
+      const isSuperAdmin = caller.role === 'superadmin';
+      const isTenantAdmin = ['admin', 'owner'].includes(caller.role);
+      if (!isSuperAdmin && !isTenantAdmin) {
+        return res.status(403).json({ error: "Non autorisé" });
+      }
+
+      const { provider, apiKey, modelName, tenantId } = req.body;
+      const targetTenantId = isSuperAdmin ? tenantId : caller.tenantId;
+      if (!targetTenantId) {
+        return res.status(400).json({ error: "tenantId est requis" });
+      }
+      if (!provider || !apiKey) {
+        return res.status(400).json({ error: "provider et apiKey sont requis" });
+      }
+      if (!['google', 'openai', 'anthropic'].includes(provider)) {
+        return res.status(400).json({ error: "Fournisseur non supporté" });
+      }
+
+      const encryptedApiKey = encrypt(apiKey);
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
+      await db.collection('tenants').doc(targetTenantId).collection('secrets').doc('ai_config').set({
+        provider,
+        encryptedApiKey,
+        modelName: modelName || null,
+        updatedAt: FieldValue.serverTimestamp(),
+        updatedBy: caller.uid
+      });
+
+      res.json({ success: true, message: "Configuration BYOK sauvegardée et chiffrée avec succès." });
+    } catch (err: any) {
+      console.error(err);
+      res.status(500).json({ error: "Erreur lors de l'enregistrement de la configuration BYOK" });
+    }
+  });
+
+  app.delete("/api/admin/byok/config", requireAppCheck, requireAuth, async (req, res) => {
+    try {
+      const caller = (req as any).user;
+      const isSuperAdmin = caller.role === 'superadmin';
+      const isTenantAdmin = ['admin', 'owner'].includes(caller.role);
+      if (!isSuperAdmin && !isTenantAdmin) {
+        return res.status(403).json({ error: "Non autorisé" });
+      }
+
+      const targetTenantId = isSuperAdmin ? (req.query.tenantId as string) : caller.tenantId;
+      if (!targetTenantId) {
+        return res.status(400).json({ error: "tenantId est requis" });
+      }
+
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
+      await db.collection('tenants').doc(targetTenantId).collection('secrets').doc('ai_config').delete();
+
+      res.json({ success: true, message: "Configuration BYOK supprimée. Retour à la clé système par défaut." });
+    } catch (err: any) {
+      console.error(err);
+      res.status(500).json({ error: "Erreur lors de la suppression de la configuration BYOK" });
     }
   });
 
@@ -984,19 +1155,52 @@ Génère une réponse au format JSON contenant:
     }
   });
 
-  // Vite middleware for development
-  app.post("/api/debug/error", express.json(), (req, res) => {
-    console.error("CLIENT-SIDE ERROR: " + JSON.stringify(req.body));
-    fs.appendFileSync("client_errors.log", JSON.stringify(req.body) + "\n");
-    res.send("ok");
+  app.post("/api/debug/error", requireAuth, (req, res) => {
+    try {
+      const bodyStr = JSON.stringify(req.body);
+      
+      // Limit payload size to 50KB to protect disk space
+      if (bodyStr.length > 50 * 1024) {
+        return res.status(400).json({ error: "Payload trop grand (max 50 Ko)" });
+      }
+
+      console.error("CLIENT-SIDE ERROR: " + bodyStr);
+
+      const logPath = "client_errors.log";
+
+      // Log rotation and maximum cumulative limit mechanism
+      try {
+        if (fs.existsSync(logPath)) {
+          const stats = fs.statSync(logPath);
+          // If total log size exceeds 5MB, rotate it
+          if (stats.size > 5 * 1024 * 1024) {
+            const oldLogPath = logPath + ".old";
+            if (fs.existsSync(oldLogPath)) {
+              fs.unlinkSync(oldLogPath);
+            }
+            fs.renameSync(logPath, oldLogPath);
+          }
+        }
+      } catch (rotationErr) {
+        console.error("Erreur lors de la rotation des logs client:", rotationErr);
+      }
+
+      fs.appendFileSync(logPath, bodyStr + "\n");
+      res.send("ok");
+    } catch (err) {
+      console.error("Erreur lors du traitement du rapport d'erreur:", err);
+      res.status(500).json({ error: "Erreur interne" });
+    }
   });
 
   // Setup Sentry error handler
   Sentry.setupExpressErrorHandler(app);
 
-  app.get("/api/debug-sentry", function mainHandler(req, res) {
-    throw new Error("My first Sentry error!");
-  });
+  if (process.env.NODE_ENV !== "production") {
+    app.get("/api/debug-sentry", function mainHandler(req, res) {
+      throw new Error("My first Sentry error!");
+    });
+  }
 
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({

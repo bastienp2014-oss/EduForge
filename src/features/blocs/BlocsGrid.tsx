@@ -26,7 +26,7 @@ function generateRandomShapes(count: number) {
 }
 
 export default function BlocsGrid({ onBack }: { onBack: () => void }) {
-  const addPiasses = useProgression(s => s.addPiasses);
+  const claimReward = useProgression(s => s.claimReward);
   const piasses = useProgression(s => s.piasses);
   const getPointsConfig = useProgression(s => s.getPointsConfig);
   const { theme } = useTheme();
@@ -133,7 +133,7 @@ export default function BlocsGrid({ onBack }: { onBack: () => void }) {
       }
       
       if (cleared > 0) {
-        addPiasses(cleared * getPointsConfig().blocsCorrect);
+        claimReward('blocs_correct', { quantity: cleared });
         setMessage("Ligne ! +" + cleared + " 🪙");
         setTimeout(() => setMessage(null), 2500);
       }

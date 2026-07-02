@@ -125,8 +125,7 @@ export default function HomeScreen() {
   const setUIPosition = useProgression((state) => state.setUIPosition);
   const leconsCompletes = useProgression((state) => state.leconsCompletes);
   const completerLecon = useProgression((state) => state.completerLecon);
-  const addXp = useProgression((state) => state.addXp);
-  const addPiasses = useProgression((state) => state.addPiasses);
+  const claimReward = useProgression((state) => state.claimReward);
   const { theme, setThemeById } = useTheme();
   const { format } = useCurrency();
   const [instructionsGame, setInstructionsGame] = useState<GameType | null>(null);
@@ -439,8 +438,7 @@ export default function HomeScreen() {
                 <button 
                   onClick={() => {
                     completerLecon(activeTheoryLesson.id);
-                    addXp(15);
-                    addPiasses(5);
+                    claimReward('theory_lesson_complete');
                     setActiveTheoryLesson(null);
                     alert(`Bravo ! Leçon terminée !\n+15 XP et +5 $`);
                   }}
