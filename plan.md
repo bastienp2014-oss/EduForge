@@ -117,6 +117,15 @@
   - [x] Refonte du routeur en de vraies URLs via React Router (Historique, deep-linking).
   - [ ] i18n réel, virtualisation des listes, unification fine du Design System, accessibilité avancée.
 
+## Phase 15 : Intégration Design Handoff (Pixel-Perfect)
+- [x] **Gabarit et Tokens Globaux** : Connexion réussie des `useThemeTokens()` sur les composants.
+- [x] **Mécaniques 01 à 04** : Fusion de l'esthétique du Handoff (Design JSX) avec la logique métier et TS (Flashcard, MultipleChoice, BinarySwipe, MemoryMatch).
+- [x] **Mécaniques 05 à 08** : Intégration métier, TypeScript, et pixels du Handoff (Hangman, Anagram, ClozeTest, Sequencing).
+- [x] **Mécaniques 09 à 12** : Intégration métier, TypeScript, et pixels du Handoff (SortGroup, LineMatching, Bingo, SituationalChoice).
+- [x] **Mécaniques 13 à 16** : Intégration métier, TypeScript, et pixels du Handoff (CategoryBlaster, TileMerge, WordSearch, ChainReaction).
+- [x] **Mécaniques 17 à 20** : Intégration métier, TypeScript, et pixels du Handoff (CombinationBuilder, DialogueTree, RebusPuzzle, AudioTranscription).
+- [x] **Mécaniques 21 à 25** : Intégration métier, TypeScript, et pixels du Handoff (ErrorCorrection, DeceptivePairs, DiagramLabeling, VoiceRecording, AudioAB).
+
 ## Phase 12 : Alignement stratégique EdTech (Recommandations de la Recherche Produit)
 
 Cette phase regroupe l'implémentation des fonctionnalités issues de l'étude comparative des plateformes LMS (Kajabi, Teachable, LearnWorlds) et des retours utilisateurs 2025-2026.

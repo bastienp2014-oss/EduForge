@@ -1,11 +1,8 @@
-import { useTheme } from '../store/useTheme';
 import React, { useState, useRef, useCallback } from 'react';
-
-
-
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import { BaseGameProps } from '../types';
 import { DiagramLabelingData } from '../types/mechanics';
-
+import GameResult from '../components/GameResult';
 import { shuffle } from '../utils/array';
 
 const DEMO_SVG = `<svg viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg">
@@ -27,7 +24,7 @@ type LabelItem = NonNullable<DiagramLabelingData['labels']>[number];
 
 export default function DiagramLabeling({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: DiagramLabelingData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, shadow } = useThemeTokens();
 
   const { config = {}, labels = [], image } = data || {};
 
@@ -66,51 +63,110 @@ export default function DiagramLabeling({ items, data, onBack, onComplete, onRes
     if (correct.length+1 >= labels.length) { setDone(true); onComplete?.(score+(isCorrect?25:0)); }
   }, [selected, correct, labels, score, tolerance, onComplete, onResponse]);
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🗺️</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{correct.length}/{labels.length} bien placés !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Carte complétée !"
+        subtitle={`${correct.length}/${labels.length} bien placés`}
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Étiquetage</span>
-        <span style={{ fontSize:12, color:C.muted }}>{correct.length}/{labels.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Étiquetage
+        </span>
+        <span className="text-xs font-bold" style={{ color: theme.colors.muted }}>
+          {correct.length}/{labels.length}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'16px', display:'flex', flexDirection:'column', gap:14 }}>
-        <div style={{ fontSize:12, color:C.muted, textAlign:'center' }}>
-          {selected ? `📍 Clique sur la carte pour placer "${selected.text}"` : 'Sélectionne une étiquette, puis clique sa position sur la carte'}
+
+      <div className="flex-1 p-4 flex flex-col gap-4 max-w-lg mx-auto w-full">
+        <div className="text-xs text-center font-semibold" style={{ color: theme.colors.muted }}>
+          {selected 
+            ? `📍 Clique sur la carte pour placer "${selected.text}"` 
+            : 'Sélectionne une étiquette, puis clique sa position sur la carte'
+          }
         </div>
+
         {/* Carte */}
-        <div ref={imgRef} onClick={placeOnMap} style={{ borderRadius:16, overflow:'hidden', border:`2px solid ${selected?C.primary:C.border}`, cursor:selected?'crosshair':'default', position:'relative', width:'100%', aspectRatio:'4/3' }}>
+        <div 
+          ref={imgRef} 
+          onClick={placeOnMap} 
+          className={`w-full aspect-[4/3] relative overflow-hidden transition-all ${selected ? 'cursor-crosshair scale-[1.01]' : 'cursor-default'}`}
+          style={{ 
+            borderRadius: radCard, 
+            border: `2px solid ${selected ? theme.colors.primary : border}`, 
+            boxShadow: shadow
+          }}
+        >
           {image ? (
-            <img src={image} style={{ width:'100%', height:'100%', objectFit:'contain', display:'block' }} alt="diagram" />
+            <img src={image} className="w-full h-full object-contain block" alt="diagram" />
           ) : (
-            <div dangerouslySetInnerHTML={{ __html:DEMO_SVG }} style={{ width:'100%', height:'100%' }} />
+            <div dangerouslySetInnerHTML={{ __html: DEMO_SVG }} className="w-full h-full" />
           )}
+
           {/* Markers pour étiquettes placées correctement */}
           {correct.map(id => {
             const lbl = labels.find(l=>l.id===id);
             if (!lbl) return null;
-            return <div key={id} style={{ position:'absolute', left:`${lbl.zone.x+lbl.zone.width/2}%`, top:`${lbl.zone.y+lbl.zone.height/2}%`, transform:'translate(-50%,-50%)', background:C.success, color:'#fff', borderRadius:999, padding:'3px 8px', fontSize:10, fontWeight:700, whiteSpace:'nowrap', pointerEvents:'none' }}>{lbl.text}</div>;
+            return (
+              <div 
+                key={id} 
+                className="absolute px-2 py-1 text-[10px] font-bold whitespace-nowrap pointer-events-none rounded-full"
+                style={{ 
+                  left: `${lbl.zone.x+lbl.zone.width/2}%`, 
+                  top: `${lbl.zone.y+lbl.zone.height/2}%`, 
+                  transform: 'translate(-50%,-50%)', 
+                  backgroundColor: theme.colors.success, 
+                  color: '#fff',
+                  fontFamily: theme.fonts.display
+                }}
+              >
+                {lbl.text}
+              </div>
+            );
           })}
         </div>
+
         {/* Étiquettes */}
-        <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
+        <div className="flex flex-wrap gap-2 justify-center mt-2">
           {remaining.map(lbl => {
-            const isSel = selected?.id===lbl.id;
+            const isSel = selected?.id === lbl.id;
             const isWrong = wrong.includes(lbl.id);
             return (
-              <button key={lbl.id} onClick={() => pickLabel(lbl)} style={{
-                background: isWrong?'rgba(192,57,43,.2)':isSel?'rgba(199,91,57,.25)':C.surface,
-                border:`2px solid ${isWrong?C.danger:isSel?C.primary:C.border}`,
-                borderRadius:999, padding:'7px 14px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color:C.ink, cursor:'pointer', transition:'all .15s'
-              }}>{lbl.text}</button>
+              <button 
+                key={lbl.id} 
+                onClick={() => pickLabel(lbl)} 
+                className="px-3.5 py-2 rounded-full border-2 font-bold text-[13px] cursor-pointer transition-all active:scale-95"
+                style={{
+                  backgroundColor: isWrong ? `${theme.colors.danger}33` : isSel ? `${theme.colors.primary}40` : theme.colors.surface,
+                  borderColor: isWrong ? theme.colors.danger : isSel ? theme.colors.primary : border,
+                  color: theme.colors.ink,
+                  fontFamily: theme.fonts.display
+                }}
+              >
+                {lbl.text}
+              </button>
             );
           })}
         </div>

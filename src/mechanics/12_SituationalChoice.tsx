@@ -1,7 +1,8 @@
-import { useTheme, AppColors } from '../store/useTheme';
 import React, { useState, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import { BaseGameProps } from '../types';
 import { SituationalChoiceData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
 type Choice = {
   id: string;
@@ -18,11 +19,15 @@ type Scenario = {
   choices: Choice[];
 };
 
-const REGISTER_COLORS: Record<Choice['register'], string> = { formal: '#2B5AA0', casual: '#2D7A4F', wrong: '#c0392b' };
-
 export default function SituationalChoice({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: SituationalChoiceData }) {
   const { theme } = useTheme();
-  const C: AppColors = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
+
+  const REGISTER_COLORS: Record<Choice['register'], string> = { 
+    formal: '#2B5AA0', 
+    casual: theme.colors.success, 
+    wrong: theme.colors.danger 
+  };
 
   const scenarios: Scenario[] = items && items.length > 0 ? items.map((i, index) => ({
     id: i.id,
@@ -52,7 +57,7 @@ export default function SituationalChoice({ items, data, onBack, onComplete, onR
   const [done, setDone] = useState<boolean>(false);
 
   if (!scenarios || scenarios.length === 0) {
-    return <div style={{ color: 'white', padding: 20 }}>No scenarios found.</div>;
+    return <div className="p-4" style={{ color: theme.colors.ink }}>No scenarios found.</div>;
   }
 
   const sc: Scenario = scenarios[idx];
@@ -79,65 +84,138 @@ export default function SituationalChoice({ items, data, onBack, onComplete, onR
   };
 
   const choiceBg = (c: Choice): string => {
-    if (!answered) return C.surface;
-    if (c.correct) return 'rgba(45,122,79,.2)';
-    if (c.id === picked) return 'rgba(192,57,43,.15)';
-    return 'rgba(255,255,255,.03)';
+    if (!answered) return theme.colors.surface;
+    if (c.correct) return `${theme.colors.success}33`;
+    if (c.id === picked) return `${theme.colors.danger}26`;
+    return `${theme.colors.ink}08`;
   };
   
   const choiceBorder = (c: Choice): string => {
-    if (!answered) return C.border;
-    if (c.correct) return C.success;
-    if (c.id === picked && !c.correct) return C.danger;
-    return 'rgba(255,255,255,.05)';
+    if (!answered) return border;
+    if (c.correct) return theme.colors.success;
+    if (c.id === picked && !c.correct) return theme.colors.danger;
+    return `${theme.colors.ink}14`;
   };
 
-  if (done) return (
-    <div style={{ background: C.bg, minHeight: isEmbedded ? '100%' : '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-      <div style={{ fontSize: 56, marginBottom: 16 }}>🎭</div>
-      <div style={{ fontFamily: 'Sora,sans-serif', fontWeight: 800, fontSize: 24, color: C.ink, marginBottom: 8 }}>Scénarios terminés !</div>
-      <div style={{ fontSize: 14, color: C.muted, marginBottom: 32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background: C.primary, color: '#fff', border: 'none', borderRadius: 14, padding: '14px 32px', fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 15, cursor: 'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Scénarios terminés !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background: C.bg, minHeight: isEmbedded ? '100%' : '100vh', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ background: '#131629', padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background: 'rgba(255,255,255,.08)', border: 'none', color: '#fff', borderRadius: 8, padding: '6px 12px', cursor: 'pointer', fontSize: 16 }}>←</button>
-        <span style={{ fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 14, color: C.ink }}>Situation</span>
-        <span style={{ fontSize: 12, color: C.muted }}>{idx + 1}/{scenarios.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Situation
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {idx + 1}/{scenarios.length}
+        </span>
       </div>
-      <div style={{ flex: 1, padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: 14 }}>
-        {/* Situation */}
-        <div style={{ background: C.surface, borderRadius: 16, padding: 18, border: `1px solid ${C.border}` }}>
-          <div style={{ fontSize: 10, color: C.muted, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: 8 }}>🎭 Situation</div>
-          <p style={{ fontSize: 14, color: C.ink, lineHeight: 1.65, margin: '0 0 10px' }}>{sc.situation}</p>
-          <p style={{ fontSize: 13, color: C.primary, fontWeight: 700, margin: 0 }}>{sc.question}</p>
+
+      <div className="flex-1 p-5 flex flex-col gap-4 max-w-md mx-auto w-full">
+        {/* Situation Card */}
+        <div 
+          className="p-5"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `1px solid ${border}`,
+            boxShadow: shadow
+          }}
+        >
+          <div className="text-[10px] font-bold uppercase tracking-widest mb-3" style={{ color: theme.colors.muted }}>
+            🎭 Situation
+          </div>
+          <p className="text-sm leading-relaxed mb-3" style={{ color: theme.colors.ink }}>
+            {sc.situation}
+          </p>
+          <p className="text-[13px] font-bold m-0" style={{ color: theme.colors.primary }}>
+            {sc.question}
+          </p>
         </div>
-        {/* Choix */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+
+        {/* Choices */}
+        <div className="flex flex-col gap-3">
           {sc.choices.map((c: Choice) => (
-            <button key={c.id} onClick={() => pick(c)} style={{
-              background: choiceBg(c), border: `2px solid ${choiceBorder(c)}`,
-              borderRadius: 14, padding: '14px 16px', textAlign: 'left', cursor: answered ? 'default' : 'pointer',
-              transition: 'all .2s'
-            }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}>
-                <div style={{ fontFamily: 'Sora,sans-serif', fontWeight: 600, fontSize: 14, color: C.ink, lineHeight: 1.5 }}>{c.text}</div>
-                <div style={{ background: `${REGISTER_COLORS[c.register]}33`, color: REGISTER_COLORS[c.register], borderRadius: 999, padding: '2px 8px', fontSize: 9, fontWeight: 700, textTransform: 'uppercase', flexShrink: 0 }}>{c.register}</div>
+            <button 
+              key={c.id} 
+              onClick={() => pick(c)} 
+              className={`p-4 text-left border-2 transition-all ${answered ? 'cursor-default' : 'cursor-pointer active:scale-[0.98]'}`}
+              style={{
+                backgroundColor: choiceBg(c), 
+                borderColor: choiceBorder(c),
+                borderRadius: radCard, 
+              }}
+            >
+              <div className="flex justify-between items-start gap-3">
+                <div className="font-semibold text-sm leading-snug" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+                  {c.text}
+                </div>
+                <div 
+                  className="px-2 py-0.5 rounded-full text-[9px] font-bold uppercase shrink-0"
+                  style={{ 
+                    backgroundColor: `${REGISTER_COLORS[c.register]}33`, 
+                    color: REGISTER_COLORS[c.register] 
+                  }}
+                >
+                  {c.register}
+                </div>
               </div>
+              
+              {/* Feedback Section */}
               {answered && c.id === picked && (
-                <div style={{ marginTop: 8, fontSize: 12, color: c.correct ? C.success : C.danger, lineHeight: 1.5 }}>{c.feedback}</div>
+                <div 
+                  className="mt-3 text-xs leading-relaxed animate-in slide-in-from-top-1" 
+                  style={{ color: c.correct ? theme.colors.success : theme.colors.danger }}
+                >
+                  {c.feedback}
+                </div>
               )}
               {answered && c.correct && c.id !== picked && (
-                <div style={{ marginTop: 8, fontSize: 12, color: C.success, lineHeight: 1.5 }}>✓ {c.feedback}</div>
+                <div 
+                  className="mt-3 text-xs leading-relaxed animate-in slide-in-from-top-1" 
+                  style={{ color: theme.colors.success }}
+                >
+                  ✓ {c.feedback}
+                </div>
               )}
             </button>
           ))}
         </div>
+
+        {/* Next Button */}
         {answered && (
-          <button onClick={next} style={{ background: C.primary, color: '#fff', border: 'none', borderRadius: 14, padding: '14px 0', fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 15, cursor: 'pointer' }}>
+          <button 
+            onClick={next} 
+            className="w-full py-3.5 border-none cursor-pointer font-bold text-[15px] active:scale-95 transition-transform mt-2 animate-in slide-in-from-bottom-2"
+            style={{ 
+              backgroundColor: theme.colors.primary, 
+              color: '#fff', 
+              borderRadius: radBtn, 
+              fontFamily: theme.fonts.display 
+            }}
+          >
             {idx + 1 < scenarios.length ? 'Scénario suivant →' : 'Voir résultats'}
           </button>
         )}

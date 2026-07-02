@@ -185,7 +185,7 @@ export default function App() {
       ) : (!hasCompletedOnboarding) ? (
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
-            <Route path="*" element={<OnboardingScreen onComplete={() => window.location.href = '/'} />} />
+            <Route path="*" element={<OnboardingScreen onComplete={() => {}} />} />
           </Routes>
         </Suspense>
       ) : (

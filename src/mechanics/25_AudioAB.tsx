@@ -1,13 +1,13 @@
-import { useTheme } from '../store/useTheme';
 import React, { useState, useRef, useCallback } from 'react';
-
-
-
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import { BaseGameProps } from '../types';
 import { AudioABData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
 export default function AudioAB({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: AudioABData }) {
   const { theme } = useTheme();
+  const tokens = useThemeTokens();
+  const { border, radCard, radBtn, shadow } = tokens;
   const C = theme.colors;
 
   const { config = {}, pairs = [] } = data || {};
@@ -51,20 +51,30 @@ export default function AudioAB({ items, data, onBack, onComplete, onResponse, i
     else { setIdx((i)=>i+1); setPicked(null); setPlaying(null); }
   };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>👂</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Oreille exercée !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Oreille exercée !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   if (!pair) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>👂</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Aucune paire disponible</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col items-center justify-center p-6 text-center`} style={{ backgroundColor: theme.colors.bg }}>
+      <div className="text-6xl mb-4">👂</div>
+      <div className="font-extrabold text-2xl mb-2" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+        Aucune paire disponible
+      </div>
+      <button 
+        onClick={onBack} 
+        className="mt-6 px-8 py-3 rounded-xl border-none font-bold text-sm cursor-pointer"
+        style={{ backgroundColor: theme.colors.primary, color: '#fff', fontFamily: theme.fonts.display }}
+      >
+        Retour
+      </button>
     </div>
   );
 
@@ -72,50 +82,121 @@ export default function AudioAB({ items, data, onBack, onComplete, onResponse, i
   const isWrong   = (w: 'A' | 'B') => answered && picked===w && w!==pair.correct;
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Comparaison A/B</span>
-        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{pairs.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Comparaison A/B
+        </span>
+        <span className="text-xs font-bold" style={{ color: theme.colors.muted }}>
+          {idx+1}/{pairs.length}
+        </span>
       </div>
+
       {pair.audioA && <audio ref={audioA} src={pair.audioA} />}
       {pair.audioB && <audio ref={audioB} src={pair.audioB} />}
-      <div style={{ flex:1, padding:'28px 16px', display:'flex', flexDirection:'column', alignItems:'center', gap:24 }}>
+
+      <div className="flex-1 p-6 flex flex-col items-center gap-6 max-w-sm mx-auto w-full">
         {/* Critère */}
-        <div style={{ background:C.surface, borderRadius:16, padding:'14px 18px', border:`1px solid ${C.border}`, textAlign:'center', width:'100%', maxWidth:340 }}>
-          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:6 }}>Critère</div>
-          <div style={{ fontSize:13, color:C.ink, fontWeight:600 }}>{config?.criterion}</div>
+        <div 
+          className="p-4 border text-center w-full"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            borderColor: border,
+            boxShadow: shadow
+          }}
+        >
+          <div className="text-[11px] font-bold uppercase tracking-wider mb-1.5" style={{ color: theme.colors.muted }}>
+            Critère
+          </div>
+          <div className="text-[13px] font-semibold" style={{ color: theme.colors.ink }}>
+            {config?.criterion}
+          </div>
         </div>
+
         {/* Label */}
-        <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink }}>{pair.label}</div>
+        <div className="font-extrabold text-2xl text-center" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          {pair.label}
+        </div>
+
         {/* Clips A et B */}
-        <div style={{ display:'flex', gap:16, width:'100%', maxWidth:340 }}>
+        <div className="flex gap-4 w-full">
           {(['A','B'] as const).map(w => (
-            <div key={w} style={{ flex:1, display:'flex', flexDirection:'column', gap:10 }}>
-              <button onClick={() => playClip(w)} style={{
-                background:playing===w?'rgba(199,91,57,.2)':C.surface, border:`2px solid ${playing===w?C.primary:C.border}`,
-                borderRadius:14, padding:'20px 10px', fontSize:24, cursor:'pointer', textAlign:'center'
-              }}>{playing===w?'⏸':'▶'}</button>
-              <button onClick={() => pick(w)} disabled={answered} style={{
-                background: isCorrect(w)?'rgba(45,122,79,.2)':isWrong(w)?'rgba(192,57,43,.15)':C.surface,
-                border:`2px solid ${isCorrect(w)?C.success:isWrong(w)?C.danger:C.border}`,
-                borderRadius:12, padding:'10px 0', fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color:C.ink, cursor:answered?'default':'pointer'
-              }}>Version {w}</button>
+            <div key={w} className="flex-1 flex flex-col gap-2.5">
+              <button 
+                onClick={() => playClip(w)} 
+                className="p-5 border-2 text-2xl text-center rounded-xl cursor-pointer transition-transform active:scale-95"
+                style={{
+                  backgroundColor: playing===w ? `${theme.colors.primary}33` : theme.colors.surface, 
+                  borderColor: playing===w ? theme.colors.primary : border,
+                  boxShadow: playing===w ? `0 0 15px ${theme.colors.primary}40` : 'none'
+                }}
+              >
+                {playing===w ? '⏸' : '▶'}
+              </button>
+              <button 
+                onClick={() => pick(w)} 
+                disabled={answered} 
+                className="p-2.5 border-2 text-[15px] font-bold text-center cursor-pointer transition-all active:scale-95"
+                style={{
+                  backgroundColor: isCorrect(w) ? `${theme.colors.success}33` : isWrong(w) ? `${theme.colors.danger}26` : theme.colors.surface,
+                  borderColor: isCorrect(w) ? theme.colors.success : isWrong(w) ? theme.colors.danger : border,
+                  borderRadius: radBtn, 
+                  fontFamily: theme.fonts.display, 
+                  color: theme.colors.ink, 
+                  opacity: answered && picked !== w && !isCorrect(w) ? 0.6 : 1
+                }}
+              >
+                Version {w}
+              </button>
             </div>
           ))}
         </div>
+
         {answered && (
-          <>
-            <div style={{ background:'rgba(255,255,255,.05)', borderRadius:14, padding:14, border:`1px solid rgba(255,255,255,.08)`, width:'100%', maxWidth:340, textAlign:'center' }}>
-              <div style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:picked===pair.correct?C.success:C.danger, marginBottom:6 }}>
-                {picked===pair.correct?'✓ Bonne oreille !':'✗ Version '+pair.correct+' était la bonne'}
+          <div className="flex flex-col gap-4 w-full mt-2 animate-in slide-in-from-bottom-2">
+            <div 
+              className="p-4 border text-center"
+              style={{ 
+                backgroundColor: `${theme.colors.ink}0a`, 
+                borderRadius: radCard, 
+                borderColor: border 
+              }}
+            >
+              <div className="font-bold text-sm mb-1.5" style={{ fontFamily: theme.fonts.display, color: picked===pair.correct ? theme.colors.success : theme.colors.danger }}>
+                {picked===pair.correct ? '✓ Bonne oreille !' : '✗ Version '+pair.correct+' était la bonne'}
               </div>
-              <div style={{ fontSize:12, color:C.muted, lineHeight:1.6 }}>{pair.explanation}</div>
+              <div className="text-xs leading-relaxed" style={{ color: theme.colors.muted }}>
+                {pair.explanation}
+              </div>
             </div>
-            <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer', width:'100%', maxWidth:340 }}>
-              {idx+1<pairs.length?'Paire suivante →':'Voir résultats'}
+            <button 
+              onClick={next} 
+              className="w-full py-3.5 border-none font-bold text-[15px] cursor-pointer transition-transform active:scale-95"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              {idx+1<pairs.length ? 'Paire suivante →' : 'Voir résultats'}
             </button>
-          </>
+          </div>
         )}
       </div>
     </div>

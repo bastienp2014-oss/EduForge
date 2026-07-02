@@ -130,6 +130,20 @@ service cloud.firestore {
     }
 
     // -----------------------------------------------------------------------------
+    // NOTES PRIVÉES
+    // -----------------------------------------------------------------------------
+    match /notes/{userId} {
+      allow get: if isOwner(userId) && isValidId(userId);
+      allow create, update: if isOwner(userId) && isValidId(userId)
+                    && incoming().tenantId is string
+                    && incoming().userId == userId
+                    && incoming().noteText is string
+                    && incoming().noteText.size() <= 100000
+                    && (!('lastUpdated' in incoming()) || incoming().lastUpdated == null || incoming().lastUpdated is timestamp);
+      allow delete: if isOwner(userId) && isValidId(userId);
+    }
+
+    // -----------------------------------------------------------------------------
     // CLASSEMENT
     // -----------------------------------------------------------------------------
     match /classement/{userId} {

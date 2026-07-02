@@ -10,6 +10,7 @@ import { initializeApp, getApps } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { getAppCheck } from 'firebase-admin/app-check';
+import firebaseConfig from './firebase-applet-config.json';
 import rateLimit from 'express-rate-limit';
 import * as Sentry from '@sentry/node';
 import { nodeProfilingIntegration } from '@sentry/profiling-node';
@@ -146,7 +147,7 @@ async function startServer() {
 
       await getAuth().setCustomUserClaims(targetUser.uid, { tenantId, role });
 
-      const db = getFirestore();
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
       await db.collection('tenants').doc(tenantId).collection('members').doc(targetUser.uid).set({
         email,
         name: name || targetUser.displayName || '',
@@ -174,7 +175,7 @@ async function startServer() {
       }
 
       await getAuth().setCustomUserClaims(uid, null);
-      const db = getFirestore();
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
       await db.collection('tenants').doc(tenantId).collection('members').doc(uid).delete();
 
       res.json({ success: true });
@@ -189,7 +190,7 @@ async function startServer() {
       const { piasses, xp } = req.body;
       const userId = (req as any).user.uid;
       
-      const db = getFirestore();
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
       const userRef = db.collection('utilisateurs').doc(userId);
       const rankingRef = db.collection('classement').doc(userId);
       
@@ -219,7 +220,7 @@ async function startServer() {
     try {
       const caller = (req as any).user;
       const tenantId = req.query.tenantId as string;
-      const db = getFirestore();
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
       
       const isSuperAdmin = caller.role === 'superadmin';
       const isTenantAdmin = caller.tenantId === tenantId && caller.role === 'admin';
@@ -251,7 +252,7 @@ async function startServer() {
     try {
       const caller = (req as any).user;
       const tenantId = req.query.tenantId as string;
-      const db = getFirestore();
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
       
       const isSuperAdmin = caller.role === 'superadmin';
       const isTenantAdmin = caller.tenantId === tenantId && caller.role === 'admin';
@@ -300,7 +301,7 @@ async function startServer() {
          return res.status(400).json({ error: "Paramètres manquants" });
       }
 
-      const db = getFirestore();
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
       
       // Calculate revenue splits using utility
       const { platformPercentage, creatorPercentage, platformAmount, creatorAmount } = calculateRevenueSplits(amount, 30);

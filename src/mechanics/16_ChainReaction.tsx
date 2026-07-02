@@ -1,13 +1,14 @@
-import { useTheme, AppColors } from '../store/useTheme';
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import { BaseGameProps } from '../types';
 import { ChainReactionData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
 type ChainReactionWord = NonNullable<ChainReactionData['wordBank']>[number];
 
 export default function ChainReaction({ items: propItems, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: ChainReactionData }) {
   const { theme } = useTheme();
-  const C: AppColors = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
   const { config = {} } = data || {};
   
   const wordBank: ChainReactionWord[] = data?.wordBank && data.wordBank.length > 0 ? data.wordBank : (propItems && propItems.length > 0 ? propItems.map((i) => {
@@ -78,56 +79,132 @@ export default function ChainReaction({ items: propItems, data, onBack, onComple
     }
   }, [input, wordBank, usedIds, neededLetter, onResponse, chain]);
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>⛓️</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Chaîne de {chain.length} mots !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:20 }}>+{chain.length*20} pts</div>
-      
-      <div style={{ display:'flex', flexDirection:'column', gap:6, width:'100%', maxWidth:340, marginBottom:24 }}>
-        {[firstWord,...chain].map((w,i) => (
-          <div key={i} style={{ fontSize:12, color:C.muted, textAlign:'center' }}>{i===0?'🎯':'→'} {w.word}</div>
-        ))}
-      </div>
-      
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title={`Chaîne de ${chain.length} mots !`}
+        points={chain.length * 20}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Chaîne de mots</span>
-        <span style={{ fontSize:12, color: timeLeft<=3?C.danger:C.muted, fontWeight:700 }}>⏱ {timeLeft}s</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Chaîne de mots
+        </span>
+        <span 
+          className="text-xs font-bold" 
+          style={{ color: timeLeft <= 3 ? theme.colors.danger : theme.colors.muted }}
+        >
+          ⏱ {timeLeft}s
+        </span>
       </div>
-      <div style={{ height:4, background:C.border }}><div style={{ height:4, background:timeLeft>timer*.4?C.success:C.danger, width:`${(timeLeft/timer)*100}%`, transition:'width 1s linear' }}/></div>
-      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
-        <div style={{ background:C.surface, borderRadius:18, padding:'20px', border:`1px solid ${C.border}`, textAlign:'center' }}>
-          <div style={{ fontSize:11, color:C.muted, fontWeight:700, textTransform:'uppercase', letterSpacing:'.06em', marginBottom:8 }}>Mot actuel</div>
-          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:28, color:C.ink, marginBottom:8 }}>{lastWord.word}</div>
-          <div style={{ fontSize:13, color:C.primary, fontWeight:700 }}>Prochain mot commence par : <span style={{ fontSize:22 }}>"{neededLetter}"</span></div>
+
+      {/* Timer Bar */}
+      <div className="h-1 w-full" style={{ backgroundColor: border }}>
+        <div 
+          className="h-full transition-all duration-1000 ease-linear" 
+          style={{ 
+            backgroundColor: timeLeft > timer * 0.4 ? theme.colors.success : theme.colors.danger, 
+            width: `${(timeLeft / timer) * 100}%` 
+          }}
+        />
+      </div>
+
+      <div className="flex-1 p-5 flex flex-col gap-4 max-w-md mx-auto w-full">
+        {/* Current Word Card */}
+        <div 
+          className="p-5 text-center"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `1px solid ${border}`,
+            boxShadow: shadow
+          }}
+        >
+          <div className="text-[11px] font-bold uppercase tracking-widest mb-2" style={{ color: theme.colors.muted }}>
+            Mot actuel
+          </div>
+          <div className="font-extrabold text-3xl mb-3" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+            {lastWord.word}
+          </div>
+          <div className="text-[13px] font-bold" style={{ color: theme.colors.primary }}>
+            Prochain mot commence par : <span className="text-2xl ml-1">"{neededLetter}"</span>
+          </div>
         </div>
         
-        <div style={{ display:'flex', gap:8 }}>
-          <input ref={inputRef} value={input} onChange={e=>setInput(e.target.value.toUpperCase())}
-            onKeyDown={e=>e.key==='Enter'&&submit()}
+        {/* Input */}
+        <div className="flex gap-2">
+          <input 
+            ref={inputRef} 
+            value={input} 
+            onChange={e => setInput(e.target.value.toUpperCase())}
+            onKeyDown={e => e.key === 'Enter' && submit()}
             placeholder={`Mot commençant par "${neededLetter}"…`}
-            style={{ flex:1, background:C.surface, border:`1px solid ${error?C.danger:C.border}`, borderRadius:12, padding:'12px 14px', color:C.ink, fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, outline:'none' }} />
-          <button onClick={submit} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:12, padding:'12px 18px', fontFamily:'Sora,sans-serif', fontWeight:700, cursor:'pointer' }}>→</button>
+            className="flex-1 p-3 outline-none transition-colors"
+            style={{ 
+              backgroundColor: theme.colors.surface, 
+              border: `2px solid ${error ? theme.colors.danger : border}`, 
+              borderRadius: radCard, 
+              color: theme.colors.ink, 
+              fontFamily: theme.fonts.display, 
+              fontWeight: 700, 
+              fontSize: 14 
+            }} 
+          />
+          <button 
+            onClick={submit} 
+            className="px-5 border-none font-bold cursor-pointer active:scale-95 transition-transform"
+            style={{ 
+              backgroundColor: theme.colors.primary, 
+              color: '#fff', 
+              borderRadius: radCard, 
+              fontFamily: theme.fonts.display 
+            }}
+          >
+            →
+          </button>
         </div>
-        {error && <div style={{ fontSize:13, color:C.danger, textAlign:'center', fontWeight:700 }}>{error}</div>}
+        {error && (
+          <div className="text-[13px] font-bold text-center animate-in fade-in" style={{ color: theme.colors.danger }}>
+            {error}
+          </div>
+        )}
         
-        <div style={{ display:'flex', flexDirection:'column', gap:6, maxHeight:200, overflow:'auto' }}>
-          {[firstWord,...chain].map((w,i) => (
-            <div key={i} style={{ fontSize:12, color:C.muted, display:'flex', alignItems:'center', gap:8 }}>
-              <span style={{ width:20, textAlign:'right', color:'rgba(255,255,255,.25)' }}>{i+1}</span>
-              <span style={{ width:20 }}>{i===0?'🎯':'→'}</span>
-              <span style={{ fontWeight:700, color:C.ink }}>{w.word}</span>
+        {/* Chain Display */}
+        <div className="flex flex-col gap-2 overflow-auto py-2 flex-1">
+          {[firstWord, ...chain].map((w, i) => (
+            <div key={i} className="flex items-center gap-3 text-xs" style={{ color: theme.colors.muted }}>
+              <span className="w-5 text-right font-medium opacity-50">{i + 1}</span>
+              <span className="w-5 text-center">{i === 0 ? '🎯' : '→'}</span>
+              <span className="font-bold text-sm" style={{ color: theme.colors.ink }}>{w.word}</span>
             </div>
           ))}
+          {/* Scroll anchor */}
+          <div />
         </div>
-        <div style={{ fontSize:11, color:C.muted, textAlign:'center' }}>Chaîne actuelle : {chain.length} mots · {chain.length*20} pts</div>
+
+        <div className="text-[11px] text-center pt-2 mt-auto" style={{ color: theme.colors.muted }}>
+          Chaîne actuelle : {chain.length} mots · {chain.length * 20} pts
+        </div>
       </div>
     </div>
   );

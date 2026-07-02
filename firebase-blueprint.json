@@ -49,9 +49,27 @@
         "courseIds": { "type": "array", "items": { "type": "string" } }
       },
       "required": ["tenantId", "title", "courseIds"]
+    },
+    "Notes": {
+      "title": "Notes",
+      "description": "Notes privées de l'apprenant",
+      "type": "object",
+      "properties": {
+        "tenantId": { "type": "string" },
+        "userId": { "type": "string" },
+        "noteText": { "type": "string" },
+        "lastUpdated": { "type": "object", "description": "Timestamp de la dernière sauvegarde" }
+      },
+      "required": ["tenantId", "userId", "noteText"]
     }
   },
   "firestore": {
+    "notes/{userId}": {
+      "schema": {
+        "$ref": "#/entities/Notes"
+      },
+      "description": "Notes privées de l'apprenant, indexées par userId"
+    },
     "utilisateurs/{userId}": {
       "schema": {
         "$ref": "#/entities/Utilisateur"

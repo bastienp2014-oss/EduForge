@@ -1,7 +1,8 @@
-import { useTheme, AppColors } from '../store/useTheme';
 import React, { useState, useRef, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import { BaseGameProps } from '../types';
 import { WordSearchData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
 type WordSearchWord = NonNullable<WordSearchData['words']>[number];
 
@@ -44,7 +45,7 @@ function cellKey(r: number,c: number) { return `${r}-${c}`; }
 
 export default function WordSearch({ items: propItems, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: WordSearchData }) {
   const { theme } = useTheme();
-  const C: AppColors = theme.colors;
+  const { border } = useThemeTokens();
   const { config = {} } = data || {};
   const size = config.gridSize || 10;
   
@@ -105,38 +106,99 @@ export default function WordSearch({ items: propItems, data, onBack, onComplete,
   const colorMap: Record<string, string> = {};
   placed.forEach((p,i) => { colorMap[p.wordId] = COLORS[i%COLORS.length]; });
 
+  if (found.length >= words.length) {
+    return (
+      <GameResult 
+        state="win"
+        title="Mots tous trouvés !"
+        points={words.length * 30}
+        onBack={onBack}
+      />
+    );
+  }
+
   return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Mots cachés</span>
-        <span style={{ fontSize:12, color:C.muted }}>{found.length}/{words.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Mots cachés
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {found.length}/{words.length}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'12px', display:'flex', flexDirection:'column', gap:12 }}>
-        <div ref={gridRef}
-          onMouseUp={onMouseUp} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
-          style={{ display:'grid', gridTemplateColumns:`repeat(${size},1fr)`, gap:2, userSelect:'none', touchAction:'none' }}>
+
+      <div className="flex-1 p-3 flex flex-col gap-4 max-w-lg mx-auto w-full justify-center">
+        {/* Grid */}
+        <div 
+          ref={gridRef}
+          onMouseUp={onMouseUp} 
+          onTouchStart={onTouchStart} 
+          onTouchMove={onTouchMove} 
+          onTouchEnd={onTouchEnd}
+          className="grid gap-0.5 select-none touch-none mx-auto w-full"
+          style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}
+        >
           {grid.map((row,r) => row.map((letter,c) => {
             const key = cellKey(r,c);
             const isFnd = foundCells.has(key);
             const isSel = selCells.has(key);
             const fndWord = placed.find(p=>found.includes(p.wordId)&&p.cells.some(cl=>cl.r===r&&cl.c===c));
-            const bg = isFnd ? `${colorMap[fndWord?.wordId || '']||C.success}44` : isSel ? 'rgba(199,91,57,.3)' : 'transparent';
+            const bg = isFnd ? `${colorMap[fndWord?.wordId || '']||theme.colors.success}44` : isSel ? `${theme.colors.primary}4d` : 'transparent';
             
             return (
-              <div key={key} onMouseDown={() => onMouseDown(r,c)} onMouseEnter={() => onMouseEnter(r,c)}
-                style={{ aspectRatio:'1', display:'flex', alignItems:'center', justifyContent:'center', borderRadius:4, background:bg, fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:11, color: isFnd?C.ink:isSel?C.primary:C.muted, cursor:'default', transition:'background .1s' }}>
+              <div 
+                key={key} 
+                onMouseDown={() => onMouseDown(r,c)} 
+                onMouseEnter={() => onMouseEnter(r,c)}
+                className="aspect-square flex items-center justify-center rounded transition-colors duration-100 font-bold text-[11px] cursor-default"
+                style={{ 
+                  backgroundColor: bg, 
+                  fontFamily: theme.fonts.display, 
+                  color: isFnd ? theme.colors.ink : isSel ? theme.colors.primary : theme.colors.muted 
+                }}
+              >
                 {letter}
               </div>
             );
           }))}
         </div>
-        <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
-          {words.map((w: WordSearchWord, i: number) => (
-            <div key={w.id} style={{ background: found.includes(w.id) ? `${COLORS[i%COLORS.length]}22` : C.surface, border:`1px solid ${found.includes(w.id)?COLORS[i%COLORS.length]:C.border}`, borderRadius:999, padding:'4px 12px', fontSize:12, fontWeight:700, color:C.ink, textDecoration:found.includes(w.id)?'line-through':'none', opacity:found.includes(w.id)?0.6:1 }}>
-              {config?.hintMode==='word' ? w.word : w.hint}
-            </div>
-          ))}
+
+        {/* Words list */}
+        <div className="flex flex-wrap gap-2 justify-center mt-2">
+          {words.map((w: WordSearchWord, i: number) => {
+            const isFound = found.includes(w.id);
+            const wColor = COLORS[i % COLORS.length];
+            return (
+              <div 
+                key={w.id} 
+                className="rounded-full px-3 py-1 text-xs font-bold transition-all duration-300"
+                style={{ 
+                  backgroundColor: isFound ? `${wColor}22` : theme.colors.surface, 
+                  border: `1px solid ${isFound ? wColor : border}`, 
+                  color: theme.colors.ink, 
+                  textDecoration: isFound ? 'line-through' : 'none', 
+                  opacity: isFound ? 0.6 : 1 
+                }}
+              >
+                {config?.hintMode === 'word' ? w.word : w.hint}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

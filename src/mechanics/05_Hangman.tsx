@@ -1,8 +1,8 @@
-import { useTheme } from '../store/useTheme';
 import React, { useState } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import { BaseGameProps } from '../types';
 import { HangmanData } from '../types/mechanics';
-
+import GameResult from '../components/GameResult';
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 const EMOJIS = ['😎','😬','😰','😓','😨','😱','💀'];
@@ -15,7 +15,7 @@ interface HangmanWord {
 
 export default function Hangman({ items, onBack, onComplete, onResponse, isEmbedded, data }: BaseGameProps & { data?: HangmanData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
 
   const { config } = data || {};
   const maxErr = config?.maxErr ?? 6;
@@ -25,7 +25,7 @@ export default function Hangman({ items, onBack, onComplete, onResponse, isEmbed
   const [done, setDone] = useState(false);
 
   if (!items || items.length === 0) {
-    return <div className="p-4" style={{color: C.ink}}>Aucune donnée pour ce jeu.</div>;
+    return <div className="p-4" style={{ color: theme.colors.ink }}>Aucune donnée pour ce jeu.</div>;
   }
 
   const words: HangmanWord[] = items.map(item => ({
@@ -47,8 +47,13 @@ export default function Hangman({ items, onBack, onComplete, onResponse, isEmbed
     const pts = won ? Math.max(50 - errors*8, 10) : 0;
     const newScore = score + pts;
     setScore(newScore);
-    if (wordIdx+1 >= words.length) { setDone(true); onComplete?.(newScore); }
-    else { setWordIdx(i=>i+1); setGuessed([]); }
+    if (wordIdx+1 >= words.length) { 
+      setDone(true); 
+      onComplete?.(newScore); 
+    } else { 
+      setWordIdx(i => i + 1); 
+      setGuessed([]); 
+    }
   };
 
   const guess = (letter: string) => {
@@ -66,73 +71,153 @@ export default function Hangman({ items, onBack, onComplete, onResponse, isEmbed
     }
   };
 
-
-  if (done) return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🎉</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Fini !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Partie terminée !"
+        subtitle={`${score} points`}
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Pendu</span>
-        <span style={{ fontSize:12, color:C.muted }}>{wordIdx+1}/{words.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Pendu
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {wordIdx + 1}/{words.length}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:20 }}>
-        {/* Erreur visual */}
-        <div style={{ textAlign:'center' }}>
-          <div style={{ fontSize:48 }}>{EMOJIS[Math.min(errors, 6)]}</div>
-          <div style={{ display:'flex', justifyContent:'center', gap:6, marginTop:8 }}>
-            {Array.from({length:maxErr}).map((_,i) => (
-              <div key={i} style={{ width:14, height:14, borderRadius:'50%', background: i<errors ? C.danger : 'rgba(255,255,255,.12)' }} />
+
+      <div className="flex-1 p-5 flex flex-col gap-6 max-w-md mx-auto w-full">
+        {/* Error visual */}
+        <div className="text-center mt-2">
+          <div className="text-6xl mb-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
+            {EMOJIS[Math.min(errors, 6)]}
+          </div>
+          <div className="flex justify-center gap-1.5 mt-2">
+            {Array.from({ length: maxErr }).map((_, i) => (
+              <div 
+                key={i} 
+                className="w-3.5 h-3.5 rounded-full transition-colors duration-300"
+                style={{ backgroundColor: i < errors ? theme.colors.danger : `${theme.colors.ink}20` }} 
+              />
             ))}
           </div>
         </div>
-        {/* Indice */}
-        <div style={{ background:C.surface, borderRadius:14, padding:'10px 14px', border:`1px solid ${C.border}`, fontSize:12, color:C.muted, textAlign:'center' }}>
-          💡 {hint}
+
+        {/* Hint */}
+        <div 
+          className="px-4 py-3 text-center text-xs leading-relaxed"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `1px solid ${border}`,
+            color: theme.colors.muted,
+            boxShadow: shadow
+          }}
+        >
+          <span className="mr-2">💡</span> {hint}
         </div>
-        {/* Mot */}
-        <div style={{ display:'flex', flexWrap:'wrap', gap:8, justifyContent:'center' }}>
-          {word.split('').map((l, i) => (
-            <div key={i} style={{
-              width:l===' '?20:36, height:44, borderBottom:l===' '||l==='-'?'none':`2px solid ${guessed.includes(l)?C.success:C.muted}`,
-              display:'flex', alignItems:'center', justifyContent:'center',
-              fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:20,
-              color: guessed.includes(l) || l === '-' ? C.ink : (lost ? C.danger : 'transparent')
-            }}>{l}</div>
-          ))}
+
+        {/* Word Display */}
+        <div className="flex flex-wrap gap-2 justify-center my-2">
+          {word.split('').map((l, i) => {
+            const isRevealed = guessed.includes(l) || l === '-';
+            const isSpace = l === ' ';
+            const isSpecial = isSpace || l === '-';
+
+            return (
+              <div 
+                key={i} 
+                className="flex items-center justify-center font-extrabold text-2xl transition-all duration-300"
+                style={{
+                  width: isSpace ? 20 : 36, 
+                  height: 44, 
+                  borderBottom: isSpecial ? 'none' : `3px solid ${isRevealed ? theme.colors.success : theme.colors.muted}`,
+                  fontFamily: theme.fonts.display,
+                  color: isRevealed ? theme.colors.ink : (lost ? theme.colors.danger : 'transparent')
+                }}
+              >
+                {l}
+              </div>
+            );
+          })}
         </div>
-        {/* Résultat intermédiaire */}
+
+        {/* Round Result */}
         {roundDone && (
-          <div style={{ background: won?'rgba(45,122,79,.2)':'rgba(192,57,43,.15)', borderRadius:14, padding:14, textAlign:'center', border:`1px solid ${won?C.success:C.danger}` }}>
-            <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color:C.ink, marginBottom:6 }}>
+          <div 
+            className="p-4 text-center mt-2 animate-in fade-in zoom-in-95 duration-300"
+            style={{ 
+              backgroundColor: won ? `${theme.colors.success}20` : `${theme.colors.danger}20`, 
+              borderRadius: radCard, 
+              border: `1px solid ${won ? theme.colors.success : theme.colors.danger}` 
+            }}
+          >
+            <div className="font-bold text-lg mb-3" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
               {won ? '✓ Correct !' : `✗ C'était : ${word}`}
             </div>
-            <button onClick={nextWord} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:10, padding:'10px 24px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>
-              {wordIdx+1<words.length ? 'Mot suivant' : 'Résultats'}
+            <button 
+              onClick={nextWord} 
+              className="px-6 py-3 border-none cursor-pointer font-bold text-sm active:scale-95 transition-transform"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              {wordIdx + 1 < words.length ? 'Mot suivant' : 'Voir les résultats'}
             </button>
           </div>
         )}
-        {/* Clavier */}
+
+        {/* Keyboard */}
         {!roundDone && (
-          <div style={{ display:'flex', flexWrap:'wrap', gap:6, justifyContent:'center' }}>
+          <div className="flex flex-wrap gap-2 justify-center mt-auto mb-4">
             {ALPHABET.map(l => {
               const used = guessed.includes(l);
               const correct = used && word.includes(l);
               const wrong = used && !word.includes(l);
+
               return (
-                <button key={l} onClick={() => guess(l)} disabled={used} style={{
-                  width:36, height:36, borderRadius:8, border:'none', cursor: used?'default':'pointer',
-                  background: correct?C.success : wrong?'rgba(192,57,43,.3)' : C.surface,
-                  color: used?C.muted:C.ink, fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13,
-                  opacity: used?0.5:1
-                }}>{l}</button>
+                <button 
+                  key={l} 
+                  onClick={() => guess(l)} 
+                  disabled={used} 
+                  className="w-10 h-11 flex items-center justify-center border-none font-bold text-sm transition-all active:scale-90"
+                  style={{
+                    borderRadius: radBtn, 
+                    cursor: used ? 'default' : 'pointer',
+                    backgroundColor: correct ? theme.colors.success : wrong ? `${theme.colors.danger}50` : theme.colors.surface,
+                    color: used && !correct && !wrong ? theme.colors.muted : (correct || wrong ? '#fff' : theme.colors.ink), 
+                    fontFamily: theme.fonts.display,
+                    opacity: used && !correct && !wrong ? 0.5 : 1,
+                    boxShadow: !used ? shadow : 'none'
+                  }}
+                >
+                  {l}
+                </button>
               );
             })}
           </div>

@@ -24,8 +24,5 @@ if (import.meta.env.VITE_RECAPTCHA_SITE_KEY) {
 
 export const auth = getAuth(app);
 setPersistence(auth, browserLocalPersistence);
-export const db = initializeFirestore(app, {
-  localCache: undefined,
-  experimentalForceLongPolling: true,
-}, firebaseConfig.firestoreDatabaseId || undefined);
+export const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
 export const storage = getStorage(app);

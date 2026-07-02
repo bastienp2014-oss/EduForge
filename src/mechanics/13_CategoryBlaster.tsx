@@ -1,8 +1,8 @@
-import { useTheme, AppColors } from '../store/useTheme';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import { BaseGameProps } from '../types';
 import { CategoryBlasterData } from '../types/mechanics';
-
+import GameResult from '../components/GameResult';
 import { shuffle } from '../utils/array';
 
 type BlasterItem = {
@@ -22,7 +22,7 @@ type FeedbackData = { correct: boolean; label: string };
 
 export default function CategoryBlaster({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: CategoryBlasterData }) {
   const { theme } = useTheme();
-  const C: AppColors = theme.colors;
+  const { border, radCard, shadow } = useThemeTokens();
 
   const { config = {} } = data || {};
 
@@ -121,48 +121,98 @@ export default function CategoryBlaster({ items, data, onBack, onComplete, onRes
     }, 700);
   }, [feedback, idx, combo, score, timeMax, config, startTimer, onComplete, onResponse]);
 
-  if (done) return (
-    <div style={{ background: C.bg, minHeight: isEmbedded ? '100%' : '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-      <div style={{ fontSize: 56, marginBottom: 16 }}>⚡</div>
-      <div style={{ fontFamily: 'Sora,sans-serif', fontWeight: 800, fontSize: 24, color: C.ink, marginBottom: 8 }}>{score} points !</div>
-      <div style={{ fontSize: 14, color: C.muted, marginBottom: 32 }}>{gameItems.current.length} items classés</div>
-      <button onClick={onBack} style={{ background: C.primary, color: '#fff', border: 'none', borderRadius: 14, padding: '14px 32px', fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 15, cursor: 'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title={`${score} points !`}
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   const item = gameItems.current[idx];
   const pct = timeMax > 0 ? (timeLeft / timeMax) * 100 : 0;
 
   return (
-    <div style={{ background: C.bg, minHeight: isEmbedded ? '100%' : '100vh', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ background: '#131629', padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background: 'rgba(255,255,255,.08)', border: 'none', color: '#fff', borderRadius: 8, padding: '6px 12px', cursor: 'pointer', fontSize: 16 }}>←</button>
-        <span style={{ fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 14, color: C.ink }}>Blaster</span>
-        <span style={{ fontSize: 12, color: C.muted }}>⭐ {score} {combo >= 3 ? '🔥' : ''}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Blaster
+        </span>
+        <span className="text-xs font-bold" style={{ color: theme.colors.muted }}>
+          ⭐ {score} {combo >= 3 ? '🔥' : ''}
+        </span>
       </div>
+
       {/* Timer bar */}
-      <div style={{ height: 6, background: C.border, transition: 'none' }}>
-        <div style={{ height: 6, background: pct > 50 ? C.success : pct > 25 ? '#f59e0b' : C.danger, width: `${pct}%`, transition: 'width .05s linear' }} />
+      <div className="h-1.5 w-full" style={{ backgroundColor: border }}>
+        <div 
+          className="h-full transition-all duration-75" 
+          style={{ 
+            backgroundColor: pct > 50 ? theme.colors.success : pct > 25 ? '#f59e0b' : theme.colors.danger, 
+            width: `${pct}%` 
+          }} 
+        />
       </div>
-      <div style={{ flex: 1, padding: '24px 16px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
+
+      <div className="flex-1 p-6 flex flex-col items-center gap-6 max-w-md mx-auto w-full">
         {/* Item card */}
-        <div style={{ width: '100%', maxWidth: 340, background: feedback ? (feedback.correct ? 'rgba(45,122,79,.15)' : 'rgba(192,57,43,.12)') : C.surface, borderRadius: 22, border: `2px solid ${feedback ? (feedback.correct ? C.success : C.danger) : C.border}`, padding: '36px 20px', textAlign: 'center', transition: 'all .15s', minHeight: 160, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+        <div 
+          className="w-full text-center p-9 min-h-[160px] flex flex-col items-center justify-center transition-all duration-200"
+          style={{ 
+            backgroundColor: feedback ? (feedback.correct ? `${theme.colors.success}26` : `${theme.colors.danger}1f`) : theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `2px solid ${feedback ? (feedback.correct ? theme.colors.success : theme.colors.danger) : border}`,
+            boxShadow: shadow
+          }}
+        >
           {feedback ? (
-            <div style={{ fontFamily: 'Sora,sans-serif', fontWeight: 800, fontSize: 20, color: feedback.correct ? C.success : C.danger }}>{feedback.label}</div>
+            <div className="font-extrabold text-xl animate-in fade-in zoom-in-95" style={{ fontFamily: theme.fonts.display, color: feedback.correct ? theme.colors.success : theme.colors.danger }}>
+              {feedback.label}
+            </div>
           ) : (
-            <div style={{ fontFamily: 'Sora,sans-serif', fontWeight: 800, fontSize: 30, color: C.ink }}>{item?.text}</div>
+            <div className="font-extrabold text-3xl animate-in fade-in" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+              {item?.text}
+            </div>
           )}
         </div>
-        <div style={{ fontSize: 11, color: C.muted }}>{idx + 1}/{gameItems.current.length} · Combo: {combo}</div>
-        {/* Catégories */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 340 }}>
+
+        <div className="text-[11px] uppercase tracking-widest font-bold" style={{ color: theme.colors.muted }}>
+          {idx + 1}/{gameItems.current.length} · Combo: {combo}
+        </div>
+
+        {/* Categories */}
+        <div className="flex flex-col gap-3 w-full">
           {categories.map((cat: BlasterCategory) => (
-            <button key={cat.id} onClick={() => pick(cat.id)} style={{
-              background: `${cat.color}22`, border: `2px solid ${cat.color}66`,
-              borderRadius: 14, padding: '16px 20px', display: 'flex', alignItems: 'center', gap: 14,
-              fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 16, color: C.ink, cursor: 'pointer'
-            }}>
-              <span style={{ fontSize: 24 }}>{cat.emoji}</span>
+            <button 
+              key={cat.id} 
+              onClick={() => pick(cat.id)} 
+              className="w-full flex items-center gap-4 p-4 border-2 font-bold text-base cursor-pointer active:scale-95 transition-all"
+              style={{
+                backgroundColor: `${cat.color}22`, 
+                borderColor: `${cat.color}66`,
+                borderRadius: radCard, 
+                fontFamily: theme.fonts.display, 
+                color: theme.colors.ink
+              }}
+            >
+              <span className="text-2xl">{cat.emoji}</span>
               <span>{cat.label}</span>
             </button>
           ))}

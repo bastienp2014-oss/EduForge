@@ -1,34 +1,46 @@
-import { useTheme } from '../store/useTheme';
 import React, { useState, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import { BaseGameProps } from '../types';
 import { ErrorCorrectionData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
 type ErrorItem = NonNullable<NonNullable<ErrorCorrectionData['exercises']>[number]['errors']>[number];
 
-function renderText(text: string, errors: ErrorItem[], found: string[], onTap: (err: ErrorItem) => void) {
+function renderText(text: string, errors: ErrorItem[], found: string[], onTap: (err: ErrorItem) => void, themeTokens: any) {
+  const { radCard } = themeTokens;
   const sorted = [...errors].sort((a,b)=>a.start-b.start);
   const parts = [];
   let last = 0;
   sorted.forEach(err => {
-    if (err.start > last) parts.push(<span key={last} style={{ color:'rgba(255,255,255,.8)' }}>{text.slice(last,err.start)}</span>);
+    if (err.start > last) parts.push(<span key={last} className="opacity-80 leading-relaxed">{text.slice(last,err.start)}</span>);
     const isFound = found.includes(err.id);
     parts.push(
-      <span key={err.id} onClick={() => !isFound && onTap(err)} style={{
-        background: isFound?'rgba(45,122,79,.25)':'rgba(255,220,100,.12)',
-        color: isFound?'#4ade80':'#fde68a',
-        borderRadius:4, padding:'1px 3px', cursor: isFound?'default':'pointer',
-        textDecoration: isFound?'none':'underline dotted', fontWeight:700, fontSize:14
-      }}>{isFound ? err.correct : err.wrong}</span>
+      <span 
+        key={err.id} 
+        onClick={() => !isFound && onTap(err)} 
+        className={`px-1 py-0.5 rounded transition-colors ${isFound ? 'cursor-default no-underline' : 'cursor-pointer active:scale-95'}`}
+        style={{
+          backgroundColor: isFound ? 'rgba(45,122,79,.25)' : 'rgba(255,220,100,.12)',
+          color: isFound ? '#4ade80' : '#fde68a',
+          borderRadius: radCard ? 4 : 4,
+          textDecoration: isFound ? 'none' : 'underline dotted',
+          fontWeight: 700,
+          fontSize: 14
+        }}
+      >
+        {isFound ? err.correct : err.wrong}
+      </span>
     );
     last = err.end;
   });
-  if (last < text.length) parts.push(<span key='end' style={{ color:'rgba(255,255,255,.8)' }}>{text.slice(last)}</span>);
+  if (last < text.length) parts.push(<span key='end' className="opacity-80 leading-relaxed">{text.slice(last)}</span>);
   return parts;
 }
 
 export default function ErrorCorrection({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: ErrorCorrectionData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const tokens = useThemeTokens();
+  const { border, radCard, radBtn, shadow } = tokens;
 
   const { config = {}, exercises = [] } = data || {};
 
@@ -53,7 +65,6 @@ export default function ErrorCorrection({ items, data, onBack, onComplete, onRes
     setShowExpl(err);
     setSelected(null);
     if (ex?.itemId && onResponse) {
-       // Just mark some positive progress
        onResponse(ex.itemId, 5);
     }
   };
@@ -64,57 +75,157 @@ export default function ErrorCorrection({ items, data, onBack, onComplete, onRes
     else { setExIdx(i=>i+1); setFound([]); setSelected(null); }
   };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🔎</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Corrections terminées !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Corrections terminées !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   if (!ex) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🔎</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Aucun exercice disponible</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col items-center justify-center p-6 text-center`} style={{ backgroundColor: theme.colors.bg }}>
+      <div className="text-6xl mb-4">🔎</div>
+      <div className="font-extrabold text-2xl mb-2" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+        Aucun exercice disponible
+      </div>
+      <button 
+        onClick={onBack} 
+        className="mt-6 px-8 py-3 rounded-xl border-none font-bold text-sm cursor-pointer"
+        style={{ backgroundColor: theme.colors.primary, color: '#fff', fontFamily: theme.fonts.display }}
+      >
+        Retour
+      </button>
     </div>
   );
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Correction</span>
-        <span style={{ fontSize:12, color:C.muted }}>{found.length}/{ex.errors.length} erreur{ex.errors.length>1?'s':''}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Correction
+        </span>
+        <span className="text-xs font-bold" style={{ color: theme.colors.muted }}>
+          {found.length}/{ex.errors.length} erreur{ex.errors.length>1?'s':''}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
+
+      <div className="flex-1 p-4 flex flex-col gap-4 max-w-lg mx-auto w-full">
         {config?.showErrorCount && (
-          <div style={{ background:'rgba(255,220,100,.08)', borderRadius:12, padding:'8px 14px', fontSize:12, color:'#fde68a', border:'1px solid rgba(255,220,100,.2)' }}>
-            ⚠️ Ce texte contient <strong>{ex.errors.length} erreur{ex.errors.length>1?'s':''}</strong>. Tape sur les mots surlignés pour les corriger.
+          <div 
+            className="p-3 text-xs border"
+            style={{ 
+              backgroundColor: 'rgba(255,220,100,.08)', 
+              borderRadius: radCard, 
+              borderColor: 'rgba(255,220,100,.2)',
+              color: '#fde68a'
+            }}
+          >
+            ⚠️ Ce texte contient <strong className="font-bold">{ex.errors.length} erreur{ex.errors.length>1?'s':''}</strong>. Tape sur les mots surlignés pour les corriger.
           </div>
         )}
-        <div style={{ background:C.surface, borderRadius:16, padding:18, border:`1px solid ${C.border}`, lineHeight:1.9, fontSize:14 }}>
-          {renderText(ex.text, ex.errors, found, tapError)}
+
+        <div 
+          className="p-5 text-sm leading-loose border"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            borderColor: border,
+            color: theme.colors.ink,
+            boxShadow: shadow
+          }}
+        >
+          {renderText(ex.text, ex.errors, found, tapError, tokens)}
         </div>
+
         {selected && (
-          <div style={{ background:'rgba(255,255,255,.06)', borderRadius:14, padding:14, border:`1px solid ${C.primary}` }}>
-            <div style={{ fontSize:12, color:C.muted, marginBottom:8 }}>Corriger <strong style={{ color:C.ink }}>"{selected.wrong}"</strong> par :</div>
-            <button onClick={() => confirm(selected)} style={{ background:C.success, color:'#fff', border:'none', borderRadius:10, padding:'10px 20px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer', marginRight:8 }}>✓ {selected.correct}</button>
-            <button onClick={() => setSelected(null)} style={{ background:'rgba(255,255,255,.08)', color:C.muted, border:'none', borderRadius:10, padding:'10px 16px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>Annuler</button>
+          <div 
+            className="p-4 border animate-in zoom-in-95"
+            style={{ 
+              backgroundColor: `${theme.colors.ink}0a`, 
+              borderRadius: radCard, 
+              borderColor: theme.colors.primary 
+            }}
+          >
+            <div className="text-xs mb-3" style={{ color: theme.colors.muted }}>
+              Corriger <strong className="font-bold" style={{ color: theme.colors.ink }}>"{selected.wrong}"</strong> par :
+            </div>
+            <div className="flex gap-2">
+              <button 
+                onClick={() => confirm(selected)} 
+                className="px-5 py-2.5 rounded-lg border-none font-bold text-sm cursor-pointer transition-transform active:scale-95 flex-1"
+                style={{ backgroundColor: theme.colors.success, color: '#fff', fontFamily: theme.fonts.display }}
+              >
+                ✓ {selected.correct}
+              </button>
+              <button 
+                onClick={() => setSelected(null)} 
+                className="px-4 py-2.5 rounded-lg border-none font-bold text-sm cursor-pointer transition-colors"
+                style={{ backgroundColor: `${theme.colors.ink}14`, color: theme.colors.muted, fontFamily: theme.fonts.display }}
+              >
+                Annuler
+              </button>
+            </div>
           </div>
         )}
+
         {showExpl && (
-          <div style={{ background:'rgba(45,122,79,.1)', borderRadius:14, padding:14, border:`1px solid ${C.success}` }}>
-            <div style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color:C.success, marginBottom:4 }}>✓ Bonne correction !</div>
-            <div style={{ fontSize:12, color:C.muted, lineHeight:1.6 }}>{showExpl.explanation}</div>
-            <button onClick={() => setShowExpl(null)} style={{ marginTop:10, background:'rgba(255,255,255,.08)', color:C.muted, border:'none', borderRadius:8, padding:'6px 14px', fontSize:11, cursor:'pointer' }}>OK</button>
+          <div 
+            className="p-4 border animate-in slide-in-from-bottom-2"
+            style={{ 
+              backgroundColor: `${theme.colors.success}1a`, 
+              borderRadius: radCard, 
+              borderColor: theme.colors.success 
+            }}
+          >
+            <div className="font-bold text-sm mb-1.5" style={{ fontFamily: theme.fonts.display, color: theme.colors.success }}>
+              ✓ Bonne correction !
+            </div>
+            <div className="text-xs leading-relaxed" style={{ color: theme.colors.muted }}>
+              {showExpl.explanation}
+            </div>
+            <button 
+              onClick={() => setShowExpl(null)} 
+              className="mt-3 px-3.5 py-1.5 rounded-md border-none text-xs cursor-pointer transition-colors"
+              style={{ backgroundColor: `${theme.colors.ink}14`, color: theme.colors.muted }}
+            >
+              OK
+            </button>
           </div>
         )}
+
         {allFound && !showExpl && (
-          <button onClick={next} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>
-            {exIdx+1<exercises.length?'Exercice suivant →':'Voir résultats'}
-          </button>
+          <div className="mt-auto pt-4 animate-in fade-in">
+            <button 
+              onClick={next} 
+              className="w-full py-3.5 border-none font-bold text-[15px] transition-transform active:scale-95 cursor-pointer"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              {exIdx+1<exercises.length ? 'Exercice suivant →' : 'Voir résultats'}
+            </button>
+          </div>
         )}
       </div>
     </div>

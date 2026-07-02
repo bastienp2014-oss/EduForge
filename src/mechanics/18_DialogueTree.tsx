@@ -1,25 +1,26 @@
-import { useTheme } from '../store/useTheme';
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import React, { useState } from 'react';
 import { BaseGameProps } from '../types';
 import { DialogueTreeData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
 export default function DialogueTree({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: DialogueTreeData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
 
   const { config = { character: { name: 'PNJ', avatar: '🤖' } }, startNode = 'n1', nodes = {} } = data || {};
 
   const char = config?.character || { name:'PNJ', avatar:'🤖' };
   const [nodeId, setNodeId] = useState(startNode);
   const [score, setScore] = useState(0);
-  const [lastFeedback, setLastFeedback] = useState(null);
-  const [history, setHistory] = useState([]);
+  const [lastFeedback, setLastFeedback] = useState<{text: string; good: boolean} | null>(null);
+  const [history, setHistory] = useState<{npc: string; player?: string}[]>([]);
   const [done, setDone] = useState(false);
-  const [outcome, setOutcome] = useState(null);
+  const [outcome, setOutcome] = useState<'win' | 'neutral' | 'lose' | null>(null);
 
   const node = nodes[nodeId];
 
-  const pick = (choice) => {
+  const pick = (choice: any) => {
     const newScore = score + (choice.points||0);
     setScore(newScore);
     setLastFeedback({ text: choice.feedback, good: (choice.points||0) > 0 });
@@ -41,68 +42,129 @@ export default function DialogueTree({ items, data, onBack, onComplete, onRespon
     }, 1600);
   };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', padding:20 }}>
-      <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:20 }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:16, color:C.ink }}>Dialogue terminé</span>
+  if (done) {
+    return (
+      <GameResult 
+        state={outcome === 'win' || outcome === 'neutral' ? 'win' : 'lose'}
+        title="Dialogue terminé"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
+
+  return (
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <div className="flex items-center gap-2">
+          <span className="text-xl">{char.avatar}</span>
+          <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+            {char.name}
+          </span>
+        </div>
+        <span className="text-xs font-bold" style={{ color: theme.colors.muted }}>
+          ⭐ {score}
+        </span>
       </div>
-      <div style={{ flex:1, display:'flex', flexDirection:'column', gap:12, marginBottom:20 }}>
-        {history.map((h, i) => (
+
+      <div className="flex-1 p-4 flex flex-col gap-4 max-w-lg mx-auto w-full">
+        {/* Historique compact */}
+        {history.slice(-2).map((h,i) => (
           <React.Fragment key={i}>
-            <div style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
-              <span style={{ fontSize:24, flexShrink:0 }}>{char.avatar}</span>
-              <div style={{ background:C.surface, borderRadius:14, borderTopLeftRadius:4, padding:'10px 14px', maxWidth:'75%', fontSize:13, color:C.ink, lineHeight:1.5 }}>{h.npc}</div>
+            <div className="flex gap-2.5 items-start">
+              <span className="text-xl shrink-0 opacity-70">{char.avatar}</span>
+              <div 
+                className="p-3 text-xs leading-relaxed max-w-[85%]"
+                style={{ 
+                  backgroundColor: theme.colors.surface, 
+                  borderRadius: radCard, 
+                  borderTopLeftRadius: 4, 
+                  color: theme.colors.muted 
+                }}
+              >
+                {h.npc}
+              </div>
             </div>
             {h.player && (
-              <div style={{ display:'flex', justifyContent:'flex-end' }}>
-                <div style={{ background:'rgba(199,91,57,.2)', border:'1px solid rgba(199,91,57,.4)', borderRadius:14, borderTopRightRadius:4, padding:'10px 14px', maxWidth:'75%', fontSize:13, color:C.ink, lineHeight:1.5 }}>{h.player}</div>
+              <div className="flex justify-end">
+                <div 
+                  className="p-3 text-xs max-w-[85%]"
+                  style={{ 
+                    backgroundColor: `${theme.colors.primary}26`, 
+                    borderRadius: radCard, 
+                    borderTopRightRadius: 4, 
+                    color: theme.colors.muted 
+                  }}
+                >
+                  {h.player}
+                </div>
               </div>
             )}
           </React.Fragment>
         ))}
-      </div>
-      <div style={{ textAlign:'center', marginBottom:16 }}>
-        <div style={{ fontSize:36, marginBottom:8 }}>{outcome==='win'?'🎉':outcome==='neutral'?'😐':'😕'}</div>
-        <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:18, color:C.ink, marginBottom:4 }}>Score : {score} pts</div>
-      </div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
 
-  return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <div style={{ display:'flex', alignItems:'center', gap:8 }}><span style={{ fontSize:20 }}>{char.avatar}</span><span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color:C.ink }}>{char.name}</span></div>
-        <span style={{ fontSize:12, color:C.muted }}>⭐ {score}</span>
-      </div>
-      <div style={{ flex:1, padding:'20px 16px', display:'flex', flexDirection:'column', gap:16 }}>
-        {/* Historique compact */}
-        {history.slice(-2).map((h,i) => (
-          <React.Fragment key={i}>
-            <div style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
-              <span style={{ fontSize:20, flexShrink:0 }}>{char.avatar}</span>
-              <div style={{ background:C.surface, borderRadius:12, borderTopLeftRadius:4, padding:'8px 12px', fontSize:12, color:C.muted, lineHeight:1.5 }}>{h.npc}</div>
-            </div>
-            {h.player && <div style={{ display:'flex', justifyContent:'flex-end' }}><div style={{ background:'rgba(199,91,57,.15)', borderRadius:12, borderTopRightRadius:4, padding:'8px 12px', fontSize:12, color:C.muted }}>{h.player}</div></div>}
-          </React.Fragment>
-        ))}
         {/* Message actuel */}
-        <div style={{ display:'flex', gap:10, alignItems:'flex-start' }}>
-          <span style={{ fontSize:24, flexShrink:0 }}>{char.avatar}</span>
-          <div style={{ background:C.surface, borderRadius:14, borderTopLeftRadius:4, padding:'14px 16px', flex:1, fontSize:14, color:C.ink, lineHeight:1.6, border:`1px solid ${C.border}` }}>{node.npc}</div>
+        <div className="flex gap-2.5 items-start animate-in fade-in slide-in-from-bottom-2">
+          <span className="text-2xl shrink-0">{char.avatar}</span>
+          <div 
+            className="flex-1 p-4 text-sm leading-relaxed border"
+            style={{ 
+              backgroundColor: theme.colors.surface, 
+              borderRadius: radCard, 
+              borderTopLeftRadius: 4, 
+              color: theme.colors.ink, 
+              borderColor: border,
+              boxShadow: shadow
+            }}
+          >
+            {node.npc}
+          </div>
         </div>
+
         {lastFeedback && (
-          <div style={{ background: lastFeedback.good?'rgba(45,122,79,.15)':'rgba(192,57,43,.12)', borderRadius:12, padding:'10px 14px', fontSize:12, color:lastFeedback.good?C.success:C.danger, border:`1px solid ${lastFeedback.good?C.success:C.danger}` }}>
+          <div 
+            className="p-3 text-xs border animate-in zoom-in-95"
+            style={{ 
+              backgroundColor: lastFeedback.good ? `${theme.colors.success}26` : `${theme.colors.danger}1f`, 
+              borderRadius: radCard, 
+              color: lastFeedback.good ? theme.colors.success : theme.colors.danger, 
+              borderColor: lastFeedback.good ? theme.colors.success : theme.colors.danger 
+            }}
+          >
             💬 {lastFeedback.text}
           </div>
         )}
+
         {/* Choix */}
         {!lastFeedback && (
-          <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
-            {node.choices?.map((c,i) => (
-              <button key={i} onClick={() => pick(c)} style={{ background:C.surface, border:`1px solid ${C.border}`, borderRadius:14, padding:'13px 16px', textAlign:'left', fontFamily:'Sora,sans-serif', fontWeight:600, fontSize:13, color:C.ink, cursor:'pointer' }}>
+          <div className="flex flex-col gap-2 mt-2">
+            {node.choices?.map((c: any, i: number) => (
+              <button 
+                key={i} 
+                onClick={() => pick(c)} 
+                className="p-4 text-left border font-semibold text-sm cursor-pointer active:scale-[0.98] transition-transform animate-in slide-in-from-bottom-3"
+                style={{ 
+                  backgroundColor: theme.colors.surface, 
+                  borderColor: border, 
+                  borderRadius: radBtn, 
+                  fontFamily: theme.fonts.display, 
+                  color: theme.colors.ink 
+                }}
+              >
                 {c.text}
               </button>
             ))}

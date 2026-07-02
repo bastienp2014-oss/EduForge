@@ -1,15 +1,15 @@
-import { useTheme } from '../store/useTheme';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import { BaseGameProps } from '../types';
 import { BinarySwipeData, BinarySwipeItem } from '../types/mechanics';
+import GameResult from '../components/GameResult';
 
 export default function BinarySwipe({ items, onBack, onComplete, onResponse, isEmbedded, data }: BaseGameProps & { data?: BinarySwipeData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
 
-  // We map the "left/right" binary choices based on the first item if possible, or use a default
-  const left = data?.config?.left || { label: 'Faux', emoji: '❌', color: '#c0392b' };
-  const right = data?.config?.right || { label: 'Vrai', emoji: '✅', color: '#2D7A4F' };
+  const leftConfig = data?.config?.left || { label: 'Faux', emoji: '❌', color: theme.colors.danger };
+  const rightConfig = data?.config?.right || { label: 'Vrai', emoji: '✅', color: theme.colors.success };
 
   const [idx, setIdx] = useState(0);
   const [score, setScore] = useState(0);
@@ -20,27 +20,25 @@ export default function BinarySwipe({ items, onBack, onComplete, onResponse, isE
   const touchStart = useRef<number | null>(null);
 
   if (!items || items.length === 0) {
-    return <div className="p-4" style={{ color: C.ink }}>Aucune donnée pour ce jeu.</div>;
+    return <div className="p-4" style={{ color: theme.colors.ink }}>Aucune donnée pour ce jeu.</div>;
   }
 
   const swipes: BinarySwipeItem[] = items.map(item => ({
     id: item.id,
-    question: item.payload.question,
+    question: item.payload.question || item.payload.translation || "Question",
     answer: item.payload.answer,
     explanation: item.payload.exemple
   }));
 
   const currentItem = swipes[idx];
-  const swipeSide = dx > 60 ? 'right' : dx < -60 ? 'left' : null;
+  // Simple heuristic: if 'right' is 'Vrai', assume answer matches right for True, left for False.
+  // In a real generic system, data should explicitly map to left/right ids. We'll fallback to right if missing.
+  const correctAnswerSide = currentItem.answer === 'left' ? 'left' : 'right';
 
-  const commit = (side: 'left' | 'right') => {
-    // For now we assume if they swipe right (Vrai), they are saying the item is correct.
-    // If it's a QCM, "Vrai" means the first option is the answer. For generic, let's just make it a mock or something.
-    // Actually, if we look at Anglicismes, answer is "quebecois". If we show a word, they can say if it's quebecois or standard?
-    // Let's assume all BinarySwipes provided have answer as 'left' or 'right' in their payload, OR
-    // we use a simple heuristic: True/False. Since we don't have True/False currently in our data, 
-    // we'll assume it's just a demo mechanic for now and accept 'right' as always correct for demonstration if not specified.
-    const isCorrect = side === 'right'; // Placeholder heuristic
+  const totalXP = score * 25;
+
+  const commit = useCallback((side: 'left' | 'right') => {
+    const isCorrect = side === correctAnswerSide;
 
     setLastAnswer({ side, correct: isCorrect, explanation: currentItem.explanation });
     setResult(isCorrect ? 'correct' : 'wrong');
@@ -49,81 +47,177 @@ export default function BinarySwipe({ items, onBack, onComplete, onResponse, isE
     onResponse?.(currentItem.id, isCorrect ? 3 : 1);
 
     setTimeout(() => {
-      setResult(null); setLastAnswer(null); setDx(0);
-      if (idx + 1 >= swipes.length) { setDone(true); onComplete?.(score * 25); }
-      else setIdx(i => i + 1);
+      setResult(null); 
+      setLastAnswer(null); 
+      setDx(0);
+      if (idx + 1 >= swipes.length) { 
+        setDone(true); 
+        onComplete?.(totalXP); 
+      } else {
+        setIdx(i => i + 1);
+      }
     }, 1100);
-  };
+  }, [currentItem, idx, swipes.length, score, onComplete, onResponse, totalXP, correctAnswerSide]);
 
-  const onTouchStart = (e: React.TouchEvent) => { touchStart.current = e.touches[0].clientX; };
-  const onTouchMove = (e: React.TouchEvent) => {
-    if (!touchStart.current || result) return;
-    setDx(e.touches[0].clientX - touchStart.current);
+  const onTouchStart = (e: React.TouchEvent | React.MouseEvent) => { 
+    touchStart.current = 'touches' in e ? e.touches[0].clientX : e.clientX; 
+  };
+  const onTouchMove = (e: React.TouchEvent | React.MouseEvent) => {
+    if (touchStart.current === null || result) return;
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    setDx(clientX - touchStart.current);
   };
   const onTouchEnd = () => {
-    if (result) return;
+    if (result || touchStart.current === null) return;
     if (dx > 80) commit('right');
     else if (dx < -80) commit('left');
     else setDx(0);
     touchStart.current = null;
   };
 
-  if (done) return (
-    <div style={{ background: C.bg, minHeight: isEmbedded ? '100%' : '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-      <div style={{ fontSize: 56, marginBottom: 16 }}>🎯</div>
-      <div style={{ fontFamily: 'Sora,sans-serif', fontWeight: 800, fontSize: 24, color: C.ink, marginBottom: 8 }}>{score}/{swipes.length} correct</div>
-      <div style={{ fontSize: 14, color: C.muted, marginBottom: 32 }}>+{score * 25} pts</div>
-      <button onClick={onBack} style={{ background: C.primary, color: '#fff', border: 'none', borderRadius: 14, padding: '14px 32px', fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 15, cursor: 'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title={`${score}/${swipes.length} corrects`}
+        points={totalXP}
+        onBack={onBack}
+      />
+    );
+  }
 
   const rotation = dx * 0.08;
   const opacity = result ? (result === 'correct' ? 1 : 0.4) : 1;
 
   return (
-    <div style={{ background: C.bg, minHeight: isEmbedded ? '100%' : '100vh', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ background: '#131629', padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background: 'rgba(255,255,255,.08)', border: 'none', color: '#fff', borderRadius: 8, padding: '6px 12px', cursor: 'pointer', fontSize: 16 }}>←</button>
-        <span style={{ fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 14, color: C.ink }}>Swipe</span>
-        <span style={{ fontSize: 12, color: C.muted }}>⭐ {score}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Swipe
+        </span>
+        <span className="text-xs font-bold" style={{ color: theme.colors.primary }}>
+          ⭐ {score}
+        </span>
       </div>
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24, gap: 20 }}>
-        {/* Indicateurs */}
-        <div style={{ display: 'flex', width: '100%', maxWidth: 340, justifyContent: 'space-between' }}>
-          <div style={{ fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 13, color: dx < -30 ? left.color : C.muted, transition: 'color .15s' }}>{left.emoji} {left.label}</div>
-          <div style={{ fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 13, color: dx > 30 ? right.color : C.muted, transition: 'color .15s' }}>{right.label} {right.emoji}</div>
+
+      <div className="flex-1 flex flex-col items-center justify-center p-6 gap-5 overflow-hidden">
+        {/* Indicators */}
+        <div className="flex w-full max-w-sm justify-between px-4">
+          <div 
+            className="font-bold text-[13px] transition-colors"
+            style={{ 
+              fontFamily: theme.fonts.display, 
+              color: dx < -30 ? leftConfig.color : theme.colors.muted 
+            }}
+          >
+            {leftConfig.emoji} {leftConfig.label}
+          </div>
+          <div 
+            className="font-bold text-[13px] transition-colors"
+            style={{ 
+              fontFamily: theme.fonts.display, 
+              color: dx > 30 ? rightConfig.color : theme.colors.muted 
+            }}
+          >
+            {rightConfig.label} {rightConfig.emoji}
+          </div>
         </div>
+
         {/* Card */}
         <div
-          onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
+          onTouchStart={onTouchStart} 
+          onTouchMove={onTouchMove} 
+          onTouchEnd={onTouchEnd}
+          onMouseDown={onTouchStart as any}
+          onMouseMove={onTouchMove as any}
+          onMouseUp={onTouchEnd}
+          onMouseLeave={onTouchEnd}
+          className="w-full max-w-sm min-h-[220px] flex flex-col items-center justify-center p-7 cursor-grab active:cursor-grabbing select-none"
           style={{
-            width: '100%', maxWidth: 340, minHeight: 180,
-            background: result === 'correct' ? C.surface : result === 'wrong' ? '#2a1010' : C.surface,
-            borderRadius: 22, border: `2px solid ${result === 'correct' ? '#2D7A4F' : result === 'wrong' ? '#c0392b' : 'rgba(255,255,255,.1)'}`,
-            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 28,
+            backgroundColor: result === 'correct' ? theme.colors.surface : result === 'wrong' ? `${theme.colors.danger}20` : theme.colors.surface,
+            borderRadius: radCard, 
+            border: `2px solid ${result === 'correct' ? theme.colors.success : result === 'wrong' ? theme.colors.danger : border}`,
             transform: `translateX(${dx}px) rotate(${rotation}deg)`,
-            transition: dx === 0 ? 'transform .3s, border-color .2s' : 'border-color .2s',
-            boxShadow: '0 8px 32px rgba(0,0,0,.3)', userSelect: 'none', cursor: 'grab', opacity
-          }}>
+            transition: dx === 0 ? 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.2s' : 'border-color 0.2s',
+            boxShadow: shadow,
+            opacity
+          }}
+        >
           {result ? (
-            <>
-              <div style={{ fontSize: 36, marginBottom: 8 }}>{result === 'correct' ? '✓' : '✗'}</div>
-              <div style={{ fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 15, color: C.ink, marginBottom: 8 }}>{result === 'correct' ? 'Correct !' : 'Mauvais'}</div>
-              {lastAnswer?.explanation && <div style={{ fontSize: 12, color: C.muted, textAlign: 'center' }}>{lastAnswer.explanation}</div>}
-            </>
+            <div className="flex flex-col items-center animate-in fade-in zoom-in duration-300">
+              <div className="text-4xl mb-3">{result === 'correct' ? '✅' : '❌'}</div>
+              <div className="font-bold text-[17px] mb-2" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+                {result === 'correct' ? 'Correct !' : 'Incorrect'}
+              </div>
+              {lastAnswer?.explanation && (
+                <div className="text-[13px] text-center leading-relaxed mt-2" style={{ color: theme.colors.muted }}>
+                  {lastAnswer.explanation}
+                </div>
+              )}
+            </div>
           ) : (
             <>
-              <div style={{ fontFamily: 'Sora,sans-serif', fontWeight: 800, fontSize: 26, color: C.ink, textAlign: 'center' }}>{currentItem.question || currentItem.answer}</div>
-              <div style={{ fontSize: 11, color: C.muted, marginTop: 16 }}>← glisse pour classer →</div>
+              <div className="font-extrabold text-[24px] text-center leading-tight" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+                {currentItem.question}
+              </div>
+              <div className="text-[11px] font-bold uppercase tracking-widest mt-6 opacity-50" style={{ color: theme.colors.muted }}>
+                ← glisse pour classer →
+              </div>
             </>
           )}
         </div>
-        {/* Boutons fallback */}
-        <div style={{ display: 'flex', gap: 12, width: '100%', maxWidth: 340 }}>
-          <button onClick={() => !result && commit('left')} style={{ flex: 1, background: left.color, color: '#fff', border: 'none', borderRadius: 12, padding: '12px 0', fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>{left.emoji} {left.label}</button>
-          <button onClick={() => !result && commit('right')} style={{ flex: 1, background: right.color, color: '#fff', border: 'none', borderRadius: 12, padding: '12px 0', fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>{right.emoji} {right.label}</button>
+
+        {/* Fallback Buttons */}
+        <div className="flex gap-3 w-full max-w-sm mt-2">
+          <button 
+            onClick={() => !result && commit('left')} 
+            className="flex-1 py-3.5 border-none cursor-pointer flex justify-center items-center gap-2 transition-transform active:scale-95 disabled:opacity-50"
+            style={{ 
+              backgroundColor: leftConfig.color, 
+              color: '#fff', 
+              borderRadius: radBtn, 
+              fontFamily: theme.fonts.display, 
+              fontWeight: 700, 
+              fontSize: 14 
+            }}
+            disabled={!!result}
+          >
+            <span>{leftConfig.emoji}</span> {leftConfig.label}
+          </button>
+          <button 
+            onClick={() => !result && commit('right')} 
+            className="flex-1 py-3.5 border-none cursor-pointer flex justify-center items-center gap-2 transition-transform active:scale-95 disabled:opacity-50"
+            style={{ 
+              backgroundColor: rightConfig.color, 
+              color: '#fff', 
+              borderRadius: radBtn, 
+              fontFamily: theme.fonts.display, 
+              fontWeight: 700, 
+              fontSize: 14 
+            }}
+            disabled={!!result}
+          >
+            <span>{rightConfig.emoji}</span> {rightConfig.label}
+          </button>
         </div>
-        <div style={{ fontSize: 11, color: C.muted }}>{idx + 1}/{swipes.length} cartes</div>
+
+        <div className="text-[11px] font-semibold tracking-wider uppercase mt-4" style={{ color: theme.colors.muted }}>
+          {idx + 1} / {swipes.length} cartes
+        </div>
       </div>
     </div>
   );

@@ -10,6 +10,9 @@ La prochaine étape logique est **la Génération Pédagogique Granulaire (Leço
 ## [Unreleased] - En cours de développement
 
 ### Ajouté
+- **Intégration Design Handoff (Batch 1 à 6)** : Fusion pixel-perfect de l'esthétique du Handoff (`design_handoff_theme_system/mechanics`) avec la logique métier et le typage strict dans `src/mechanics`. Remplacement des couleurs codées en dur par le système dynamique `useThemeTokens`.
+  - Intégration achevée pour **TOUTES LES MÉCANIQUES (1 à 25)** : `01_FlashcardSRS` à `25_AudioAB`.
+  - Fix des props du composant universel `GameResult` (state, points, title) au lieu des props obsolètes (score, xp).
 - **Refactoring "Gold Standard" des Mécaniques de Jeu** : Élimination complète de `any` et typage strict des mécaniques de jeu `02_MultipleChoice.tsx`, `03_BinarySwipe.tsx`, `04_MemoryMatch.tsx` et `05_Hangman.tsx` avec validation de compilation linter sans erreur (`npm run lint`).
   - *Multiple Choice* : Raccordé au type structuré `MultipleChoiceData` pour supporter la configuration de minuteurs customisés.
   - *Binary Swipe* : Création de `BinarySwipeItem` et structuration des swipes, raccordé à la configuration `BinarySwipeData` (labels, emojis, couleurs personnalisables).

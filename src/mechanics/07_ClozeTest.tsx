@@ -1,10 +1,9 @@
-import { useTheme, AppColors } from '../store/useTheme';
 import React, { useState, useCallback, ReactNode } from 'react';
-
+import { useTheme, useThemeTokens, AppColors } from '../store/useTheme';
 import { BaseGameProps } from '../types';
 import { ClozeTestData } from '../types/mechanics';
-
 import { shuffle } from '../utils/array';
+import GameResult from '../components/GameResult';
 
 type Exercise = ClozeTestData['exercises'][number];
 type Blank = Exercise['blanks'][number];
@@ -20,7 +19,8 @@ function parseText(
   fills: Record<string, string>,
   onPick: (bid: string, val: string | null) => void,
   answered: boolean,
-  C: AppColors
+  C: AppColors,
+  radBtn: number | string
 ): ReactNode[] {
   const parts: ReactNode[] = [];
   let last = 0;
@@ -30,7 +30,7 @@ function parseText(
   while ((m = regex.exec(text)) !== null) {
     if (m.index > last) {
       parts.push(
-        <span key={last} style={{ color: 'rgba(255,255,255,.75)', lineHeight: 1.8 }}>
+        <span key={last} className="leading-relaxed" style={{ color: C.ink, opacity: 0.85 }}>
           {text.slice(last, m.index)}
         </span>
       );
@@ -45,18 +45,13 @@ function parseText(
     parts.push(
       <span
         key={bid}
+        className="inline-block min-w-[90px] font-bold text-sm mx-1 px-2 py-0.5 text-center transition-all duration-200"
         style={{
-          display: 'inline-block',
-          minWidth: 90,
-          borderBottom: filled ? 'none' : '2px solid rgba(255,255,255,.3)',
-          background: filled ? (answered ? (correct ? 'rgba(45,122,79,.25)' : 'rgba(192,57,43,.2)') : 'rgba(199,91,57,.15)') : 'transparent',
-          borderRadius: filled ? 6 : 0,
-          padding: filled ? '1px 8px' : '1px 4px',
-          color: answered ? (correct ? '#4ade80' : wrong ? '#f87171' : C.ink) : C.primary,
-          fontWeight: 700,
-          fontSize: 14,
+          borderBottom: filled ? 'none' : `2px solid ${C.muted}`,
+          backgroundColor: filled ? (answered ? (correct ? `${C.success}30` : `${C.danger}30`) : `${C.primary}20`) : 'transparent',
+          borderRadius: filled ? radBtn : 0,
+          color: answered ? (correct ? C.success : wrong ? C.danger : C.ink) : C.primary,
           cursor: filled && !answered ? 'pointer' : 'default',
-          margin: '0 2px'
         }}
         onClick={() => !answered && filled && onPick(bid, null)}
       >
@@ -68,7 +63,7 @@ function parseText(
   
   if (last < text.length) {
     parts.push(
-      <span key="end" style={{ color: 'rgba(255,255,255,.75)', lineHeight: 1.8 }}>
+      <span key="end" className="leading-relaxed" style={{ color: C.ink, opacity: 0.85 }}>
         {text.slice(last)}
       </span>
     );
@@ -77,9 +72,9 @@ function parseText(
   return parts;
 }
 
-// TODO: Refactor ClozeTest to fully use items instead of data
 export default function ClozeTest({ data, items, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: ClozeTestData }) {
   const { theme } = useTheme();
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
   const C: AppColors = theme.colors;
 
   const { exercises = [] } = data || {};
@@ -132,53 +127,83 @@ export default function ClozeTest({ data, items, onBack, onComplete, onResponse,
     }
   };
 
-  if (done) return (
-    <div style={{ background: C.bg, minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-      <div style={{ fontSize: 56, marginBottom: 16 }}>📝</div>
-      <div style={{ fontFamily: 'Sora,sans-serif', fontWeight: 800, fontSize: 24, color: C.ink, marginBottom: 8 }}>Exercices terminés !</div>
-      <div style={{ fontSize: 14, color: C.muted, marginBottom: 32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background: C.primary, color: '#fff', border: 'none', borderRadius: 14, padding: '14px 32px', fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 15, cursor: 'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Exercices terminés !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   if (!ex) return null;
 
   const usedWords = Object.values(fills);
 
   return (
-    <div style={{ background: C.bg, minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <div style={{ background: '#131629', padding: '14px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background: 'rgba(255,255,255,.08)', border: 'none', color: '#fff', borderRadius: 8, padding: '6px 12px', cursor: 'pointer', fontSize: 16 }}>←</button>
-        <span style={{ fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 14, color: C.ink }}>Texte à trous</span>
-        <span style={{ fontSize: 12, color: C.muted }}>{exIdx + 1}/{exercises.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Texte à trous
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {exIdx + 1}/{exercises.length}
+        </span>
       </div>
-      <div style={{ flex: 1, padding: '20px 16px', display: 'flex', flexDirection: 'column', gap: 16 }}>
-        {/* Texte */}
-        <div style={{ background: C.surface, borderRadius: 16, padding: 18, border: `1px solid ${C.border}`, lineHeight: 2, fontSize: 15 }}>
-          {parseText(ex.text, ex.blanks, fills, clearBlank, answered, C)}
+
+      <div className="flex-1 p-5 flex flex-col gap-6 max-w-lg mx-auto w-full">
+        {/* Text Area */}
+        <div 
+          className="p-5 text-[15px]"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `1px solid ${border}`,
+            boxShadow: shadow
+          }}
+        >
+          {parseText(ex.text, ex.blanks, fills, clearBlank, answered, C, radBtn)}
         </div>
-        {/* Banque de mots */}
+
+        {/* Word Bank */}
         <div>
-          <div style={{ fontSize: 10, color: C.muted, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.06em', marginBottom: 8 }}>Banque de mots</div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+          <div className="text-[10px] font-bold uppercase tracking-wider mb-3" style={{ color: theme.colors.muted }}>
+            Banque de mots
+          </div>
+          <div className="flex flex-wrap gap-2.5">
             {wordBank.map((w: string) => {
               const used = usedWords.includes(w);
               return (
                 <button
                   key={w}
                   onClick={() => !used && !answered && pick(w)}
+                  className="px-3.5 py-1.5 font-bold text-xs transition-all active:scale-95 disabled:pointer-events-none"
                   style={{
-                    background: used ? 'rgba(255,255,255,.04)' : C.surface,
-                    color: used ? C.muted : C.ink,
-                    border: `1px solid ${used ? C.border : C.primary}`,
+                    backgroundColor: used ? `${theme.colors.surface}40` : theme.colors.surface,
+                    color: used ? theme.colors.muted : theme.colors.ink,
+                    border: `1px solid ${used ? 'transparent' : border}`,
                     borderRadius: 999,
-                    padding: '6px 14px',
-                    fontFamily: 'Sora,sans-serif',
-                    fontWeight: 700,
-                    fontSize: 12,
+                    fontFamily: theme.fonts.display,
                     cursor: used || answered ? 'default' : 'pointer',
                     opacity: used ? 0.5 : 1,
-                    textDecoration: used ? 'line-through' : 'none'
+                    textDecoration: used ? 'line-through' : 'none',
+                    boxShadow: !used ? shadow : 'none'
                   }}
                 >
                   {w}
@@ -187,13 +212,40 @@ export default function ClozeTest({ data, items, onBack, onComplete, onResponse,
             })}
           </div>
         </div>
-        {!answered ? (
-          <button onClick={validate} disabled={!allFilled} style={{ background: allFilled ? C.primary : 'rgba(255,255,255,.08)', color: '#fff', border: 'none', borderRadius: 14, padding: '14px 0', fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 15, cursor: allFilled ? 'pointer' : 'default' }}>Valider</button>
-        ) : (
-          <button onClick={next} style={{ background: C.primary, color: '#fff', border: 'none', borderRadius: 14, padding: '14px 0', fontFamily: 'Sora,sans-serif', fontWeight: 700, fontSize: 15, cursor: 'pointer' }}>
-            {exIdx + 1 < exercises.length ? 'Exercice suivant →' : 'Voir résultats'}
-          </button>
-        )}
+
+        {/* Actions */}
+        <div className="mt-auto pt-4">
+          {!answered ? (
+            <button 
+              onClick={validate} 
+              disabled={!allFilled} 
+              className="w-full py-3.5 border-none font-bold text-[15px] transition-transform disabled:opacity-50"
+              style={{ 
+                backgroundColor: allFilled ? theme.colors.primary : `${theme.colors.ink}10`, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display, 
+                cursor: allFilled ? 'pointer' : 'default',
+                transform: allFilled ? 'scale(1)' : 'scale(0.98)'
+              }}
+            >
+              Valider
+            </button>
+          ) : (
+            <button 
+              onClick={next} 
+              className="w-full py-3.5 border-none cursor-pointer font-bold text-[15px] active:scale-95 transition-transform animate-in slide-in-from-bottom-2"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              {exIdx + 1 < exercises.length ? 'Exercice suivant →' : 'Voir résultats'}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

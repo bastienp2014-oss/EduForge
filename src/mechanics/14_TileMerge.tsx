@@ -1,10 +1,11 @@
-import { useTheme, AppColors } from '../store/useTheme';
 import React, { useState, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import { BaseGameProps } from '../types';
 import { TileMergeData } from '../types/mechanics';
+import GameResult from '../components/GameResult';
+import { shuffle } from '../utils/array';
 
 type TileMergeBankItem = NonNullable<TileMergeData['tileBank']>[number];
-import { shuffle } from '../utils/array';
 
 function initGrid(bank: TileMergeBankItem[], size: number) {
   const picked = shuffle(bank).slice(0, size*size);
@@ -18,7 +19,7 @@ function initGrid(bank: TileMergeBankItem[], size: number) {
 
 export default function TileMerge({ items: propItems, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: TileMergeData }) {
   const { theme } = useTheme();
-  const C: AppColors = theme.colors;
+  const { border, shadow } = useThemeTokens();
   const { config = {} } = data || {};
   const size = config?.gridSize || 4;
   
@@ -72,45 +73,82 @@ export default function TileMerge({ items: propItems, data, onBack, onComplete, 
 
   const done = merged >= total;
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🔢</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Toutes les paires !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Toutes les paires !"
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Fusion de Tuiles</span>
-        <span style={{ fontSize:12, color:C.muted }}>{merged}/{total} paires · {score} pts</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Fusion de Tuiles
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {merged}/{total} paires · {score} pts
+        </span>
       </div>
-      <div style={{ flex:1, padding:16, display:'flex', flexDirection:'column', alignItems:'center', gap:16, justifyContent:'center' }}>
-        <div style={{ fontSize:12, color:C.muted, textAlign:'center' }}>Sélectionne deux tuiles qui vont ensemble</div>
+
+      <div className="flex-1 p-5 flex flex-col items-center gap-5 justify-center">
+        <div className="text-xs text-center" style={{ color: theme.colors.muted }}>
+          Sélectionne deux tuiles qui vont ensemble
+        </div>
         
-        <div style={{ display:'grid', gridTemplateColumns:`repeat(${size},1fr)`, gap:8, width:'100%', maxWidth:360 }}>
+        <div 
+          className="grid gap-2 w-full max-w-sm"
+          style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}
+        >
           {grid.map((row, r) => row.map((tile, c) => {
-            const isSel = selected && selected.r===r && selected.c===c;
-            const color = tile ? (colorMap[tile.id]||C.primary) : 'transparent';
+            const isSel = selected && selected.r === r && selected.c === c;
+            const color = tile ? (colorMap[tile.id] || theme.colors.primary) : 'transparent';
+            
             return (
-              <div key={`${r}-${c}`} onClick={() => tile && selectTile(r,c)} style={{
-                aspectRatio:'1', borderRadius:12,
-                background: tile ? `${color}22` : 'rgba(255,255,255,.02)',
-                border: `2px solid ${isSel ? color : tile ? color+'66' : 'rgba(255,255,255,.05)'}`,
-                display:'flex', alignItems:'center', justifyContent:'center',
-                fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:11, color:C.ink,
-                cursor: tile?'pointer':'default', textAlign:'center', padding:4,
-                transform: isSel ? 'scale(1.05)' : 'scale(1)',
-                transition:'all .15s', lineHeight:1.2,
-                boxShadow: isSel ? `0 0 12px ${color}66` : 'none'
-              }}>{tile ? tile.label : ''}</div>
+              <div 
+                key={`${r}-${c}`} 
+                onClick={() => tile && selectTile(r, c)} 
+                className={`
+                  aspect-square rounded-xl flex items-center justify-center p-1 text-center leading-tight
+                  font-extrabold text-[11px] transition-all duration-150
+                  ${tile ? 'cursor-pointer' : 'cursor-default'}
+                `}
+                style={{
+                  backgroundColor: tile ? `${color}22` : `${theme.colors.ink}05`,
+                  border: `2px solid ${isSel ? color : tile ? `${color}66` : `${theme.colors.ink}0d`}`,
+                  color: theme.colors.ink,
+                  fontFamily: theme.fonts.display,
+                  transform: isSel ? 'scale(1.05)' : 'scale(1)',
+                  boxShadow: isSel ? `0 0 12px ${color}66` : tile ? shadow : 'none'
+                }}
+              >
+                {tile ? tile.label : ''}
+              </div>
             );
           }))}
         </div>
-        <div style={{ fontSize:12, color:C.muted }}>Tuiles restantes : {grid.flat().filter(Boolean).length}</div>
+        
+        <div className="text-xs" style={{ color: theme.colors.muted }}>
+          Tuiles restantes : {grid.flat().filter(Boolean).length}
+        </div>
       </div>
     </div>
   );

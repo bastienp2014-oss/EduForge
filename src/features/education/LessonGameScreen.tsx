@@ -5,6 +5,7 @@ import { contentProvider } from '../../services/contentProvider';
 import { COMPATIBILITY_MATRIX, MechanicId, ContentItem } from '../../types';
 import { FlashcardSRS, Hangman, MultipleChoice, BinarySwipe } from '../../mechanics';
 import { ArrowLeft, Trophy, Star, Zap } from 'lucide-react';
+import PrivateNotesWidget from '../../components/PrivateNotesWidget';
 
 interface LessonGameScreenProps {
   lessonId: string;
@@ -96,16 +97,25 @@ export default function LessonGameScreen({ lessonId, onBack }: LessonGameScreenP
 
   const mechanic = lesson.mechanic || 'flashcard';
 
-  switch (mechanic) {
-    case 'flashcard':
-      return <FlashcardSRS items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
-    case 'quiz':
-      return <MultipleChoice items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
-    case 'pendu':
-      return <Hangman items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
-    case 'swipe':
-      return <BinarySwipe items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
-    default:
-      return <FlashcardSRS items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
-  }
+  const renderGame = () => {
+    switch (mechanic) {
+      case 'flashcard':
+        return <FlashcardSRS items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
+      case 'quiz':
+        return <MultipleChoice items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
+      case 'pendu':
+        return <Hangman items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
+      case 'swipe':
+        return <BinarySwipe items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
+      default:
+        return <FlashcardSRS items={items} onBack={onBack} onComplete={handleComplete} onResponse={handleResponse} />;
+    }
+  };
+
+  return (
+    <>
+      {renderGame()}
+      <PrivateNotesWidget />
+    </>
+  );
 }

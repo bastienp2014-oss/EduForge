@@ -1,8 +1,9 @@
-import { useTheme, AppColors } from '../store/useTheme';
 import React, { useState } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import { BaseGameProps } from '../types';
 import { LineMatchingData } from '../types/mechanics';
 import { shuffle } from '../utils/array';
+import GameResult from '../components/GameResult';
 
 interface LineMatchingRight {
   text: string;
@@ -11,7 +12,7 @@ interface LineMatchingRight {
 
 export default function LineMatching({ items: propItems, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: LineMatchingData }) {
   const { theme } = useTheme();
-  const C: AppColors = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
   const { config = {} } = data || {};
   
   const pairs = data?.pairs && data.pairs.length > 0 ? data.pairs : (propItems && propItems.length > 0 ? propItems.map((i, index) => ({
@@ -64,61 +65,140 @@ export default function LineMatching({ items: propItems, data, onBack, onComplet
 
   const finish = () => { setDone(true); onComplete?.(correct*20); };
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🔗</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{correct}/{total} bonnes associations</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{correct*20} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    const finalPoints = correct * 20;
+    return (
+      <GameResult 
+        state={correct === total ? "win" : "lose"}
+        title={`${correct}/${total} bonnes associations`}
+        points={finalPoints}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Associations</span>
-        <span style={{ fontSize:12, color:C.muted }}>{Object.keys(connections).length}/{total}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Associations
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {Object.keys(connections).length}/{total}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'16px', display:'flex', flexDirection:'column', gap:12 }}>
-        <div style={{ fontSize:12, color:C.muted, textAlign:'center', marginBottom:4 }}>Sélectionne un mot à gauche, puis sa définition à droite</div>
-        <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:10, flex:1 }}>
-          <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+
+      <div className="flex-1 p-4 flex flex-col gap-4 max-w-2xl mx-auto w-full">
+        <div className="text-xs text-center" style={{ color: theme.colors.muted }}>
+          Sélectionne un mot à gauche, puis sa définition à droite
+        </div>
+
+        <div className="grid grid-cols-2 gap-4 flex-1">
+          {/* Left Column */}
+          <div className="flex flex-col gap-2">
             {pairs.map((p) => {
-              const isSelected = selected===p.id;
+              const isSelected = selected === p.id;
               const isConnected = !!connections[p.id];
-              const isCorrect = submitted && connections[p.id]===p.id;
-              const isWrong = submitted && connections[p.id] && connections[p.id]!==p.id;
+              const isCorrect = submitted && connections[p.id] === p.id;
+              const isWrong = submitted && connections[p.id] && connections[p.id] !== p.id;
+              
               return (
-                <button key={p.id} onClick={() => pickLeft(p.id)} style={{
-                  background: isCorrect?'rgba(45,122,79,.2)':isWrong?'rgba(192,57,43,.15)':isSelected?'rgba(199,91,57,.2)':isConnected?'rgba(255,255,255,.08)':C.surface,
-                  border: `2px solid ${isCorrect?C.success:isWrong?C.danger:isSelected?C.primary:C.border}`,
-                  borderRadius:12, padding:'12px 10px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, color:C.ink, cursor:'pointer', textAlign:'left', transition:'all .15s'
-                }}>{p.left.text}</button>
+                <button 
+                  key={p.id} 
+                  onClick={() => pickLeft(p.id)} 
+                  className="p-3 text-left border-2 font-bold text-[13px] transition-all cursor-pointer select-none active:scale-[0.98]"
+                  style={{
+                    backgroundColor: isCorrect ? `${theme.colors.success}33` : isWrong ? `${theme.colors.danger}26` : isSelected ? `${theme.colors.primary}33` : isConnected ? `${theme.colors.ink}14` : theme.colors.surface,
+                    borderColor: isCorrect ? theme.colors.success : isWrong ? theme.colors.danger : isSelected ? theme.colors.primary : isConnected ? `${theme.colors.primary}80` : border,
+                    borderRadius: radCard, 
+                    fontFamily: theme.fonts.display, 
+                    color: theme.colors.ink,
+                    boxShadow: isSelected ? `0 0 0 2px ${theme.colors.primary}33` : !submitted ? shadow : 'none'
+                  }}
+                >
+                  {p.left.text}
+                </button>
               );
             })}
           </div>
-          <div style={{ display:'flex', flexDirection:'column', gap:8 }}>
+
+          {/* Right Column */}
+          <div className="flex flex-col gap-2">
             {rights.map((r) => {
               const isLinked = Object.values(connections).includes(r.pairId);
               const leftKey = Object.keys(connections).find(k=>connections[k]===r.pairId);
               const isCorrect = submitted && leftKey===r.pairId;
               const isWrong = submitted && isLinked && leftKey!==r.pairId;
+              const isTargetable = selected && !isLinked;
+              
               return (
-                <button key={r.pairId} onClick={() => pickRight(r.pairId)} style={{
-                  background: isCorrect?'rgba(45,122,79,.2)':isWrong?'rgba(192,57,43,.15)':isLinked?'rgba(255,255,255,.08)':selected?'rgba(99,102,241,.1)':C.surface,
-                  border: `2px solid ${isCorrect?C.success:isWrong?C.danger:isLinked?C.primary:selected?'rgba(99,102,241,.4)':C.border}`,
-                  borderRadius:12, padding:'12px 10px', fontFamily:'Sora,sans-serif', fontWeight:600, fontSize:12, color:C.ink, cursor:'pointer', textAlign:'left', transition:'all .15s'
-                }}>{r.text}</button>
+                <button 
+                  key={r.pairId} 
+                  onClick={() => pickRight(r.pairId)} 
+                  className="p-3 text-left border-2 font-semibold text-xs transition-all cursor-pointer select-none active:scale-[0.98]"
+                  style={{
+                    backgroundColor: isCorrect ? `${theme.colors.success}33` : isWrong ? `${theme.colors.danger}26` : isLinked ? `${theme.colors.ink}14` : isTargetable ? `${theme.colors.primary}10` : theme.colors.surface,
+                    borderColor: isCorrect ? theme.colors.success : isWrong ? theme.colors.danger : isLinked ? `${theme.colors.primary}80` : isTargetable ? `${theme.colors.primary}40` : border,
+                    borderRadius: radCard, 
+                    fontFamily: theme.fonts.display, 
+                    color: theme.colors.ink,
+                    boxShadow: !submitted ? shadow : 'none'
+                  }}
+                >
+                  {r.text}
+                </button>
               );
             })}
           </div>
         </div>
-        {!submitted ? (
-          <button onClick={validate} disabled={Object.keys(connections).length < total} style={{ background: Object.keys(connections).length>=total?C.primary:'rgba(255,255,255,.08)', color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Valider</button>
-        ) : (
-          <button onClick={finish} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Terminer → +{correct*20} pts</button>
-        )}
+
+        {/* Actions */}
+        <div className="mt-auto pt-2 pb-4 flex flex-col gap-3">
+          {!submitted ? (
+            <button 
+              onClick={validate} 
+              disabled={Object.keys(connections).length < total} 
+              className="w-full py-3.5 border-none font-bold text-[15px] transition-transform disabled:opacity-50"
+              style={{ 
+                backgroundColor: Object.keys(connections).length >= total ? theme.colors.primary : `${theme.colors.ink}14`, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display, 
+                cursor: Object.keys(connections).length >= total ? 'pointer' : 'default',
+                transform: Object.keys(connections).length >= total ? 'scale(1)' : 'scale(0.98)'
+              }}
+            >
+              Valider
+            </button>
+          ) : (
+            <button 
+              onClick={finish} 
+              className="w-full py-3.5 border-none cursor-pointer font-bold text-[15px] active:scale-95 transition-transform animate-in slide-in-from-bottom-2"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              Terminer → +{correct * 20} pts
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

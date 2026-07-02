@@ -1,9 +1,9 @@
-import { useTheme } from '../store/useTheme';
 import React, { useState, useCallback } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import { BaseGameProps } from '../types';
 import { AnagramData } from '../types/mechanics';
-
 import { shuffle } from '../utils/array';
+import GameResult from '../components/GameResult';
 
 function shuffleStr(str: string): string[] {
   const arr = str.split('');
@@ -17,9 +17,9 @@ interface Tile {
   used: boolean;
 }
 
-export default function Anagram({ items, data, onBack, onComplete, onResponse }: BaseGameProps & { data?: AnagramData }) {
+export default function Anagram({ items, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: AnagramData }) {
   const { theme } = useTheme();
-  const C = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
 
   const { words = [] } = data || {};
   
@@ -34,7 +34,7 @@ export default function Anagram({ items, data, onBack, onComplete, onResponse }:
   const [done, setDone] = useState(false);
 
   if (!words || words.length === 0) {
-    return <div style={{ color: 'white', padding: 20 }}>No anagram data found.</div>;
+    return <div className="p-4" style={{ color: theme.colors.ink }}>Aucune donnée pour ce jeu.</div>;
   }
 
   const word = words[idx];
@@ -66,8 +66,10 @@ export default function Anagram({ items, data, onBack, onComplete, onResponse }:
 
     setTimeout(() => {
       setResult(null);
-      if (idx+1 >= words.length) { setDone(true); onComplete?.(score + (correct?40:0)); }
-      else {
+      if (idx+1 >= words.length) { 
+        setDone(true); 
+        onComplete?.(score + (correct?40:0)); 
+      } else {
         const ni = idx+1;
         setIdx(ni);
         setTiles(shuffleStr(words[ni].word).map((l,i)=>({id:i,letter:l,used:false})));
@@ -76,62 +78,150 @@ export default function Anagram({ items, data, onBack, onComplete, onResponse }:
     }, 1200);
   }, [answer, word, idx, words, score, onComplete, items, onResponse]);
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>🔤</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>Bravo !</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{score} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state="win"
+        title="Bravo !"
+        subtitle={`${idx + 1} mots trouvés`}
+        points={score}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight:'100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Anagramme</span>
-        <span style={{ fontSize:12, color:C.muted }}>{idx+1}/{words.length}</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Anagramme
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {idx + 1}/{words.length}
+        </span>
       </div>
-      <div style={{ flex:1, padding:'24px 16px', display:'flex', flexDirection:'column', gap:20, alignItems:'center' }}>
-        {/* Indice */}
-        <div style={{ background:C.surface, borderRadius:14, padding:'10px 16px', border:`1px solid ${C.border}`, fontSize:12, color:C.muted, textAlign:'center', width:'100%', maxWidth:340 }}>
-          💡 {word.hint}
+
+      <div className="flex-1 p-6 flex flex-col gap-6 items-center w-full max-w-md mx-auto">
+        {/* Hint */}
+        <div 
+          className="w-full text-center py-3 px-4 text-xs leading-relaxed"
+          style={{ 
+            backgroundColor: theme.colors.surface, 
+            borderRadius: radCard, 
+            border: `1px solid ${border}`,
+            color: theme.colors.muted,
+            boxShadow: shadow
+          }}
+        >
+          <span className="mr-2">💡</span> {word.hint}
         </div>
-        {/* Réponse slots */}
-        <div style={{ display:'flex', flexWrap:'wrap', gap:8, justifyContent:'center', minHeight:52 }}>
-          {answer.map((t,i) => (
-            <div key={i} style={{ width:40, height:48, borderRadius:10, background:C.surface, border:`2px solid ${result==='correct'?C.success:result==='wrong'?C.danger:C.primary}`, display:'flex', alignItems:'center', justifyContent:'center', fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:18, color:C.ink }}>
+
+        {/* Answer Slots */}
+        <div className="flex flex-wrap gap-2 justify-center min-h-[52px] w-full">
+          {answer.map((t, i) => (
+            <div 
+              key={i} 
+              className="w-10 h-12 flex items-center justify-center font-extrabold text-lg animate-in zoom-in-90 duration-200"
+              style={{ 
+                borderRadius: radBtn, 
+                backgroundColor: theme.colors.surface, 
+                border: `2px solid ${result === 'correct' ? theme.colors.success : result === 'wrong' ? theme.colors.danger : theme.colors.primary}`,
+                fontFamily: theme.fonts.display, 
+                color: theme.colors.ink 
+              }}
+            >
               {t.letter}
             </div>
           ))}
-          {Array.from({length: word.word.length - answer.length}).map((_,i) => (
-            <div key={'empty'+i} style={{ width:40, height:48, borderRadius:10, border:`2px dashed rgba(255,255,255,.15)`, display:'flex', alignItems:'center', justifyContent:'center' }} />
+          {Array.from({ length: word.word.length - answer.length }).map((_, i) => (
+            <div 
+              key={'empty'+i} 
+              className="w-10 h-12 flex items-center justify-center"
+              style={{ 
+                borderRadius: radBtn, 
+                border: `2px dashed ${border}` 
+              }} 
+            />
           ))}
         </div>
-        {/* Tuiles source */}
-        <div style={{ display:'flex', flexWrap:'wrap', gap:10, justifyContent:'center', maxWidth:340 }}>
+
+        {/* Source Tiles */}
+        <div className="flex flex-wrap gap-2.5 justify-center w-full max-w-[340px]">
           {tiles.map(t => (
-            <button key={t.id} onClick={() => pickTile(t)} disabled={t.used} style={{
-              width:44, height:48, borderRadius:10, cursor:t.used?'default':'pointer',
-              background:t.used?'rgba(255,255,255,.05)':C.surface,
-              border:`2px solid ${t.used?'transparent':C.border}`,
-              fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:18, color:t.used?'transparent':C.ink,
-              transition:'all .15s'
-            }}>{t.used?'':t.letter}</button>
+            <button 
+              key={t.id} 
+              onClick={() => pickTile(t)} 
+              disabled={t.used} 
+              className="w-11 h-12 flex items-center justify-center border-none font-extrabold text-lg transition-all active:scale-90"
+              style={{
+                borderRadius: radBtn, 
+                cursor: t.used ? 'default' : 'pointer',
+                backgroundColor: t.used ? `${theme.colors.surface}40` : theme.colors.surface,
+                border: `2px solid ${t.used ? 'transparent' : border}`,
+                fontFamily: theme.fonts.display, 
+                color: t.used ? 'transparent' : theme.colors.ink,
+                boxShadow: !t.used ? shadow : 'none'
+              }}
+            >
+              {t.used ? '' : t.letter}
+            </button>
           ))}
         </div>
+
         {/* Actions */}
-        <div style={{ display:'flex', gap:10, width:'100%', maxWidth:340 }}>
-          <button onClick={removeLast} disabled={!answer.length} style={{ flex:1, background:C.surface, color:C.ink, border:`1px solid ${C.border}`, borderRadius:12, padding:'12px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer' }}>⌫ Effacer</button>
-          <button onClick={validate} disabled={answer.length!==word.word.length || !!result} style={{
-            flex:2, background: answer.length===word.word.length ? C.primary : 'rgba(255,255,255,.08)',
-            color:'#fff', border:'none', borderRadius:12, padding:'12px 0',
-            fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:13, cursor:'pointer'
-          }}>Valider ✓</button>
+        <div className="flex gap-3 w-full max-w-[340px] mt-auto">
+          <button 
+            onClick={removeLast} 
+            disabled={!answer.length} 
+            className="flex-1 py-3 border-none cursor-pointer font-bold text-[13px] active:scale-95 transition-transform disabled:opacity-50"
+            style={{ 
+              backgroundColor: theme.colors.surface, 
+              color: theme.colors.ink, 
+              border: `1px solid ${border}`, 
+              borderRadius: radBtn, 
+              fontFamily: theme.fonts.display 
+            }}
+          >
+            ⌫ Effacer
+          </button>
+          <button 
+            onClick={validate} 
+            disabled={answer.length !== word.word.length || !!result} 
+            className="flex-[2] py-3 border-none cursor-pointer font-bold text-[13px] active:scale-95 transition-transform disabled:opacity-50"
+            style={{
+              backgroundColor: answer.length === word.word.length ? theme.colors.primary : `${theme.colors.ink}10`,
+              color: '#fff', 
+              borderRadius: radBtn,
+              fontFamily: theme.fonts.display 
+            }}
+          >
+            Valider ✓
+          </button>
         </div>
+
         {result && (
-          <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:16, color: result==='correct'?C.success:C.danger }}>
-            {result==='correct' ? '✓ Correct !' : `✗ C'était : ${word.word}`}
+          <div 
+            className="font-extrabold text-lg animate-in slide-in-from-bottom-2 duration-300"
+            style={{ 
+              fontFamily: theme.fonts.display, 
+              color: result === 'correct' ? theme.colors.success : theme.colors.danger 
+            }}
+          >
+            {result === 'correct' ? '✓ Correct !' : `✗ C'était : ${word.word}`}
           </div>
         )}
       </div>

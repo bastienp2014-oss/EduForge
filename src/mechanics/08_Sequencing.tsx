@@ -1,8 +1,9 @@
-import { useTheme, AppColors } from '../store/useTheme';
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef } from 'react';
+import { useTheme, useThemeTokens } from '../store/useTheme';
 import { BaseGameProps } from '../types';
 import { SequencingData, SequencingItem } from '../types/mechanics';
 import { shuffle } from '../utils/array';
+import GameResult from '../components/GameResult';
 
 function score(items: SequencingItem[]) {
   let correct = 0;
@@ -12,7 +13,7 @@ function score(items: SequencingItem[]) {
 
 export default function Sequencing({ items: propItems, data, onBack, onComplete, onResponse, isEmbedded }: BaseGameProps & { data?: SequencingData }) {
   const { theme } = useTheme();
-  const C: AppColors = theme.colors;
+  const { border, radCard, radBtn, shadow } = useThemeTokens();
   const { config = {} } = data || {};
   
   const mappedItems: SequencingItem[] = propItems && propItems.length > 0 ? propItems.map((item, index) => ({
@@ -38,17 +39,25 @@ export default function Sequencing({ items: propItems, data, onBack, onComplete,
   const onDragStart = (i: number) => setDragging(i);
   const onDragEnter = (i: number) => { dragOver.current = i; };
   const onDragEnd = () => {
-    if (dragging === null || dragOver.current === null || dragging === dragOver.current) { setDragging(null); dragOver.current=null; return; }
+    if (dragging === null || dragOver.current === null || dragging === dragOver.current) { 
+      setDragging(null); 
+      dragOver.current = null; 
+      return; 
+    }
     const arr = [...items];
     const [moved] = arr.splice(dragging, 1);
     arr.splice(dragOver.current, 0, moved);
     setItems(arr);
-    setDragging(null); dragOver.current=null;
+    setDragging(null); 
+    dragOver.current = null;
   };
 
   const touchStart = useRef<number|null>(null);
   const touchIdx = useRef<number|null>(null);
-  const onTouchStart = (e: React.TouchEvent, i: number) => { touchStart.current = e.touches[0].clientY; touchIdx.current = i; };
+  const onTouchStart = (e: React.TouchEvent, i: number) => { 
+    touchStart.current = e.touches[0].clientY; 
+    touchIdx.current = i; 
+  };
   const onTouchEnd = (e: React.TouchEvent, i: number) => {
     if (touchStart.current === null) return;
     const dy = e.changedTouches[0].clientY - touchStart.current;
@@ -69,30 +78,58 @@ export default function Sequencing({ items: propItems, data, onBack, onComplete,
     }
   };
 
-  const finish = () => { setDone(true); onComplete?.(correct*20); };
+  const finish = () => { 
+    setDone(true); 
+    onComplete?.(correct*20); 
+  };
+  
   const isCorrect = (item: SequencingItem, i: number) => submitted && item.order === i+1;
   const isWrong = (item: SequencingItem, i: number) => submitted && item.order !== i+1;
 
-  if (done) return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:24 }}>
-      <div style={{ fontSize:56, marginBottom:16 }}>📅</div>
-      <div style={{ fontFamily:'Sora,sans-serif', fontWeight:800, fontSize:24, color:C.ink, marginBottom:8 }}>{correct}/{total} dans le bon ordre</div>
-      <div style={{ fontSize:14, color:C.muted, marginBottom:32 }}>+{correct*20} pts</div>
-      <button onClick={onBack} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 32px', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Retour</button>
-    </div>
-  );
+  if (done) {
+    return (
+      <GameResult 
+        state={correct === total ? "win" : "lose"}
+        title={`${correct}/${total} dans le bon ordre`}
+        points={correct * 20}
+        onBack={onBack}
+      />
+    );
+  }
 
   return (
-    <div style={{ background:C.bg, minHeight: isEmbedded ? '100%' : '100vh', display:'flex', flexDirection:'column' }}>
-      <div style={{ background:'#131629', padding:'14px 18px', display:'flex', alignItems:'center', justifyContent:'space-between', borderBottom:'1px solid rgba(255,255,255,.07)' }}>
-        <button onClick={onBack} style={{ background:'rgba(255,255,255,.08)', border:'none', color:'#fff', borderRadius:8, padding:'6px 12px', cursor:'pointer', fontSize:16 }}>←</button>
-        <span style={{ fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:14, color:C.ink }}>Séquençage</span>
-        <span style={{ fontSize:12, color:C.muted }}>{total} éléments</span>
+    <div className={`${isEmbedded ? 'min-h-full h-full' : 'min-h-screen'} flex flex-col`} style={{ backgroundColor: theme.colors.bg }}>
+      {/* HUD */}
+      <div 
+        className="flex items-center justify-between px-4 py-3 border-b"
+        style={{ 
+          backgroundColor: theme.colors.header, 
+          borderColor: border 
+        }}
+      >
+        <button 
+          onClick={onBack} 
+          className="rounded-lg px-3 py-1.5 text-base cursor-pointer"
+          style={{ backgroundColor: border, color: theme.colors.ink }}
+        >
+          ←
+        </button>
+        <span className="font-bold text-sm" style={{ fontFamily: theme.fonts.display, color: theme.colors.ink }}>
+          Séquençage
+        </span>
+        <span className="text-xs" style={{ color: theme.colors.muted }}>
+          {total} éléments
+        </span>
       </div>
-      <div style={{ flex:1, padding:'16px', display:'flex', flexDirection:'column', gap:10 }}>
-        <div style={{ fontSize:12, color:C.muted, textAlign:'center', marginBottom:4 }}>Glisse pour réordonner du plus ancien au plus récent</div>
+
+      <div className="flex-1 p-5 flex flex-col gap-3 max-w-md mx-auto w-full">
+        <div className="text-xs text-center mb-2" style={{ color: theme.colors.muted }}>
+          Glisse pour réordonner du plus ancien au plus récent
+        </div>
+        
         {items.map((item, i) => (
-          <div key={item.id}
+          <div 
+            key={item.id}
             draggable={!submitted}
             onDragStart={() => onDragStart(i)}
             onDragEnter={() => onDragEnter(i)}
@@ -100,39 +137,94 @@ export default function Sequencing({ items: propItems, data, onBack, onComplete,
             onDragOver={e => e.preventDefault()}
             onTouchStart={e => onTouchStart(e,i)}
             onTouchEnd={e => onTouchEnd(e,i)}
+            className="flex items-center gap-3 p-3 select-none transition-all duration-200"
             style={{
-              background: isCorrect(item,i) ? 'rgba(45,122,79,.2)' : isWrong(item,i) ? 'rgba(192,57,43,.12)' : C.surface,
-              border: `1px solid ${isCorrect(item,i)?C.success:isWrong(item,i)?C.danger:C.border}`,
-              borderRadius:14, padding:'12px 14px', display:'flex', alignItems:'center', gap:12,
-              cursor: submitted ? 'default' : 'grab', userSelect:'none',
-              transition:'background .2s, border-color .2s',
-              opacity: dragging===i ? 0.5 : 1
-            }}>
-            <div style={{ width:28, height:28, borderRadius:8, background:'rgba(255,255,255,.08)', display:'grid', placeItems:'center', fontSize:13, fontWeight:800, color:C.muted, flexShrink:0 }}>{i+1}</div>
-            <div style={{ flex:1, fontSize:13, color:C.ink, lineHeight:1.4 }}>{item.text}</div>
+              backgroundColor: isCorrect(item, i) ? `${theme.colors.success}20` : isWrong(item, i) ? `${theme.colors.danger}15` : theme.colors.surface,
+              border: `1px solid ${isCorrect(item, i) ? theme.colors.success : isWrong(item, i) ? theme.colors.danger : border}`,
+              borderRadius: radCard,
+              cursor: submitted ? 'default' : 'grab',
+              opacity: dragging === i ? 0.5 : 1,
+              boxShadow: !submitted && dragging !== i ? shadow : 'none'
+            }}
+          >
+            <div 
+              className="w-8 h-8 rounded-lg grid place-items-center text-sm font-extrabold shrink-0"
+              style={{ backgroundColor: `${theme.colors.ink}10`, color: theme.colors.muted }}
+            >
+              {i + 1}
+            </div>
+            
+            <div className="flex-1 text-[13px] leading-snug" style={{ color: theme.colors.ink }}>
+              {item.text}
+            </div>
+
             {submitted && (
-              <div style={{ fontSize:11, color: isCorrect(item,i)?C.success:C.danger, fontWeight:700, flexShrink:0 }}>
-                {isCorrect(item,i) ? '✓' : `→ pos.${item.order}`}
+              <div 
+                className="text-xs font-bold shrink-0 animate-in fade-in"
+                style={{ color: isCorrect(item, i) ? theme.colors.success : theme.colors.danger }}
+              >
+                {isCorrect(item, i) ? '✓' : `→ pos. ${item.order}`}
               </div>
             )}
-            {config?.showLabels && <div style={{ fontSize:10, color:C.muted, fontWeight:700, flexShrink:0 }}>{item.label}</div>}
-            {!submitted && <div style={{ fontSize:18, color:'rgba(255,255,255,.2)', flexShrink:0 }}>⠿</div>}
+            
+            {config?.showLabels && (
+              <div className="text-[10px] font-bold shrink-0" style={{ color: theme.colors.muted }}>
+                {item.label}
+              </div>
+            )}
+            
+            {!submitted && (
+              <div className="text-lg shrink-0 cursor-grab" style={{ color: `${theme.colors.ink}20` }}>
+                ⠿
+              </div>
+            )}
           </div>
         ))}
-        {!submitted ? (
-          <button onClick={validate} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer', marginTop:8 }}>Valider l'ordre</button>
-        ) : (
-          <>
-            {submitted && config?.showLabels===false && (
-              <div style={{ background:'rgba(255,255,255,.05)', borderRadius:12, padding:12 }}>
-                {[...mappedItems].sort((a,b)=>a.order-b.order).map(it => (
-                  <div key={it.id} style={{ fontSize:11, color:C.muted, padding:'3px 0' }}>• {it.label} — {it.text}</div>
-                ))}
-              </div>
-            )}
-            <button onClick={finish} style={{ background:C.primary, color:'#fff', border:'none', borderRadius:14, padding:'14px 0', fontFamily:'Sora,sans-serif', fontWeight:700, fontSize:15, cursor:'pointer' }}>Terminer</button>
-          </>
-        )}
+
+        <div className="mt-auto pt-4 flex flex-col gap-3">
+          {!submitted ? (
+            <button 
+              onClick={validate} 
+              className="w-full py-3.5 border-none cursor-pointer font-bold text-[15px] active:scale-95 transition-transform"
+              style={{ 
+                backgroundColor: theme.colors.primary, 
+                color: '#fff', 
+                borderRadius: radBtn, 
+                fontFamily: theme.fonts.display 
+              }}
+            >
+              Valider l'ordre
+            </button>
+          ) : (
+            <>
+              {submitted && config?.showLabels === false && (
+                <div 
+                  className="p-4 rounded-xl text-xs leading-relaxed animate-in slide-in-from-bottom-2"
+                  style={{ backgroundColor: `${theme.colors.ink}05` }}
+                >
+                  {[...mappedItems].sort((a, b) => a.order - b.order).map(it => (
+                    <div key={it.id} className="py-1" style={{ color: theme.colors.muted }}>
+                      <span className="font-bold mr-2 text-current opacity-80">• {it.label}</span>
+                      {it.text}
+                    </div>
+                  ))}
+                </div>
+              )}
+              <button 
+                onClick={finish} 
+                className="w-full py-3.5 border-none cursor-pointer font-bold text-[15px] active:scale-95 transition-transform animate-in slide-in-from-bottom-2"
+                style={{ 
+                  backgroundColor: theme.colors.primary, 
+                  color: '#fff', 
+                  borderRadius: radBtn, 
+                  fontFamily: theme.fonts.display 
+                }}
+              >
+                Terminer
+              </button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
