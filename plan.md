@@ -36,11 +36,11 @@
 
 ## Phase 0 — Sécurité & hygiène (Semaines 1-2) — BLOQUANT
 
-- [x] **Superadmin sans email hardcodé** : source = custom claim uniquement ; provisioning par script d'admin ; retrait des 3 occurrences (`server.ts`, `firestore.rules`, `syncSlice.ts`). *AC : grep de l'email = 0 résultat ; tests rules verts. Validé le 2026-07-02.*
-- [x] **Endpoints debug** : suppression de `/api/debug-sentry` en prod ; `/api/debug/error` authentifié + taille bornée + rotation. *AC : appel non authentifié → 401.*
+- [ ] **Superadmin sans email hardcodé** (partiellement restauré, reste AdminScreen.tsx) : source = custom claim uniquement ; provisioning par script d'admin ; retrait des 3 occurrences (`server.ts`, `firestore.rules`, `syncSlice.ts`). *AC : grep de l'email = 0 résultat ; tests rules verts. Validé le 2026-07-02.*
+- [ ] **Endpoints debug** (partiellement restauré, reste debug-sentry) : suppression de `/api/debug-sentry` en prod ; `/api/debug/error` authentifié + taille bornée + rotation. *AC : appel non authentifié → 401.*
 - [x] **Économie côté serveur** : `/api/economy/update` n'accepte plus de montants libres ; XP/piasses dérivés d'événements de jeu validés (type d'activité → barème serveur). *AC : payload arbitraire → 400 ; barème testé. Validé le 2026-07-02.*
 - [x] **App Check partout** : `requireAppCheck` sur tous les `/api/gemini/*` et `/api/admin/*` ; front migré sur `secureFetch`. *AC : requête sans token App Check → 401 (après 1 semaine en mode monitor). Validé le 2026-07-02.*
-- [x] **Clés IA côté serveur** : BYOK stocké chiffré dans `tenants/{id}/secrets` ; suppression du header `x-api-key` et du fallback silencieux ; quota Gemini par tenant. *AC : clé absente du localStorage ; dépassement quota → 429. Validé le 2026-07-02.*
+- [ ] **Clés IA côté serveur** (partiellement restauré, x-api-key encore dans src/) : BYOK stocké chiffré dans `tenants/{id}/secrets` ; suppression du header `x-api-key` et du fallback silencieux ; quota Gemini par tenant. *AC : clé absente du localStorage ; dépassement quota → 429. Validé le 2026-07-02.*
 - [ ] **Garde-fous RAG v0** : limite de taille d'ingestion + quota tenant + restriction aux rôles admin/creator du tenant. *AC : ingestion 10 Mo → 413.*
 - [ ] **Lecture publique Firestore réduite** : `tenants/{id}` et `configuration/**` réservés aux authentifiés ; document `tenants/{id}/public/site` dédié pour Astro. *AC : lecture anonyme des configs → deny ; site Astro fonctionnel.*
 - [ ] **CI minimale** : GitHub Actions `tsc + eslint + vitest` sur PR. *AC : pipeline requis pour merge.*
