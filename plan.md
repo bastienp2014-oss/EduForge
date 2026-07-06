@@ -1,17 +1,31 @@
-# Plan d'Action — Deep Generation OS (v2, reconstruit)
+# Plan d'Action — Deep Generation OS (v4)
 
-> Ce plan remplace l'ancien `plan.md`. Il repose exclusivement sur l'état **vérifié** du code (audit 2026-07-02) et sur la vision Deep Generation (hiérarchie 7 niveaux, blueprints, multi-copilots, HITL, RAG sourcé).
-> Règles : chaque item a un **critère d'acceptation testable** ; aucun item n'est coché sans preuve dans le code ; les invariants servis sont indiqués entre crochets — [HIER] hiérarchie, [BP] blueprint, [ISO] isolation de contexte, [HITL] validation humaine, [COPILOT] multi-copilots.
+> Ce plan remplace `plan.md` (v2). État du code vérifié manuellement le 6 juillet 2026 (grep + lecture de fichiers, pas déclarations passées). Il repose sur l'audit technique (AUDIT_DEEP_GENERATION_OS.md), sur la vision Deep Generation (hiérarchie 7 niveaux, blueprints, multi-copilots, HITL, RAG sourcé), sur les contraintes du programme de recherche pédagogique (Phases 1-8, recommandations R1-R12), et sur les conclusions de Phase 7 (architectures alternatives, principe d'architecture fédérée pour R8).
+>
+> **Avertissement — Session AI antérieure perdue** : Une session Gemini (mai-juin 2026) sur cet environnement a connu un crash filesystem. Des corrections annoncées (ligne 131 AdminScreen.tsx, migration config Firestore, composant TenantConfigSync) n'ont pas survécu à la restauration d'une sauvegarde. Ce plan reflète maintenant l'état **réel vérifiable du dépôt**, pas les affirmations de sessions antérieures.
+>
+> Règles : chaque item a un **critère d'acceptation testable** ; aucun item n'est coché sans preuve dans le code (vérifiée par grep/inspection directe, jamais par souvenir de conversation) ; les invariants servis sont indiqués entre crochets — [HIER] hiérarchie, [BP] blueprint, [ISO] isolation de contexte, [HITL] validation humaine, [COPILOT] multi-copilots, [SEM] contrainte sémantique/pédagogique.
 
 ---
 
-## État vérifié (acquis, avec preuves)
+## Contraintes sémantiques et pédagogiques (non négociables — s'appliquent à toutes les phases)
+
+> Ces contraintes proviennent du programme de recherche (Phase 8, diagnostic produit). Elles ne sont pas une phase à cocher — elles s'appliquent en continu, à chaque item ci-dessous qui touche l'affichage de données à l'apprenant, au créateur, ou à un client B2B.
+
+- **[SEM-1] Aucun proxy présenté comme une mesure de compétence.** Le système mesure aujourd'hui de la **rétention mémorielle** (stability, difficulty, lapses — FSRS) et de la **complétion** (booléens de leçons terminées). Ni l'une ni l'autre n'est une mesure de compétence au sens de "capacité à agir en contexte nouveau". Aucune interface, aucun document commercial, aucun tableau de bord ne doit utiliser les mots "compétence", "maîtrise", ou un pourcentage présenté comme score global de savoir, pour désigner ces données. Vocabulaire correct : "rétention", "mémorisation", "fragile / solide", "complété".
+- **[SEM-2] Honnêteté sur la frontière représentation/accompagnement.** Le produit excelle à représenter (mémoriser, séquencer). Il n'accompagne pas au sens d'un mentor qui suit une trajectoire. Le tuteur IA doit toujours afficher explicitement ce qu'il peut faire ("t'aider à comprendre cet item") et ce qu'il ne peut pas faire ("te suivre entre sessions", "évaluer ta compétence globale"). Cette frontière est une exigence d'interface, pas un détail d'implémentation laissé à la discrétion de l'agent qui code.
+- **[SEM-3] Test d'autonomie sur la gamification.** Avant d'ajouter ou d'étendre un mécanisme de l'économie virtuelle (piasses, XP, streaks, classements), vérifier : est-ce que ça développe l'apprentissage, ou est-ce que ça développe la dépendance au système (effet fantôme — Phase 2 du programme de recherche) ? Un mécanisme qui échoue ce test doit être reconsidéré avant implémentation, pas après coup.
+- **[SEM-4] "Skill Graph" est un nom provisoire à corriger avant construction.** Voir Phase 5 — ce terme ne doit pas être implémenté tel quel.
+
+---
+
+## État vérifié (acquis, avec preuves — vérification 2026-07-06)
 
 - ✅ **SPA React 19 / Vite / TS / Tailwind / React Router 7** avec lazy loading (`src/App.tsx`) et ErrorBoundary + Sentry.
 - ✅ **Zustand en slices** : `useProgression` découpé (economy, inventory, settings, stats, courses, sync) ; sélecteurs stricts.
 - ✅ **25 mécaniques typées** (`src/mechanics/*`, `src/types/mechanics.ts`, registre `index.ts`) + matrice de compatibilité (`COMPATIBILITY_MATRIX`) + mapper (`mechanicDataMapper.ts`).
 - ✅ **Moteur SRS FSRS v5** pur (`src/services/srs.ts`) avec détection de blocage conceptuel (R1) et Dashboard mémoriel (R2).
-- ✅ **Tuteur IA v0** connecté aux échecs récents + disclaimer de limites (R12) (`AITutorChat.tsx`).
+- ✅ **Tuteur IA v0** connecté aux échecs récents + disclaimer de limites (R12, [SEM-2] partiellement respecté) (`AITutorChat.tsx`).
 - ✅ **Validation pédagogique R3/R11** dans `DataGeneratorModal` (apprenant naïf, profondeur cognitive, redondances, étape de revue).
 - ✅ **Backend Express** : auth Firebase (custom claims), rate limiting, Sentry, endpoints revenue avec transactions atomiques, parsing PDF/DOCX.
 - ✅ **RAG v0 fonctionnel** (ingest → embed `text-embedding-004` → cosinus → génération contrainte par `responseSchema`) — mais **volatile (RAM) et non isolé** (voir Phase 2).
@@ -20,6 +34,26 @@
 - ✅ **Site vitrine Astro SSR multi-tenant** : layouts, JSON-LD, sitemaps par tenant, teaser interactif.
 - ✅ **Notes privées apprenant** (`useNotes`, `PrivateNotesWidget`, rules `notes/{userId}`).
 - ✅ Vitest opérationnel (3 suites : revenue, tileColors, useTenant).
+- ✅ **Économie côté serveur** : `/api/economy/update` rejette tout XP/piasses positif envoyé par le client.
+- ✅ **App Check** : `requireAppCheck` appliqué sur tous les endpoints admin et Gemini.
+- ✅ **isAdmin() en rules** : basé sur custom claim `role == 'superadmin'`, aucun email hardcodé en dur dans les rules.
+- ✅ **Endpoints debug** : `/api/debug-sentry` gardé par condition `NODE_ENV !== "production"`, non exposé en prod.
+
+## Régressions identifiées — non résolues malgré annonces antérieures (vérifiées le 2026-07-06)
+
+> Ces régressions ont été annoncées comme résolues dans une session Gemini antérieure qui a été perdue lors d'un crash filesystem. Elles subsistent dans le dépôt actuel. Incluées dans la liste de Phase 0 ci-dessous avec priorité bloquante.
+
+- **Superadmin par email hardcodé (résiduel : `AdminScreen.tsx:131`)**  
+  `const isSuperAdmin = claims?.role === 'superadmin' || auth.currentUser?.email === 'bastienp2014@gmail.com';`  
+  Condition sur l'email hardcodé doit être retirée — seul le custom claim doit déterminer le statut superadmin. Vérification : `grep -n "bastienp2014@gmail.com" src/` doit retourner 0 résultat.
+
+- **Config tenant toujours en localStorage** (`useAppConfig.ts`, `useGames.ts` encore en `persist`)  
+  Stores utilisent encore le middleware `persist` de Zustand, sauvegarde en localStorage. Migration Firestore n'a pas été committée. Implémentation de référence existe : `PHASE1_config_migration_reference.md`.  
+  Vérification : `grep -n "persist(" src/store/useAppConfig.ts src/store/useGames.ts` doit retourner 0 résultat post-correction.
+
+- **BYOK (Bring Your Own Key) pour Gemini toujours en localStorage**  
+  Les headers `x-api-key` sont encore envoyés via localStorage en plusieurs endroits (`AITutorChat.tsx`, `AdminIA.tsx`, `AdminScenarios.tsx`). À migrer vers `tenants/{id}/secrets` chiffré.  
+  Vérification : `grep -rn "x-api-key" src/` doit retourner 0 résultat post-correction.
 
 ## Dette et écarts connus (entrée des phases ci-dessous)
 
@@ -27,33 +61,34 @@
 - Sorties IA appliquées directement (scaffold) — pas d'entité Blueprint.
 - Hiérarchie vision absente ; contenu généré stocké dans le doc utilisateur.
 - Sélecteur de mécaniques limité à 5 ids (2 invalides) ; `LessonGameScreen` ne dispatche que 4 mécaniques.
-- Superadmin par email hardcodé ; `/api/economy/update` non validé ; BYOK en localStorage ; App Check quasi inactif ; endpoints debug ouverts.
-- Config tenant (jeux, flags, devise) en localStorage ; flags non liés aux plans, non vérifiés serveur.
-- Restes verticaux "Québec" dans le noyau (écrans, prompts, i18n, clés `quebec-*`).
-- Pas de CI, pas d'E2E, pas d'évals IA/RAG ; fichiers morts (`fix.js`, `scripts/directus-setup.cjs`, handoff design dans le repo).
+- **[SEM]** Aucune contrainte sémantique (CN5 du programme de recherche) n'était formalisée dans le plan avant la v4 — corrigé ci-dessus.
+- **[SEM]** R5 (Défis de transfert), R6 (Vue réseau conceptuel), R7 (Scénario étendu), R8 (Couche communautaire), R9 (Evidence Portfolio), R10 (Verifiable Credentials) : présents dans le programme de recherche et dans l'ancien plan chronologique, absents de la v2 — réintégrés ci-dessous (Phase 3, Phase 4, et section "Différé" en fin de document).
 
 ---
 
 ## Phase 0 — Sécurité & hygiène (Semaines 1-2) — BLOQUANT
 
-- [ ] **Superadmin sans email hardcodé** (partiellement restauré, reste AdminScreen.tsx) : source = custom claim uniquement ; provisioning par script d'admin ; retrait des 3 occurrences (`server.ts`, `firestore.rules`, `syncSlice.ts`). *AC : grep de l'email = 0 résultat ; tests rules verts. Validé le 2026-07-02.*
-- [ ] **Endpoints debug** (partiellement restauré, reste debug-sentry) : suppression de `/api/debug-sentry` en prod ; `/api/debug/error` authentifié + taille bornée + rotation. *AC : appel non authentifié → 401.*
-- [x] **Économie côté serveur** : `/api/economy/update` n'accepte plus de montants libres ; XP/piasses dérivés d'événements de jeu validés (type d'activité → barème serveur). *AC : payload arbitraire → 400 ; barème testé. Validé le 2026-07-02.*
-- [x] **App Check partout** : `requireAppCheck` sur tous les `/api/gemini/*` et `/api/admin/*` ; front migré sur `secureFetch`. *AC : requête sans token App Check → 401 (après 1 semaine en mode monitor). Validé le 2026-07-02.*
-- [ ] **Clés IA côté serveur** (partiellement restauré, x-api-key encore dans src/) : BYOK stocké chiffré dans `tenants/{id}/secrets` ; suppression du header `x-api-key` et du fallback silencieux ; quota Gemini par tenant. *AC : clé absente du localStorage ; dépassement quota → 429. Validé le 2026-07-02.*
+- [ ] **Superadmin sans email hardcodé** : retrait de la condition d'email ligne 131 `AdminScreen.tsx`. Source = custom claim uniquement. *AC : `grep "bastienp2014@gmail.com" src/ firestore.rules server.ts` = 0 résultat ; build propre.*
+- [ ] **Endpoints debug** : `/api/debug-sentry` reste gardé par `NODE_ENV`, `/api/debug/error` reste en place pour logging. *AC : requête `/api/debug/error` non authentifiée → 403 serveur (actuellement `requireAuth` qui n'est que du middleware, pas du vrai 403).*
+- [x] **Économie côté serveur** : `/api/economy/update` rejette XP/piasses positif. *Vérifié le 2026-07-06 : ligne 287-292 de `server.ts` refuse tout positif.*
+- [x] **App Check partout** : `requireAppCheck` sur tous les `/api/gemini/*` et `/api/admin/*`. *Vérifié le 2026-07-06 : grep montre couverture complète.*
+- [ ] **Clés IA côté serveur** : BYOK actuellement en localStorage (`x-api-key` header). Migrer vers `tenants/{id}/secrets` chiffré ; suppression du header en localStorage et du fallback silencieux. *AC : clé absente du localStorage ; dépassement quota → 429 serveur.*
 - [ ] **Garde-fous RAG v0** : limite de taille d'ingestion + quota tenant + restriction aux rôles admin/creator du tenant. *AC : ingestion 10 Mo → 413.*
-- [ ] **Lecture publique Firestore réduite** : `tenants/{id}` et `configuration/**` réservés aux authentifiés ; document `tenants/{id}/public/site` dédié pour Astro. *AC : lecture anonyme des configs → deny ; site Astro fonctionnel.*
+- [ ] **Lecture publique Firestore réduite** : `tenants/{id}` et `configuration/**` actuellement `read: if true` doivent passer à `read: if isSignedIn()`. **Point de vigilance** : vérifier que le SSR Astro ne lit pas `tenants/{id}/configuration` sans auth avant d'appliquer. *AC : lecture anon des configs → 403 ; site Astro fonctionnel.*
 - [ ] **CI minimale** : GitHub Actions `tsc + eslint + vitest` sur PR. *AC : pipeline requis pour merge.*
-- [x] **Purge fichiers morts** : `design_handoff_theme_system/` archivé hors repo ; suppression `fix.js`, `scripts/directus-setup.cjs`, `scripts/out.txt`, `tsconfig.tsbuildinfo`, script `db:push`.
+
+---
 
 ## Phase 1 — Fondations : hiérarchie & Blueprint Engine (Semaines 3-7) [HIER][BP][HITL]
 
 - [ ] **Modèle hiérarchique 7 niveaux** sous `tenants/{id}` : `programs → courses → chapters → lessons → activities → questions`, chaque nœud portant `contextDigest` hérité. *AC : schémas Zod partagés (`packages/shared/hierarchy.ts`) + rules + tests emulator.*
 - [ ] **Migration** : `ProgressionConfig` (niveaux/chapitres/leçons) → hiérarchie sous un Programme "default" ; `customContentItems` déplacés du doc utilisateur vers `tenants/{id}/contentItems` rattachés aux leçons. *AC : script idempotent, dual-read 2 semaines, zéro perte de progression (test E2E).*
 - [ ] **Blueprint Engine** : collection `tenants/{id}/blueprints`, machine à états `draft → in_review → approved/rejected → published`, versionnage des éditions humaines, publication transactionnelle vers la hiérarchie, audit (`generations` : modèle, promptVersion, tokens, coût, citations). *AC : impossible d'écrire un nœud publié sans blueprint approuvé (test d'intégration).*
-- [ ] **File de revue (Directeur éditorial)** : UI listant les blueprints, diff/édition inline, approbation unitaire et "tout approuver". *AC : parcours E2E scaffold → revue → publication.*
+- [ ] **File de revue (Directeur éditorial)** — **[SEM] enrichie des flags pédagogiques R3/R11** : UI listant les blueprints, diff/édition inline, approbation unitaire et "tout approuver". Pour tout blueprint de type leçon/activité, la file affiche les signalements déjà produits par la validation R3/R11 existante (`DataGeneratorModal`) — questions d'un "apprenant naïf" non résolues dans le contenu, classification de profondeur cognitive (Bloom) par item, doublons/redondances détectés entre blueprints du même cours. Ces signalements sont visibles avant l'approbation, pas seulement lors de la génération initiale. *AC : parcours E2E scaffold → revue (avec flags visibles) → publication ; un blueprint approuvé sans qu'aucun flag n'ait été affiché est un échec de test, que le créateur les ait corrigés ou non.*
 - [ ] **Refonte des générateurs existants en émetteurs de blueprints** : `generate-scaffold-rag`, `generate-lesson-rag`, `generate-items-rag`, `generate-scenario`, `generate-marketing`. Les `responseSchema` sont définis **côté serveur** (le client n'envoie plus de schéma). *AC : `AdminIA` n'applique plus rien directement ; grep `updateProgressionConfig` hors publication = 0.*
-- [ ] **Config tenant en BDD** : `useGames`, `useAppConfig` (nav, devise, tags, flags) migrés vers `tenants/{id}/configuration` ; `persist` réservé aux préférences UI. *AC : deux navigateurs voient la même config.*
+- [ ] **Config tenant en BDD** : `useGames`, `useAppConfig` (nav, devise, tags, flags) migrés vers `tenants/{id}/configuration` ; `persist` réservé aux préférences UI locales uniquement. Implémentation de référence : `PHASE1_config_migration_reference.md`. *AC : deux navigateurs voient la même config.*
+
+---
 
 ## Phase 2 — RAG durable, isolé, sourcé (Semaines 6-10) [ISO]
 
@@ -63,15 +98,21 @@
 - [ ] **Sources externes (SourceProvider)** : Perplexity (recherche temps réel) d'abord ; puis Google Scholar/Scite (evidence-based) ; puis YouTube (transcriptions). Toggle "Sources actives" par génération. *AC : génération avec Perplexity actif produit des citations URL ; désactivé → aucune requête externe (test).*
 - [ ] **Évals RAG** : golden set par vertical ; groundedness ≥ 0,9 ; recall@k ≥ 0,8 ; test négatif "hors corpus → refus d'inventer". *AC : suite bloquante en pré-release.*
 
-## Phase 3 — Multi-copilots & mécaniques dynamiques (Semaines 10-16) [COPILOT]
+---
 
-- [ ] **Orchestrateur + prompts versionnés** (`packages/prompts`, id@version) ; abstraction `LlmClient` (modèles par copilot en config, retry, coûts).
+## Phase 3 — Multi-copilots & mécaniques dynamiques (Semaines 10-16) [COPILOT][SEM]
+
+- [ ] **Orchestrateur + prompts versionnés** (`packages/prompts`, id@version) ; abstraction `LlmClient` (modèles par copilot en config, retry, coûts) — **routage par criticité** : un modèle premium/haute-précision pour les tâches sensibles (validation de sécurité, décisions ayant un impact sur des données réelles), un modèle économique pour le volume (génération de contenu en masse, brouillons). *AC : la config de routage est explicite par type de tâche, pas un choix unique de modèle pour tout le système ; tout chiffre de benchmark utilisé pour justifier un choix de modèle a été vérifié via une source indépendante.*
 - [ ] **Brand Copilot (macro)** : onboarding conversationnel admin (thématique, persona cible, direction artistique) → blueprints `brand_identity` (nom, slogan, palette, design tokens) et `marketing_site`. *AC : un tenant vierge est configurable de bout en bout par la conversation, sous revue humaine.*
-- [ ] **Course Copilot (méso)** : pipeline Knowledge→Course granulaire — syllabus (blueprint `course_syllabus`), puis génération chapitre par chapitre et leçon par leçon avec `contextDigest` hérité, RAG du cours + sources externes. *AC : contexte strictement limité au cours (test d'isolation) ; suggestions de mécaniques incluses dans le syllabus.*
+- [ ] **Course Copilot (méso)** — **[SEM] enrichi de R11** : pipeline Knowledge→Course granulaire — syllabus (blueprint `course_syllabus`), puis génération chapitre par chapitre et leçon par leçon avec `contextDigest` hérité, RAG du cours + sources externes. Après génération du syllabus, une étape "apprenant naïf" simule les questions qu'un débutant poserait sur le contenu et expose les présupposés implicites, termes non définis, et sauts logiques comme partie du blueprint soumis à la revue (extension du pattern déjà en place dans `DataGeneratorModal`, généralisée à tout le pipeline copilot). *AC : contexte strictement limité au cours (test d'isolation) ; suggestions de mécaniques incluses dans le syllabus ; le blueprint de syllabus contient un champ "clarifications suggérées" non vide pour tout cours de complexité non triviale.*
 - [ ] **Registre des 25 mécaniques** (`MECHANIC_REGISTRY`) : ids canoniques + legacy, formes de contenu requises, cibles cognitives, contraintes, schémas de payload. Sélection en 2 étapes : filtre déterministe (`eligibleMechanics`) puis classement LLM ; override créateur (et apprenant si autorisé). *AC : `suggest-mechanic` couvre les 25 ids valides ; plus aucun id fantôme.*
 - [ ] **Dispatch unifié** : `LessonGameScreen` et `DynamicGameScreen` partagent la même factory 25 mécaniques. *AC : chaque mécanique jouable depuis une leçon (test matrice).*
-- [ ] **Micro Tutor (micro)** : génération d'activités par leçon (blueprints `activity`/`question_set` conformes aux schémas de mécaniques) + tuteur socratique v1 (stratégie question→indice→explication, mémoire de session persistée, contexte = leçon + profil SRS). *AC : le tuteur cite la leçon ; scénario de test "ne donne pas la réponse au 1er tour".*
-- [ ] **R4 — 26e mécanique "Génération"** (réponse ouverte évaluée) branchée sur le Micro Tutor.
+- [ ] **Micro Tutor (micro)** — **[SEM] enrichi de R12 / [SEM-2]** : génération d'activités par leçon (blueprints `activity`/`question_set` conformes aux schémas de mécaniques) + tuteur socratique v1 (stratégie question→indice→explication, mémoire de session persistée, contexte = leçon + profil SRS + signal de blocage R1). L'interface du tuteur affiche explicitement et en permanence sa frontière de capacité ("je peux t'aider sur cet item, je ne suis pas un mentor qui connaît tout ton parcours") — reprise et renforcement du disclaimer déjà présent dans `AITutorChat.tsx`, pas une régression vers un ton qui laisserait croire à un accompagnement complet. *AC : le tuteur cite la leçon ; scénario de test "ne donne pas la réponse au 1er tour" ; scénario de test "le disclaimer de frontière est visible dans l'UI, pas seulement dans un message d'accueil disparu après le premier tour".*
+  > **Raffinement — Détecteur de Frontière (issu de la recherche Phase 7, architecture "Le Cartographe") :** au-delà du disclaimer d'interface, le relais vers un humain devrait à terme être déclenché par un **seuil de confiance actif**, pas seulement par une déclaration passive de limites. Concrètement : quand le signal de blocage (R1) se répète malgré l'intervention du tuteur, ou quand la confiance du modèle sur une réponse tombe sous un seuil, le système déclenche activement un relais (signalement au créateur, proposition de contact humain) plutôt que de continuer à répondre. Ce raffinement est une itération ultérieure au Micro Tutor v1 ci-dessus — à spécifier une fois v1 stable, pas un blocant pour la Phase 3.
+- [ ] **R4 — 26e mécanique "Génération"** (réponse ouverte évaluée) branchée sur le Micro Tutor. L'évaluation identifie les idées-clés présentes/absentes selon une rubrique définie par le créateur ; le résultat alimente le Détecteur de Blocage (R1), il n'est jamais présenté comme un score de compétence autonome. *AC : le score affiché à l'apprenant est formulé en termes de rétroaction ("ces idées sont présentes / à approfondir"), jamais en pourcentage de "compétence".*
+- [ ] **R5 — Défis de transfert** (nouvel item, réintégré du programme de recherche) : évaluations périodiques non annoncées (hebdomadaire/mensuel), combinant des concepts de plusieurs leçons/modules, présentées dans un contexte différent de celui de l'apprentissage initial. Ne pénalisent pas la courbe de planification SRS — sont un diagnostic, pas une évaluation notée. *AC : un défi combine des items d'au moins 2 modules distincts ; l'échec à un défi ne modifie pas `stability`/`difficulty` des items concernés ; le résultat est présenté comme "tu as réussi à appliquer ces concepts en contexte nouveau", jamais comme un score de compétence global [SEM-1].*
+
+---
 
 ## Phase 4 — Monétisation, flags serveur, marketing IA (Semaines 16-22)
 
@@ -82,17 +123,38 @@
 - [ ] **Marketing & SEO générés** : Brand Copilot produit les pages Astro (blueprints `seo_page` : hero, bénéfices, FAQ, meta, JSON-LD) et les landing pages programmatiques niche/ville, publiées après revue. *AC : nouvelle page indexable créée sans toucher au code.*
 - [ ] **Neutralisation du noyau** : extraction de la verticale Québec (écrans `ville/depanneur/tutoiement/...`, prompts "québécois", i18n survie, clés `quebec-*`) vers un tenant seed de démonstration. *AC : un tenant "anatomie médicale" ne contient aucun artefact québécois.*
 
-## Phase 5 — Extensions premium (Semaines 22+)
+---
+
+## Phase 5 — Extensions premium (Semaines 22+) [SEM]
 
 - [ ] **Typst — moteur documentaire** : service de rendu isolé, flux Blueprint JSON → template Typst → PDF (ebooks, workbooks adaptatifs SRS, bilans, export de notes) ; accès par tier. *AC : PDF généré depuis un cours publié en < 30 s.*
-- [ ] **Analytics actionnables (Smart Actions)** : recommandations admin issues des données de progression + LLM, sous forme de blueprints d'action. 
-- [ ] **Transcript académique & certificats** ; **pré/post-tests adaptatifs** ; **skill graph** (liaisons tags↔compétences + visualisation).
-- [ ] **Leaderboards par cohortes** ; couche sociale.
+- [ ] **Analytics actionnables (Smart Actions)** : recommandations admin issues des données de progression + LLM, sous forme de blueprints d'action.
+- [ ] **Transcript académique & certificats** ; **pré/post-tests adaptatifs**.
+- [ ] **Graphe de rétention mémorielle** (renommé — voir note ci-dessous) : liaisons tags ↔ items SRS, visualisation de la rétention prédite par concept.
+  > **[SEM-4] Note de nomenclature — remplace "skill graph" :** ce composant ne doit à aucun moment être nommé ou présenté comme un "niveau de compétence" ou une mesure de maîtrise. Il visualise de la rétention mémorielle prédite (issue de FSRS), pas de la compétence. Si le terme "compétence" est jugé commercialement nécessaire pour ce composant, il doit être accompagné d'une définition explicite et visible dans l'interface de ce qu'il recouvre (rétention d'items liés) et de ce qu'il ne recouvre pas (capacité d'application en contexte nouveau — voir R5 pour l'unique donnée qui s'en approche, et même celle-là reste un diagnostic ponctuel, pas un score cumulatif). *AC : recherche de "skill" ou "compétence" dans les composants d'interface de ce module → chaque occurrence est accompagnée d'une clarification visible, ou remplacée par un terme de rétention.*
+- [ ] **Leaderboards par cohortes** — **[SEM-3] soumis au test d'autonomie** avant extension : vérifier que le classement encourage la pratique plutôt que la course au score déconnectée de l'apprentissage réel.
+
+---
+
+## Horizon différé — R6, R7, R8, R9, R10 (réintégrés du programme de recherche, hors roadmap active)
+
+> Ces recommandations existaient dans l'ancien plan chronologique et dans le programme de recherche. Elles ne sont pas rejetées — elles sont explicitement différées, avec la raison, pour ne pas se reperdre une deuxième fois lors d'une future reconstruction du plan.
+
+- **R6 — Vue Réseau Conceptuel** (graphe des relations entre concepts, prérequis/oppositions/applications) : différé parce qu'il exige que les créateurs définissent ces relations dès la conception du cours — une charge de travail supplémentaire non raisonnable tant que le Blueprint Engine (Phase 1) n'est pas stable en usage réel. À reconsidérer une fois la Phase 3 livrée.
+- **R7 — Scénario Ramifié Étendu** (extension de `18_DialogueTree` en simulation de décision professionnelle avec conséquences différées et débrief) : différé pour la même raison que R6 — dépend d'un effort de conception créateur significatif, à planifier après stabilisation des copilots.
+- **R8 — Couche Communautaire** (fil de concept par item, pairs de progression, contribution valorisée, anciens qui guident) : différé mais identifié par le programme de recherche comme **le plus grand levier structurel à long terme** — le situated learning est la théorie la plus absente des systèmes numériques actuels, et elle est particulièrement alignée avec le cas d'usage d'origine du produit (intégration linguistique). À spécifier sérieusement en Phase 6, pas à traiter comme une "couche sociale en devenir" vague.
+  > **Principe directeur pour la future spécification (issu de la recherche Phase 7) :** la recherche a construit deux architectures opposées — l'une centrée sur l'individu et fortement IA, l'autre centrée sur la communauté avec l'IA volontairement contrainte à un rôle de bibliothécaire. Aucune des deux seule n'a été retenue ; une fusion naïve hériterait des mêmes tensions non résolues que les LXP actuels. La direction retenue est une **architecture fédérée à deux couches où l'apprenant contrôle explicitement la frontière** entre sa couche individuelle (mémoire, représentation — ce que le produit fait déjà) et la couche communautaire (accompagnement, situated learning — à construire). Quand R8 sera spécifié, ce contrôle de frontière par l'apprenant doit être un principe de conception explicite, pas une option accessoire.
+- **R9 — Evidence Portfolio** (collection de preuves de compétence — artefacts produits, défis de transfert réussis, validations par les pairs — plutôt qu'un score) : différé, dépend de R4, R5, et R8 pour avoir des artefacts à collecter. Approche recommandée pour toute future demande de "certification de compétence" — à privilégier sur un score agrégé, en cohérence avec [SEM-1].
+- **R10 — Portabilité du Parcours (Verifiable Credentials)** : différé, horizon 3-5 ans. Direction stratégique à nommer publiquement ("tes données te suivent, pas la plateforme") sans entrer en roadmap active immédiate.
+- **Migration Firebase → Supabase** (nouvel item, issu de l'analyse critique d'un rapport d'architecture tiers généré par Gemini) : un rapport a présenté cette migration comme une nécessité urgente, motivée par les vulnérabilités déjà connues (RAG en RAM, contournement possible des rules Firestore par le backend Node). Ces vulnérabilités sont **déjà traitées par les Phases 0 et 2 du présent plan** — la migration n'est donc pas une nécessité de sécurité mais une question d'architecture à horizon moyen terme. Différée explicitement, sans analyse de coût/complexité/risque de migration en base de données multi-tenant en production — cette analyse est un préalable à toute décision, pas l'urgence affichée par le rapport source.
 
 ---
 
 ## Gouvernance du plan
 
-- Toute case cochée doit référencer un commit + le test d'acceptation.
+- Toute case cochée doit référencer un commit + le test d'acceptation (vérification par grep/inspection directe du dépôt, jamais par souvenir de conversation).
 - Revue mensuelle : ce fichier est régénéré à partir de l'état du code, jamais l'inverse.
+- **Toute modification de ce plan qui touche à l'affichage de données de progression, de rétention, ou de tout terme lié à "compétence"/"maîtrise" doit être vérifiée contre les contraintes sémantiques en tête de document avant d'être ajoutée.**
+- **Vérification indépendante des benchmarks avant décision d'architecture.** Toute affirmation chiffrée ou comparative sur les performances d'un modèle IA ou d'un outil — produite par n'importe quel modèle, y compris celui qui rédige ce plan — doit être vérifiée via une source indépendante avant de justifier une décision de routage de modèle, de migration technique, ou de choix de fournisseur. Un rapport produit par un modèle recommandant l'outil de son propre fournisseur, ou citant un chiffre de benchmark non recoupé, n'est pas une base de décision suffisante en l'état.
+- **Ne jamais faire confiance à une affirmation passée sur l'état du code sans la vérifier par grep/inspection.** Les sessions IA antérieures peuvent avoir crash, ou leurs modifications peuvent ne pas avoir survécu au contrôle de version. Chaque affirmation doit être vérifiable dans le dépôt actuel.
 - KPI de pilotage : % de blueprints publiés sans édition humaine ; groundedness moyenne ; coût IA par cours publié ; délai brief → cours publié.
