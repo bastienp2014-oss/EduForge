@@ -30,14 +30,10 @@ export const requireAppCheck = async (req: express.Request, res: express.Respons
 // Authentication middleware
 export const requireSuperAdmin = (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const user = (req as any).user;
-  const token = req.body?.token;
-  const isValidToken = process.env.SUPERADMIN_PROVISIONING_TOKEN && token === process.env.SUPERADMIN_PROVISIONING_TOKEN;
-
-  if (isValidToken || (user && user.role === "superadmin")) {
-    return next();
+  if (!user || user.role !== "superadmin") {
+    return res.status(403).json({ error: "Forbidden: Superadmin role required" });
   }
-
-  return res.status(403).json({ error: "Forbidden: Superadmin role required" });
+  next();
 };
 
 export const requireAuth = async (req: express.Request, res: express.Response, next: express.NextFunction) => {

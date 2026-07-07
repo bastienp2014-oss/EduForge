@@ -62,12 +62,20 @@ async function startServer() {
     res.json({ status: "ok" });
   });
 
-  app.post("/api/admin/bootstrap", requireAppCheck, requireAuth, requireSuperAdmin, async (req, res) => {
+  app.post("/api/admin/bootstrap", requireAppCheck, requireAuth, async (req, res) => {
     try {
+      const { token } = req.body;
       const user = (req as any).user;
       
-      await getAuth().setCustomUserClaims(user.uid, { role: 'superadmin', tenantId: 'eduforge' });
-      res.json({ success: true, message: "SuperAdmin claims granted. Please sign out and sign in again." });
+      const isSuperAdmin = user.role === 'superadmin';
+      const isValidToken = process.env.SUPERADMIN_PROVISIONING_TOKEN && token === process.env.SUPERADMIN_PROVISIONING_TOKEN;
+
+      if (isSuperAdmin || isValidToken) {
+        await getAuth().setCustomUserClaims(user.uid, { role: 'superadmin', tenantId: 'eduforge' });
+        res.json({ success: true, message: "SuperAdmin claims granted. Please sign out and sign in again." });
+      } else {
+        res.status(403).json({ error: "Non autorisé" });
+      }
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Erreur bootstrap" });
