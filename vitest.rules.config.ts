@@ -5,7 +5,10 @@ import { defineConfig } from 'vitest/config';
 // dépendre `npm test` d'un émulateur en cours d'exécution.
 export default defineConfig({
   test: {
-    environment: 'node',
-    include: ['src/store/firestoreConfigRules.test.ts'],
+    environment: 'jsdom',
+    include: [
+      'src/store/firestoreConfigRules.test.ts',
+      'src/store/useAppConfig.test.ts',
+    ],
   },
 });
