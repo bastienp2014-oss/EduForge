@@ -5,11 +5,12 @@ import { Settings, ShieldAlert, Coins, ToggleLeft, Globe } from 'lucide-react';
 import { useTenant } from '../../store/useTenant';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../services/firebase';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 export default function AdminConfiguration() {
   const { theme } = useAdminTheme();
   const c = theme.colors;
-  const { appName, setAppName, currency, setCurrency, features, setFeatures, srsConfig, setSrsConfig } = useAppConfig();
+  const { appName, setAppName, currency, setCurrency, features, setFeatures, srsConfig, setSrsConfig, isLoaded } = useAppConfig();
   const { currentTenant } = useTenant();
   const [domainInput, setDomainInput] = useState(currentTenant?.domain || '');
   const [isSavingDomain, setIsSavingDomain] = useState(false);
@@ -45,6 +46,8 @@ export default function AdminConfiguration() {
     { name: 'Sirop', symbol: '🍁', position: 'suffix' },
     { name: 'Lingots', symbol: '💰', position: 'suffix' },
   ];
+
+  if (!isLoaded) return <LoadingSpinner />;
 
   return (
     <div className="p-4 sm:p-6 space-y-8 max-w-4xl mx-auto pb-24" style={{ color: c.ink }}>

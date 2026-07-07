@@ -584,6 +584,11 @@ export default function AdminMechanics() {
   };
 
   const handleSave = () => {
+    if (!useGames.getState().isLoaded) {
+      alert("La configuration des jeux n'est pas encore chargée, réessaie dans un instant.");
+      return;
+    }
+
     addGame({
       id: formData.id,
       name: formData.name,
@@ -594,7 +599,7 @@ export default function AdminMechanics() {
       enabled: true,
       data: null
     });
-    
+
     alert('Jeu créé et ajouté au catalogue !');
     setOpenMech(null);
   };

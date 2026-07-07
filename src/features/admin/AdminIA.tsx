@@ -159,11 +159,15 @@ export default function AdminIA() {
       const data = await response.json();
       
       if (data && data.appName) {
-        // Appliquer le nom
-        setAppName(data.appName);
-        
-        if (data.appDescription) setAppDescription(data.appDescription);
-        if (data.marketingSlogan) setMarketingSlogan(data.marketingSlogan);
+        if (!useAppConfig.getState().isLoaded) {
+          console.warn('Config tenant pas encore chargée depuis Firestore, application du scaffold IA (nom/description/slogan) ignorée pour éviter un écrasement par le chargement en cours.');
+        } else {
+          // Appliquer le nom
+          setAppName(data.appName);
+
+          if (data.appDescription) setAppDescription(data.appDescription);
+          if (data.marketingSlogan) setMarketingSlogan(data.marketingSlogan);
+        }
 
         // Appliquer les couleurs
         if (data.colors) {
@@ -271,13 +275,18 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
       });
       if (!response.ok) throw new Error("Erreur génération jeu");
       const data = await response.json();
-      
+
       const { useGames } = await import('../../store/useGames');
-      useGames.getState().addGame({
-        ...data,
-        enabled: true
-      });
-      alert(`Jeu "${data.name}" généré et ajouté à l'Arcade !`);
+      if (!useGames.getState().isLoaded) {
+        console.warn('Config jeux pas encore chargée depuis Firestore, ajout du jeu généré ignoré pour éviter un écrasement par le chargement en cours.');
+        alert("La configuration des jeux n'est pas encore chargée, réessaie dans un instant.");
+      } else {
+        useGames.getState().addGame({
+          ...data,
+          enabled: true
+        });
+        alert(`Jeu "${data.name}" généré et ajouté à l'Arcade !`);
+      }
       setGameIdea('');
     } catch (err) {
       console.error(err);

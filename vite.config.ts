@@ -53,6 +53,8 @@ export default defineConfig(() => {
     },
     test: {
       environment: 'jsdom',
+      // Nécessite l'émulateur Firestore — exécuté séparément via `npm run test:rules`.
+      exclude: ['**/node_modules/**', 'src/store/firestoreConfigRules.test.ts', 'src/store/useAppConfig.test.ts'],
     },
   };
 });
