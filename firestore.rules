@@ -92,6 +92,13 @@ service cloud.firestore {
         allow read: if isAdmin() || isTenantMember(tenantId) || (isSignedIn() && resource.data.statut == 'active');
         allow write: if isAdmin() || isTenantAdmin(tenantId) || isTenantCreator(tenantId);
       }
+
+      // Secrets subcollection (BYOK API keys, encrypted). Server accesses this via the
+      // Admin SDK, which bypasses these rules — this block is defense-in-depth against
+      // any future client-side read/write attempt.
+      match /secrets/{document=**} {
+        allow read, write: if isAdmin() || isTenantAdmin(tenantId);
+      }
     }
 
     // -----------------------------------------------------------------------------
