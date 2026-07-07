@@ -120,7 +120,6 @@ interface AdminScreenProps {
   onBack: () => void;
 }
 
-import { auth } from '../../services/firebase';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../store/useAuth';
 
@@ -128,7 +127,7 @@ export default function AdminScreen({ onBack }: AdminScreenProps) {
   const navigate = useNavigate();
   const { theme } = useAdminTheme();
   const { claims } = useAuth();
-  const isSuperAdmin = claims?.role === 'superadmin' || auth.currentUser?.email === 'bastienp2014@gmail.com';
+  const isSuperAdmin = claims?.role === 'superadmin';
   const isAdmin = isSuperAdmin || claims?.role === 'admin';
   const isCreator = isAdmin || claims?.role === 'creator';
   const currentTenant = useTenant(s => s.currentTenant);

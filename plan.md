@@ -68,7 +68,7 @@
 
 ## Phase 0 — Sécurité & hygiène (Semaines 1-2) — BLOQUANT
 
-- [ ] **Superadmin sans email hardcodé** : retrait de la condition d'email ligne 131 `AdminScreen.tsx`. Source = custom claim uniquement. *AC : `grep "bastienp2014@gmail.com" src/ firestore.rules server.ts` = 0 résultat ; build propre.*
+- [x] **Superadmin sans email hardcodé** : retrait de la condition d'email ligne 131 `AdminScreen.tsx`. Source = custom claim uniquement. *AC : `grep "bastienp2014@gmail.com" src/ firestore.rules server.ts` = 0 résultat ; build propre.* Vérifié le 2026-07-07 : grep = 0 résultat, `npm run lint` et `npm test` passent.
 - [ ] **Endpoints debug** : `/api/debug-sentry` reste gardé par `NODE_ENV`, `/api/debug/error` reste en place pour logging. *AC : requête `/api/debug/error` non authentifiée → 403 serveur (actuellement `requireAuth` qui n'est que du middleware, pas du vrai 403).*
 - [x] **Économie côté serveur** : `/api/economy/update` rejette XP/piasses positif. *Vérifié le 2026-07-06 : ligne 287-292 de `server.ts` refuse tout positif.*
 - [x] **App Check partout** : `requireAppCheck` sur tous les `/api/gemini/*` et `/api/admin/*`. *Vérifié le 2026-07-06 : grep montre couverture complète.*
