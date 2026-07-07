@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { useAdminTheme } from '../../store/useAdminTheme';
 import { useAppConfig, TagConfig } from '../../store/useAppConfig';
 import { Plus, X, Edit2, Save, Trash2 } from 'lucide-react';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 export default function AdminTags() {
   const { theme } = useAdminTheme();
-  const { tags, addTag, removeTag, updateTag } = useAppConfig();
+  const { tags, addTag, removeTag, updateTag, isLoaded } = useAppConfig();
   
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editLabel, setEditLabel] = useState('');
@@ -39,6 +40,8 @@ export default function AdminTags() {
   const handleCancelEdit = () => {
     setEditingId(null);
   };
+
+  if (!isLoaded) return <LoadingSpinner />;
 
   return (
     <div className="p-6">

@@ -22,6 +22,8 @@ import { useProgression } from './store/useProgression';
 import { useTheme, AppTheme, applyThemeTokens } from './store/useTheme';
 import { useTenant } from './store/useTenant';
 import { useAuth } from './store/useAuth';
+import { useAppConfig } from './store/useAppConfig';
+import { useGames } from './store/useGames';
 const LoginScreen = lazy(() => import('./components/LoginScreen'));
 import { registerForPush, setupMessageListener } from './services/notifications';
 import { auth, db } from './services/firebase';
@@ -76,8 +78,11 @@ export default function App() {
   const resolveTenantFromDomain = useTenant((state) => state.resolveTenantFromDomain);
   const isLoadingTenant = useTenant((state) => state.isLoadingTenant);
   const currentTenant = useTenant((state) => state.currentTenant);
-  
+
   const { setAuth, isLoading: isAuthLoading, setIsLoading: setIsAuthLoading, claims } = useAuth();
+
+  const loadAppConfig = useAppConfig((state) => state.load);
+  const loadGames = useGames((state) => state.load);
 
   // Résoudre le tenant basé sur le domaine au lancement
   useEffect(() => {
@@ -116,6 +121,13 @@ export default function App() {
     };
     fetchGlobalTheme();
   }, [setPersonalTheme, currentTenant?.id]);
+
+  // Charger la config app + jeux du tenant depuis Firestore (avec migration transparente du localStorage)
+  useEffect(() => {
+    if (!currentTenant?.id) return;
+    loadAppConfig(currentTenant.id);
+    loadGames(currentTenant.id);
+  }, [currentTenant?.id, loadAppConfig, loadGames]);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
