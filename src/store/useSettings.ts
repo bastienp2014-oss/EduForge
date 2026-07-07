@@ -9,9 +9,6 @@ export interface DocumentMeta {
 }
 
 interface SettingsState {
-  apiKey: string;
-  setApiKey: (key: string) => void;
-  clearApiKey: () => void;
   persona: string;
   setPersona: (persona: string) => void;
   context: string;
@@ -26,9 +23,6 @@ interface SettingsState {
 export const useSettings = create<SettingsState>()(
   persist(
     (set) => ({
-      apiKey: '',
-      setApiKey: (key) => set({ apiKey: key }),
-      clearApiKey: () => set({ apiKey: '' }),
       persona: 'Vous êtes un assistant éducatif expert. Vous aidez à la création de contenu pédagogique interactif.',
       setPersona: (persona) => set({ persona }),
       context: '',

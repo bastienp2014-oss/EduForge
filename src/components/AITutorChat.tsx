@@ -21,7 +21,7 @@ interface AITutorChatProps {
 export default function AITutorChat({ onClose, gameContext }: AITutorChatProps) {
   const { theme } = useTheme();
   const c = theme.colors;
-  const { apiKey, persona, context } = useSettings();
+  const { persona, context } = useSettings();
   const { recentFailures } = useSrs();
   const niveau = useProgression(state => state.getNiveau());
   
@@ -72,8 +72,7 @@ export default function AITutorChat({ onClose, gameContext }: AITutorChatProps) 
       const res = await secureFetch('/api/gemini/chat', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
-          ...(apiKey ? { 'x-api-key': apiKey } : {})
+          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`
         },
         body: JSON.stringify({
           message: userMessage,

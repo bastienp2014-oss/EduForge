@@ -491,12 +491,11 @@ export default function AdminScenarios() {
     if (!iaSubject.trim()) return;
     setIsGenerating(true);
     try {
-      const { apiKey, persona, context, documents } = useSettings.getState();
+      const { persona, context, documents } = useSettings.getState();
       const response = await secureFetch('/api/gemini/generate-scenario', {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
-          ...(apiKey ? { 'x-api-key': apiKey } : {})
+        headers: {
+          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`
         },
         body: JSON.stringify({ subject: iaSubject, prompt: iaPrompt, count: iaCount, persona, context: context + (documents && documents.length > 0 ? "\n\nDocuments Additionnels:\n" + documents.map(d => `--- ${d.name} ---\n${d.content}`).join("\n\n") : "") })
       });

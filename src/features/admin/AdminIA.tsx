@@ -5,19 +5,18 @@ import { useAdminTheme } from '../../store/useAdminTheme';
 import { useAppConfig } from '../../store/useAppConfig';
 import { useTheme } from '../../store/useTheme';
 import { useProgression } from '../../store/useProgression';
-import { Key, Save, Trash2, Wand2, Image as ImageIcon, Loader2, Gamepad2, ShieldAlert, FileText, Upload, Layout, Server, AlertCircle } from 'lucide-react';
+import { Save, Trash2, Wand2, Image as ImageIcon, Loader2, Gamepad2, ShieldAlert, FileText, Upload, Layout, Server, AlertCircle } from 'lucide-react';
 import { secureFetch } from '../../utils/secureFetch';
 
 export default function AdminIA() {
   const { theme } = useAdminTheme();
   const c = theme.colors;
-  const { apiKey, setApiKey, clearApiKey, persona, setPersona, context, setContext, appGenerationPrompt, setAppGenerationPrompt, documents, addDocument, removeDocument } = useSettings();
+  const { persona, setPersona, context, setContext, appGenerationPrompt, setAppGenerationPrompt, documents, addDocument, removeDocument } = useSettings();
   const { features, setAppName, setAppDescription, setMarketingSlogan } = useAppConfig();
   const { patchPersonal } = useTheme();
   const updateProgressionConfig = useProgression(s => s.updateProgressionConfig);
   const getPointsConfig = useProgression(s => s.getPointsConfig);
   const addCustomContentItems = useProgression(s => s.addCustomContentItems);
-  const [inputKey, setInputKey] = useState(apiKey);
   const [inputPersona, setInputPersona] = useState(persona);
   const [inputContext, setInputContext] = useState(context);
   const [inputAppPrompt, setInputAppPrompt] = useState(appGenerationPrompt);
@@ -144,9 +143,8 @@ export default function AdminIA() {
     try {
       const response = await secureFetch('/api/gemini/generate-scaffold-rag', {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
-          ...(apiKey ? { 'x-api-key': apiKey } : {})
+        headers: {
+          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`
         },
         body: JSON.stringify({
           prompt: inputAppPrompt,
@@ -248,9 +246,8 @@ export default function AdminIA() {
     try {
       const response = await secureFetch('/api/gemini/generate-json-rag', {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
-          ...(apiKey ? { 'x-api-key': apiKey } : {})
+        headers: {
+          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`
         },
         body: JSON.stringify({ 
           courseId: 'global',
@@ -302,9 +299,8 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
     try {
       const response = await secureFetch('/api/gemini/generate-lesson-rag', {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
-          ...(apiKey ? { 'x-api-key': apiKey } : {})
+        headers: {
+          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`
         },
         body: JSON.stringify({
           courseId: "global",
@@ -327,17 +323,11 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
   };
 
   const handleSave = () => {
-    setApiKey(inputKey);
     setPersona(inputPersona);
     setContext(inputContext);
     setAppGenerationPrompt(inputAppPrompt);
     setIsSaved(true);
     setTimeout(() => setIsSaved(false), 2000);
-  };
-
-  const handleClear = () => {
-    setInputKey('');
-    clearApiKey();
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -363,9 +353,8 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
       
       const ingestResponse = await secureFetch('/api/gemini/rag-ingest', {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
-          ...(apiKey ? { 'x-api-key': apiKey } : {})
+        headers: {
+          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`
         },
         body: JSON.stringify({
           courseId: "global",
@@ -402,9 +391,8 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
     try {
       const response = await secureFetch('/api/gemini/generate-image', {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`,
-          ...(apiKey ? { 'x-api-key': apiKey } : {})
+        headers: {
+          'Content-Type': 'application/json', 'Authorization': `Bearer ${await auth.currentUser?.getIdToken()}`
         },
         body: JSON.stringify({ prompt: imgPrompt, aspectRatio: imgRatio })
       });
@@ -533,36 +521,7 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
 
       <div className="rounded-2xl shadow-sm border overflow-hidden" style={{ backgroundColor: c.surface, borderColor: `color-mix(in srgb, ${c.ink} 10%, transparent)` }}>
         <div className="p-6 space-y-4">
-          <h3 className="font-bold text-lg flex items-center gap-2" style={{ color: c.ink }}>
-            <Key size={20} style={{ color: c.muted }} />
-            Clé API Gemini Locale (Navigateur)
-          </h3>
-          <p className="text-sm" style={{ color: c.muted }}>
-            Alternativement, entrez une clé d'API Gemini locale stockée uniquement dans votre navigateur actuel. La configuration globale ci-dessus reste prioritaire.
-          </p>
-          
-          <div className="flex gap-2 max-w-xl">
-            <input
-              type="password"
-              value={inputKey}
-              onChange={(e) => setInputKey(e.target.value)}
-              placeholder="AIzaSy..."
-              className="flex-1 border text-sm rounded-xl px-4 py-2 outline-none transition-all"
-              style={{ backgroundColor: c.bg, borderColor: `color-mix(in srgb, ${c.ink} 15%, transparent)`, color: c.ink }}
-            />
-            {apiKey && (
-              <button
-                onClick={handleClear}
-                className="flex items-center gap-2 px-4 py-2 rounded-xl font-bold transition-colors"
-                title="Supprimer la clé"
-                style={{ backgroundColor: `color-mix(in srgb, ${c.danger} 10%, transparent)`, color: c.danger }}
-              >
-                <Trash2 size={18} />
-              </button>
-            )}
-          </div>
-          
-          <div className="pt-4 border-t" style={{ borderColor: `color-mix(in srgb, ${c.ink} 10%, transparent)` }}>
+          <div>
             <h4 className="font-bold text-sm mb-2" style={{ color: c.ink }}>Personnalité de l'Assistant (System Prompt)</h4>
             <textarea
               value={inputPersona}
@@ -694,7 +653,7 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
                 </select>
                 <button 
                   onClick={genererImage}
-                  disabled={isGeneratingImg || !imgPrompt || !apiKey}
+                  disabled={isGeneratingImg || !imgPrompt}
                   className="flex items-center gap-2 text-white px-6 py-2 rounded-xl font-bold transition-all disabled:opacity-50"
                   style={{ background: c.primary }}
                 >
@@ -702,10 +661,6 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
                   Générer
                 </button>
               </div>
-              
-              {!apiKey && (
-                <p className="text-xs text-red-500">Veuillez configurer une clé API pour utiliser cette fonctionnalité.</p>
-              )}
 
               {generatedImg && (
                 <div className="mt-4 p-4 border rounded-xl flex flex-col items-center gap-4" style={{ backgroundColor: c.bg, borderColor: `color-mix(in srgb, ${c.ink} 10%, transparent)` }}>
@@ -748,7 +703,7 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
               <div className="flex justify-end">
                 <button 
                   onClick={genererJeu}
-                  disabled={isGeneratingGame || !gameIdea || !apiKey}
+                  disabled={isGeneratingGame || !gameIdea}
                   className="flex items-center gap-2 text-white px-6 py-2 rounded-xl font-bold transition-all disabled:opacity-50"
                   style={{ background: c.primary }}
                 >
@@ -756,9 +711,6 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
                   Générer et Ajouter
                 </button>
               </div>
-              {!apiKey && (
-                <p className="text-xs" style={{ color: c.danger }}>Veuillez configurer une clé API pour utiliser cette fonctionnalité.</p>
-              )}
             </div>
           </div>
         </div>
@@ -786,7 +738,7 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
               <div className="flex justify-end">
                 <button 
                   onClick={genererLeconRAG}
-                  disabled={isGeneratingLesson || !lessonSubject || !apiKey}
+                  disabled={isGeneratingLesson || !lessonSubject}
                   className="flex items-center gap-2 text-white px-6 py-2 rounded-xl font-bold transition-all disabled:opacity-50"
                   style={{ background: c.primary }}
                 >
@@ -794,10 +746,6 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
                   Générer
                 </button>
               </div>
-              
-              {!apiKey && (
-                <p className="text-xs" style={{ color: c.danger }}>Veuillez configurer une clé API pour utiliser cette fonctionnalité.</p>
-              )}
 
               {generatedLesson && (
                 <div className="mt-4 p-4 border rounded-xl" style={{ backgroundColor: c.bg, borderColor: `color-mix(in srgb, ${c.ink} 10%, transparent)` }}>
@@ -830,17 +778,13 @@ Donne un identifiant unique (id), un nom (name), un emoji (icon), une descriptio
             <div className="space-y-4">
               <button 
                 onClick={genererScaffold}
-                disabled={isGeneratingScaffold || !inputAppPrompt || !apiKey}
+                disabled={isGeneratingScaffold || !inputAppPrompt}
                 className="flex items-center gap-2 text-white px-6 py-2 rounded-xl font-bold transition-all disabled:opacity-50"
                 style={{ background: c.primary }}
               >
                 {isGeneratingScaffold ? <Loader2 size={18} className="animate-spin" /> : <Wand2 size={18} />}
                 Générer l'Architecture (Scaffold)
               </button>
-              
-              {!apiKey && (
-                <p className="text-xs" style={{ color: c.danger }}>Veuillez configurer une clé API pour utiliser cette fonctionnalité.</p>
-              )}
             </div>
           </div>
         </div>

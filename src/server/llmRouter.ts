@@ -6,12 +6,16 @@ import { getFirestore } from 'firebase-admin/firestore';
 import firebaseConfig from '../../firebase-applet-config.json';
 
 // Simple symmetric encryption helper
-export function encrypt(text: string): string {
-  const keyStr = process.env.ENCRYPTION_KEY || 'fallback_secret_32_bytes_long_key_123';
-  if (!process.env.ENCRYPTION_KEY) {
-    console.warn("WARNING: ENCRYPTION_KEY env variable is not set. Using insecure fallback key.");
+function getEncryptionKeyStr(): string {
+  const keyStr = process.env.ENCRYPTION_KEY;
+  if (!keyStr) {
+    throw new Error('ENCRYPTION_KEY environment variable is required.');
   }
-  const key = crypto.createHash('sha256').update(keyStr).digest();
+  return keyStr;
+}
+
+export function encrypt(text: string): string {
+  const key = crypto.createHash('sha256').update(getEncryptionKeyStr()).digest();
   const iv = crypto.randomBytes(16);
   const cipher = crypto.createCipheriv('aes-256-cbc', key, iv);
   let encrypted = cipher.update(text, 'utf8', 'hex');
@@ -20,8 +24,7 @@ export function encrypt(text: string): string {
 }
 
 export function decrypt(encryptedText: string): string {
-  const keyStr = process.env.ENCRYPTION_KEY || 'fallback_secret_32_bytes_long_key_123';
-  const key = crypto.createHash('sha256').update(keyStr).digest();
+  const key = crypto.createHash('sha256').update(getEncryptionKeyStr()).digest();
   const parts = encryptedText.split(':');
   if (parts.length !== 2) {
     throw new Error("Invalid encrypted format. Must be iv:encryptedText");
@@ -265,6 +268,31 @@ export async function routeChat(
 
     const textBlock = response.content.find(block => block.type === 'text');
     return textBlock && 'text' in textBlock ? textBlock.text : '';
+  }
+
+  throw new Error(`Unsupported AI provider: ${provider}`);
+}
+
+// Minimal, low-cost call per provider used to validate that a key is accepted.
+export async function testAIConfig(config: AIConfig): Promise<void> {
+  const { provider, apiKey, modelName } = config;
+
+  if (provider === 'google') {
+    const ai = new GoogleGenAI({ apiKey });
+    await ai.models.countTokens({ model: modelName || "gemini-3.5-flash", contents: "test" });
+    return;
+  }
+
+  if (provider === 'openai') {
+    const openai = new OpenAI({ apiKey });
+    await openai.models.list();
+    return;
+  }
+
+  if (provider === 'anthropic') {
+    const anthropic = new Anthropic({ apiKey });
+    await anthropic.models.list();
+    return;
   }
 
   throw new Error(`Unsupported AI provider: ${provider}`);

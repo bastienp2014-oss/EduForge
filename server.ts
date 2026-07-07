@@ -11,12 +11,12 @@ import { getAuth } from 'firebase-admin/auth';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { getAppCheck } from 'firebase-admin/app-check';
 import firebaseConfig from './firebase-applet-config.json';
-import rateLimit from 'express-rate-limit';
+import rateLimit, { ipKeyGenerator } from 'express-rate-limit';
 import * as Sentry from '@sentry/node';
 import { nodeProfilingIntegration } from '@sentry/profiling-node';
 import { calculateRevenueSplits } from './src/utils/revenue';
 import { ingestDocument, retrieveChunks, clearCourseIndex } from './src/server/rag';
-import { routeGenerateContent, routeChat, getGoogleAIInstance, encrypt, decrypt } from './src/server/llmRouter';
+import { routeGenerateContent, routeChat, getGoogleAIInstance, getTenantAIConfig, testAIConfig, encrypt, decrypt, type AIConfig } from './src/server/llmRouter';
 
 
 if (process.env.SENTRY_DSN) {
@@ -98,7 +98,19 @@ const geminiLimiter = rateLimit({
   message: { error: 'Quota Gemini dépassé pour le moment.' }
 });
 
+const byokTestLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 1,
+  message: { error: 'Un seul test de clé par minute.' },
+  keyGenerator: (req) => (req as any).user?.tenantId || ipKeyGenerator(req.ip as string)
+});
+
 async function startServer() {
+  if (process.env.NODE_ENV === 'production' && !process.env.ENCRYPTION_KEY) {
+    console.error('FATAL: ENCRYPTION_KEY not set in production. Exiting.');
+    process.exit(1);
+  }
+
   const app = express();
   app.set('trust proxy', 1);
   const PORT = 3000;
@@ -1030,6 +1042,30 @@ Génère une réponse au format JSON contenant:
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: "Erreur lors de la suggestion de mécanique", details: err instanceof Error ? err.message : String(err) });
+    }
+  });
+
+  app.get("/api/gemini/test", requireAppCheck, requireAuth, byokTestLimiter, async (req, res) => {
+    try {
+      const tenantId = (req as any).user?.tenantId;
+      const tenantConfig = tenantId ? await getTenantAIConfig(tenantId) : null;
+      const effectiveConfig: AIConfig | null = tenantConfig || (process.env.GEMINI_API_KEY
+        ? { provider: 'google', apiKey: process.env.GEMINI_API_KEY }
+        : null);
+
+      if (!effectiveConfig) {
+        return res.status(500).json({ valid: false, reason: "Aucune clé API configurée (ni BYOK, ni clé système)" });
+      }
+
+      await testAIConfig(effectiveConfig);
+      res.status(200).json({ valid: true, provider: effectiveConfig.provider });
+    } catch (err: any) {
+      const status = err?.status || err?.response?.status;
+      if (status === 401 || status === 403) {
+        return res.status(401).json({ valid: false, reason: "Clé API invalide" });
+      }
+      console.error('BYOK test error:', err);
+      res.status(500).json({ valid: false, reason: "Erreur serveur lors du test de la clé" });
     }
   });
 
