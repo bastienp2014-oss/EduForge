@@ -68,6 +68,14 @@ const requireAppCheck = async (req: express.Request, res: express.Response, next
 };
 
 // Authentication middleware
+const requireSuperAdmin = (req: express.Request, res: express.Response, next: express.NextFunction) => {
+  const user = (req as any).user;
+  if (!user || user.role !== "superadmin") {
+    return res.status(403).json({ error: "Forbidden: Superadmin role required" });
+  }
+  next();
+};
+
 const requireAuth = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -1198,7 +1206,7 @@ Génère une réponse au format JSON contenant:
     }
   });
 
-  app.post("/api/debug/error", requireAuth, (req, res) => {
+  app.post("/api/debug/error", requireAuth, requireSuperAdmin, (req, res) => {
     try {
       const bodyStr = JSON.stringify(req.body);
       
@@ -1239,11 +1247,9 @@ Génère une réponse au format JSON contenant:
   // Setup Sentry error handler
   Sentry.setupExpressErrorHandler(app);
 
-  if (process.env.NODE_ENV !== "production") {
-    app.get("/api/debug-sentry", function mainHandler(req, res) {
-      throw new Error("My first Sentry error!");
-    });
-  }
+  app.get("/api/debug-sentry", requireAuth, requireSuperAdmin, function mainHandler(req, res) {
+    throw new Error("My first Sentry error!");
+  });
 
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
