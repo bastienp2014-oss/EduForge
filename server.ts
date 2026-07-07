@@ -9,9 +9,10 @@ import mammoth from "mammoth";
 import { initializeApp, getApps } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
-import { getAppCheck } from 'firebase-admin/app-check';
 import firebaseConfig from './firebase-applet-config.json';
-import rateLimit, { ipKeyGenerator } from 'express-rate-limit';
+import { requireAppCheck, requireSuperAdmin, requireAuth } from './src/middlewares/auth.middleware';
+import { apiLimiter, geminiLimiter, byokTestLimiter } from './src/middlewares/rateLimit.middleware';
+
 import * as Sentry from '@sentry/node';
 import { nodeProfilingIntegration } from '@sentry/profiling-node';
 import { calculateRevenueSplits } from './src/utils/revenue';
@@ -41,77 +42,6 @@ try {
 }
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
-
-// Firebase App Check middleware
-const requireAppCheck = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const appCheckToken = req.header('X-Firebase-AppCheck');
-  const enforce = process.env.APP_CHECK_ENFORCE === 'true';
-
-  if (!appCheckToken) {
-    console.warn(`[App Check Monitor] Token App Check manquant pour la requête ${req.method} ${req.path}`);
-    if (enforce) {
-      return res.status(401).json({ error: 'Non autorisé: Token App Check manquant' });
-    }
-    return next();
-  }
-
-  try {
-    await getAppCheck().verifyToken(appCheckToken);
-    next();
-  } catch (err: any) {
-    console.warn(`[App Check Monitor] Token App Check invalide pour la requête ${req.method} ${req.path}:`, err?.message || err);
-    if (enforce) {
-      return res.status(401).json({ error: 'Non autorisé: Token App Check invalide' });
-    }
-    next();
-  }
-};
-
-// Authentication middleware
-const requireSuperAdmin = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const user = (req as any).user;
-  if (!user || user.role !== "superadmin") {
-    return res.status(403).json({ error: "Forbidden: Superadmin role required" });
-  }
-  next();
-};
-
-const requireAuth = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ error: 'Non autorisé: Token manquant' });
-  }
-
-  const token = authHeader.split('Bearer ')[1];
-  try {
-    const decodedToken = await getAuth().verifyIdToken(token);
-    (req as any).user = decodedToken;
-    next();
-  } catch (error) {
-    console.error('Erreur de vérification du token:', error);
-    return res.status(401).json({ error: 'Non autorisé: Token invalide' });
-  }
-};
-
-// Rate limiting middlewares
-const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
-  message: { error: 'Trop de requêtes, veuillez réessayer plus tard.' }
-});
-
-const geminiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 50,
-  message: { error: 'Quota Gemini dépassé pour le moment.' }
-});
-
-const byokTestLimiter = rateLimit({
-  windowMs: 60 * 1000,
-  max: 1,
-  message: { error: 'Un seul test de clé par minute.' },
-  keyGenerator: (req) => (req as any).user?.tenantId || ipKeyGenerator(req.ip as string)
-});
 
 async function startServer() {
   if (process.env.NODE_ENV === 'production' && !process.env.ENCRYPTION_KEY) {
