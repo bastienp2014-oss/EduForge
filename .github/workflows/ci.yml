@@ -47,9 +47,17 @@ jobs:
       - name: Unit tests
         run: npm test
 
+      # The Firestore emulator is launched by `firebase-tools`, which requires a
+      # JDK at version 21 or above. The default Java on ubuntu-latest's PATH is
+      # older, so we install Temurin 21 explicitly before running the rules tests.
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
       # Firestore rules tests, run against the real Firestore emulator.
       # `firebase-tools` is a devDependency (installed by `npm ci`), so the
-      # `firebase` binary is available on the PATH via npm scripts. The
-      # emulator itself requires Java, which is preinstalled on ubuntu-latest.
+      # `firebase` binary is available on the PATH via npm scripts.
       - name: Firestore rules tests (emulator)
         run: npm run test:rules
