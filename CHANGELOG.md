@@ -2,14 +2,11 @@
 
 Toutes les modifications notables apportées à la plateforme **EduForge** (le moteur SaaS B2B) seront documentées dans ce fichier. Le format est basé sur [Keep a Changelog](https://keepachangelog.com/fr/1.0.0/).
 
-## Prochaine Étape Prioritaire
-
-La prochaine étape logique est **la Génération Pédagogique Granulaire (Leçons)** dans l'éditeur de Parcours (`AdminParcours.tsx`).
-*Pourquoi ?* Nous avons implémenté la génération globale de l'architecture de l'application via RAG ("Le Gros JSON") et validé la route backend de génération de leçon RAG (`/api/gemini/generate-lesson-rag`). La prochaine étape est de permettre aux créateurs de générer le texte détaillé d'une leçon spécifique directement depuis l'éditeur de Syllabus, en utilisant le contexte de la leçon et de l'application via le pipeline RAG.
-
 ## [Unreleased] - En cours de développement
 
 ### Ajouté
+- **Garde-fous d'ingestion RAG** (PR #7) : trois protections sur `/api/gemini/rag-ingest` — limite de taille de payload à 10 Mo (413 au-delà, via un middleware `express.json` conditionnel qui laisse les autres routes à 100 Ko), quota de 20 ingestions par tenant et par heure (`ragIngestLimiter`, pattern `byokTestLimiter`), et restriction d'accès aux rôles `superadmin`, `admin` et `creator` (403 sinon).
+- **Endpoint public de branding tenant** (PR #8) : `GET /api/tenant-public` (App Check, sans authentification requise — point d'entrée pré-connexion), SDK Admin côté serveur, projection volontairement minimale (`id`, `name`, `plan`, `domain`, `theme`, `appTheme`). Permet à l'écran de connexion et à la résolution de domaine white-label de fonctionner sans lecture Firestore publique.
 - **Sécurisation des Endpoints Backend avec Firebase App Check** : Implémentation du middleware `requireAppCheck` sur l'ensemble des endpoints `/api/gemini/*` et `/api/admin/*` dans `server.ts`. Migration de tous les appels client (`fetch`) vers le wrapper `secureFetch` (défini dans `src/utils/secureFetch.ts`), assurant l'injection automatique du token Firebase App Check et du token d'authentification. Ajout d'un mode "monitor" via `APP_CHECK_ENFORCE` (actuellement `false` en `.env.example`) pour permettre une transition sécurisée sans rupture de service immédiate.
 - **Règles Firestore Verrouillées** : Mise à jour de `firestore.rules` pour bloquer toute création ou modification de document utilisateur contenant des champs d'économie (`xp` ou `piasses`) non nuls via le client.
 - **Migration Complète de la Gamification** : Alignement de tous les écrans, modules de jeux et actions utilisateur (`HacheScreen`, `SortScreen`, `SwipeScreen`, `TuInterrogatifScreen`, `QuizScreen`, `Game2048Screen`, `ContractionsScreen`, `TutoiementScreen`, `LessonGameScreen`, `DynamicGameScreen`, `OnboardingScreen`, `HomeScreen`, `coursesSlice`, `inventorySlice`, `useSrs`) sur l'utilisation exclusive de `claimReward` avec les identifiants d'activités serveur correspondants.
@@ -57,10 +54,15 @@ La prochaine étape logique est **la Génération Pédagogique Granulaire (Leço
 - **Planification des fonctionnalités d'adhésion multi-cours** : Analyse et conception d'une architecture modulaire pour soutenir la vente de cours individuels, de bundles et de tarification par niveaux.
 
 ### Sécurité & Correctifs (Unreleased)
+- **Durcissement des endpoints de debug** (PR #5) : `/api/debug/error` et `/api/debug-sentry` exigent désormais le rôle `superadmin` via un middleware `requireSuperAdmin` dédié, en remplacement d'une garde `NODE_ENV` fragile. Extraction des middlewares d'authentification et de rate limiting depuis `server.ts` vers `src/middlewares/auth.middleware.ts` et `src/middlewares/rateLimit.middleware.ts` (refactoring isomorphique, aucun changement de comportement). La route `/api/admin/bootstrap` conserve sa logique d'amorçage inline, volontairement isolée du middleware partagé.
+- **Fin de la lecture publique de `tenants/{tenantId}`** (PR #8) : la règle passe de `read: if true` à `read: if isSignedIn()`. Trois surfaces qui en dépendaient ont été migrées dans la même PR (SSR Astro vers le SDK Admin ; `useTenant.ts` et `App.tsx` vers `/api/tenant-public`), sans fenêtre de régression sur le branding public des tenants white-label.
 - **Finalisation de la Phase 0 — Sécurité & hygiène** :
   - **Éradication de l'email superadmin codé en dur** : Suppression complète de toutes les occurrences de l'adresse email de superadmin en dur (`bastienp2014@gmail.com`) dans `server.ts`, `firestore.rules` et `syncSlice.ts`.
   - **Sécurisation des endpoints de debug** : Désactivation de `/api/debug-sentry` en production. Authentification requise (`requireAuth`) pour `/api/debug/error`, avec limitation de taille (50 Ko) et rotation des logs (max 5 Mo) pour protéger l'espace disque. Mise à jour du frontend pour inclure le token Firebase dans les en-têtes d'autorisation.
   - **Purge de la dette technique et des fichiers morts** : Suppression définitive des résidus : `fix.js`, `scripts/directus-setup.cjs`, `scripts/out.txt`, `tsconfig.tsbuildinfo`, répertoire `design_handoff_theme_system/` (archivé), `client_errors.log`. Suppression du script `db:push` dans `package.json`.
+
+### Corrigé
+- **Protocole de fin d'itération et clause de méfiance envers les revues IA** ajoutés à `CLAUDE.md` (section 9 et section 6, point 9). Motivé par un incident réel : lors de la PR #5, une revue automatique avait qualifié de « sans risque de sécurité réel » un contournement par token de provisioning introduit dans le middleware `requireSuperAdmin` partagé — lequel protégeait aussi les deux endpoints de debug. Le code final doit être relu ligne par ligne avant tout merge touchant l'authentification, l'autorisation ou la gestion de secrets.
 
 ### Optimisé / Modifié
 - **Performance (Zustand)** : Migration massive vers les sélecteurs stricts Zustand (`useProgression(s => s.property)`) dans de nombreux composants (HUD, AudioPlayer, écrans de jeu, admin) pour éviter les re-rendus inutiles en chaîne.
