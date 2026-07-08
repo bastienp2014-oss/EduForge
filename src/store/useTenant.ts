@@ -1,7 +1,5 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { db } from '../services/firebase';
-import { collection, query, where, getDocs, limit } from 'firebase/firestore';
 
 export type TenantType = 'saas' | 'tenant';
 
@@ -52,22 +50,19 @@ export const useTenant = create<TenantState>()(
 
         set({ isLoadingTenant: true });
         try {
-          const tenantsRef = collection(db, 'tenants');
-          const q = query(tenantsRef, where('domain', '==', hostname), limit(1));
-          const snapshot = await getDocs(q);
-          
-          if (!snapshot.empty) {
-            const data = snapshot.docs[0].data();
-            set({ 
-              currentTenant: { 
-                id: snapshot.docs[0].id, 
-                name: data.name || 'Tenant', 
-                type: 'tenant', 
-                plan: data.plan || 'basic', 
-                isActive: true, 
+          const response = await fetch(`/api/tenant-public?domain=${encodeURIComponent(hostname)}`);
+          if (response.ok) {
+            const data = await response.json();
+            set({
+              currentTenant: {
+                id: data.id,
+                name: data.name || 'Tenant',
+                type: 'tenant',
+                plan: data.plan || 'basic',
+                isActive: true,
                 themeColor: data.theme?.primary || '#10b981',
                 domain: data.domain
-              } 
+              }
             });
           }
         } catch (e) {

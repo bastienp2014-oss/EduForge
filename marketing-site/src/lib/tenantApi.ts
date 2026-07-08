@@ -1,26 +1,13 @@
-import { initializeApp, getApps, getApp } from 'firebase/app';
-import { getFirestore, collection, query, where, getDocs, limit, initializeFirestore } from 'firebase/firestore';
-import type { TenantConfig } from './tenantApi';
+import { getApps, getApp, initializeApp } from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
+import firebaseConfig from '../../../firebase-applet-config.json';
 
-// Initialisation conditionnelle pour le SSR
-const firebaseConfig = {
-  "projectId": "gen-lang-client-0808256771",
-  "appId": "1:906490759700:web:abba0155b3d3f6e5c33501",
-  "apiKey": "AIzaSyCp9VBssCMQFQv2kzN7ZX6dT3SsMh4C0jQ",
-  "authDomain": "gen-lang-client-0808256771.firebaseapp.com",
-  "firestoreDatabaseId": "ai-studio-f07a6670-0671-4de0-9caf-b551ab6f37a7",
-  "storageBucket": "gen-lang-client-0808256771.firebasestorage.app",
-  "messagingSenderId": "906490759700",
-  "measurementId": ""
-};
-
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-let db;
-try {
-  db = initializeFirestore(app, {}, firebaseConfig.firestoreDatabaseId);
-} catch (e) {
-  db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
-}
+// SSR : le serveur Node de ce site (Cloud Run) est un environnement de confiance,
+// au même titre que server.ts — on utilise donc le SDK Admin (Application Default
+// Credentials, pas de clé de service en dur) plutôt que le SDK client, qui exigerait
+// un accès Firestore public pour fonctionner sans utilisateur connecté.
+const app = getApps().length ? getApp() : initializeApp();
+const db = getFirestore(app, firebaseConfig.firestoreDatabaseId);
 
 export interface TenantConfig {
   id: string;
@@ -44,70 +31,43 @@ export interface TenantConfig {
   domain?: string;
 }
 
+function toTenantConfig(id: string, data: FirebaseFirestore.DocumentData): TenantConfig {
+  return {
+    id,
+    theme: data.theme || {
+      primary: '#10b981',
+      secondary: '#6ee7b7',
+      background: '#ffffff',
+      text: '#111827',
+      fontFamily: 'Inter',
+    },
+    marketing: data.marketing || {
+      siteTitle: data.name || 'Plateforme',
+      heroTitle: 'Bienvenue',
+      heroSubtitle: 'Découvrez notre méthodologie interactive.',
+    },
+    seo: data.seo || {},
+    domain: data.domain,
+  };
+}
+
 export async function getTenantConfig(domainOrId: string | undefined): Promise<TenantConfig | null> {
   if (!domainOrId) return null;
 
   try {
-    const tenantsRef = collection(db, 'tenants');
-    
+    const tenantsRef = db.collection('tenants');
+
     // On peut chercher par ID ou par domaine configuré
-    const q = query(
-      tenantsRef, 
-      where('domain', '==', domainOrId), 
-      limit(1)
-    );
-    
-    const snapshot = await getDocs(q);
-    
+    const snapshot = await tenantsRef.where('domain', '==', domainOrId).limit(1).get();
     if (!snapshot.empty) {
-      const data = snapshot.docs[0].data();
-      return {
-        id: snapshot.docs[0].id,
-        theme: data.theme || {
-          primary: '#10b981',
-          secondary: '#6ee7b7',
-          background: '#ffffff',
-          text: '#111827',
-          fontFamily: 'Inter',
-        },
-        marketing: data.marketing || {
-          siteTitle: data.name || 'Plateforme',
-          heroTitle: 'Bienvenue',
-          heroSubtitle: 'Découvrez notre méthodologie interactive.',
-        },
-        seo: data.seo || {},
-        domain: data.domain
-      };
-    }
-    
-    // Fallback: chercher par ID
-    const qById = query(
-      tenantsRef, 
-      where('id', '==', domainOrId), 
-      limit(1)
-    );
-    const snapshotById = await getDocs(qById);
-    if (!snapshotById.empty) {
-      const data = snapshotById.docs[0].data();
-      return {
-        id: snapshotById.docs[0].id,
-        theme: data.theme || {
-          primary: '#10b981',
-          secondary: '#6ee7b7',
-          background: '#ffffff',
-          text: '#111827',
-          fontFamily: 'Inter',
-        },
-        marketing: data.marketing || {
-          siteTitle: data.name || 'Plateforme',
-          heroTitle: 'Bienvenue',
-          heroSubtitle: 'Découvrez notre méthodologie interactive.',
-        },
-        seo: data.seo || {},
-        domain: data.domain
-      };
+      return toTenantConfig(snapshot.docs[0].id, snapshot.docs[0].data());
     }
 
+    // Fallback: chercher par ID
+    const snapshotById = await tenantsRef.where('id', '==', domainOrId).limit(1).get();
+    if (!snapshotById.empty) {
+      return toTenantConfig(snapshotById.docs[0].id, snapshotById.docs[0].data());
+    }
   } catch (error) {
     console.error("Erreur lors de la récupération du tenant:", error);
   }
@@ -136,10 +96,8 @@ export async function getTenantConfig(domainOrId: string | undefined): Promise<T
 
 export async function getProduct(productId: string) {
   try {
-    const { doc, getDoc } = await import('firebase/firestore');
-    const docRef = doc(db, 'products', productId);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
+    const docSnap = await db.collection('products').doc(productId).get();
+    if (docSnap.exists) {
       return { id: docSnap.id, ...docSnap.data() };
     }
   } catch (e) {
@@ -150,10 +108,8 @@ export async function getProduct(productId: string) {
 
 export async function getCourse(courseId: string) {
   try {
-    const { doc, getDoc } = await import('firebase/firestore');
-    const docRef = doc(db, 'courses', courseId);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
+    const docSnap = await db.collection('courses').doc(courseId).get();
+    if (docSnap.exists) {
       return { id: docSnap.id, ...docSnap.data() };
     }
   } catch (e) {
@@ -164,10 +120,8 @@ export async function getCourse(courseId: string) {
 
 export async function getBundle(bundleId: string) {
   try {
-    const { doc, getDoc } = await import('firebase/firestore');
-    const docRef = doc(db, 'bundles', bundleId);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
+    const docSnap = await db.collection('bundles').doc(bundleId).get();
+    if (docSnap.exists) {
       return { id: docSnap.id, ...docSnap.data() };
     }
   } catch (e) {

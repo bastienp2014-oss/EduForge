@@ -54,7 +54,7 @@ export default defineConfig(() => {
     test: {
       environment: 'jsdom',
       // Nécessite l'émulateur Firestore — exécuté séparément via `npm run test:rules`.
-      exclude: ['**/node_modules/**', 'src/store/firestoreConfigRules.test.ts', 'src/store/useAppConfig.test.ts'],
+      exclude: ['**/node_modules/**', 'src/store/firestoreConfigRules.test.ts', 'src/store/useAppConfig.test.ts', 'marketing-site/src/lib/tenantApi.test.ts'],
     },
   };
 });

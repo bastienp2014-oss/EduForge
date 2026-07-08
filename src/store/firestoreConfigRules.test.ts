@@ -9,6 +9,9 @@ import {
 } from '@firebase/rules-unit-testing';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
+// Preuve exécutable de l'AC "Lecture publique Firestore réduite" (plan.md Phase 0) :
+// tenants/{tenantId} passe de `read: if true` à `read: if isSignedIn()`.
+
 // Preuve exécutable de l'AC "Config tenant en BDD" (plan.md Phase 1) contre le
 // firestore.rules réel du repo, via l'émulateur Firestore — pas une lecture de code.
 
@@ -87,5 +90,28 @@ describe('firestore.rules — tenants/{tenantId}/configuration', () => {
 
     expect(snapA.data()?.appName).toBe('Config A');
     expect(snapB.data()?.appName).toBe('Config B');
+  });
+});
+
+describe('firestore.rules — tenants/{tenantId} (document racine)', () => {
+  it('refuse la lecture non authentifiée (durcissement isSignedIn())', async () => {
+    await testEnv.withSecurityRulesDisabled(async (ctx) => {
+      await setDoc(doc(ctx.firestore(), 'tenants', TENANT_A), { name: 'Tenant A', domain: 'tenant-a.example.com' });
+    });
+
+    const unauth = testEnv.unauthenticatedContext();
+    const ref = doc(unauth.firestore(), 'tenants', TENANT_A);
+    await assertFails(getDoc(ref));
+  });
+
+  it('autorise la lecture pour tout utilisateur signé (isSignedIn())', async () => {
+    await testEnv.withSecurityRulesDisabled(async (ctx) => {
+      await setDoc(doc(ctx.firestore(), 'tenants', TENANT_A), { name: 'Tenant A', domain: 'tenant-a.example.com' });
+    });
+
+    const user = testEnv.authenticatedContext('regular-user', { role: 'creator', tenantId: TENANT_A });
+    const ref = doc(user.firestore(), 'tenants', TENANT_A);
+    const snap = await assertSucceeds(getDoc(ref));
+    expect(snap.data()?.name).toBe('Tenant A');
   });
 });

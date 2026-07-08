@@ -71,6 +71,44 @@ async function startServer() {
     res.json({ status: "ok" });
   });
 
+  // Lecture publique minimale d'un tenant (branding pré-connexion : écran de login,
+  // résolution de domaine white-label). Projection volontairement restreinte à des
+  // champs non sensibles — ne jamais y ajouter un champ sans revoir la surface exposée
+  // aux visiteurs anonymes.
+  app.get("/api/tenant-public", requireAppCheck, async (req, res) => {
+    try {
+      const { domain, id } = req.query;
+      const db = getFirestore(firebaseConfig.firestoreDatabaseId);
+
+      let docSnap;
+      if (typeof id === 'string' && id) {
+        docSnap = await db.collection('tenants').doc(id).get();
+      } else if (typeof domain === 'string' && domain) {
+        const snapshot = await db.collection('tenants').where('domain', '==', domain).limit(1).get();
+        docSnap = snapshot.empty ? undefined : snapshot.docs[0];
+      } else {
+        return res.status(400).json({ error: "Paramètre 'domain' ou 'id' requis" });
+      }
+
+      if (!docSnap || !docSnap.exists) {
+        return res.status(404).json({ error: "Tenant introuvable" });
+      }
+
+      const data = docSnap.data() || {};
+      res.json({
+        id: docSnap.id,
+        name: data.name ?? null,
+        plan: data.plan ?? null,
+        domain: data.domain ?? null,
+        theme: data.theme ?? null,
+        appTheme: data.appTheme ?? null,
+      });
+    } catch (err: any) {
+      console.error(err);
+      res.status(500).json({ error: "Erreur lors de la récupération du tenant" });
+    }
+  });
+
   app.post("/api/admin/bootstrap", requireAppCheck, requireAuth, async (req, res) => {
     try {
       const { token } = req.body;
