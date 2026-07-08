@@ -53,7 +53,16 @@ async function startServer() {
   app.set('trust proxy', 1);
   const PORT = 3000;
 
-  app.use(express.json());
+
+  // Conditionally apply express.json with different limits
+  app.use((req, res, next) => {
+    if (req.path === '/api/gemini/rag-ingest') {
+      express.json({ limit: '10mb' })(req, res, next);
+    } else {
+      express.json()(req, res, next);
+    }
+  });
+
   
   // Appliquer le limiteur global aux APIs
   app.use('/api/', apiLimiter);
@@ -703,9 +712,20 @@ Génère une réponse au format JSON contenant:
     }
   });
 
-  app.post("/api/gemini/rag-ingest", requireAppCheck, requireAuth, geminiLimiter, async (req, res) => {
+  // NOTE: courseId n'est pas vérifié comme appartenant au tenant de l'appelant —
+  // dette connue du RAG v0 (index partagé, sans ACL), voir plan.md "Dette et écarts connus"
+  app.post("/api/gemini/rag-ingest", requireAppCheck, requireAuth, geminiLimiter, ragIngestLimiter, async (req, res) => {
     try {
-      const tenantId = (req as any).user?.tenantId;
+      const caller = (req as any).user;
+      const tenantId = caller?.tenantId;
+
+      const isSuperAdmin = caller?.role === 'superadmin';
+      const isTenantAdmin = ['admin', 'creator'].includes(caller?.role);
+
+      if (!isSuperAdmin && !isTenantAdmin) {
+        return res.status(403).json({ error: "Non autorisé" });
+      }
+
       const ai = await getGoogleAIInstance(tenantId);
       const { courseId, text, clearPrevious } = req.body;
       
