@@ -712,13 +712,15 @@ Génère une réponse au format JSON contenant:
     }
   });
 
+  // NOTE: courseId n'est pas vérifié comme appartenant au tenant de l'appelant —
+  // dette connue du RAG v0 (index partagé, sans ACL), voir plan.md "Dette et écarts connus"
   app.post("/api/gemini/rag-ingest", requireAppCheck, requireAuth, geminiLimiter, ragIngestLimiter, async (req, res) => {
     try {
       const caller = (req as any).user;
       const tenantId = caller?.tenantId;
 
       const isSuperAdmin = caller?.role === 'superadmin';
-      const isTenantAdmin = caller?.tenantId === tenantId && ['admin', 'creator'].includes(caller?.role);
+      const isTenantAdmin = ['admin', 'creator'].includes(caller?.role);
 
       if (!isSuperAdmin && !isTenantAdmin) {
         return res.status(403).json({ error: "Non autorisé" });
