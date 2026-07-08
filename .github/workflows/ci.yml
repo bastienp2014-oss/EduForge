@@ -1,0 +1,63 @@
+# Minimal CI for EduForge.
+#
+# Runs on every pull request targeting `main`. Three verification steps run
+# in order; any failure fails the workflow (GitHub Actions' default — no
+# `continue-on-error` is used, so a red step blocks the merge once branch
+# protection is enabled).
+#
+# NOTE on the `lint` step: the `lint` npm script runs `tsc --noEmit` (a
+# type-check), NOT ESLint, despite its name. It is left as-is on purpose to avoid
+# breaking references elsewhere. ESLint is intentionally OUT OF SCOPE for this
+# workflow and is tracked as a separate item in plan.md — no ESLint command is
+# executed here.
+#
+# Node 20 LTS is pinned explicitly (no version is otherwise pinned in the repo).
+#
+# Branch protection: making this workflow a required check before merge must be
+# enabled manually in GitHub → Settings → Branches. It cannot be set from a
+# code commit.
+
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # Type-check (tsc --noEmit). See note above about the misleading name.
+      - name: Type-check (tsc --noEmit)
+        run: npm run lint
+
+      # Unit tests (vitest run).
+      - name: Unit tests
+        run: npm test
+
+      # The Firestore emulator is launched by `firebase-tools`, which requires a
+      # JDK at version 21 or above. The default Java on ubuntu-latest's PATH is
+      # older, so we install Temurin 21 explicitly before running the rules tests.
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      # Firestore rules tests, run against the real Firestore emulator.
+      # `firebase-tools` is a devDependency (installed by `npm ci`), so the
+      # `firebase` binary is available on the PATH via npm scripts.
+      - name: Firestore rules tests (emulator)
+        run: npm run test:rules
