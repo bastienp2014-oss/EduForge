@@ -20,3 +20,10 @@ export const byokTestLimiter = rateLimit({
   message: { error: 'Un seul test de clé par minute.' },
   keyGenerator: (req: express.Request) => (req as any).user?.tenantId || ipKeyGenerator(req.ip as string)
 });
+
+export const ragIngestLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 heure
+  max: 20, // 20 ingestions par heure
+  message: { error: 'Quota d\'ingestion RAG dépassé pour ce tenant.' },
+  keyGenerator: (req: express.Request) => (req as any).user?.tenantId || ipKeyGenerator(req.ip as string)
+});
