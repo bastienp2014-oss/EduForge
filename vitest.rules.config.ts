@@ -10,6 +10,7 @@ export default defineConfig({
       'src/store/firestoreConfigRules.test.ts',
       'src/store/useAppConfig.test.ts',
       'marketing-site/src/lib/tenantApi.test.ts',
+      'src/shared/hierarchyRules.test.ts',
     ],
   },
 });

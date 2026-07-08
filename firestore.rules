@@ -61,6 +61,21 @@ service cloud.firestore {
       return val is list && val.size() <= maxLen;
     }
 
+    function canAuthorHierarchy(tenantId) {
+      return isAdmin() || isTenantAdmin(tenantId) || isTenantCreator(tenantId);
+    }
+
+    function isValidHierarchyNode(tenantId, nodeId) {
+      return isValidId(nodeId)
+             && incoming().id == nodeId
+             && incoming().tenantId == tenantId
+             && isValidString(incoming().title, 200) && incoming().title.size() > 0
+             && isValidNumber(incoming().order, 0)
+             && incoming().status in ['draft', 'published']
+             && isValidNumber(incoming().digestVersion, 1)
+             && isValidString(incoming().contextDigest, 4000);
+    }
+
     // -----------------------------------------------------------------------------
     // DENY BY DEFAULT
     // -----------------------------------------------------------------------------
@@ -98,6 +113,110 @@ service cloud.firestore {
       // any future client-side read/write attempt.
       match /secrets/{document=**} {
         allow read, write: if isAdmin() || isTenantAdmin(tenantId);
+      }
+
+      // -----------------------------------------------------------------------------
+      // HIERARCHY: programs -> courses -> chapters -> lessons -> activities
+      // (plan.md Phase 1, item #1). Nœud terminal = `activities` — pas de collection
+      // ni de schéma `questions` ici ; différé (voir PRD, décision D3).
+      //
+      // Requêtes de liste : une condition `status == 'published'` dans `allow read`
+      // fait échouer TOUTE la requête si elle peut retourner un brouillon — Firestore
+      // évalue la règle contre chaque résultat potentiel, pas seulement ceux qu'un
+      // client naïf attend. Un client apprenant DOIT donc filtrer lui-même avec
+      // `.where('status', '==', 'published')` ; cette règle ne filtre pas les
+      // brouillons pour lui dans une requête non scopée.
+      //
+      // Pas de suppression en cascade : Firestore ne supprime pas les sous-collections
+      // d'un document supprimé. Supprimer un `programs/{programId}` NE supprime PAS
+      // ses `courses`/`chapters`/`lessons`/`activities` — elles deviennent orphelines,
+      // toujours accessibles par chemin direct. `delete` est donc restreint à
+      // isAdmin()/isTenantAdmin() (créateurs exclus) à tous les niveaux, comme garde-
+      // fou volontaire. Un job de cascade est hors portée de cet item.
+      // -----------------------------------------------------------------------------
+      match /programs/{programId} {
+        allow read: if isAdmin()
+                       || isTenantAdmin(tenantId)
+                       || isTenantCreator(tenantId)
+                       || (isTenantMember(tenantId) && existing().status == 'published');
+
+        allow create: if canAuthorHierarchy(tenantId)
+                         && isValidHierarchyNode(tenantId, programId);
+
+        allow update: if canAuthorHierarchy(tenantId)
+                         && isValidHierarchyNode(tenantId, programId)
+                         && incoming().tenantId == existing().tenantId
+                         && incoming().digestVersion >= existing().digestVersion;
+
+        allow delete: if isAdmin() || isTenantAdmin(tenantId);
+
+        match /courses/{courseId} {
+          allow read: if isAdmin()
+                         || isTenantAdmin(tenantId)
+                         || isTenantCreator(tenantId)
+                         || (isTenantMember(tenantId) && existing().status == 'published');
+
+          allow create: if canAuthorHierarchy(tenantId)
+                           && isValidHierarchyNode(tenantId, courseId);
+
+          allow update: if canAuthorHierarchy(tenantId)
+                           && isValidHierarchyNode(tenantId, courseId)
+                           && incoming().tenantId == existing().tenantId
+                           && incoming().digestVersion >= existing().digestVersion;
+
+          allow delete: if isAdmin() || isTenantAdmin(tenantId);
+
+          match /chapters/{chapterId} {
+            allow read: if isAdmin()
+                           || isTenantAdmin(tenantId)
+                           || isTenantCreator(tenantId)
+                           || (isTenantMember(tenantId) && existing().status == 'published');
+
+            allow create: if canAuthorHierarchy(tenantId)
+                             && isValidHierarchyNode(tenantId, chapterId);
+
+            allow update: if canAuthorHierarchy(tenantId)
+                             && isValidHierarchyNode(tenantId, chapterId)
+                             && incoming().tenantId == existing().tenantId
+                             && incoming().digestVersion >= existing().digestVersion;
+
+            allow delete: if isAdmin() || isTenantAdmin(tenantId);
+
+            match /lessons/{lessonId} {
+              allow read: if isAdmin()
+                             || isTenantAdmin(tenantId)
+                             || isTenantCreator(tenantId)
+                             || (isTenantMember(tenantId) && existing().status == 'published');
+
+              allow create: if canAuthorHierarchy(tenantId)
+                               && isValidHierarchyNode(tenantId, lessonId);
+
+              allow update: if canAuthorHierarchy(tenantId)
+                               && isValidHierarchyNode(tenantId, lessonId)
+                               && incoming().tenantId == existing().tenantId
+                               && incoming().digestVersion >= existing().digestVersion;
+
+              allow delete: if isAdmin() || isTenantAdmin(tenantId);
+
+              match /activities/{activityId} {
+                allow read: if isAdmin()
+                               || isTenantAdmin(tenantId)
+                               || isTenantCreator(tenantId)
+                               || (isTenantMember(tenantId) && existing().status == 'published');
+
+                allow create: if canAuthorHierarchy(tenantId)
+                                 && isValidHierarchyNode(tenantId, activityId);
+
+                allow update: if canAuthorHierarchy(tenantId)
+                                 && isValidHierarchyNode(tenantId, activityId)
+                                 && incoming().tenantId == existing().tenantId
+                                 && incoming().digestVersion >= existing().digestVersion;
+
+                allow delete: if isAdmin() || isTenantAdmin(tenantId);
+              }
+            }
+          }
+        }
       }
     }
 
