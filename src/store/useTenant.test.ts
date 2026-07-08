@@ -1,25 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useTenant } from './useTenant';
 
-// Mock Firebase module
-vi.mock('../services/firebase', () => {
-  return {
-    db: {},
-    auth: {}
-  };
-});
-
-// Mock Firestore functions
-vi.mock('firebase/firestore', () => {
-  return {
-    collection: vi.fn(),
-    query: vi.fn(),
-    where: vi.fn(),
-    getDocs: vi.fn(),
-    limit: vi.fn()
-  };
-});
-
 describe('useTenant Store', () => {
   beforeEach(() => {
     // Reset store before each test
@@ -38,6 +19,7 @@ describe('useTenant Store', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+    vi.unstubAllGlobals();
   });
 
   it('définit le tenant par défaut (saas)', () => {
@@ -70,5 +52,39 @@ describe('useTenant Store', () => {
     
     useTenant.getState().simulateTenantSwitch('eduforge');
     expect(useTenant.getState().currentTenant?.id).toBe('eduforge');
+  });
+
+  it('resolveTenantFromDomain : sur un domaine custom, appelle /api/tenant-public et met à jour le tenant', async () => {
+    vi.stubGlobal('location', { hostname: 'academie-custom.example.com' });
+    const fetchMock = vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        id: 'academie-custom',
+        name: 'Académie Custom',
+        plan: 'premium',
+        domain: 'academie-custom.example.com',
+        theme: { primary: '#123456' },
+      }),
+    });
+    vi.stubGlobal('fetch', fetchMock);
+
+    await useTenant.getState().resolveTenantFromDomain();
+
+    expect(fetchMock).toHaveBeenCalledWith('/api/tenant-public?domain=academie-custom.example.com');
+    const tenant = useTenant.getState().currentTenant;
+    expect(tenant?.id).toBe('academie-custom');
+    expect(tenant?.name).toBe('Académie Custom');
+    expect(tenant?.type).toBe('tenant');
+    expect(tenant?.themeColor).toBe('#123456');
+  });
+
+  it('resolveTenantFromDomain : ne fait aucun appel réseau sur un domaine principal (localhost)', async () => {
+    vi.stubGlobal('location', { hostname: 'localhost' });
+    const fetchMock = vi.fn();
+    vi.stubGlobal('fetch', fetchMock);
+
+    await useTenant.getState().resolveTenantFromDomain();
+
+    expect(fetchMock).not.toHaveBeenCalled();
   });
 });

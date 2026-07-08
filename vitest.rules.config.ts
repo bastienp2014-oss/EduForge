@@ -9,6 +9,7 @@ export default defineConfig({
     include: [
       'src/store/firestoreConfigRules.test.ts',
       'src/store/useAppConfig.test.ts',
+      'marketing-site/src/lib/tenantApi.test.ts',
     ],
   },
 });

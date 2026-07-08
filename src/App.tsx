@@ -99,12 +99,15 @@ export default function App() {
     const fetchGlobalTheme = async () => {
       try {
         if (currentTenant?.id && currentTenant.id !== 'eduforge') {
-          // Charger le thème du tenant
-          const docRef = doc(db, 'tenants', currentTenant.id);
-          const docSnap = await getDoc(docRef);
-          if (docSnap.exists() && docSnap.data().appTheme) {
-            setPersonalTheme(docSnap.data().appTheme as AppTheme);
-            return;
+          // Charger le thème du tenant (branding pré-connexion, via l'API publique
+          // plutôt qu'une lecture Firestore directe non authentifiée)
+          const response = await fetch(`/api/tenant-public?id=${encodeURIComponent(currentTenant.id)}`);
+          if (response.ok) {
+            const data = await response.json();
+            if (data.appTheme) {
+              setPersonalTheme(data.appTheme as AppTheme);
+              return;
+            }
           }
         }
         
