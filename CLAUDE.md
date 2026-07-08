@@ -86,6 +86,7 @@ Ce protocole existe parce qu'une session précédente (sur un autre outil) a mon
 6. **Ne pas modifier l'outillage du projet sans qu'on vous le demande** — pas de suppression de fichiers de configuration, pas de changement de format d'export, même si ça semble une amélioration.
 7. **Avant toute modification de `firestore.rules`** : vérifier explicitement l'impact sur tout ce qui lit les mêmes chemins sans authentification (notamment le SSR Astro) avant d'appliquer, pas après.
 8. **Si vous avez vous-même écrit le code dans une session antérieure de ce même projet**, soyez vigilant au biais de défendre un choix passé ou de minimiser un constat de l'audit sans vérification fraîche. Une assistance passée n'est pas une autorisation à ne pas re-vérifier.
+9. **Une review automatique d'un agent (Jules ou autre) n'est pas une garantie de sécurité.** Un reviewer IA peut rationaliser un risque réel comme acceptable en confondant une prémisse vraie avec sa conclusion (ex. : « posséder ce token permet de toute façon l'accès » ne justifie pas d'élargir la surface où ce token fait effet). Avant d'approuver un merge touchant l'authentification, l'autorisation, ou la gestion de secrets, vérifier le code final ligne par ligne — jamais uniquement le résumé de la review.
 
 ## 7. Sécurité
 
@@ -102,3 +103,21 @@ Un item n'est terminé que si :
 - toute affirmation chiffrée ou comparative sur la performance d'un modèle/outil utilisée pour justifier une décision a été vérifiée indépendamment (voir section Gouvernance de `plan.md`).
 
 Si l'une de ces conditions manque, l'item reste `[ ]`, peu importe l'avancement apparent.
+
+## 9. Protocole de fin d'itération
+
+Ce protocole se déclenche quand l'utilisateur signale qu'une tâche est terminée et veut préparer la suite — phrases comme "fin d'itération", "tâche terminée", "prépare la suite", "workflow de fin d'itération".
+
+Exécuter dans l'ordre :
+
+1. **Analyse de l'état réel.** Distinguer explicitement : terminé (avec preuve), en attente, non vérifié, dette technique, régressions connues, risques. Ne proposer aucune solution à cette étape. Respecter la règle de la section 6.2 : toute affirmation vient d'une inspection réelle (grep, test, lecture de fichier), jamais d'un souvenir de session.
+
+2. **Mise à jour documentaire.** Proposer uniquement les ajouts ou modifications à `plan.md` — ne pas réécrire le document. Si un écart existe entre ce que `plan.md` affiche et l'état réel du code constaté à l'étape 1, le signaler explicitement avant de proposer la modification.
+
+3. **Prochain item unique.** Déterminer le prochain item de `plan.md` à traiter, dans l'ordre du plan, en respectant les dépendances et les reports documentés (section "Horizon différé"). Un seul item — ne jamais en proposer plusieurs en parallèle.
+
+4. **Choix d'agent.** Évaluer si l'item est éligible à une délégation à Google Jules : autonome et scopé, critères d'acceptation vérifiables mécaniquement (tests/lint/grep), sans logique d'authentification, d'autorisation, ou de secrets nécessitant une supervision en temps réel.
+   - Si l'item reste en Claude Code : produire directement un PRD scopé à cette tranche verticale (objectif, portée, critères d'acceptation vérifiables).
+   - Si l'item est éligible à Jules : ne pas rédiger le prompt Jules ici — le signaler clairement à l'utilisateur avec la justification, et recommander de repasser par Claude Web pour obtenir le prompt adapté à Gemini 3.1 Pro (contexte réinjecté intégralement, tâche totalement autonome, sans ambiguïté possible).
+
+5. **Rappel de vérification.** Si l'item choisi touche `firestore.rules`, l'authentification, l'économie, ou une migration de store — rappeler explicitement les skills `eduforge-sem-check` et `eduforge-verify-before-commit` avant de considérer quoi que ce soit comme terminé.
